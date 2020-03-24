@@ -15,8 +15,15 @@ const count = breakpoints.length + 1
 export enum Color {
   White = '#fff',
   Black = '#000',
-  Gray10 = '#222',
-  Gray40 = '#888',
+  Bronze40 = '#8e713f',
+  Gold40 = '#cd930d',
+  Gray10 = '#161616',
+  Gray60 = '#9a9a9a',
+  Gray70 = '#b4b4b4',
+  Gray80 = '#cbcbcb',
+  Gray90 = '#e6e6e6',
+  Gray95 = '#f5f5f5',
+  Red40 = '#cf1837',
 }
 
 export enum Font {
@@ -85,7 +92,7 @@ const baseTheme = {
   lineHeights: LineHeight,
 
   // Spacing
-  space: Space,
+  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   spaceScales: {
     t: linearScale('10px', '16px', { count }),
     s: linearScale('12px', '24px', { count }),
@@ -151,7 +158,7 @@ export const theme = {
   f: baseTheme.fontSizeScales,
   fw: baseTheme.fontWeights,
   lh: baseTheme.lineHeights,
-  S: baseTheme.spaceScales,
+  S: baseTheme.space,
   s: baseTheme.spaceScales,
   td: baseTheme.transitionDurations,
   z: baseTheme.zIndices,
