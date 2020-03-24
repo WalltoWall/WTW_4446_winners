@@ -1,0 +1,61 @@
+{
+  "name": "WTW_4446_winners",
+  "private": true,
+  "scripts": {
+    "clean": "gatsby clean",
+    "develop": "ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "start": "yarn develop",
+    "build": "NODE_ENV=production gatsby build",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "codegen": "graphql-codegen --config graphql-codegen.yml"
+  },
+  "dependencies": {
+    "facepaint": "^1.2.1",
+    "gatsby": "^2.19.49",
+    "gatsby-plugin-styled-components": "^3.1.21",
+    "gatsby-plugin-typescript": "^2.2.5",
+    "gatsby-source-airtable": "^2.1.0",
+    "gatsby-source-filesystem": "^2.1.57",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "slug": "^2.1.1",
+    "styled-components": "^5.0.1",
+    "styled-system-scale": "^0.7.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@graphql-codegen/cli": "^1.13.1",
+    "@graphql-codegen/typescript": "^1.13.1",
+    "@graphql-codegen/typescript-operations": "^1.13.1",
+    "@types/facepaint": "^1.2.1",
+    "@types/styled-components": "^5.0.1",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "husky": "^4.2.3",
+    "prettier": "^1.19.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "always",
+    "printWidth": 80
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}
