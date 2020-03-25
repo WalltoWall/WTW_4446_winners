@@ -4,4 +4,6 @@ import { t } from '../theme'
 
 export const View = styled.div({
   transitionDuration: t.td.Normal,
+  transitionProperty: 'none',
+  transitionTimingFunction: 'ease-out',
 })

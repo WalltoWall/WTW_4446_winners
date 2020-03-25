@@ -28,14 +28,14 @@ export const AspectRatio: React.FC<AspectRatioProps> = ({
   ...props
 }) => (
   <View {...props} css={{ position: 'relative' }}>
-    <div
+    <View
       aria-hidden={true}
       css={mq({
         paddingTop: zipFirstLeftWith(zipper, castArray(x), castArray(y)),
       })}
     />
-    <div css={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+    <View css={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
       {children}
-    </div>
+    </View>
   </View>
 )
