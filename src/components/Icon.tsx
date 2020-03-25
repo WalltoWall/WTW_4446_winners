@@ -11,18 +11,18 @@ interface Icon {
   y: number
 }
 
-const icons: Record<string, Icon> = {
+const icons = {
   award: { svg: AssetIconAwardSVG, x: 20, y: 20 },
   search: { svg: AssetIconSearchSVG, x: 20, y: 20 },
   chevronDown: { svg: AssetIconChevronDownSVG, x: 14, y: 7 },
-}
+} as const
 
 type IconProps = Omit<React.ComponentProps<typeof SVG>, 'svg'> & {
   icon: keyof typeof icons
 }
 
 export const Icon: React.FC<IconProps> = ({ icon: iconName, ...props }) => {
-  const icon = icons[iconName]
+  const icon: Icon = icons[iconName]
 
   return <SVG svg={icon.svg} x={icon.x} y={icon.y} {...props} />
 }

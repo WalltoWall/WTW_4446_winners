@@ -10,7 +10,7 @@ export enum Size {
 const breakpoints = Object.values(Size)
 
 // Used for linearScale count
-const count = breakpoints.length + 1
+const count = 3
 
 export enum Color {
   White = '#fff',
@@ -27,10 +27,7 @@ export enum Color {
 }
 
 export enum Font {
-  Sans = 'Inter, system-ui',
-  SansAlt = 'Symphonie, system-ui',
-  SansCond = '"Trade Gothic Std Cond", system-ui',
-  Serif = '"Crimson Text", system-ui',
+  Sans = "'Work Sans', system-ui, Helvetica, Arial, sans-serif",
 }
 
 export enum FontWeight {
@@ -82,7 +79,8 @@ const baseTheme = {
   fonts: Font,
   fontSizes: FontSize,
   fontSizeScales: {
-    b: linearScale('0.625rem', '1rem', { count }),
+    'b-': linearScale('0.625rem', '0.875rem', { count }),
+    b: linearScale('0.6875rem', '1rem', { count }),
     'b+': linearScale('0.6875rem', '1rem', { count }),
     'm-': linearScale('0.6875rem', '1.125rem', { count }),
     m: linearScale('0.875rem', '1.125rem', { count }),
@@ -93,7 +91,7 @@ const baseTheme = {
   lineHeights: LineHeight,
 
   // Spacing
-  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  space: [0, 4, 8, 16, 24, 32, 64, 128, 256, 512],
   spaceScales: {
     t: linearScale('10px', '16px', { count }),
     s: linearScale('12px', '24px', { count }),

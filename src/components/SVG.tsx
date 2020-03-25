@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { View } from './View'
 import { AspectRatio } from './AspectRatio'
 
 type SVGProps = React.ComponentProps<typeof AspectRatio> & {
@@ -8,6 +9,6 @@ type SVGProps = React.ComponentProps<typeof AspectRatio> & {
 
 export const SVG: React.FC<SVGProps> = ({ svg: SvgComp, x, y, ...props }) => (
   <AspectRatio x={x} y={y} {...props}>
-    <SvgComp css={{ width: '100%', height: '100%' }} />
+    <View as={SvgComp} css={{ width: '100%', height: '100%' }} />
   </AspectRatio>
 )

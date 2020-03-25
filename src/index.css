@@ -1,0 +1,21 @@
+html {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: white;
+}
+
+input,
+button {
+  -webkit-tap-highlight-color: transparent;
+  border: 0;
+  outline: none;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+}
