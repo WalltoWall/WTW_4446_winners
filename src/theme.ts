@@ -15,7 +15,7 @@ const count = 3
 export enum Color {
   White = '#fff',
   Black = '#000',
-  Bronze40 = '#8e713f',
+  Bronze50 = '#c3724b',
   Gold40 = '#cd930d',
   Gray10 = '#161616',
   Gray60 = '#9a9a9a',
@@ -23,6 +23,7 @@ export enum Color {
   Gray80 = '#cbcbcb',
   Gray90 = '#e6e6e6',
   Gray95 = '#f5f5f5',
+  Red30 = '#9b1229',
   Red40 = '#cf1837',
 }
 
