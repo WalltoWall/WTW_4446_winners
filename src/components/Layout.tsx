@@ -2,6 +2,7 @@ import React from 'react'
 
 import { t, mq } from '../theme'
 import { View } from './View'
+import { Header } from './Header'
 import { Footer } from './Footer'
 
 type LayoutProps = React.ComponentProps<typeof View>
@@ -16,6 +17,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, ...props }) => (
       lineHeight: t.lh.Solid,
     })}
   >
+    <Header />
     <View as="main">{children}</View>
     <Footer />
   </View>
