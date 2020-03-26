@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = (props) => (
     forwardedAs="footer"
     {...props}
     css={mq({
-      borderTop: `1px solid ${t.c.Gray80}`,
+      boxShadow: `0 -0.5px 0 ${t.c.Gray80}`,
       paddingBottom: linearScale('1.25rem', '2rem', { count: 3 }),
       paddingTop: linearScale('1.25rem', '2rem', { count: 3 }),
       textAlign: ['center', 'left'],

@@ -52,6 +52,10 @@ export enum LineHeight {
 
 export enum ZIndex {
   Base = 0,
+  Header = 1,
+  HeaderMobileBackdrop = 0,
+  HeaderMobileMenu = 1,
+  HeaderMobileBar = 2,
 }
 
 export enum TransitionDuration {
