@@ -12,8 +12,8 @@ import { AspectRatio } from './AspectRatio'
 
 const variants = {
   base: {
-    imageAspectRatioX: 8,
-    imageAspectRatioY: 5,
+    imageAspectRatioX: 4,
+    imageAspectRatioY: 3,
     padding: [t.S[3], null, t.S[4]],
     subtitleFontSize: t.f['b-'],
   },

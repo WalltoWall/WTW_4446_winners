@@ -20,6 +20,7 @@ interface Entry {
   url: string
   name?: string
   award?: 'gold' | 'silver' | 'bronze'
+  category?: { line_1: string; line_2: string }
   image?: CloudinaryAssetFluidFragment
 }
 
@@ -136,7 +137,7 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
               <EntryCard
                 key={entry.url}
                 title={entry?.name}
-                subtitle="Category"
+                subtitle={entry?.category?.line_1}
                 award={entry?.award}
                 imageFluid={entry.image}
               />
