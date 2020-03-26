@@ -5,7 +5,7 @@ import { View } from './View'
 
 type HeadingProps = React.ComponentProps<typeof View>
 
-export const Heading: React.FC<HeadingProps> = props => (
+export const Heading: React.FC<HeadingProps> = (props) => (
   <View
     as="h2"
     {...props}

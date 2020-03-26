@@ -22,7 +22,7 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Entries',
-            tableLinks: ['entrant'],
+            tableLinks: ['entrant', 'category'],
             queryName: 'Entry',
             separateNodeType: true,
             mapping: { images: 'fileNode' },
@@ -31,6 +31,12 @@ module.exports = {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Entrants',
             queryName: 'Entrant',
+            separateNodeType: true,
+          },
+          {
+            baseId: process.env.AIRTABLE_BASE_ID,
+            tableName: 'Categories',
+            queryName: 'Category',
             separateNodeType: true,
           },
         ],
@@ -58,6 +64,12 @@ module.exports = {
                 data {
                   name
                   award
+                  category {
+                    data {
+                      line_1
+                      line_2
+                    }
+                  }
                   images {
                     localFiles {
                       childCloudinaryAsset {
@@ -83,6 +95,7 @@ module.exports = {
             )}/`,
             name: node.data.name,
             award: node.data.award.toLowerCase(),
+            category: dlv(node, ['data', 'category', 0, 'data']),
             image: dlv(node, [
               'data',
               'images',
