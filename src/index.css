@@ -8,10 +8,17 @@ body {
   background-color: white;
 }
 
+a {
+  text-decoration: none;
+}
+
 input,
 button {
   -webkit-tap-highlight-color: transparent;
   border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
   outline: none;
   padding: 0;
 }

@@ -1,4 +1,7 @@
 import React from 'react'
+import GatsbyImage from 'gatsby-image'
+
+import { CloudinaryAssetFluidFragment } from '../graphqlTypes'
 
 import { t, mq } from '../theme'
 import { View } from './View'
@@ -30,10 +33,11 @@ const variants = {
 
 type EntryCardProps = React.ComponentProps<typeof View> & {
   variant?: keyof typeof variants
-  title: string
-  subtitle: string
-  award: React.ComponentProps<typeof AwardIcon>['type']
+  title?: string
+  subtitle?: string
+  award?: React.ComponentProps<typeof AwardIcon>['type']
   isSpecialAward?: boolean
+  imageFluid?: CloudinaryAssetFluidFragment
 }
 
 export const EntryCard: React.FC<EntryCardProps> = ({
@@ -42,27 +46,34 @@ export const EntryCard: React.FC<EntryCardProps> = ({
   subtitle,
   award,
   isSpecialAward = false,
+  imageFluid,
   ...props
 }) => {
   const variant = variants[variantName]
 
   return (
-    <View {...props}>
+    <View {...props} css={{ display: 'flex', flexDirection: 'column' }}>
       <AspectRatio
         x={variant.imageAspectRatioX}
         y={variant.imageAspectRatioY}
         css={{ backgroundColor: 'black' }}
-      ></AspectRatio>
+      >
+        {imageFluid && (
+          <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
+        )}
+      </AspectRatio>
       <View
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
-          gap: t.S[2],
+          flexGrow: '1',
+          gap: [t.S[1], null, t.S[2]],
           gridTemplateColumns: '1fr auto',
+          gridTemplateRows: 'auto 1fr',
           padding: variant.padding,
         })}
       >
-        {isSpecialAward ? (
+        {subtitle && isSpecialAward ? (
           <Subheading
             forwardAs="h4"
             css={mq({ fontSize: variant.subtitleFontSize })}
@@ -77,16 +88,22 @@ export const EntryCard: React.FC<EntryCardProps> = ({
             {subtitle}
           </View>
         )}
-        <Heading forwardAs="h3">{title}</Heading>
-        <AwardIcon
-          type={award}
-          css={mq({
-            gridColumn: '2',
-            gridRow: '1 / 3',
-            alignSelf: 'end',
-            width: ['0.8125rem', '1.25rem'],
-          })}
-        />
+        {title && (
+          <Heading forwardAs="h3" css={{ lineHeight: t.lh.Title }}>
+            {title}
+          </Heading>
+        )}
+        {award && (
+          <AwardIcon
+            type={award}
+            css={mq({
+              gridColumn: '2',
+              gridRow: '1 / 3',
+              alignSelf: 'end',
+              width: ['0.8125rem', '1.25rem'],
+            })}
+          />
+        )}
       </View>
     </View>
   )
