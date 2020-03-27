@@ -33,7 +33,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/winners/">Best of Show Winners</Anchor>
           </Heading>
-          <CardList columns={[2]}>
+          <CardList columns={[1, 2]}>
             {bestOfEntries.map((entry) => (
               <EntryCard
                 key={entry?.fields?.url}
@@ -59,7 +59,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/ad-people/">People of the Year</Anchor>
           </Heading>
-          <CardList columns={[3]}>
+          <CardList columns={[1, 3]}>
             {adPeople.map((person) => (
               <PersonCard
                 key={person?.fields?.url}
@@ -85,7 +85,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
           </Heading>
-          <CardList columns={[3]}>
+          <CardList columns={[1, 3]}>
             {judgesEntries.map((entry) => (
               <EntryCard
                 key={entry?.fields?.url}

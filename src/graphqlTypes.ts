@@ -693,6 +693,7 @@ export type AirtableEntryData = {
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   images?: Maybe<AirtableField>;
 };
 
@@ -732,6 +733,7 @@ export type AirtableEntryDataFilterInput = {
   category?: Maybe<AirtableCategoryFilterListInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
+  tags?: Maybe<StringQueryOperatorInput>;
   images?: Maybe<AirtableFieldFilterInput>;
 };
 
@@ -890,6 +892,7 @@ export enum AirtableEntryFieldsEnum {
   DataCategoryDataEntries = 'data___category___data___Entries',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
+  DataTags = 'data___tags',
   DataImagesId = 'data___images___id',
   DataImagesParentId = 'data___images___parent___id',
   DataImagesParentChildren = 'data___images___parent___children',
@@ -4055,6 +4058,7 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsPluginsName = 'pluginCreator___pluginOptions___plugins___name',
   PluginCreatorPluginOptionsPluginsVersion = 'pluginCreator___pluginOptions___plugins___version',
   PluginCreatorPluginOptionsPluginsPluginFilepath = 'pluginCreator___pluginOptions___plugins___pluginFilepath',
+  PluginCreatorPluginOptionsDisplayName = 'pluginCreator___pluginOptions___displayName',
   PluginCreatorPluginOptionsApiKey = 'pluginCreator___pluginOptions___apiKey',
   PluginCreatorPluginOptionsConcurrency = 'pluginCreator___pluginOptions___concurrency',
   PluginCreatorPluginOptionsTables = 'pluginCreator___pluginOptions___tables',
@@ -4072,7 +4076,6 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsExpand = 'pluginCreator___pluginOptions___expand',
   PluginCreatorPluginOptionsPath = 'pluginCreator___pluginOptions___path',
   PluginCreatorPluginOptionsPathCheck = 'pluginCreator___pluginOptions___pathCheck',
-  PluginCreatorPluginOptionsDisplayName = 'pluginCreator___pluginOptions___displayName',
   PluginCreatorNodeApIs = 'pluginCreator___nodeAPIs',
   PluginCreatorSsrApIs = 'pluginCreator___ssrAPIs',
   PluginCreatorPluginFilepath = 'pluginCreator___pluginFilepath',
@@ -4265,6 +4268,7 @@ export enum SitePluginFieldsEnum {
   PluginOptionsPluginsVersion = 'pluginOptions___plugins___version',
   PluginOptionsPluginsPluginOptionsExpand = 'pluginOptions___plugins___pluginOptions___expand',
   PluginOptionsPluginsPluginFilepath = 'pluginOptions___plugins___pluginFilepath',
+  PluginOptionsDisplayName = 'pluginOptions___displayName',
   PluginOptionsApiKey = 'pluginOptions___apiKey',
   PluginOptionsConcurrency = 'pluginOptions___concurrency',
   PluginOptionsTables = 'pluginOptions___tables',
@@ -4284,7 +4288,6 @@ export enum SitePluginFieldsEnum {
   PluginOptionsExpand = 'pluginOptions___expand',
   PluginOptionsPath = 'pluginOptions___path',
   PluginOptionsPathCheck = 'pluginOptions___pathCheck',
-  PluginOptionsDisplayName = 'pluginOptions___displayName',
   NodeApIs = 'nodeAPIs',
   SsrApIs = 'ssrAPIs',
   PluginFilepath = 'pluginFilepath',
@@ -4397,6 +4400,7 @@ export type SitePluginPackageJsonPeerDependenciesFilterListInput = {
 
 export type SitePluginPluginOptions = {
   plugins?: Maybe<Array<Maybe<SitePluginPluginOptionsPlugins>>>;
+  displayName?: Maybe<Scalars['Boolean']>;
   apiKey?: Maybe<Scalars['String']>;
   concurrency?: Maybe<Scalars['Int']>;
   tables?: Maybe<Array<Maybe<SitePluginPluginOptionsTables>>>;
@@ -4409,11 +4413,11 @@ export type SitePluginPluginOptions = {
   expand?: Maybe<Array<Maybe<Scalars['String']>>>;
   path?: Maybe<Scalars['String']>;
   pathCheck?: Maybe<Scalars['Boolean']>;
-  displayName?: Maybe<Scalars['Boolean']>;
 };
 
 export type SitePluginPluginOptionsFilterInput = {
   plugins?: Maybe<SitePluginPluginOptionsPluginsFilterListInput>;
+  displayName?: Maybe<BooleanQueryOperatorInput>;
   apiKey?: Maybe<StringQueryOperatorInput>;
   concurrency?: Maybe<IntQueryOperatorInput>;
   tables?: Maybe<SitePluginPluginOptionsTablesFilterListInput>;
@@ -4426,7 +4430,6 @@ export type SitePluginPluginOptionsFilterInput = {
   expand?: Maybe<StringQueryOperatorInput>;
   path?: Maybe<StringQueryOperatorInput>;
   pathCheck?: Maybe<BooleanQueryOperatorInput>;
-  displayName?: Maybe<BooleanQueryOperatorInput>;
 };
 
 export type SitePluginPluginOptionsPlugins = {
@@ -4553,7 +4556,7 @@ export type EntryTemplateQueryVariables = {
 
 
 export type EntryTemplateQuery = { airtableEntry?: Maybe<{ data?: Maybe<(
-      Pick<AirtableEntryData, 'name'>
+      Pick<AirtableEntryData, 'name' | 'tags'>
       & { images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
     )> }> };
 

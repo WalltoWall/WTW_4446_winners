@@ -40,9 +40,10 @@ export const Footer: React.FC<FooterProps> = (props) => (
     forwardedAs="footer"
     {...props}
     css={mq({
-      boxShadow: `0 -0.5px 0 ${t.c.Gray80}`,
+      boxShadow: `0 -0.5px 0 rgba(0, 0, 0, 0.2)`,
       paddingBottom: linearScale('1.25rem', '2rem', { count: 3 }),
       paddingTop: linearScale('1.25rem', '2rem', { count: 3 }),
+      position: 'relative',
       textAlign: ['center', 'left'],
     })}
   >

@@ -47,7 +47,7 @@ export const Button: React.FC<ButtonProps> = ({
         paddingRight: linearScale('1rem', '1.625rem', { count: 3 }),
         textAlign: 'center',
         transitionProperty: 'color, background-color',
-        '&:hover': {
+        '&:hover, &:focus': {
           backgroundColor: disabled
             ? variant.backgroundColorDisabled
             : variant.backgroundColorHover,

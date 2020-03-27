@@ -35,6 +35,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
       backgroundColor: t.c.White,
       display: 'grid',
       gridTemplateColumns: ['1fr 2fr', 'repeat(2, 1fr)'],
+      width: '100%',
     })}
   >
     <Link href={href}>
