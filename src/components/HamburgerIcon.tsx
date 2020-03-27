@@ -4,7 +4,7 @@ import delay from 'delay'
 
 import { View } from './View'
 
-type HamburgerButtonProps = React.ComponentProps<typeof View> & {
+type HamburgerIconProps = React.ComponentProps<typeof View> & {
   isOpen?: boolean
 }
 
@@ -23,7 +23,7 @@ const Bar: React.FC<BarProps> = (props) => (
   />
 )
 
-export const HamburgerIcon: React.FC<HamburgerButtonProps> = ({
+export const HamburgerIcon: React.FC<HamburgerIconProps> = ({
   isOpen = false,
   ...props
 }) => {
