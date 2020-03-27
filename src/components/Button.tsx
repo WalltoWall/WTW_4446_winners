@@ -8,7 +8,7 @@ const variants = {
   red: {
     color: t.c.White,
     colorHover: t.c.White,
-    colorDisabled: t.c.Gray80,
+    colorDisabled: t.c.Gray60,
     backgroundColor: t.c.Red40,
     backgroundColorHover: t.c.Red30,
     backgroundColorDisabled: t.c.Gray90,

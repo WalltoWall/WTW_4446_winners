@@ -1,13 +1,12 @@
 import React from 'react'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { Link } from './Link'
 
-type TagProps = React.ComponentProps<typeof View>
+type TagProps = React.ComponentProps<typeof Link>
 
 export const Tag: React.FC<TagProps> = (props) => (
-  <View
-    as="span"
+  <Link
     css={mq({
       backgroundColor: t.c.Gray85,
       borderRadius: linearScale('2px', '3px'),

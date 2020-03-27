@@ -11,7 +11,6 @@ import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
 import { Tag } from '../components/Tag'
-import { Link } from '../components/Link'
 
 type EntryTemplateProps = React.ComponentProps<typeof Layout> & {
   data: EntryTemplateQuery
@@ -75,9 +74,7 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
                     paddingBottom: linearScale('0.5rem', '0.875rem'),
                   })}
                 >
-                  <Link href={`/tags/${tag}/`}>
-                    <Tag>{tag}</Tag>
-                  </Link>
+                  <Tag href={`/tags/${tag}/`}>{tag}</Tag>
                 </View>
               ))}
             </View>
