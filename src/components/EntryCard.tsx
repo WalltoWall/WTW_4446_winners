@@ -9,6 +9,8 @@ import { Heading } from './Heading'
 import { Subheading } from './Subheading'
 import { AwardIcon } from './AwardIcon'
 import { AspectRatio } from './AspectRatio'
+import { Anchor } from './Anchor'
+import { Link } from './Link'
 
 const variants = {
   base: {
@@ -33,15 +35,17 @@ const variants = {
 
 type EntryCardProps = React.ComponentProps<typeof View> & {
   variant?: keyof typeof variants
+  href: string
   title?: string
   subtitle?: string
-  award?: React.ComponentProps<typeof AwardIcon>['type']
+  award?: React.ComponentProps<typeof AwardIcon>['type'] | null
   isSpecialAward?: boolean
   imageFluid?: CloudinaryAssetFluidFragment
 }
 
 export const EntryCard: React.FC<EntryCardProps> = ({
   variant: variantName = 'base',
+  href,
   title,
   subtitle,
   award,
@@ -52,16 +56,26 @@ export const EntryCard: React.FC<EntryCardProps> = ({
   const variant = variants[variantName]
 
   return (
-    <View {...props} css={{ display: 'flex', flexDirection: 'column' }}>
-      <AspectRatio
-        x={variant.imageAspectRatioX}
-        y={variant.imageAspectRatioY}
-        css={{ backgroundColor: 'black' }}
-      >
-        {imageFluid && (
-          <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
-        )}
-      </AspectRatio>
+    <View
+      {...props}
+      css={{
+        backgroundColor: t.c.White,
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+      }}
+    >
+      <Link href={href}>
+        <AspectRatio
+          x={variant.imageAspectRatioX}
+          y={variant.imageAspectRatioY}
+          css={{ backgroundColor: 'black' }}
+        >
+          {imageFluid && (
+            <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
+          )}
+        </AspectRatio>
+      </Link>
       <View
         css={mq({
           backgroundColor: t.c.White,
@@ -90,7 +104,7 @@ export const EntryCard: React.FC<EntryCardProps> = ({
         )}
         {title && (
           <Heading forwardAs="h3" css={{ lineHeight: t.lh.Title }}>
-            {title}
+            <Anchor href={href}>{title}</Anchor>
           </Heading>
         )}
         {award && (

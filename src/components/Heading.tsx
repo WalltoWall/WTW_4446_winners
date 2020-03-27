@@ -12,6 +12,7 @@ export const Heading: React.FC<HeadingProps> = (props) => (
     css={mq({
       fontSize: t.f.l,
       fontWeight: t.fw.Semibold,
+      lineHeight: t.lh.Title,
     })}
   />
 )

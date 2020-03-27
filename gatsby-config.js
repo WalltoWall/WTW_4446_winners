@@ -35,6 +35,13 @@ module.exports = {
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
+            tableName: 'Ad People',
+            queryName: 'AdPerson',
+            separateNodeType: true,
+            mapping: { photo: 'fileNode' },
+          },
+          {
+            baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Categories',
             queryName: 'Category',
             separateNodeType: true,
@@ -60,7 +67,9 @@ module.exports = {
           query {
             allAirtableEntry {
               nodes {
-                id
+                fields {
+                  url
+                }
                 data {
                   name
                   award
@@ -90,9 +99,7 @@ module.exports = {
         `,
         normalizer: ({ data }) =>
           data.allAirtableEntry.nodes.map((node) => ({
-            url: `/entries/${slug(
-              (dlv(node, 'data.name') || node.id).toLowerCase(),
-            )}/`,
+            url: node.fields.url,
             name: node.data.name,
             award: node.data.award.toLowerCase(),
             category: dlv(node, ['data', 'category', 0, 'data']),
@@ -124,7 +131,9 @@ module.exports = {
           query {
             allAirtableEntrant {
               nodes {
-                id
+                fields {
+                  url
+                }
                 data {
                   name
                 }
@@ -134,9 +143,7 @@ module.exports = {
         `,
         normalizer: ({ data }) =>
           data.allAirtableEntrant.nodes.map((node) => ({
-            url: `/entrants/${slug(
-              (dlv(node, 'data.name') || node.id).toLowerCase(),
-            )}/`,
+            url: node.fields.url,
             name: node.data.name,
           })),
         plugins: [

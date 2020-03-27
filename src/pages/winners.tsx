@@ -4,6 +4,7 @@ import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 import { linearScale } from 'styled-system-scale'
 
 import { WinnersPageQuery, CloudinaryAssetFluidFragment } from '../graphqlTypes'
+import { Award } from '../types'
 
 import { t, mq } from '../theme'
 import { Layout } from '../components/Layout'
@@ -11,6 +12,7 @@ import { View } from '../components/View'
 import { BoundedBox } from '../components/BoundedBox'
 import { EntryCard } from '../components/EntryCard'
 import { Button } from '../components/Button'
+import { CardList } from '../components/CardList'
 
 type WinnersPageProps = React.ComponentProps<typeof Layout> & {
   data: WinnersPageQuery
@@ -19,7 +21,7 @@ type WinnersPageProps = React.ComponentProps<typeof Layout> & {
 interface Entry {
   url: string
   name?: string
-  award?: 'gold' | 'silver' | 'bronze'
+  award?: Award
   category?: { line_1: string; line_2: string }
   image?: CloudinaryAssetFluidFragment
 }
@@ -120,29 +122,18 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
             gap: linearScale('3rem', '6.25rem', { count: 3 }),
           })}
         >
-          <View
-            css={mq({
-              display: 'grid',
-              gap: [t.S[3], null, t.S[4]],
-              gridTemplateColumns: [
-                '1fr',
-                'repeat(3, 1fr)',
-                null,
-                'repeat(4, 1fr)',
-              ],
-              alignItems: 'stretch',
-            })}
-          >
+          <CardList columns={[1, 3, 3, 4]}>
             {entries.map((entry) => (
               <EntryCard
                 key={entry.url}
+                href={entry.url}
                 title={entry?.name}
                 subtitle={entry?.category?.line_1}
                 award={entry?.award}
                 imageFluid={entry.image}
               />
             ))}
-          </View>
+          </CardList>
           <View
             css={mq({
               display: 'grid',

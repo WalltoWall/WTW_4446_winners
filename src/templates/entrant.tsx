@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 
 import { EntrantTemplateQuery } from '../graphqlTypes'
 import { Layout } from '../components/Layout'
+import { Heading } from '../components/Heading'
 
 type EntrantTemplateProps = React.ComponentProps<typeof Layout> & {
   data: EntrantTemplateQuery
@@ -14,7 +15,11 @@ export const EntrantTemplate: React.FC<EntrantTemplateProps> = ({
 }) => {
   const entrant = data.airtableEntrant
 
-  return <Layout {...props}>Entrant template for: {entrant?.data?.name}</Layout>
+  return (
+    <Layout {...props}>
+      <Heading>Entrant template for: {entrant?.data?.name}</Heading>
+    </Layout>
+  )
 }
 
 export default EntrantTemplate

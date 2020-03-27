@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react'
-import { Link } from 'gatsby'
 import { linearScale } from 'styled-system-scale'
 
 import { t, mq } from '../theme'
@@ -7,6 +6,8 @@ import { View } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
 import { HamburgerIcon } from './HamburgerIcon'
+import { Anchor } from './Anchor'
+import { Link } from './Link'
 
 type NavItemProps = React.ComponentProps<typeof View> & {
   href: string
@@ -28,19 +29,9 @@ const NavItem: React.FC<NavItemProps> = ({
       '&:last-child': { marginBottom: 0 },
     })}
   >
-    <View
-      as={Link}
-      to={href}
-      target={target}
-      css={mq({
-        color: t.c.Black,
-        fontSize: t.f.m,
-        transitionProperty: 'color',
-        '&:hover': { color: t.c.Red40 },
-      })}
-    >
+    <Anchor href={href} target={target} css={mq({ fontSize: t.f.m })}>
       {children}
-    </View>
+    </Anchor>
   </View>
 )
 
@@ -72,16 +63,18 @@ export const Header: React.FC<HeaderProps> = (props) => {
             alignItems: 'center',
           }}
         >
-          <View
-            css={{
-              backgroundColor: t.c.Gray10,
-              borderRadius: '50%',
-              height: '2rem',
-              width: '2rem',
-            }}
-          />
+          <Link href="/">
+            <View
+              css={{
+                backgroundColor: t.c.Gray10,
+                borderRadius: '50%',
+                height: '2rem',
+                width: '2rem',
+              }}
+            />
+          </Link>
           <Heading css={mq({ fontSize: t.f.b, textAlign: 'center' })}>
-            Pele Awards Winners
+            <Anchor href="/">Pele Awards Winners</Anchor>
           </Heading>
           <View
             as="button"

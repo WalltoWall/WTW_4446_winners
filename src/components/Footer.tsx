@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import { linearScale, negateScale } from 'styled-system-scale'
 
 import { t, mq } from '../theme'
 import { View } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
+import { Anchor } from './Anchor'
 
 type NavItemProps = React.ComponentProps<typeof View> & {
   href: string
@@ -27,18 +27,9 @@ const NavItem: React.FC<NavItemProps> = ({
       '&:last-child': { marginRight: 0 },
     })}
   >
-    <View
-      as={Link}
-      to={href}
-      target={target}
-      css={{
-        color: t.c.Black,
-        transitionProperty: 'color',
-        '&:hover': { color: t.c.Red40 },
-      }}
-    >
+    <Anchor href={href} target={target}>
       {children}
-    </View>
+    </Anchor>
   </View>
 )
 
@@ -72,7 +63,7 @@ export const Footer: React.FC<FooterProps> = (props) => (
           gridRow: [null, 1],
         })}
       >
-        Pele Awards Winners
+        <Anchor href="/">Pele Awards Winners</Anchor>
       </Heading>
       <View
         as="nav"
