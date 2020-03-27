@@ -24,7 +24,7 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
     <Layout {...props}>
       <Heading>Entry template for: {entry?.data?.name}</Heading>
       {images.map((image) => (
-        <GatsbyImage fluid={image?.fluid} />
+        <GatsbyImage key={image?.fluid?.src} fluid={image?.fluid} />
       ))}
     </Layout>
   )

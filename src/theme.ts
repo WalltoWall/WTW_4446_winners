@@ -47,7 +47,6 @@ export enum LineHeight {
   Title = 1.15,
   TitleWide = 1.25,
   Copy = 1.4,
-  Code = 1.6,
 }
 
 export enum ZIndex {
@@ -175,3 +174,6 @@ export { theme as t }
 export type Theme = typeof theme
 
 export const mq = facepaint(Object.values(theme.mediaQueries))
+
+export const ls = (min: string, max: string) => linearScale(min, max, { count })
+export { ls as linearScale }
