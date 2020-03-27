@@ -25,7 +25,8 @@ module.exports = {
             tableLinks: ['entrant', 'category'],
             queryName: 'Entry',
             separateNodeType: true,
-            mapping: { images: 'fileNode' },
+            mapping: { images: 'fileNode', credits: 'text/markdown' },
+            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
@@ -47,6 +48,12 @@ module.exports = {
             separateNodeType: true,
           },
         ],
+      },
+    },
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: ['gatsby-remark-breaks'],
       },
     },
     {

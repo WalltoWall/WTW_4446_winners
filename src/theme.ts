@@ -47,7 +47,7 @@ export enum LineHeight {
   Solid = 1,
   Title = 1.15,
   TitleWide = 1.25,
-  Copy = 1.4,
+  Copy = 1.5,
 }
 
 export enum ZIndex {
