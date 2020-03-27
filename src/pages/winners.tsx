@@ -1,18 +1,18 @@
 import React, { useReducer, useCallback } from 'react'
 import { graphql, withPrefix } from 'gatsby'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
-import { linearScale } from 'styled-system-scale'
 
 import { WinnersPageQuery, CloudinaryAssetFluidFragment } from '../graphqlTypes'
 import { Award } from '../types'
 
-import { t, mq } from '../theme'
+import { t, mq, linearScale } from '../theme'
 import { Layout } from '../components/Layout'
 import { View } from '../components/View'
 import { BoundedBox } from '../components/BoundedBox'
 import { EntryCard } from '../components/EntryCard'
 import { Button } from '../components/Button'
 import { CardList } from '../components/CardList'
+import { Heading } from '../components/Heading'
 
 type WinnersPageProps = React.ComponentProps<typeof Layout> & {
   data: WinnersPageQuery
@@ -115,11 +115,22 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
 
   return (
     <Layout>
+      <BoundedBox
+        css={mq({
+          backgroundColor: t.c.White,
+          paddingTop: linearScale('1.5rem', '3.5rem'),
+          paddingBottom: linearScale('1.5rem', '3.5rem'),
+        })}
+      >
+        <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
+          Winners
+        </Heading>
+      </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
         <View
           css={mq({
             display: 'grid',
-            gap: linearScale('3rem', '6.25rem', { count: 3 }),
+            gap: linearScale('3rem', '6.25rem'),
           })}
         >
           <CardList columns={[1, 3, 3, 4]}>
@@ -137,7 +148,7 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
           <View
             css={mq({
               display: 'grid',
-              gap: linearScale('0.375rem', '0.875rem', { count: 3 }),
+              gap: linearScale('0.375rem', '0.875rem'),
               justifyContent: 'center',
             })}
           >

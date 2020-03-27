@@ -21,6 +21,7 @@ export enum Color {
   Gray60 = '#9a9a9a',
   Gray70 = '#b4b4b4',
   Gray80 = '#cbcbcb',
+  Gray85 = '#d8d8d8',
   Gray90 = '#e6e6e6',
   Gray95 = '#f5f5f5',
   Red30 = '#9b1229',

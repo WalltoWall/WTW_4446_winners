@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
         {...props}
         css={mq({
           backgroundColor: t.c.White,
-          boxShadow: `0 0.5px 0 ${isMenuOpen ? 'transparent' : t.c.Gray80}`,
+          boxShadow: `0 0.5px 0 rgba(0, 0, 0, ${isMenuOpen ? 0 : 0.2})`,
           paddingBottom: linearScale('0.75rem', '2rem', { count: 3 }),
           paddingTop: linearScale('0.75rem', '2rem', { count: 3 }),
           position: 'relative',

@@ -11,7 +11,7 @@ export const Anchor: React.FC<AnchorProps> = (props) => (
     css={{
       color: 'inherit',
       transitionProperty: 'color',
-      '&:hover': { color: t.c.Red40 },
+      '&:hover, &:focus': { color: t.c.Red40 },
     }}
   />
 )
