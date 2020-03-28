@@ -3,19 +3,17 @@ import React from 'react'
 import { t, mq, linearScale } from '../theme'
 import { View } from './View'
 import { Link } from './Link'
-import { SVG } from './SVG'
-import { ReactComponent as AssetIconChevronLeft } from '../assets/icon-chevron-left.svg'
-import { ReactComponent as AssetIconChevronRight } from '../assets/icon-chevron-right.svg'
+import { Icon } from './Icon'
 
 const variants = {
   previous: {
     label: 'Previous',
-    svg: AssetIconChevronLeft,
+    iconName: 'chevronLeft',
     svgOffsetX: '-10%',
   },
   next: {
     label: 'Next',
-    svg: AssetIconChevronRight,
+    iconName: 'chevronRight',
     svgOffsetX: '10%',
   },
 } as const
@@ -52,10 +50,8 @@ const DirectionButton: React.FC<DirectionButtonProps> = ({
           justifyContent: 'center',
         })}
       >
-        <SVG
-          svg={variant.svg}
-          x={8}
-          y={14}
+        <Icon
+          name={variant.iconName}
           css={mq({
             color: t.c.White,
             width: ['0.3rem', '0.4rem', '0.5rem'],
@@ -95,8 +91,9 @@ export const NextPrevious: React.FC<NextPreviousProps> = ({
     {...props}
     css={mq({
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: nextHref && previousHref ? 'repeat(2, 1fr)' : '1fr',
       gap: linearScale('1rem', '5.625rem'),
+      justifyContent: 'center',
     })}
   >
     {previousHref && (

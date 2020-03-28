@@ -37,7 +37,7 @@ export const Button: React.FC<ButtonProps> = ({
         backgroundColor: disabled
           ? variant.backgroundColorDisabled
           : variant.backgroundColor,
-        borderRadius: '3px',
+        borderRadius: ['3px', '4px'],
         color: disabled ? variant.colorDisabled : variant.color,
         cursor: disabled ? 'default' : 'pointer',
         fontSize: variant.fontSize,

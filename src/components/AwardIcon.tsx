@@ -1,6 +1,8 @@
 import React from 'react'
+import VisuallyHidden from '@reach/visually-hidden'
 
 import { t } from '../theme'
+import { View } from './View'
 import { Icon } from './Icon'
 
 const colors = {
@@ -14,5 +16,8 @@ type AwardIconProps = Omit<React.ComponentProps<typeof Icon>, 'icon'> & {
 }
 
 export const AwardIcon: React.FC<AwardIconProps> = ({ type, ...props }) => (
-  <Icon icon="award" {...props} css={{ color: colors[type] }} />
+  <View {...props}>
+    <Icon name="award" css={{ color: colors[type] }} />
+    <VisuallyHidden>{type}</VisuallyHidden>
+  </View>
 )

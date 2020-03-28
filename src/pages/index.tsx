@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
+import { EVENT_SITE_URL } from '../constants'
 import { IndexPageQuery } from '../graphqlTypes'
 import { Award } from '../types'
 
@@ -104,7 +105,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
           </CardList>
         </View>
       </BoundedBox>
-      <CallToAction buttonText="Learn more" buttonHref="https://peleawards.com">
+      <CallToAction buttonText="Learn more" buttonHref={EVENT_SITE_URL}>
         <Heading
           css={mq({
             fontSize: t.f.xl,
@@ -176,7 +177,7 @@ export const query = graphql`
       images {
         localFiles {
           childCloudinaryAsset {
-            fluid(maxWidth: 800) {
+            fluid(maxWidth: 1000) {
               ...CloudinaryAssetFluid
             }
           }

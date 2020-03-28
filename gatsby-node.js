@@ -5,30 +5,54 @@ exports.createPages = (gatsbyContext) => {
   const { actions, getNodesByType } = gatsbyContext
   const { createPage } = actions
 
-  for (const node of getNodesByType('AirtableEntry')) {
+  const entryNodes = getNodesByType('AirtableEntry')
+  for (let i = 0; i < entryNodes.length; i++) {
+    const node = entryNodes[i]
+    const previousNode = entryNodes[i - 1]
+    const nextNode = entryNodes[i + 1]
     if (!node.data.name) continue
     createPage({
       path: node.fields.url,
       component: path.resolve(__dirname, 'src/templates/entry.tsx'),
-      context: { recordId: node.recordId },
+      context: {
+        recordId: node.recordId,
+        previousRecordId: previousNode ? previousNode.recordId : undefined,
+        nextRecordId: nextNode ? nextNode.recordId : undefined,
+      },
     })
   }
 
-  for (const node of getNodesByType('AirtableEntrant')) {
+  const entrantNodes = getNodesByType('AirtableEntrant')
+  for (let i = 0; i < entrantNodes.length; i++) {
+    const node = entrantNodes[i]
+    const previousNode = entrantNodes[i - 1]
+    const nextNode = entrantNodes[i + 1]
     if (!node.data.name) continue
     createPage({
       path: node.fields.url,
       component: path.resolve(__dirname, 'src/templates/entrant.tsx'),
-      context: { recordId: node.recordId },
+      context: {
+        recordId: node.recordId,
+        previousRecordId: previousNode ? previousNode.recordId : undefined,
+        nextRecordId: nextNode ? nextNode.recordId : undefined,
+      },
     })
   }
 
-  for (const node of getNodesByType('AirtableAdPerson')) {
+  const adPersonNodes = getNodesByType('AirtableAdPerson')
+  for (let i = 0; i < adPersonNodes.length; i++) {
+    const node = adPersonNodes[i]
+    const previousNode = adPersonNodes[i - 1]
+    const nextNode = adPersonNodes[i + 1]
     if (!node.data.name) continue
     createPage({
       path: node.fields.url,
       component: path.resolve(__dirname, 'src/templates/person.tsx'),
-      context: { recordId: node.recordId },
+      context: {
+        recordId: node.recordId,
+        previousRecordId: previousNode ? previousNode.recordId : undefined,
+        nextRecordId: nextNode ? nextNode.recordId : undefined,
+      },
     })
   }
 }
@@ -50,6 +74,17 @@ exports.onCreateNode = ({ node, actions }) => {
     case 'AirtableEntry': {
       const url = `/entries/${airtableNodeToSlug(node)}/`
       createNodeField({ node, name: 'url', value: url })
+
+      const tags = node.data.tags
+      createNodeField({
+        node,
+        name: 'tags',
+        value: tags.map((tag) => ({
+          tag,
+          url: `/tags/${slug(tag.toLowerCase())}/`,
+        })),
+      })
+
       break
     }
 

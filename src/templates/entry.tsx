@@ -1,10 +1,10 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { negateScale } from 'styled-system-scale'
-import slug from 'slug'
 
 import { Award } from '../types'
 import { EntryTemplateQuery } from '../graphqlTypes'
+import { compact } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
 import { View } from '../components/View'
@@ -16,6 +16,7 @@ import { Tag } from '../components/Tag'
 import { HTMLContent } from '../components/HTMLContent'
 import { NextPrevious } from '../components/NextPrevious'
 import { AwardIcon } from '../components/AwardIcon'
+import { ImageGallery } from '../components/ImageGallery'
 
 type EntryTemplateProps = React.ComponentProps<typeof Layout> & {
   data: EntryTemplateQuery
@@ -27,8 +28,17 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
 }) => {
   const entry = data.airtableEntry
   const category = entry?.data?.category?.[0]?.data
+  const images = compact(
+    entry?.data?.images?.localFiles?.map(
+      (localFile) => localFile?.childCloudinaryAsset?.fluid,
+    ) ?? [],
+  )
   const hasSpecialAward = Boolean(entry?.data?.special_award)
-  const hasTags = (entry?.data?.tags?.length ?? 0) > 0
+  const hasImages = images.length > 0
+  const hasTags = (entry?.fields?.tags?.length ?? 0) > 0
+
+  const nextEntry = data.nextAirtableEntry
+  const previousEntry = data.previousAirtableEntry
 
   return (
     <Layout {...props}>
@@ -55,6 +65,18 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
               {entry?.data?.name}
             </Heading>
           </View>
+          {hasImages && (
+            <View
+              css={{
+                width: '100%',
+                maxWidth: t.sz.Xlarge,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
+            >
+              <ImageGallery images={images} />
+            </View>
+          )}
           <View
             css={mq({
               backgroundColor: t.c.White,
@@ -70,7 +92,8 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
             <View
               css={mq({
                 display: 'grid',
-                gap: linearScale('1.25rem', '1.5rem'),
+                rowGap: linearScale('1.25rem', '1.5rem'),
+                columnGap: '5rem',
                 gridAutoFlow: 'row dense',
                 alignItems: 'baseline',
                 gridTemplateColumns: [null, 'repeat(2, 1fr)'],
@@ -125,20 +148,18 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
                     gridColumn: [null, 1],
                   })}
                 >
-                  {entry?.data?.tags?.map(
+                  {entry?.fields?.tags?.map(
                     (tag) =>
-                      tag && (
+                      tag?.url && (
                         <View
-                          key={tag}
+                          key={tag.tag}
                           as="li"
                           css={mq({
                             paddingRight: linearScale('0.5rem', '0.875rem'),
                             paddingBottom: linearScale('0.5rem', '0.875rem'),
                           })}
                         >
-                          <Tag href={`/tags/${slug(tag.toLowerCase())}/`}>
-                            {tag}
-                          </Tag>
+                          <Tag href={tag.url}>{tag.tag}</Tag>
                         </View>
                       ),
                   )}
@@ -171,10 +192,10 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
             </View>
           </View>
           <NextPrevious
-            previousHref="/"
-            previousLabel="Hawaii Something"
-            nextHref="/"
-            nextLabel="Another What"
+            previousHref={previousEntry?.fields?.url}
+            previousLabel={previousEntry?.data?.name}
+            nextHref={nextEntry?.fields?.url}
+            nextLabel={nextEntry?.data?.name}
           />
         </View>
       </BoundedBox>
@@ -185,8 +206,18 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
 export default EntryTemplate
 
 export const query = graphql`
-  query EntryTemplate($recordId: String!) {
+  query EntryTemplate(
+    $recordId: String!
+    $nextRecordId: String
+    $previousRecordId: String
+  ) {
     airtableEntry(recordId: { eq: $recordId }) {
+      fields {
+        tags {
+          tag
+          url
+        }
+      }
       data {
         name
         tags
@@ -213,12 +244,28 @@ export const query = graphql`
         images {
           localFiles {
             childCloudinaryAsset {
-              fluid(maxWidth: 800) {
+              fluid(maxWidth: 1600) {
                 ...CloudinaryAssetFluid
               }
             }
           }
         }
+      }
+    }
+    nextAirtableEntry: airtableEntry(recordId: { eq: $nextRecordId }) {
+      fields {
+        url
+      }
+      data {
+        name
+      }
+    }
+    previousAirtableEntry: airtableEntry(recordId: { eq: $previousRecordId }) {
+      fields {
+        url
+      }
+      data {
+        name
       }
     }
   }
