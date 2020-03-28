@@ -12,6 +12,8 @@ import { Link } from './Link'
 import { Overlay } from './Overlay'
 import { Button } from './Button'
 import { Icon } from './Icon'
+import { SVG } from './SVG'
+import { ReactComponent as AssetLogo2020SVG } from '../assets/logo-2020.svg'
 
 type NavItemProps = React.ComponentProps<typeof View> & {
   href: string
@@ -63,6 +65,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
             display: 'grid',
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
+            gap: linearScale('1rem', '2rem'),
           })}
         >
           <Anchor
@@ -77,16 +80,20 @@ export const Header: React.FC<HeaderProps> = (props) => {
           >
             <View
               css={mq({
-                backgroundColor: t.c.Gray10,
                 borderRadius: '50%',
+                marginLeft: '-0.125rem',
+                overflow: 'hidden',
                 height: linearScale('2rem', '3.625rem'),
                 width: linearScale('2rem', '3.625rem'),
               })}
-            />
+            >
+              <SVG svg={AssetLogo2020SVG} x={1} y={1} css={{ width: '100%' }} />
+            </View>
             <Heading
               css={mq({
                 fontSize: t.f.m,
-                display: ['none', null, 'block'],
+                fontWeight: t.fw.Medium,
+                display: ['none', null, null, 'block'],
               })}
             >
               Pele Awards Winners
@@ -96,7 +103,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
             css={mq({
               fontSize: t.f.b,
               textAlign: 'center',
-              display: [null, null, 'none'],
+              display: [null, 'none'],
             })}
           >
             <Anchor href="/">Pele Awards Winners</Anchor>
@@ -104,7 +111,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           <View
             as="ul"
             css={mq({
-              display: ['none', null, 'grid'],
+              display: ['none', 'grid'],
               gap: '2.5rem',
               gridAutoFlow: 'column',
             })}
@@ -139,7 +146,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
                 <Icon name="search" css={{ width: '1.25rem' }} />
               </View>
               <Button as={Link} href={EVENT_SITE_URL}>
-                Enter the 2021 Pele Awards
+                Enter{' '}
+                <View
+                  as="span"
+                  css={mq({ display: ['none', null, null, 'inline'] })}
+                >
+                  the 2021 Pele Awards
+                </View>
               </Button>
             </View>
           </View>

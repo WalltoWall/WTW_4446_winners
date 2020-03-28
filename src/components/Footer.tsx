@@ -45,6 +45,8 @@ export const Footer: React.FC<FooterProps> = (props) => (
       boxShadow: `0 -1px 0 rgba(0, 0, 0, 0.1)`,
       paddingBottom: linearScale('1.25rem', '2rem'),
       paddingTop: linearScale('1.25rem', '2rem'),
+      paddingLeft: linearScale('1rem', '2rem'),
+      paddingRight: linearScale('1rem', '2rem'),
       position: 'relative',
       textAlign: ['center', 'left'],
     })}
