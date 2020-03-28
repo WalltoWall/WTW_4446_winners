@@ -1,7 +1,9 @@
 import React from 'react'
-import { linearScale, negateScale } from 'styled-system-scale'
+import { negateScale } from 'styled-system-scale'
 
-import { t, mq } from '../theme'
+import { navigation } from '../constants'
+
+import { t, mq, linearScale } from '../theme'
 import { View } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
@@ -22,8 +24,8 @@ const NavItem: React.FC<NavItemProps> = ({
     as="li"
     {...props}
     css={mq({
-      marginRight: linearScale('1rem', '3rem', { count: 3 }),
-      paddingBottom: linearScale('0.375rem', '0.875rem', { count: 3 }),
+      marginRight: linearScale('1rem', '3rem'),
+      paddingBottom: linearScale('0.375rem', '0.875rem'),
       '&:last-child': { marginRight: 0 },
     })}
   >
@@ -40,9 +42,9 @@ export const Footer: React.FC<FooterProps> = (props) => (
     forwardedAs="footer"
     {...props}
     css={mq({
-      boxShadow: `0 -0.5px 0 rgba(0, 0, 0, 0.2)`,
-      paddingBottom: linearScale('1.25rem', '2rem', { count: 3 }),
-      paddingTop: linearScale('1.25rem', '2rem', { count: 3 }),
+      boxShadow: `0 -1px 0 rgba(0, 0, 0, 0.1)`,
+      paddingBottom: linearScale('1.25rem', '2rem'),
+      paddingTop: linearScale('1.25rem', '2rem'),
       position: 'relative',
       textAlign: ['center', 'left'],
     })}
@@ -80,16 +82,14 @@ export const Footer: React.FC<FooterProps> = (props) => (
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            marginBottom: negateScale(
-              linearScale('0.375rem', '0.875rem', { count: 3 }),
-            ),
+            marginBottom: negateScale(linearScale('0.375rem', '0.875rem')),
           })}
         >
-          <NavItem href="/winners/">Winners</NavItem>
-          <NavItem href="/ad-people/">Ad People</NavItem>
-          <NavItem href="/high-school/">High School</NavItem>
-          <NavItem href="/college/">College</NavItem>
-          <NavItem href="/about/">About</NavItem>
+          {navigation.map((item) => (
+            <NavItem key={item.name} href={item.href}>
+              {item.name}
+            </NavItem>
+          ))}
         </View>
       </View>
       <View

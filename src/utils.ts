@@ -90,3 +90,20 @@ export const isInternal = (url: string) => /^\/(?!\/)/.test(url)
  * stripProtocol('https://example.com') // "example.com"
  */
 export const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '')
+
+/**
+ * Creates a new array from the provided array without falsy values.
+ *
+ * @param input Array potentially with falsy values.
+ *
+ * @returns A new array equivalent to `input` without falsy values.
+ */
+export const compact = <T>(
+  input: (T | null | undefined | false | '' | 0)[],
+): T[] => {
+  const result: T[] = []
+
+  for (let i = 0; i < input.length; i++) input[i] && result.push(input[i] as T)
+
+  return result
+}

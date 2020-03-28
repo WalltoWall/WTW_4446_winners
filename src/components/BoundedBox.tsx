@@ -17,8 +17,8 @@ export const BoundedBox: React.FC<BoundedBoxProps> = ({
   <View
     {...props}
     css={mq({
-      paddingLeft: [t.S[3], null, t.S[4], null, t.S[6]],
-      paddingRight: [t.S[3], null, t.S[4], null, t.S[6]],
+      paddingLeft: linearScale('1rem', '4rem'),
+      paddingRight: linearScale('1rem', '4rem'),
       paddingTop: linearScale('2.5rem', '6.25rem'),
       paddingBottom: linearScale('2.5rem', '6.25rem'),
     })}

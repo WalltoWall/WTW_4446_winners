@@ -745,6 +745,7 @@ export type AirtableEntryEdge = {
 
 export type AirtableEntryFields = {
   url?: Maybe<Scalars['String']>;
+  tags?: Maybe<Array<Maybe<AirtableEntryFieldsTags>>>;
 };
 
 export enum AirtableEntryFieldsEnum {
@@ -974,11 +975,29 @@ export enum AirtableEntryFieldsEnum {
   DataImagesLocalFilesUrl = 'data___images___localFiles___url',
   DataImagesLocalFilesId = 'data___images___localFiles___id',
   DataImagesLocalFilesChildren = 'data___images___localFiles___children',
-  FieldsUrl = 'fields___url'
+  FieldsUrl = 'fields___url',
+  FieldsTags = 'fields___tags',
+  FieldsTagsTag = 'fields___tags___tag',
+  FieldsTagsUrl = 'fields___tags___url'
 }
 
 export type AirtableEntryFieldsFilterInput = {
   url?: Maybe<StringQueryOperatorInput>;
+  tags?: Maybe<AirtableEntryFieldsTagsFilterListInput>;
+};
+
+export type AirtableEntryFieldsTags = {
+  tag?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+export type AirtableEntryFieldsTagsFilterInput = {
+  tag?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+};
+
+export type AirtableEntryFieldsTagsFilterListInput = {
+  elemMatch?: Maybe<AirtableEntryFieldsTagsFilterInput>;
 };
 
 export type AirtableEntryFilterInput = {
@@ -3991,12 +4010,12 @@ export type Query = {
   allPaginatedCollection: PaginatedCollectionConnection;
   paginatedCollectionPage?: Maybe<PaginatedCollectionPage>;
   allPaginatedCollectionPage: PaginatedCollectionPageConnection;
-  airtableEntrant?: Maybe<AirtableEntrant>;
-  allAirtableEntrant: AirtableEntrantConnection;
   airtableField?: Maybe<AirtableField>;
   allAirtableField: AirtableFieldConnection;
   airtableAdPerson?: Maybe<AirtableAdPerson>;
   allAirtableAdPerson: AirtableAdPersonConnection;
+  airtableEntrant?: Maybe<AirtableEntrant>;
+  allAirtableEntrant: AirtableEntrantConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableFieldfileNode?: Maybe<AirtableFieldfileNode>;
@@ -4248,27 +4267,6 @@ export type QueryAllPaginatedCollectionPageArgs = {
 };
 
 
-export type QueryAirtableEntrantArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableEntrantDataFilterInput>;
-  fields?: Maybe<AirtableEntrantFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableEntrantArgs = {
-  filter?: Maybe<AirtableEntrantFilterInput>;
-  sort?: Maybe<AirtableEntrantSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableFieldArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -4303,6 +4301,27 @@ export type QueryAirtableAdPersonArgs = {
 export type QueryAllAirtableAdPersonArgs = {
   filter?: Maybe<AirtableAdPersonFilterInput>;
   sort?: Maybe<AirtableAdPersonSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableEntrantArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableEntrantDataFilterInput>;
+  fields?: Maybe<AirtableEntrantFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableEntrantArgs = {
+  filter?: Maybe<AirtableEntrantFilterInput>;
+  sort?: Maybe<AirtableEntrantSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -4782,10 +4801,14 @@ export type SitePageConnectionGroupArgs = {
 
 export type SitePageContext = {
   recordId?: Maybe<Scalars['String']>;
+  previousRecordId?: Maybe<Scalars['String']>;
+  nextRecordId?: Maybe<Scalars['String']>;
 };
 
 export type SitePageContextFilterInput = {
   recordId?: Maybe<StringQueryOperatorInput>;
+  previousRecordId?: Maybe<StringQueryOperatorInput>;
+  nextRecordId?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageEdge = {
@@ -4888,6 +4911,8 @@ export enum SitePageFieldsEnum {
   InternalType = 'internal___type',
   IsCreatedByStatefulCreatePages = 'isCreatedByStatefulCreatePages',
   ContextRecordId = 'context___recordId',
+  ContextPreviousRecordId = 'context___previousRecordId',
+  ContextNextRecordId = 'context___nextRecordId',
   PluginCreatorId = 'pluginCreator___id',
   PluginCreatorParentId = 'pluginCreator___parent___id',
   PluginCreatorParentParentId = 'pluginCreator___parent___parent___id',
@@ -5436,13 +5461,15 @@ export type EntrantTemplateQuery = { airtableEntrant?: Maybe<{ data?: Maybe<Pick
 
 export type EntryTemplateQueryVariables = {
   recordId: Scalars['String'];
+  nextRecordId?: Maybe<Scalars['String']>;
+  previousRecordId?: Maybe<Scalars['String']>;
 };
 
 
-export type EntryTemplateQuery = { airtableEntry?: Maybe<{ data?: Maybe<(
+export type EntryTemplateQuery = { airtableEntry?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableEntryFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
       Pick<AirtableEntryData, 'name' | 'tags' | 'year' | 'award' | 'special_award' | 'client'>
       & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, entrant?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableEntrantData, 'name'>> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-    )> }> };
+    )> }>, nextAirtableEntry?: Maybe<{ fields?: Maybe<Pick<AirtableEntryFields, 'url'>>, data?: Maybe<Pick<AirtableEntryData, 'name'>> }>, previousAirtableEntry?: Maybe<{ fields?: Maybe<Pick<AirtableEntryFields, 'url'>>, data?: Maybe<Pick<AirtableEntryData, 'name'>> }> };
 
 export type PersonTemplateQueryVariables = {
   recordId: Scalars['String'];

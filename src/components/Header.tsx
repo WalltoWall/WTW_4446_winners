@@ -1,13 +1,17 @@
 import React, { useState, useCallback } from 'react'
-import { linearScale } from 'styled-system-scale'
 
-import { t, mq } from '../theme'
+import { navigation, EVENT_SITE_URL } from '../constants'
+
+import { t, mq, linearScale } from '../theme'
 import { View } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
 import { HamburgerIcon } from './HamburgerIcon'
 import { Anchor } from './Anchor'
 import { Link } from './Link'
+import { Overlay } from './Overlay'
+import { Button } from './Button'
+import { Icon } from './Icon'
 
 type NavItemProps = React.ComponentProps<typeof View> & {
   href: string
@@ -20,16 +24,12 @@ const NavItem: React.FC<NavItemProps> = ({
   children,
   ...props
 }) => (
-  <View
-    as="li"
-    {...props}
-    css={mq({
-      marginBottom: linearScale('0.75rem', '0.875rem', { count: 3 }),
-      textAlign: 'center',
-      '&:last-child': { marginBottom: 0 },
-    })}
-  >
-    <Anchor href={href} target={target} css={mq({ fontSize: t.f.m })}>
+  <View as="li" {...props} css={mq({ textAlign: 'center' })}>
+    <Anchor
+      href={href}
+      target={target}
+      css={mq({ fontSize: linearScale('0.875rem', '1.125rem') })}
+    >
       {children}
     </Anchor>
   </View>
@@ -48,79 +48,133 @@ export const Header: React.FC<HeaderProps> = (props) => {
         {...props}
         css={mq({
           backgroundColor: t.c.White,
-          boxShadow: `0 0.5px 0 rgba(0, 0, 0, ${isMenuOpen ? 0 : 0.2})`,
-          paddingBottom: linearScale('0.75rem', '2rem', { count: 3 }),
-          paddingTop: linearScale('0.75rem', '2rem', { count: 3 }),
+          boxShadow: `0 1px 0 rgba(0, 0, 0, ${isMenuOpen ? 0 : 0.1})`,
+          paddingBottom: linearScale('0.75rem', '1.25rem'),
+          paddingTop: linearScale('0.75rem', '1.25rem'),
+          paddingLeft: linearScale('1rem', '2rem'),
+          paddingRight: linearScale('1rem', '2rem'),
           position: 'relative',
           zIndex: t.z.HeaderMobileBar,
           transitionProperty: 'boxShadow',
         })}
       >
         <View
-          css={{
+          css={mq({
             display: 'grid',
-            gridTemplateColumns: 'auto 1fr auto',
+            gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
-          }}
+          })}
         >
-          <Link href="/">
+          <Anchor
+            href="/"
+            css={{
+              display: 'grid',
+              gap: t.S[3],
+              gridAutoFlow: 'column',
+              justifySelf: 'start',
+              alignItems: 'center',
+            }}
+          >
             <View
-              css={{
+              css={mq({
                 backgroundColor: t.c.Gray10,
                 borderRadius: '50%',
-                height: '2rem',
-                width: '2rem',
-              }}
+                height: linearScale('2rem', '3.625rem'),
+                width: linearScale('2rem', '3.625rem'),
+              })}
             />
-          </Link>
-          <Heading css={mq({ fontSize: t.f.b, textAlign: 'center' })}>
+            <Heading
+              css={mq({
+                fontSize: t.f.m,
+                display: ['none', null, 'block'],
+              })}
+            >
+              Pele Awards Winners
+            </Heading>
+          </Anchor>
+          <Heading
+            css={mq({
+              fontSize: t.f.b,
+              textAlign: 'center',
+              display: [null, null, 'none'],
+            })}
+          >
             <Anchor href="/">Pele Awards Winners</Anchor>
           </Heading>
           <View
-            as="button"
-            onClick={toggleMenu}
-            css={{ width: '1.5rem', height: '0.9rem' }}
+            as="ul"
+            css={mq({
+              display: ['none', null, 'grid'],
+              gap: '2.5rem',
+              gridAutoFlow: 'column',
+            })}
           >
-            <HamburgerIcon isOpen={isMenuOpen} css={{ height: '100%' }} />
+            {navigation.map((item) => (
+              <NavItem key={item.name} href={item.href}>
+                {item.name}
+              </NavItem>
+            ))}
+          </View>
+          <View css={{ justifySelf: 'end' }}>
+            <View
+              as="button"
+              onClick={toggleMenu}
+              css={mq({
+                width: '1.5rem',
+                height: '0.9rem',
+                display: [null, null, 'none'],
+              })}
+            >
+              <HamburgerIcon isOpen={isMenuOpen} css={{ height: '100%' }} />
+            </View>
+            <View
+              css={mq({
+                display: ['none', null, 'grid'],
+                gap: '2.125rem',
+                gridAutoFlow: 'column',
+                alignItems: 'center',
+              })}
+            >
+              <View as="button">
+                <Icon name="search" css={{ width: '1.25rem' }} />
+              </View>
+              <Button as={Link} href={EVENT_SITE_URL}>
+                Enter the 2021 Pele Awards
+              </Button>
+            </View>
           </View>
         </View>
       </BoundedBox>
-      <BoundedBox
-        forwardedAs="nav"
-        css={{
-          backgroundColor: t.c.White,
-          boxShadow: `0 3px 6px rgba(0, 0, 0, 0.25)`,
-          left: 0,
-          position: 'absolute',
-          right: 0,
-          transform: `translateY(${isMenuOpen ? '0%' : '-120%'})`,
-          transitionProperty: 'transform',
-          zIndex: t.z.HeaderMobileMenu,
-        }}
-      >
-        <View as="ul">
-          <NavItem href="/winners/">Winners</NavItem>
-          <NavItem href="/ad-people/">Ad People</NavItem>
-          <NavItem href="/high-school/">High School</NavItem>
-          <NavItem href="/college/">College</NavItem>
-          <NavItem href="/about/">About</NavItem>
-        </View>
-      </BoundedBox>
-      <View
-        onClick={closeMenu}
-        css={{
-          backgroundColor: t.c.Black,
-          bottom: 0,
-          left: 0,
-          opacity: isMenuOpen ? 0.5 : 0,
-          pointerEvents: isMenuOpen ? 'auto' : 'none',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          transitionProperty: 'opacity',
-          zIndex: t.z.HeaderMobileBackdrop,
-        }}
-      />
+
+      {/* Mobile Nav */}
+      <View css={mq({ display: [null, null, 'none'] })}>
+        <BoundedBox
+          forwardedAs="nav"
+          css={{
+            backgroundColor: t.c.White,
+            boxShadow: `0 3px 6px rgba(0, 0, 0, 0.25)`,
+            left: 0,
+            position: 'absolute',
+            right: 0,
+            transform: `translateY(${isMenuOpen ? '0%' : '-120%'})`,
+            transitionProperty: 'transform',
+            zIndex: t.z.HeaderMobileMenu,
+          }}
+        >
+          <View as="ul" css={{ display: 'grid', gap: '0.75rem' }}>
+            {navigation.map((item) => (
+              <NavItem key={item.name} href={item.href}>
+                {item.name}
+              </NavItem>
+            ))}
+          </View>
+        </BoundedBox>
+        <Overlay
+          isActive={isMenuOpen}
+          onClick={closeMenu}
+          css={{ zIndex: t.z.HeaderMobileBackdrop }}
+        />
+      </View>
     </View>
   )
 }
