@@ -177,7 +177,7 @@ export type Theme = typeof theme
 export const mq = facepaint(Object.values(theme.mediaQueries))
 
 // let lsCache = new Set()
-export const ls = (min: string, max: string) => {
+export const ls = (min: string, max: string, _type?: 'space' | 'font') => {
   // lsCache.add(`${min} / ${max}`)
   // console.log(lsCache)
   return linearScale(min, max, { count })
