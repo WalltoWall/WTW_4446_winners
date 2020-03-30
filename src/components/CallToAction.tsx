@@ -30,7 +30,9 @@ export const CallToAction: React.FC<CallToActionProps> = ({
         justifyItems: 'center',
       })}
     >
-      <View css={{ maxWidth: '80ch', lineHeight: t.lh.Copy }}>{children}</View>
+      <View css={mq({ maxWidth: ['45ch', '80ch'], lineHeight: t.lh.Copy })}>
+        {children}
+      </View>
       {buttonHref && (
         <Button as={Link} href={buttonHref}>
           {buttonText}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { Helmet } from 'react-helmet-async'
 import { negateScale } from 'styled-system-scale'
 
 import { Award } from '../types'
@@ -42,6 +43,9 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
 
   return (
     <Layout {...props}>
+      <Helmet>
+        <title>{entry?.data?.name}</title>
+      </Helmet>
       <BoundedBox forwardedAs="section" css={{ backgroundColor: t.c.Gray95 }}>
         <View
           css={mq({

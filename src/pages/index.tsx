@@ -15,6 +15,7 @@ import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
 import { CallToAction } from '../components/CallToAction'
 import { CardList } from '../components/CardList'
+import { Hero } from '../components/Hero'
 
 type IndexPageProps = React.ComponentProps<typeof Layout> & {
   data: IndexPageQuery
@@ -27,6 +28,28 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
 
   return (
     <Layout {...props}>
+      {/* TODO: Convert to CMS/Airtable + HTMLContent */}
+      <Hero>
+        <Heading
+          css={mq({
+            fontSize: t.f.xl,
+            lineHeight: t.lh.Title,
+            marginTop: linearScale('2.25rem', '3rem'),
+            marginBottom: linearScale('1rem', '1.5rem'),
+            color: t.c.Black,
+            ...t.boxStyles.firstLastNoMargin,
+          })}
+        >
+          <Anchor href="/winners/">
+            2020 Pele Awards Winners Have Been Announced!
+          </Anchor>
+        </Heading>
+        <View as="p">
+          This year’s Pele Awards Winners have been selected. Have a look at the
+          very best design and advertising work in Hawai‘i. Mahalo to all
+          participants and congratulations to all the winners.
+        </View>
+      </Hero>
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
         <View
           css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}

@@ -7,6 +7,7 @@ module.exports = {
   plugins: [
     'gatsby-plugin-typescript',
     'gatsby-plugin-svgr',
+    'gatsby-plugin-react-helmet-async',
     {
       resolve: 'gatsby-plugin-styled-components',
       options: {
