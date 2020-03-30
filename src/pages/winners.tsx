@@ -1,5 +1,6 @@
 import React, { useReducer, useCallback } from 'react'
 import { graphql, withPrefix } from 'gatsby'
+import { Helmet } from 'react-helmet-async'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 
 import { WinnersPageQuery, CloudinaryAssetFluidFragment } from '../graphqlTypes'
@@ -115,6 +116,9 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Winners</title>
+      </Helmet>
       <BoundedBox
         css={mq({
           backgroundColor: t.c.White,
