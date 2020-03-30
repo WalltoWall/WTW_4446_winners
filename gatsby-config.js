@@ -40,7 +40,8 @@ module.exports = {
             tableName: 'Ad People',
             queryName: 'AdPerson',
             separateNodeType: true,
-            mapping: { photo: 'fileNode' },
+            mapping: { photo: 'fileNode', description: 'text/markdown' },
+            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,

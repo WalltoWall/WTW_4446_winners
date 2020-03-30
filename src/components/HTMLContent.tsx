@@ -16,7 +16,7 @@ export const baseHeadingCss = {
 }
 
 export const baseTextCss = {
-  marginBottom: linearScale('1rem', '1.5rem'),
+  marginBottom: linearScale('0.5rem', '0.875rem'),
   ...t.boxStyles.lastNoMargin,
 }
 
