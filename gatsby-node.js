@@ -1,5 +1,51 @@
 const path = require('path')
 const slug = require('slug')
+const {
+  createPaginatedCollectionNodes,
+} = require('gatsby-plugin-paginated-collection')
+
+exports.sourceNodes = (gatsbyContext) => {
+  const {
+    actions,
+    createNodeId,
+    createContentDigest,
+    getNodesByType,
+  } = gatsbyContext
+  const { createNode } = actions
+
+  const entryNodes = getNodesByType('AirtableEntry')
+  const categoryNodes = getNodesByType('AirtableCategory')
+  const categoryMap = categoryNodes.reduce((acc, curr) => {
+    const line1 = curr.data.line_1
+
+    if (!acc[line1]) acc[line1] = new Set()
+    acc[line1].add(curr.id)
+
+    return acc
+  }, {})
+
+  for (const category in categoryMap) {
+    const subcategories = categoryMap[category]
+    const collection = entryNodes.filter((entryNode) => {
+      const intersection = new Set(
+        entryNode.data.category___NODE.filter((catId) =>
+          subcategories.has(catId),
+        ),
+      )
+      return intersection.size > 0
+    })
+    if (collection.length < 1) continue
+
+    createPaginatedCollectionNodes({
+      collection,
+      name: `entries/${category}`,
+      pageSize: 8,
+      createNode,
+      createNodeId,
+      createContentDigest,
+    })
+  }
+}
 
 exports.createPages = (gatsbyContext) => {
   const { actions, getNodesByType } = gatsbyContext
