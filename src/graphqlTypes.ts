@@ -44,11 +44,11 @@ export type AirtableAdPersonConnectionGroupArgs = {
 };
 
 export type AirtableAdPersonData = {
-  name?: Maybe<Scalars['String']>;
-  award?: Maybe<Scalars['String']>;
-  year?: Maybe<Scalars['Date']>;
-  title?: Maybe<Scalars['String']>;
   company?: Maybe<Scalars['String']>;
+  award?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['Date']>;
+  name?: Maybe<Scalars['String']>;
   description?: Maybe<AirtableFieldtextmarkdown>;
   photo?: Maybe<AirtableFieldfileNode>;
 };
@@ -62,11 +62,11 @@ export type AirtableAdPersonDataYearArgs = {
 };
 
 export type AirtableAdPersonDataFilterInput = {
-  name?: Maybe<StringQueryOperatorInput>;
-  award?: Maybe<StringQueryOperatorInput>;
-  year?: Maybe<DateQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
   company?: Maybe<StringQueryOperatorInput>;
+  award?: Maybe<StringQueryOperatorInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  year?: Maybe<DateQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   photo?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
@@ -171,11 +171,11 @@ export enum AirtableAdPersonFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataName = 'data___name',
-  DataAward = 'data___award',
-  DataYear = 'data___year',
-  DataTitle = 'data___title',
   DataCompany = 'data___company',
+  DataAward = 'data___award',
+  DataTitle = 'data___title',
+  DataYear = 'data___year',
+  DataName = 'data___name',
   DataDescriptionId = 'data___description___id',
   DataDescriptionParentId = 'data___description___parent___id',
   DataDescriptionParentChildren = 'data___description___parent___children',
@@ -324,16 +324,16 @@ export type AirtableCategoryConnectionGroupArgs = {
 };
 
 export type AirtableCategoryData = {
-  line_2?: Maybe<Scalars['String']>;
   line_1?: Maybe<Scalars['String']>;
   code?: Maybe<Scalars['String']>;
+  line_2?: Maybe<Scalars['String']>;
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type AirtableCategoryDataFilterInput = {
-  line_2?: Maybe<StringQueryOperatorInput>;
   line_1?: Maybe<StringQueryOperatorInput>;
   code?: Maybe<StringQueryOperatorInput>;
+  line_2?: Maybe<StringQueryOperatorInput>;
   Entries?: Maybe<StringQueryOperatorInput>;
 };
 
@@ -433,9 +433,9 @@ export enum AirtableCategoryFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataLine_2 = 'data___line_2',
   DataLine_1 = 'data___line_1',
   DataCode = 'data___code',
+  DataLine_2 = 'data___line_2',
   DataEntries = 'data___Entries'
 }
 
@@ -502,9 +502,9 @@ export type AirtableEntrantConnectionGroupArgs = {
 };
 
 export type AirtableEntrantData = {
-  name?: Maybe<Scalars['String']>;
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   website?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
 };
@@ -526,9 +526,9 @@ export type AirtableEntrantDataCreated_AtArgs = {
 };
 
 export type AirtableEntrantDataFilterInput = {
-  name?: Maybe<StringQueryOperatorInput>;
   Entries?: Maybe<StringQueryOperatorInput>;
   website?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
 };
@@ -633,9 +633,9 @@ export enum AirtableEntrantFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataName = 'data___name',
   DataEntries = 'data___Entries',
   DataWebsite = 'data___website',
+  DataName = 'data___name',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
   FieldsUrl = 'fields___url'
@@ -709,13 +709,13 @@ export type AirtableEntryConnectionGroupArgs = {
 };
 
 export type AirtableEntryData = {
-  name?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
-  entrant?: Maybe<Array<Maybe<AirtableEntrant>>>;
+  name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  year?: Maybe<Scalars['Date']>;
+  entrant?: Maybe<Array<Maybe<AirtableEntrant>>>;
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
+  year?: Maybe<Scalars['Date']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
@@ -749,13 +749,13 @@ export type AirtableEntryDataCreated_AtArgs = {
 };
 
 export type AirtableEntryDataFilterInput = {
-  name?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
-  entrant?: Maybe<AirtableEntrantFilterListInput>;
+  name?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
-  year?: Maybe<DateQueryOperatorInput>;
+  entrant?: Maybe<AirtableEntrantFilterListInput>;
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
+  year?: Maybe<DateQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
@@ -865,8 +865,9 @@ export enum AirtableEntryFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataName = 'data___name',
   DataAward = 'data___award',
+  DataName = 'data___name',
+  DataDescription = 'data___description',
   DataEntrant = 'data___entrant',
   DataEntrantId = 'data___entrant___id',
   DataEntrantParentId = 'data___entrant___parent___id',
@@ -885,14 +886,12 @@ export enum AirtableEntryFieldsEnum {
   DataEntrantTable = 'data___entrant___table',
   DataEntrantRecordId = 'data___entrant___recordId',
   DataEntrantQueryName = 'data___entrant___queryName',
-  DataEntrantDataName = 'data___entrant___data___name',
   DataEntrantDataEntries = 'data___entrant___data___Entries',
   DataEntrantDataWebsite = 'data___entrant___data___website',
+  DataEntrantDataName = 'data___entrant___data___name',
   DataEntrantDataUpdatedAt = 'data___entrant___data___updated_at',
   DataEntrantDataCreatedAt = 'data___entrant___data___created_at',
   DataEntrantFieldsUrl = 'data___entrant___fields___url',
-  DataDescription = 'data___description',
-  DataYear = 'data___year',
   DataClient = 'data___client',
   DataCategory = 'data___category',
   DataCategoryId = 'data___category___id',
@@ -912,10 +911,11 @@ export enum AirtableEntryFieldsEnum {
   DataCategoryTable = 'data___category___table',
   DataCategoryRecordId = 'data___category___recordId',
   DataCategoryQueryName = 'data___category___queryName',
-  DataCategoryDataLine_2 = 'data___category___data___line_2',
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
+  DataCategoryDataLine_2 = 'data___category___data___line_2',
   DataCategoryDataEntries = 'data___category___data___Entries',
+  DataYear = 'data___year',
   DataTags = 'data___tags',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
@@ -3706,16 +3706,16 @@ export type Query = {
   allPaginatedCollection: PaginatedCollectionConnection;
   paginatedCollectionPage?: Maybe<PaginatedCollectionPage>;
   allPaginatedCollectionPage: PaginatedCollectionPageConnection;
-  airtableEntrant?: Maybe<AirtableEntrant>;
-  allAirtableEntrant: AirtableEntrantConnection;
   airtableAdPerson?: Maybe<AirtableAdPerson>;
   allAirtableAdPerson: AirtableAdPersonConnection;
+  airtableEntrant?: Maybe<AirtableEntrant>;
+  allAirtableEntrant: AirtableEntrantConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
-  airtableFieldfileNode?: Maybe<AirtableFieldfileNode>;
-  allAirtableFieldfileNode: AirtableFieldfileNodeConnection;
   airtableFieldtextmarkdown?: Maybe<AirtableFieldtextmarkdown>;
   allAirtableFieldtextmarkdown: AirtableFieldtextmarkdownConnection;
+  airtableFieldfileNode?: Maybe<AirtableFieldfileNode>;
+  allAirtableFieldfileNode: AirtableFieldfileNodeConnection;
   airtableEntry?: Maybe<AirtableEntry>;
   allAirtableEntry: AirtableEntryConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
@@ -3961,27 +3961,6 @@ export type QueryAllPaginatedCollectionPageArgs = {
 };
 
 
-export type QueryAirtableEntrantArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableEntrantDataFilterInput>;
-  fields?: Maybe<AirtableEntrantFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableEntrantArgs = {
-  filter?: Maybe<AirtableEntrantFilterInput>;
-  sort?: Maybe<AirtableEntrantSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAdPersonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -3998,6 +3977,27 @@ export type QueryAirtableAdPersonArgs = {
 export type QueryAllAirtableAdPersonArgs = {
   filter?: Maybe<AirtableAdPersonFilterInput>;
   sort?: Maybe<AirtableAdPersonSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableEntrantArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableEntrantDataFilterInput>;
+  fields?: Maybe<AirtableEntrantFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableEntrantArgs = {
+  filter?: Maybe<AirtableEntrantFilterInput>;
+  sort?: Maybe<AirtableEntrantSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -4023,24 +4023,6 @@ export type QueryAllAirtableCategoryArgs = {
 };
 
 
-export type QueryAirtableFieldfileNodeArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  raw?: Maybe<AirtableFieldfileNodeRawFilterListInput>;
-  localFiles?: Maybe<FileFilterListInput>;
-};
-
-
-export type QueryAllAirtableFieldfileNodeArgs = {
-  filter?: Maybe<AirtableFieldfileNodeFilterInput>;
-  sort?: Maybe<AirtableFieldfileNodeSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableFieldtextmarkdownArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -4054,6 +4036,24 @@ export type QueryAirtableFieldtextmarkdownArgs = {
 export type QueryAllAirtableFieldtextmarkdownArgs = {
   filter?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   sort?: Maybe<AirtableFieldtextmarkdownSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableFieldfileNodeArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  raw?: Maybe<AirtableFieldfileNodeRawFilterListInput>;
+  localFiles?: Maybe<FileFilterListInput>;
+};
+
+
+export type QueryAllAirtableFieldfileNodeArgs = {
+  filter?: Maybe<AirtableFieldfileNodeFilterInput>;
+  sort?: Maybe<AirtableFieldfileNodeSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5140,9 +5140,12 @@ export type WinnersPageQueryVariables = {};
 
 
 export type WinnersPageQuery = { paginatedCollectionPage?: Maybe<(
-    Pick<PaginatedCollectionPage, 'nodes'>
-    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
-  )> };
+    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
+    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'id' | 'nodeCount'> }
+  )>, allPaginatedCollectionPage: { nodes: Array<(
+      Pick<PaginatedCollectionPage, 'id'>
+      & { collection: Pick<PaginatedCollection, 'id' | 'name'> }
+    )> } };
 
 export type EntrantTemplateQueryVariables = {
   recordId: Scalars['String'];

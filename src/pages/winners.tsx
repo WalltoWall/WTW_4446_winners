@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from 'react'
+import React, { useState, useReducer, useCallback } from 'react'
 import { graphql, withPrefix } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
@@ -14,6 +14,8 @@ import { EntryCard } from '../components/EntryCard'
 import { Button } from '../components/Button'
 import { CardList } from '../components/CardList'
 import { Heading } from '../components/Heading'
+import { FormSelect } from '../components/FormSelect'
+import { FormSearchInput } from '../components/FormSearchInput'
 
 type WinnersPageProps = React.ComponentProps<typeof Layout> & {
   data: WinnersPageQuery
@@ -28,6 +30,7 @@ interface Entry {
 }
 
 enum ActionType {
+  RestartWithInitialPage,
   Begin,
   Failed,
   Completed,
@@ -61,6 +64,9 @@ const createInitialState = (
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case ActionType.RestartWithInitialPage:
+      return createInitialState(action.payload as ExpandedPageNode)
+
     case ActionType.Begin:
       return { ...state, type: StateType.Loading, error: undefined }
 
@@ -91,6 +97,11 @@ const reducer = (state: State, action: Action): State => {
 export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
   const initialPage: WinnersPageQuery['paginatedCollectionPage'] | undefined =
     data?.paginatedCollectionPage
+  const firstPages = data.allPaginatedCollectionPage.nodes
+
+  const [selectedFirstPageId, setSelectedFirstPageId] = useState(
+    initialPage?.collection?.id,
+  )
   const [{ latestPage, entries }, dispatch] = useReducer(
     reducer,
     initialPage,
@@ -105,6 +116,7 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
     const path = withPrefix(`/paginated-collections/${nextPageId}.json`)
 
     try {
+      dispatch({ type: ActionType.Begin })
       const res = await fetch(path)
       const json = await res.json()
       dispatch({ type: ActionType.Completed, payload: json })
@@ -113,6 +125,23 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
       dispatch({ type: ActionType.Failed, payload: error })
     }
   }, [latestPage])
+
+  const handleCategoryChange = useCallback(async (event) => {
+    const newFirstPageId = event.target.value
+    setSelectedFirstPageId(newFirstPageId)
+
+    const path = withPrefix(`/paginated-collections/${newFirstPageId}.json`)
+
+    try {
+      dispatch({ type: ActionType.Begin })
+      const res = await fetch(path)
+      const json = await res.json()
+      dispatch({ type: ActionType.RestartWithInitialPage, payload: json })
+    } catch (error) {
+      console.error(error)
+      dispatch({ type: ActionType.Failed, payload: error })
+    }
+  }, [])
 
   return (
     <Layout>
@@ -126,9 +155,43 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
           paddingBottom: linearScale('1.5rem', '3.5rem'),
         })}
       >
-        <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-          Winners
-        </Heading>
+        <View
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.6875rem', '1.375rem', 'space'),
+          })}
+        >
+          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
+            Winners
+          </Heading>
+          <View
+            css={mq({
+              display: 'grid',
+              gap: linearScale('0.625rem', '1.875rem', 'space'),
+              gridTemplateColumns: ['repeat(2, auto)', 'repeat(3, auto)'],
+              justifyContent: 'center',
+              justifyItems: 'center',
+            })}
+          >
+            <FormSelect>
+              <option>2020</option>
+              <option>2019</option>
+              <option>2018</option>
+            </FormSelect>
+            <FormSelect
+              value={selectedFirstPageId}
+              onChange={handleCategoryChange}
+            >
+              <option value={initialPage?.id}>All categories</option>
+              {firstPages.map((firstPage) => (
+                <option key={firstPage.id} value={firstPage.id}>
+                  {firstPage.collection.name.split('/')[1]}
+                </option>
+              ))}
+            </FormSelect>
+            <FormSearchInput css={mq({ gridColumn: ['1 / -1', 'auto'] })} />
+          </View>
+        </View>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
         <View
@@ -184,12 +247,28 @@ export const query = graphql`
       collection: { name: { eq: "entries" } }
       index: { eq: 0 }
     ) {
+      id
       nodes
       nextPage {
         id
       }
       collection {
+        id
         nodeCount
+      }
+    }
+    allPaginatedCollectionPage(
+      filter: {
+        collection: { name: { regex: "/^entries//" } }
+        index: { eq: 0 }
+      }
+    ) {
+      nodes {
+        id
+        collection {
+          id
+          name
+        }
       }
     }
   }
