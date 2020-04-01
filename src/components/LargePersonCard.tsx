@@ -47,7 +47,7 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
         paddingRight: ['1.5rem', 0],
         paddingTop: ['1.5rem', 0],
         width: ['50%', '100%'],
-        minWidth: '11.5rem',
+        minWidth: '14rem',
       })}
     >
       <AspectRatio
