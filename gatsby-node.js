@@ -1,19 +1,66 @@
 const path = require('path')
 const slug = require('slug')
+const dlv = require('dlv')
 const {
   createPaginatedCollectionNodes,
 } = require('gatsby-plugin-paginated-collection')
+const {
+  writePaginatedCollectionJSONFiles,
+} = require('gatsby-paginated-collection-json-files')
 
-exports.sourceNodes = (gatsbyContext) => {
+exports.createPages = async (gatsbyContext) => {
   const {
     actions,
     createNodeId,
     createContentDigest,
+    getNode,
     getNodesByType,
+    store,
+    graphql,
   } = gatsbyContext
-  const { createNode } = actions
+  const { createNode, createPage } = actions
+  const { program } = store.getState()
 
-  const entryNodes = getNodesByType('AirtableEntry')
+  /***
+   * Create paginated collections for each category.
+   */
+
+  const queryResult = await graphql(`
+    query {
+      allAirtableEntry {
+        nodes {
+          fields {
+            url
+          }
+          data {
+            name
+            award
+            category {
+              id
+              data {
+                line_1
+                line_2
+              }
+            }
+            images {
+              localFiles {
+                childCloudinaryAsset {
+                  fluid(maxWidth: 800) {
+                    aspectRatio
+                    base64
+                    sizes
+                    src
+                    srcSet
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
   const categoryNodes = getNodesByType('AirtableCategory')
   const categoryMap = categoryNodes.reduce((acc, curr) => {
     const line1 = curr.data.line_1
@@ -26,30 +73,54 @@ exports.sourceNodes = (gatsbyContext) => {
 
   for (const category in categoryMap) {
     const subcategories = categoryMap[category]
-    const collection = entryNodes.filter((entryNode) => {
-      const intersection = new Set(
-        entryNode.data.category___NODE.filter((catId) =>
-          subcategories.has(catId),
-        ),
-      )
-      return intersection.size > 0
-    })
+    const collection = queryResult.data.allAirtableEntry.nodes
+      .filter((entryNode) => {
+        const intersection = new Set(
+          entryNode.data.category.filter((cat) => subcategories.has(cat.id)),
+        )
+        return intersection.size > 0
+      })
+      .map((node) => ({
+        url: node.fields.url,
+        name: node.data.name,
+        award: node.data.award.toLowerCase(),
+        category: dlv(node, ['data', 'category', 0, 'data']),
+        image: dlv(node, [
+          'data',
+          'images',
+          'localFiles',
+          0,
+          'childCloudinaryAsset',
+          'fluid',
+        ]),
+      }))
     if (collection.length < 1) continue
 
-    createPaginatedCollectionNodes({
+    const nodeInput = createPaginatedCollectionNodes({
       collection,
       name: `entries/${category}`,
-      pageSize: 8,
+      pageSize: 1,
       createNode,
       createNodeId,
       createContentDigest,
     })
-  }
-}
+    const node = getNode(nodeInput.id)
 
-exports.createPages = (gatsbyContext) => {
-  const { actions, getNodesByType } = gatsbyContext
-  const { createPage } = actions
+    writePaginatedCollectionJSONFiles({
+      node,
+      directory: path.resolve(
+        program.directory,
+        'public',
+        'paginated-collections',
+      ),
+      expand: ['collection', 'nextPage'],
+      getNode,
+    })
+  }
+
+  /***
+   * Create pages.
+   */
 
   const entryNodes = getNodesByType('AirtableEntry')
   for (let i = 0; i < entryNodes.length; i++) {

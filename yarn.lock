@@ -6572,10 +6572,10 @@ gatsby-page-utils@^0.1.1:
     lodash "^4.17.15"
     micromatch "^3.1.10"
 
-gatsby-paginated-collection-json-files@^0.2.0-next.0:
-  version "0.2.0-next.0"
-  resolved "https://registry.yarnpkg.com/gatsby-paginated-collection-json-files/-/gatsby-paginated-collection-json-files-0.2.0-next.0.tgz#3d63f1d8b75e761dadb7c8a47d1c0f6354e1977e"
-  integrity sha512-KfvCrtKuVYOoeA1oLFNYLFB+1gwTKsDlU5A00xELzUwmJlQpTvJgeoqwMtKOWMH9QY8Vip/8+p0GA+GdQaOsRQ==
+gatsby-paginated-collection-json-files@^0.2.0-next.2:
+  version "0.2.0-next.2"
+  resolved "https://registry.yarnpkg.com/gatsby-paginated-collection-json-files/-/gatsby-paginated-collection-json-files-0.2.0-next.2.tgz#5a5a6de08ce095db8742d67c3aa20bbdcf38f37e"
+  integrity sha512-amCvwVnJDk9EyHycUpqsboy/ZMeN/j+Lo/RSh2HRB1mKBTNhekoVbPF5WHx3TEbAvnDqP9i6ZSGzK/K81qDi3g==
 
 gatsby-plugin-page-creator@^2.2.1:
   version "2.2.1"
