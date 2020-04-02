@@ -33,7 +33,7 @@ const variants = {
   },
 } as const
 
-type EntryCardProps = React.ComponentProps<typeof View> & {
+type WinnerCardProps = React.ComponentProps<typeof View> & {
   variant?: keyof typeof variants
   href: string
   title?: string
@@ -43,7 +43,7 @@ type EntryCardProps = React.ComponentProps<typeof View> & {
   imageFluid?: CloudinaryAssetFluidFragment
 }
 
-export const EntryCard: React.FC<EntryCardProps> = ({
+export const WinnerCard: React.FC<WinnerCardProps> = ({
   variant: variantName = 'base',
   href,
   title,

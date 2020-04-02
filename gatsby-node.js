@@ -41,7 +41,7 @@ const processPaginationCollection = ({
   })
 }
 
-const normalizeEntryNode = (node) => ({
+const normalizeWinnerNode = (node) => ({
   url: node.fields.url,
   name: node.data.name,
   award: node.data.award.toLowerCase(),
@@ -75,14 +75,16 @@ exports.createPages = async (gatsbyContext) => {
 
   const queryResult = await graphql(`
     query {
-      allAirtableEntry {
+      allAirtableWinner {
         nodes {
+          recordId
           fields {
             url
           }
           data {
             name
             award
+            tags
             category {
               id
               data {
@@ -108,37 +110,50 @@ exports.createPages = async (gatsbyContext) => {
       }
     }
   `)
+  const winnerNodes = queryResult.data.allAirtableWinner.nodes
 
   processPaginationCollection({
-    collection: queryResult.data.allAirtableEntry.nodes.map(normalizeEntryNode),
-    name: 'entries',
+    collection: winnerNodes.map(normalizeWinnerNode),
+    name: 'winners',
     createNode,
     createNodeId,
     createContentDigest,
     getNode,
   })
 
-  const categoryNodes = getNodesByType('AirtableCategory')
-  const categoryMap = categoryNodes.reduce((acc, curr) => {
-    const line1 = curr.data.line_1
-    if (!acc[line1]) acc[line1] = new Set()
-    acc[line1].add(curr.id)
+  const winnerNodesByCategory = winnerNodes.reduce((acc, curr) => {
+    const category = curr.data.category[0]
+    const line1 = category.data.line_1
+    acc[line1] = [...(acc[line1] || []), curr]
     return acc
   }, {})
 
-  for (const category in categoryMap) {
-    const collection = queryResult.data.allAirtableEntry.nodes
-      .filter(
-        (node) =>
-          node.data.category.filter((cat) => categoryMap[category].has(cat.id))
-            .length > 0,
-      )
-      .map(normalizeEntryNode)
+  for (const category in winnerNodesByCategory) {
+    const collection = winnerNodesByCategory[category].map(normalizeWinnerNode)
     if (collection.length < 1) continue
 
     processPaginationCollection({
       collection,
-      name: `entries/${category}`,
+      name: `winners/${category}`,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      getNode,
+    })
+  }
+
+  const winnerNodesByTag = winnerNodes.reduce((acc, curr) => {
+    for (const tag of curr.data.tags) acc[tag] = [...(acc[tag] || []), curr]
+    return acc
+  }, {})
+
+  for (const tag in winnerNodesByTag) {
+    const collection = winnerNodesByTag[tag].map(normalizeWinnerNode)
+    if (collection.length < 1) continue
+
+    processPaginationCollection({
+      collection,
+      name: `tags/${tag}`,
       createNode,
       createNodeId,
       createContentDigest,
@@ -150,14 +165,13 @@ exports.createPages = async (gatsbyContext) => {
    * Create pages.
    */
 
-  const entryNodes = getNodesByType('AirtableEntry')
-  for (let i = 0; i < entryNodes.length; i++) {
-    const node = entryNodes[i]
-    const previousNode = entryNodes[i - 1]
-    const nextNode = entryNodes[i + 1]
+  for (let i = 0; i < winnerNodes.length; i++) {
+    const node = winnerNodes[i]
+    const previousNode = winnerNodes[i - 1]
+    const nextNode = winnerNodes[i + 1]
     createPage({
       path: node.fields.url,
-      component: path.resolve(__dirname, 'src/templates/entry.tsx'),
+      component: path.resolve(__dirname, 'src/templates/winner.tsx'),
       context: {
         recordId: node.recordId,
         previousRecordId: previousNode ? previousNode.recordId : undefined,
@@ -166,12 +180,23 @@ exports.createPages = async (gatsbyContext) => {
     })
   }
 
-  const entrantNodes = getNodesByType('AirtableEntrant')
-  for (const node of entrantNodes)
+  const agencyNodes = getNodesByType('AirtableAgency')
+  for (const node of agencyNodes)
     createPage({
       path: node.fields.url,
-      component: path.resolve(__dirname, 'src/templates/entrant.tsx'),
+      component: path.resolve(__dirname, 'src/templates/agency.tsx'),
       context: { recordId: node.recordId },
+    })
+
+  const tags = winnerNodes.reduce((acc, curr) => {
+    for (const tag of curr.data.tags) acc.add(tag)
+    return acc
+  }, new Set())
+  for (const tag of tags)
+    createPage({
+      path: `/tags/${slug(tag.toLowerCase())}/`,
+      component: path.resolve(__dirname, 'src/templates/tag.tsx'),
+      context: { paginatedCollectionName: `tags/${tag}` },
     })
 }
 
@@ -183,14 +208,14 @@ exports.onCreateNode = ({ node, actions }) => {
       : node.recordId
 
   switch (node.internal.type) {
-    case 'AirtableEntrant': {
-      const url = `/entrants/${airtableNodeToSlug(node)}/`
+    case 'AirtableAgency': {
+      const url = `/agencies/${airtableNodeToSlug(node)}/`
       createNodeField({ node, name: 'url', value: url })
       break
     }
 
-    case 'AirtableEntry': {
-      const url = `/entries/${airtableNodeToSlug(node)}/`
+    case 'AirtableWinner': {
+      const url = `/winners/${airtableNodeToSlug(node)}/`
       createNodeField({ node, name: 'url', value: url })
 
       const tags = node.data.tags

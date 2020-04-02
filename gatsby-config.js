@@ -8,6 +8,7 @@ module.exports = {
     'gatsby-plugin-typescript',
     'gatsby-plugin-svgr',
     'gatsby-plugin-react-helmet-async',
+    'gatsby-plugin-paginated-collection',
     {
       resolve: 'gatsby-plugin-styled-components',
       options: {
@@ -22,17 +23,17 @@ module.exports = {
         tables: [
           {
             baseId: process.env.AIRTABLE_BASE_ID,
-            tableName: 'Entries',
-            tableLinks: ['entrant', 'category'],
-            queryName: 'Entry',
+            tableName: 'Winners',
+            tableLinks: ['agency', 'category'],
+            queryName: 'Winner',
             separateNodeType: true,
             mapping: { images: 'fileNode', credits: 'text/markdown' },
             separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
-            tableName: 'Entrants',
-            queryName: 'Entrant',
+            tableName: 'Agencies',
+            queryName: 'Agency',
             separateNodeType: true,
           },
           {
@@ -65,40 +66,6 @@ module.exports = {
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
         uploadFolder: 'gatsby-cloudinary',
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-paginated-collection',
-      options: {
-        name: 'entrants',
-        pageSize: 12,
-        query: `
-          query {
-            allAirtableEntrant {
-              nodes {
-                fields {
-                  url
-                }
-                data {
-                  name
-                }
-              }
-            }
-          }
-        `,
-        normalizer: ({ data }) =>
-          data.allAirtableEntrant.nodes.map((node) => ({
-            url: node.fields.url,
-            name: node.data.name,
-          })),
-        plugins: [
-          {
-            resolve: 'gatsby-paginated-collection-json-files',
-            options: {
-              expand: ['collection', 'nextPage'],
-            },
-          },
-        ],
       },
     },
   ],
