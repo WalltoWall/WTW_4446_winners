@@ -3,8 +3,8 @@ import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 
-import { TagTemplateQuery, CloudinaryAssetFluidFragment } from '../graphqlTypes'
-import { Award } from '../types'
+import { TagTemplateQuery } from '../graphqlTypes'
+import { Winner } from '../types'
 import { useLoadMore } from '../hooks/useLoadMore'
 
 import { t, mq, linearScale } from '../theme'
@@ -18,14 +18,6 @@ import { Heading } from '../components/Heading'
 
 type TagTemplateProps = React.ComponentProps<typeof Layout> & {
   data: TagTemplateQuery
-}
-
-interface Winner {
-  url: string
-  name?: string
-  award?: Award
-  category?: { line_1: string; line_2: string }
-  image?: CloudinaryAssetFluidFragment
 }
 
 export const TagTemplate: React.FC<TagTemplateProps> = ({ data }) => {
