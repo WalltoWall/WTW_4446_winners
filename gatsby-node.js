@@ -8,6 +8,54 @@ const {
   writePaginatedCollectionJSONFiles,
 } = require('gatsby-paginated-collection-json-files')
 
+const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
+  __dirname,
+  'public',
+  'paginated-collections',
+)
+
+const processPaginationCollection = ({
+  collection,
+  name,
+  pageSize = 8,
+  createNode,
+  createNodeId,
+  createContentDigest,
+  getNode,
+}) => {
+  const nodeInput = createPaginatedCollectionNodes({
+    collection,
+    name,
+    pageSize,
+    createNode,
+    createNodeId,
+    createContentDigest,
+  })
+  const node = getNode(nodeInput.id)
+
+  writePaginatedCollectionJSONFiles({
+    node,
+    directory: PAGINATED_COLLECTION_DIRECTORY,
+    expand: ['collection', 'nextPage'],
+    getNode,
+  })
+}
+
+const normalizeEntryNode = (node) => ({
+  url: node.fields.url,
+  name: node.data.name,
+  award: node.data.award.toLowerCase(),
+  category: dlv(node, ['data', 'category', 0, 'data']),
+  image: dlv(node, [
+    'data',
+    'images',
+    'localFiles',
+    0,
+    'childCloudinaryAsset',
+    'fluid',
+  ]),
+})
+
 exports.createPages = async (gatsbyContext) => {
   const {
     actions,
@@ -61,59 +109,39 @@ exports.createPages = async (gatsbyContext) => {
     }
   `)
 
+  processPaginationCollection({
+    collection: queryResult.data.allAirtableEntry.nodes.map(normalizeEntryNode),
+    name: 'entries',
+    createNode,
+    createNodeId,
+    createContentDigest,
+    getNode,
+  })
+
   const categoryNodes = getNodesByType('AirtableCategory')
   const categoryMap = categoryNodes.reduce((acc, curr) => {
     const line1 = curr.data.line_1
-
     if (!acc[line1]) acc[line1] = new Set()
     acc[line1].add(curr.id)
-
     return acc
   }, {})
 
   for (const category in categoryMap) {
-    const subcategories = categoryMap[category]
     const collection = queryResult.data.allAirtableEntry.nodes
-      .filter((entryNode) => {
-        const intersection = new Set(
-          entryNode.data.category.filter((cat) => subcategories.has(cat.id)),
-        )
-        return intersection.size > 0
-      })
-      .map((node) => ({
-        url: node.fields.url,
-        name: node.data.name,
-        award: node.data.award.toLowerCase(),
-        category: dlv(node, ['data', 'category', 0, 'data']),
-        image: dlv(node, [
-          'data',
-          'images',
-          'localFiles',
-          0,
-          'childCloudinaryAsset',
-          'fluid',
-        ]),
-      }))
+      .filter(
+        (node) =>
+          node.data.category.filter((cat) => categoryMap[category].has(cat.id))
+            .length > 0,
+      )
+      .map(normalizeEntryNode)
     if (collection.length < 1) continue
 
-    const nodeInput = createPaginatedCollectionNodes({
+    processPaginationCollection({
       collection,
       name: `entries/${category}`,
-      pageSize: 1,
       createNode,
       createNodeId,
       createContentDigest,
-    })
-    const node = getNode(nodeInput.id)
-
-    writePaginatedCollectionJSONFiles({
-      node,
-      directory: path.resolve(
-        program.directory,
-        'public',
-        'paginated-collections',
-      ),
-      expand: ['collection', 'nextPage'],
       getNode,
     })
   }
@@ -127,7 +155,6 @@ exports.createPages = async (gatsbyContext) => {
     const node = entryNodes[i]
     const previousNode = entryNodes[i - 1]
     const nextNode = entryNodes[i + 1]
-    if (!node.data.name) continue
     createPage({
       path: node.fields.url,
       component: path.resolve(__dirname, 'src/templates/entry.tsx'),
@@ -140,38 +167,12 @@ exports.createPages = async (gatsbyContext) => {
   }
 
   const entrantNodes = getNodesByType('AirtableEntrant')
-  for (let i = 0; i < entrantNodes.length; i++) {
-    const node = entrantNodes[i]
-    const previousNode = entrantNodes[i - 1]
-    const nextNode = entrantNodes[i + 1]
-    if (!node.data.name) continue
+  for (const node of entrantNodes)
     createPage({
       path: node.fields.url,
       component: path.resolve(__dirname, 'src/templates/entrant.tsx'),
-      context: {
-        recordId: node.recordId,
-        previousRecordId: previousNode ? previousNode.recordId : undefined,
-        nextRecordId: nextNode ? nextNode.recordId : undefined,
-      },
+      context: { recordId: node.recordId },
     })
-  }
-
-  const adPersonNodes = getNodesByType('AirtableAdPerson')
-  for (let i = 0; i < adPersonNodes.length; i++) {
-    const node = adPersonNodes[i]
-    const previousNode = adPersonNodes[i - 1]
-    const nextNode = adPersonNodes[i + 1]
-    if (!node.data.name) continue
-    createPage({
-      path: node.fields.url,
-      component: path.resolve(__dirname, 'src/templates/person.tsx'),
-      context: {
-        recordId: node.recordId,
-        previousRecordId: previousNode ? previousNode.recordId : undefined,
-        nextRecordId: nextNode ? nextNode.recordId : undefined,
-      },
-    })
-  }
 }
 
 exports.onCreateNode = ({ node, actions }) => {
