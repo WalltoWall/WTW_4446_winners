@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { negateScale } from 'styled-system-scale'
 
 import { Award } from '../types'
-import { EntryTemplateQuery } from '../graphqlTypes'
+import { WinnerTemplateQuery } from '../graphqlTypes'
 import { compact } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
@@ -19,32 +19,32 @@ import { NextPrevious } from '../components/NextPrevious'
 import { AwardIcon } from '../components/AwardIcon'
 import { ImageGallery } from '../components/ImageGallery'
 
-type EntryTemplateProps = React.ComponentProps<typeof Layout> & {
-  data: EntryTemplateQuery
+type WinnerTemplateProps = React.ComponentProps<typeof Layout> & {
+  data: WinnerTemplateQuery
 }
 
-export const EntryTemplate: React.FC<EntryTemplateProps> = ({
+export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
   data,
   ...props
 }) => {
-  const entry = data.airtableEntry
-  const category = entry?.data?.category?.[0]?.data
+  const winner = data.airtableWinner
+  const category = winner?.data?.category?.[0]?.data
   const images = compact(
-    entry?.data?.images?.localFiles?.map(
+    winner?.data?.images?.localFiles?.map(
       (localFile) => localFile?.childCloudinaryAsset?.fluid,
     ) ?? [],
   )
-  const hasSpecialAward = Boolean(entry?.data?.special_award)
+  const hasSpecialAward = Boolean(winner?.data?.special_award)
   const hasImages = images.length > 0
-  const hasTags = (entry?.fields?.tags?.length ?? 0) > 0
+  const hasTags = (winner?.fields?.tags?.length ?? 0) > 0
 
-  const nextEntry = data.nextAirtableEntry
-  const previousEntry = data.previousAirtableEntry
+  const nextWinner = data.nextAirtableWinner
+  const previousWinner = data.previousAirtableWinner
 
   return (
     <Layout {...props}>
       <Helmet>
-        <title>{entry?.data?.name}</title>
+        <title>{winner?.data?.name}</title>
       </Helmet>
       <BoundedBox forwardedAs="section" css={{ backgroundColor: t.c.Gray95 }}>
         <View
@@ -66,7 +66,7 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
               <Anchor href="/winners/">Winners</Anchor>
             </View>
             <Heading css={mq({ fontSize: t.f.xl })}>
-              {entry?.data?.name}
+              {winner?.data?.name}
             </Heading>
           </View>
           {hasImages && (
@@ -115,7 +115,7 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
                 })}
               >
                 <AwardIcon
-                  type={entry?.data?.award?.toLowerCase?.() as Award}
+                  type={winner?.data?.award?.toLowerCase?.() as Award}
                   css={mq({ width: linearScale('0.8125rem', '1.25rem') })}
                 />
                 {hasSpecialAward && (
@@ -125,13 +125,13 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
                       lineHeight: t.lh.Solid,
                     }}
                   >
-                    {entry?.data?.special_award}
+                    {winner?.data?.special_award}
                   </Heading>
                 )}
               </View>
               <View css={mq({ lineHeight: t.lh.Copy, gridColumn: [null, 1] })}>
                 <View as="p" css={{ fontWeight: t.fw.Semibold }}>
-                  {entry?.data?.year}
+                  {winner?.data?.year}
                 </View>
                 <View as="p" css={{ fontWeight: t.fw.Semibold }}>
                   {category?.line_1}
@@ -152,7 +152,7 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
                     gridColumn: [null, 1],
                   })}
                 >
-                  {entry?.fields?.tags?.map(
+                  {winner?.fields?.tags?.map(
                     (tag) =>
                       tag?.url && (
                         <View
@@ -181,25 +181,25 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
                   <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
                     Client
                   </View>
-                  <View as="dd">{entry?.data?.client}</View>
+                  <View as="dd">{winner?.data?.client}</View>
                 </View>
                 <View as="dl" css={{ lineHeight: t.lh.Copy }}>
                   <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
                     Creative Agency
                   </View>
-                  <View as="dd">{entry?.data?.entrant?.[0]?.data?.name}</View>
+                  <View as="dd">{winner?.data?.agency?.[0]?.data?.name}</View>
                 </View>
                 <HTMLContent
-                  html={entry?.data?.credits?.childMarkdownRemark?.html}
+                  html={winner?.data?.credits?.childMarkdownRemark?.html}
                 />
               </View>
             </View>
           </View>
           <NextPrevious
-            previousHref={previousEntry?.fields?.url}
-            previousLabel={previousEntry?.data?.name}
-            nextHref={nextEntry?.fields?.url}
-            nextLabel={nextEntry?.data?.name}
+            previousHref={previousWinner?.fields?.url}
+            previousLabel={previousWinner?.data?.name}
+            nextHref={nextWinner?.fields?.url}
+            nextLabel={nextWinner?.data?.name}
           />
         </View>
       </BoundedBox>
@@ -207,15 +207,15 @@ export const EntryTemplate: React.FC<EntryTemplateProps> = ({
   )
 }
 
-export default EntryTemplate
+export default WinnerTemplate
 
 export const query = graphql`
-  query EntryTemplate(
+  query WinnerTemplate(
     $recordId: String!
     $nextRecordId: String
     $previousRecordId: String
   ) {
-    airtableEntry(recordId: { eq: $recordId }) {
+    airtableWinner(recordId: { eq: $recordId }) {
       fields {
         tags {
           tag
@@ -235,7 +235,7 @@ export const query = graphql`
           }
         }
         client
-        entrant {
+        agency {
           data {
             name
           }
@@ -256,7 +256,7 @@ export const query = graphql`
         }
       }
     }
-    nextAirtableEntry: airtableEntry(recordId: { eq: $nextRecordId }) {
+    nextAirtableWinner: airtableWinner(recordId: { eq: $nextRecordId }) {
       fields {
         url
       }
@@ -264,7 +264,9 @@ export const query = graphql`
         name
       }
     }
-    previousAirtableEntry: airtableEntry(recordId: { eq: $previousRecordId }) {
+    previousAirtableWinner: airtableWinner(
+      recordId: { eq: $previousRecordId }
+    ) {
       fields {
         url
       }

@@ -7,7 +7,7 @@ import { Award } from '../types'
 
 import { t, mq, linearScale } from '../theme'
 import { View } from '../components/View'
-import { EntryCard } from '../components/EntryCard'
+import { WinnerCard } from '../components/WinnerCard'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
 import { Layout } from '../components/Layout'
@@ -58,16 +58,16 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
             <Anchor href="/winners/">Best of Show Winners</Anchor>
           </Heading>
           <CardList columns={[1, 2]}>
-            {bestOfEntries.map((entry) => (
-              <EntryCard
-                key={entry?.fields?.url}
+            {bestOfEntries.map((winner) => (
+              <WinnerCard
+                key={winner?.fields?.url}
                 variant="featuredWide"
-                href={entry?.fields?.url!}
-                title={entry?.data?.name}
-                subtitle={entry?.data?.special_award}
-                award={entry?.data?.award?.toLowerCase?.() as Award}
+                href={winner?.fields?.url!}
+                title={winner?.data?.name}
+                subtitle={winner?.data?.special_award}
+                award={winner?.data?.award?.toLowerCase?.() as Award}
                 imageFluid={
-                  entry?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
+                  winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
                     ?.fluid
                 }
                 isSpecialAward={true}
@@ -110,16 +110,16 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
             <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
           </Heading>
           <CardList columns={[1, 3]}>
-            {judgesEntries.map((entry) => (
-              <EntryCard
-                key={entry?.fields?.url}
+            {judgesEntries.map((winner) => (
+              <WinnerCard
+                key={winner?.fields?.url}
                 variant="featured"
-                href={entry?.fields?.url!}
-                title={entry?.data?.name}
-                subtitle={entry?.data?.special_award}
-                award={entry?.data?.award?.toLowerCase?.() as Award}
+                href={winner?.fields?.url!}
+                title={winner?.data?.name}
+                subtitle={winner?.data?.special_award}
+                award={winner?.data?.award?.toLowerCase?.() as Award}
                 imageFluid={
-                  entry?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
+                  winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
                     ?.fluid
                 }
                 isSpecialAward={true}
@@ -151,11 +151,11 @@ export default IndexPage
 
 export const query = graphql`
   query IndexPage {
-    bestOfEntries: allAirtableEntry(
+    bestOfEntries: allAirtableWinner(
       filter: { data: { special_award: { regex: "/^Best of Show - /" } } }
     ) {
       nodes {
-        ...SpecialAwardEntry
+        ...SpecialAwardWinner
       }
     }
     adPeople: allAirtableAdPerson {
@@ -180,16 +180,16 @@ export const query = graphql`
         }
       }
     }
-    judgesEntries: allAirtableEntry(
+    judgesEntries: allAirtableWinner(
       filter: { data: { special_award: { regex: "/^Judge's Award - /" } } }
     ) {
       nodes {
-        ...SpecialAwardEntry
+        ...SpecialAwardWinner
       }
     }
   }
 
-  fragment SpecialAwardEntry on AirtableEntry {
+  fragment SpecialAwardWinner on AirtableWinner {
     fields {
       url
     }

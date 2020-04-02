@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 
-import { WinnersPageQuery } from '../graphqlTypes'
-import { Winner } from '../types'
+import { TagTemplateQuery, CloudinaryAssetFluidFragment } from '../graphqlTypes'
+import { Award } from '../types'
 import { useLoadMore } from '../hooks/useLoadMore'
 
 import { t, mq, linearScale } from '../theme'
@@ -15,35 +15,29 @@ import { WinnerCard } from '../components/WinnerCard'
 import { Button } from '../components/Button'
 import { CardList } from '../components/CardList'
 import { Heading } from '../components/Heading'
-import { FormSelect } from '../components/FormSelect'
-import { FormSearchInput } from '../components/FormSearchInput'
 
-type WinnersPageProps = React.ComponentProps<typeof Layout> & {
-  data: WinnersPageQuery
+type TagTemplateProps = React.ComponentProps<typeof Layout> & {
+  data: TagTemplateQuery
 }
 
-export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
-  const initialPage: WinnersPageQuery['paginatedCollectionPage'] | undefined =
-    data?.paginatedCollectionPage
-  const firstPages = data.allPaginatedCollectionPage.nodes
+interface Winner {
+  url: string
+  name?: string
+  award?: Award
+  category?: { line_1: string; line_2: string }
+  image?: CloudinaryAssetFluidFragment
+}
 
-  const [selectedFirstPageId, setSelectedFirstPageId] = useState(
-    initialPage?.collection?.id,
-  )
-  const [{ latestPage, items: winners }, loadMore, loadAndReset] = useLoadMore({
+export const TagTemplate: React.FC<TagTemplateProps> = ({ data }) => {
+  const initialPage: TagTemplateQuery['paginatedCollectionPage'] | undefined =
+    data?.paginatedCollectionPage
+
+  const [{ latestPage, items: winners }, loadMore] = useLoadMore({
     initialPage: initialPage as Partial<ExpandedPageNode>,
   })
+
   const hasNextPage = Boolean(latestPage?.nextPage?.id)
-
-  const handleCategoryChange = useCallback(
-    async (event) => {
-      const newFirstPageId = event.target.value
-      setSelectedFirstPageId(newFirstPageId)
-
-      await loadAndReset(newFirstPageId)
-    },
-    [loadAndReset],
-  )
+  const tag = data.paginatedCollectionPage?.collection?.name?.split?.('/')?.[1]
 
   return (
     <Layout>
@@ -64,35 +58,8 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
           })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-            Winners
+            Tag: {tag}
           </Heading>
-          <View
-            css={mq({
-              display: 'grid',
-              gap: linearScale('0.625rem', '1.875rem', 'space'),
-              gridTemplateColumns: ['repeat(2, auto)', 'repeat(3, auto)'],
-              justifyContent: 'center',
-              justifyItems: 'center',
-            })}
-          >
-            <FormSelect>
-              <option>2020</option>
-              <option>2019</option>
-              <option>2018</option>
-            </FormSelect>
-            <FormSelect
-              value={selectedFirstPageId}
-              onChange={handleCategoryChange}
-            >
-              <option value={initialPage?.id}>All categories</option>
-              {firstPages.map((firstPage) => (
-                <option key={firstPage.id} value={firstPage.id}>
-                  {firstPage.collection.name.split('/')[1]}
-                </option>
-              ))}
-            </FormSelect>
-            <FormSearchInput css={mq({ gridColumn: ['1 / -1', 'auto'] })} />
-          </View>
         </View>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
@@ -141,36 +108,21 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
   )
 }
 
-export default WinnersPage
+export default TagTemplate
 
 export const query = graphql`
-  query WinnersPage {
+  query TagTemplate($paginatedCollectionName: String!) {
     paginatedCollectionPage(
-      collection: { name: { eq: "winners" } }
+      collection: { name: { eq: $paginatedCollectionName } }
       index: { eq: 0 }
     ) {
-      id
       nodes
       nextPage {
         id
       }
       collection {
-        id
+        name
         nodeCount
-      }
-    }
-    allPaginatedCollectionPage(
-      filter: {
-        collection: { name: { regex: "/^winners//" } }
-        index: { eq: 0 }
-      }
-    ) {
-      nodes {
-        id
-        collection {
-          id
-          name
-        }
       }
     }
   }
