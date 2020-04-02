@@ -29,6 +29,7 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
 }) => {
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
+  const agency = winner?.data?.agency?.[0]
   const images = compact(
     winner?.data?.images?.localFiles?.map(
       (localFile) => localFile?.childCloudinaryAsset?.fluid,
@@ -187,7 +188,11 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
                   <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
                     Creative Agency
                   </View>
-                  <View as="dd">{winner?.data?.agency?.[0]?.data?.name}</View>
+                  <View as="dd">
+                    <Anchor href={agency?.fields?.url!}>
+                      {agency?.data?.name}
+                    </Anchor>
+                  </View>
                 </View>
                 <HTMLContent
                   html={winner?.data?.credits?.childMarkdownRemark?.html}
@@ -236,6 +241,9 @@ export const query = graphql`
         }
         client
         agency {
+          fields {
+            url
+          }
           data {
             name
           }

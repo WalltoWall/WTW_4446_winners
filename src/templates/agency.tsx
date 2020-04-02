@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
@@ -11,6 +11,7 @@ import { View } from '../components/View'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { PaginatedWinners } from '../components/PaginatedWinners'
+import { Anchor } from '../components/Anchor'
 
 type AgencyTemplateProps = React.ComponentProps<typeof Layout> & {
   data: AgencyTemplateQuery
@@ -18,6 +19,12 @@ type AgencyTemplateProps = React.ComponentProps<typeof Layout> & {
 
 export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
   const agency = data.airtableAgency
+  const cleanWebsite = useMemo(() => {
+    if (!agency?.data?.website) return
+    const url = new URL(agency.data.website)
+    return url.host
+  }, [agency])
+
   const initialPage = data?.paginatedCollectionPage
 
   return (
@@ -27,20 +34,42 @@ export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
       </Helmet>
       <BoundedBox
         css={mq({
-          backgroundColor: t.c.White,
-          paddingTop: linearScale('1.5rem', '3.5rem'),
-          paddingBottom: linearScale('1.5rem', '3.5rem'),
+          backgroundColor: t.c.Gray95,
+          paddingBottom: 0,
         })}
       >
         <View
           css={mq({
             display: 'grid',
-            gap: linearScale('0.6875rem', '1.375rem', 'space'),
+            gap: linearScale('0.625rem', '0.75rem', 'space'),
+            justifyItems: 'center',
           })}
         >
-          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
+          <View
+            css={mq({
+              backgroundColor: t.c.Black,
+              width: linearScale('1.875rem', '2.5rem'),
+              height: linearScale('1.875rem', '2.5rem'),
+              borderRadius: '50%',
+            })}
+          />
+          <Heading
+            css={mq({
+              textAlign: 'center',
+              fontSize: t.f.xl,
+              lineHeight: t.lh.Solid,
+            })}
+          >
             {agency?.data?.name}
           </Heading>
+          {agency?.data?.website && (
+            <Anchor
+              href={agency?.data?.website}
+              css={mq({ color: t.c.Gray60, fontSize: t.f['b-'] })}
+            >
+              {cleanWebsite}
+            </Anchor>
+          )}
         </View>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
@@ -60,6 +89,7 @@ export const query = graphql`
     airtableAgency(recordId: { eq: $recordId }) {
       data {
         name
+        website
       }
     }
     paginatedCollectionPage(

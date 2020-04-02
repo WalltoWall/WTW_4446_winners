@@ -330,6 +330,7 @@ export type AirtableAgencyData = {
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
+  avatar?: Maybe<Array<Maybe<AirtableAgencyDataAvatar>>>;
 };
 
 
@@ -348,12 +349,83 @@ export type AirtableAgencyDataCreated_AtArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
+export type AirtableAgencyDataAvatar = {
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnails>;
+};
+
+export type AirtableAgencyDataAvatarFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnailsFilterInput>;
+};
+
+export type AirtableAgencyDataAvatarFilterListInput = {
+  elemMatch?: Maybe<AirtableAgencyDataAvatarFilterInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnails = {
+  small?: Maybe<AirtableAgencyDataAvatarThumbnailsSmall>;
+  large?: Maybe<AirtableAgencyDataAvatarThumbnailsLarge>;
+  full?: Maybe<AirtableAgencyDataAvatarThumbnailsFull>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsFilterInput = {
+  small?: Maybe<AirtableAgencyDataAvatarThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableAgencyDataAvatarThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableAgencyDataAvatarThumbnailsFullFilterInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
 export type AirtableAgencyDataFilterInput = {
   Entries?: Maybe<StringQueryOperatorInput>;
   website?: Maybe<StringQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
+  avatar?: Maybe<AirtableAgencyDataAvatarFilterListInput>;
 };
 
 export type AirtableAgencyEdge = {
@@ -461,6 +533,12 @@ export enum AirtableAgencyFieldsEnum {
   DataName = 'data___name',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
+  DataAvatar = 'data___avatar',
+  DataAvatarId = 'data___avatar___id',
+  DataAvatarUrl = 'data___avatar___url',
+  DataAvatarFilename = 'data___avatar___filename',
+  DataAvatarSize = 'data___avatar___size',
+  DataAvatarType = 'data___avatar___type',
   FieldsUrl = 'fields___url'
 }
 
@@ -1423,6 +1501,7 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyDataName = 'data___agency___data___name',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
+  DataAgencyDataAvatar = 'data___agency___data___avatar',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
   DataClient = 'data___client',
   DataCategory = 'data___category',
@@ -5129,7 +5208,7 @@ export type AgencyTemplateQueryVariables = {
 };
 
 
-export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>, paginatedCollectionPage?: Maybe<(
+export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name' | 'website'>> }>, paginatedCollectionPage?: Maybe<(
     Pick<PaginatedCollectionPage, 'id' | 'nodes'>
     & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
   )> };
@@ -5153,5 +5232,5 @@ export type WinnerTemplateQueryVariables = {
 
 export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableWinnerFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
       Pick<AirtableWinnerData, 'name' | 'tags' | 'year' | 'award' | 'special_award' | 'client'>
-      & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+      & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
     )> }>, nextAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, previousAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }> };
