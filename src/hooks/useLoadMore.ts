@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from 'react'
+import { useReducer, useCallback, useEffect, useState } from 'react'
 import { withPrefix } from 'gatsby'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 
@@ -65,24 +65,25 @@ const reducer = (state: State, action: Action): State => {
 }
 
 interface UseLoadMoreArgs {
+  firstPageId: string
   initialPage?: Partial<ExpandedPageNode>
   directory?: string
 }
 
 export const useLoadMore = (args: UseLoadMoreArgs) => {
-  const { initialPage, directory = 'paginated-collections' } = args
+  const { firstPageId, initialPage, directory = 'paginated-collections' } = args
 
   const [state, dispatch] = useReducer(reducer, initialPage, createInitialState)
 
   const loadPage = useCallback(
-    async (id: string) => {
+    async (id: string, successAction: ActionType = ActionType.Completed) => {
       const path = withPrefix(`/${directory}/${id}.json`)
 
       try {
         dispatch({ type: ActionType.Begin })
         const res = await fetch(path)
         const json = await res.json()
-        dispatch({ type: ActionType.Completed, payload: json })
+        dispatch({ type: successAction, payload: json })
       } catch (error) {
         console.error(error)
         dispatch({ type: ActionType.Failed, payload: error })
@@ -97,20 +98,18 @@ export const useLoadMore = (args: UseLoadMoreArgs) => {
 
   const loadAndReset = useCallback(
     async (id: string) => {
-      const path = withPrefix(`/${directory}/${id}.json`)
-
-      try {
-        dispatch({ type: ActionType.Begin })
-        const res = await fetch(path)
-        const json = await res.json()
-        dispatch({ type: ActionType.RestartWithInitialPage, payload: json })
-      } catch (error) {
-        console.error(error)
-        dispatch({ type: ActionType.Failed, payload: error })
-      }
+      await loadPage(id, ActionType.RestartWithInitialPage)
     },
-    [directory],
+    [loadPage],
   )
+
+  const [previousFirstPageId, setPreviousFirstPageId] = useState(firstPageId)
+  useEffect(() => {
+    if (firstPageId === previousFirstPageId) return
+
+    loadPage(firstPageId, ActionType.RestartWithInitialPage)
+    setPreviousFirstPageId(firstPageId)
+  }, [loadPage, firstPageId, previousFirstPageId])
 
   return [state, loadMore, loadAndReset] as const
 }
