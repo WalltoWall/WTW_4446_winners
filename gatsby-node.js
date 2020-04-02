@@ -14,33 +14,6 @@ const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
   'paginated-collections',
 )
 
-const processPaginationCollection = ({
-  collection,
-  name,
-  pageSize = 8,
-  createNode,
-  createNodeId,
-  createContentDigest,
-  getNode,
-}) => {
-  const nodeInput = createPaginatedCollectionNodes({
-    collection,
-    name,
-    pageSize,
-    createNode,
-    createNodeId,
-    createContentDigest,
-  })
-  const node = getNode(nodeInput.id)
-
-  writePaginatedCollectionJSONFiles({
-    node,
-    directory: PAGINATED_COLLECTION_DIRECTORY,
-    expand: ['collection', 'nextPage'],
-    getNode,
-  })
-}
-
 const normalizeWinnerNode = (node) => ({
   url: node.fields.url,
   name: node.data.name,
@@ -69,6 +42,25 @@ exports.createPages = async (gatsbyContext) => {
   const { createNode, createPage } = actions
   const { program } = store.getState()
 
+  const processPaginatedCollection = ({ collection, name, pageSize = 8 }) => {
+    const nodeInput = createPaginatedCollectionNodes({
+      collection,
+      name,
+      pageSize,
+      createNode,
+      createNodeId,
+      createContentDigest,
+    })
+    const node = getNode(nodeInput.id)
+
+    writePaginatedCollectionJSONFiles({
+      node,
+      directory: PAGINATED_COLLECTION_DIRECTORY,
+      expand: ['collection', 'nextPage'],
+      getNode,
+    })
+  }
+
   /***
    * Create paginated collections for each category.
    */
@@ -85,6 +77,9 @@ exports.createPages = async (gatsbyContext) => {
             name
             award
             tags
+            agency {
+              id
+            }
             category {
               id
               data {
@@ -112,7 +107,7 @@ exports.createPages = async (gatsbyContext) => {
   `)
   const winnerNodes = queryResult.data.allAirtableWinner.nodes
 
-  processPaginationCollection({
+  processPaginatedCollection({
     collection: winnerNodes.map(normalizeWinnerNode),
     name: 'winners',
     createNode,
@@ -131,15 +126,7 @@ exports.createPages = async (gatsbyContext) => {
   for (const category in winnerNodesByCategory) {
     const collection = winnerNodesByCategory[category].map(normalizeWinnerNode)
     if (collection.length < 1) continue
-
-    processPaginationCollection({
-      collection,
-      name: `winners/${category}`,
-      createNode,
-      createNodeId,
-      createContentDigest,
-      getNode,
-    })
+    processPaginatedCollection({ collection, name: `winners/${category}` })
   }
 
   const winnerNodesByTag = winnerNodes.reduce((acc, curr) => {
@@ -150,15 +137,19 @@ exports.createPages = async (gatsbyContext) => {
   for (const tag in winnerNodesByTag) {
     const collection = winnerNodesByTag[tag].map(normalizeWinnerNode)
     if (collection.length < 1) continue
+    processPaginatedCollection({ collection, name: `tags/${tag}` })
+  }
 
-    processPaginationCollection({
-      collection,
-      name: `tags/${tag}`,
-      createNode,
-      createNodeId,
-      createContentDigest,
-      getNode,
-    })
+  const winnerNodesByAgency = winnerNodes.reduce((acc, curr) => {
+    for (const agency of curr.data.agency)
+      acc[agency.id] = [...(acc[agency.id] || []), curr]
+    return acc
+  }, {})
+
+  for (const agency in winnerNodesByAgency) {
+    const collection = winnerNodesByAgency[agency].map(normalizeWinnerNode)
+    if (collection.length < 1) continue
+    processPaginatedCollection({ collection, name: `winners-agency/${agency}` })
   }
 
   /***
@@ -185,7 +176,10 @@ exports.createPages = async (gatsbyContext) => {
     createPage({
       path: node.fields.url,
       component: path.resolve(__dirname, 'src/templates/agency.tsx'),
-      context: { recordId: node.recordId },
+      context: {
+        recordId: node.recordId,
+        paginatedCollectionName: `winners-agency/${node.id}`,
+      },
     })
 
   const tags = winnerNodes.reduce((acc, curr) => {

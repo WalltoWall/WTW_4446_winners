@@ -5125,10 +5125,14 @@ export type WinnersPageQuery = { paginatedCollectionPage?: Maybe<(
 
 export type AgencyTemplateQueryVariables = {
   recordId: Scalars['String'];
+  paginatedCollectionName: Scalars['String'];
 };
 
 
-export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }> };
+export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>, paginatedCollectionPage?: Maybe<(
+    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
+    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
+  )> };
 
 export type TagTemplateQueryVariables = {
   paginatedCollectionName: Scalars['String'];
@@ -5136,7 +5140,7 @@ export type TagTemplateQueryVariables = {
 
 
 export type TagTemplateQuery = { paginatedCollectionPage?: Maybe<(
-    Pick<PaginatedCollectionPage, 'nodes'>
+    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
     & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'name' | 'nodeCount'> }
   )> };
 
