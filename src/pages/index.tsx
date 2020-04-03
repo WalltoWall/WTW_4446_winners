@@ -104,7 +104,7 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
                 href={person?.fields?.url!}
                 name={person?.data?.name!}
                 title={person?.data?.title!}
-                company={person?.data?.company}
+                agencyName={person?.data?.agency?.[0]?.data?.name}
                 award={person?.data?.award!}
                 imageFluid={
                   person?.data?.photo?.localFiles?.[0]?.childCloudinaryAsset
@@ -171,7 +171,11 @@ export const query = graphql`
         data {
           name
           title
-          company
+          agency {
+            data {
+              name
+            }
+          }
           award
           photo {
             localFiles {

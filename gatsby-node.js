@@ -302,17 +302,6 @@ exports.onCreateNode = ({ node, actions }) => {
     case 'AirtableCollegeWinner': {
       const url = `/college/${airtableNodeToSlug(node)}/`
       createNodeField({ node, name: 'url', value: url })
-
-      const tags = node.data.tags
-      createNodeField({
-        node,
-        name: 'tags',
-        value: tags.map((tag) => ({
-          tag,
-          url: `/tags/${slug(tag.toLowerCase())}/`,
-        })),
-      })
-
       break
     }
 
