@@ -103,7 +103,7 @@ export const WinnerCard: React.FC<WinnerCardProps> = ({
           </View>
         )}
         {title && (
-          <Heading forwardAs="h3" css={{ lineHeight: t.lh.Title }}>
+          <Heading as="h3">
             <Anchor href={href}>{title}</Anchor>
           </Heading>
         )}
