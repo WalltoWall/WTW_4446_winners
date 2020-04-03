@@ -1,6 +1,8 @@
 import React from 'react'
 import VisuallyHidden from '@reach/visually-hidden'
 
+import { Award } from '../types'
+
 import { t } from '../theme'
 import { View } from './View'
 import { Icon } from './Icon'
@@ -12,7 +14,7 @@ const colors = {
 } as const
 
 type AwardIconProps = Omit<React.ComponentProps<typeof Icon>, 'icon'> & {
-  type: 'gold' | 'silver' | 'bronze'
+  type: Award
 }
 
 export const AwardIcon: React.FC<AwardIconProps> = ({ type, ...props }) => (
