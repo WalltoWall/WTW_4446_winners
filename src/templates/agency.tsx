@@ -12,6 +12,8 @@ import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 import { Anchor } from '../components/Anchor'
+import { Avatar } from '../components/Avatar'
+import { SocialIcons } from '../components/SocialIcons'
 
 type AgencyTemplateProps = React.ComponentProps<typeof Layout> & {
   data: AgencyTemplateQuery
@@ -19,13 +21,15 @@ type AgencyTemplateProps = React.ComponentProps<typeof Layout> & {
 
 export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
   const agency = data.airtableAgency
+  const avatarFluid =
+    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
+  const initialPage = data?.paginatedCollectionPage
+
   const cleanWebsite = useMemo(() => {
     if (!agency?.data?.website) return
     const url = new URL(agency.data.website)
     return url.host
   }, [agency])
-
-  const initialPage = data?.paginatedCollectionPage
 
   return (
     <Layout>
@@ -41,35 +45,42 @@ export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
         <View
           css={mq({
             display: 'grid',
-            gap: linearScale('0.625rem', '0.75rem', 'space'),
+            gap: linearScale('1.25rem', '1.75rem', 'space'),
             justifyItems: 'center',
           })}
         >
           <View
             css={mq({
-              backgroundColor: t.c.Black,
-              width: linearScale('1.875rem', '2.5rem'),
-              height: linearScale('1.875rem', '2.5rem'),
-              borderRadius: '50%',
-            })}
-          />
-          <Heading
-            css={mq({
-              textAlign: 'center',
-              fontSize: t.f.xl,
-              lineHeight: t.lh.Solid,
+              display: 'grid',
+              gap: linearScale('0.625rem', '0.75rem', 'space'),
+              justifyItems: 'center',
             })}
           >
-            {agency?.data?.name}
-          </Heading>
-          {agency?.data?.website && (
-            <Anchor
-              href={agency?.data?.website}
-              css={mq({ color: t.c.Gray60, fontSize: t.f['b-'] })}
+            <Avatar fluid={avatarFluid} />
+            <Heading
+              css={mq({
+                textAlign: 'center',
+                fontSize: t.f.xl,
+                lineHeight: t.lh.Solid,
+              })}
             >
-              {cleanWebsite}
-            </Anchor>
-          )}
+              {agency?.data?.name}
+            </Heading>
+            {agency?.data?.website && (
+              <Anchor
+                href={agency?.data?.website}
+                css={mq({ color: t.c.Gray60, fontSize: t.f['b-'] })}
+              >
+                {cleanWebsite}
+              </Anchor>
+            )}
+          </View>
+          <SocialIcons
+            facebookHandle={agency?.data?.facebook_handle}
+            instagramHandle={agency?.data?.instagram_handle}
+            twitterHandle={agency?.data?.twitter_handle}
+            linkedinHandle={agency?.data?.linkedin_handle}
+          />
         </View>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
@@ -90,6 +101,19 @@ export const query = graphql`
       data {
         name
         website
+        facebook_handle
+        twitter_handle
+        instagram_handle
+        linkedin_handle
+        avatar {
+          localFiles {
+            childCloudinaryAsset {
+              fluid(maxWidth: 100) {
+                ...CloudinaryAssetFluid
+              }
+            }
+          }
+        }
       }
     }
     paginatedCollectionPage(

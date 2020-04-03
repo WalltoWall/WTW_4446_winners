@@ -325,12 +325,16 @@ export type AirtableAgencyConnectionGroupArgs = {
 };
 
 export type AirtableAgencyData = {
-  Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
-  website?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
-  avatar?: Maybe<Array<Maybe<AirtableAgencyDataAvatar>>>;
+  name?: Maybe<Scalars['String']>;
+  Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
+  website?: Maybe<Scalars['String']>;
+  instagram_handle?: Maybe<Scalars['String']>;
+  facebook_handle?: Maybe<Scalars['String']>;
+  twitter_handle?: Maybe<Scalars['String']>;
+  linkedin_handle?: Maybe<Scalars['String']>;
+  avatar?: Maybe<AirtableFieldfileNode>;
 };
 
 
@@ -349,83 +353,17 @@ export type AirtableAgencyDataCreated_AtArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
-export type AirtableAgencyDataAvatar = {
-  id?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  filename?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
-  type?: Maybe<Scalars['String']>;
-  thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnails>;
-};
-
-export type AirtableAgencyDataAvatarFilterInput = {
-  id?: Maybe<StringQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
-  filename?: Maybe<StringQueryOperatorInput>;
-  size?: Maybe<IntQueryOperatorInput>;
-  type?: Maybe<StringQueryOperatorInput>;
-  thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnailsFilterInput>;
-};
-
-export type AirtableAgencyDataAvatarFilterListInput = {
-  elemMatch?: Maybe<AirtableAgencyDataAvatarFilterInput>;
-};
-
-export type AirtableAgencyDataAvatarThumbnails = {
-  small?: Maybe<AirtableAgencyDataAvatarThumbnailsSmall>;
-  large?: Maybe<AirtableAgencyDataAvatarThumbnailsLarge>;
-  full?: Maybe<AirtableAgencyDataAvatarThumbnailsFull>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsFilterInput = {
-  small?: Maybe<AirtableAgencyDataAvatarThumbnailsSmallFilterInput>;
-  large?: Maybe<AirtableAgencyDataAvatarThumbnailsLargeFilterInput>;
-  full?: Maybe<AirtableAgencyDataAvatarThumbnailsFullFilterInput>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsFull = {
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsFullFilterInput = {
-  url?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<IntQueryOperatorInput>;
-  height?: Maybe<IntQueryOperatorInput>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsLarge = {
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsLargeFilterInput = {
-  url?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<IntQueryOperatorInput>;
-  height?: Maybe<IntQueryOperatorInput>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsSmall = {
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-export type AirtableAgencyDataAvatarThumbnailsSmallFilterInput = {
-  url?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<IntQueryOperatorInput>;
-  height?: Maybe<IntQueryOperatorInput>;
-};
-
 export type AirtableAgencyDataFilterInput = {
-  Entries?: Maybe<StringQueryOperatorInput>;
-  website?: Maybe<StringQueryOperatorInput>;
-  name?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
-  avatar?: Maybe<AirtableAgencyDataAvatarFilterListInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+  Entries?: Maybe<StringQueryOperatorInput>;
+  website?: Maybe<StringQueryOperatorInput>;
+  instagram_handle?: Maybe<StringQueryOperatorInput>;
+  facebook_handle?: Maybe<StringQueryOperatorInput>;
+  twitter_handle?: Maybe<StringQueryOperatorInput>;
+  linkedin_handle?: Maybe<StringQueryOperatorInput>;
+  avatar?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
 
 export type AirtableAgencyEdge = {
@@ -528,17 +466,72 @@ export enum AirtableAgencyFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataEntries = 'data___Entries',
-  DataWebsite = 'data___website',
-  DataName = 'data___name',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
-  DataAvatar = 'data___avatar',
+  DataName = 'data___name',
+  DataEntries = 'data___Entries',
+  DataWebsite = 'data___website',
+  DataInstagramHandle = 'data___instagram_handle',
+  DataFacebookHandle = 'data___facebook_handle',
+  DataTwitterHandle = 'data___twitter_handle',
+  DataLinkedinHandle = 'data___linkedin_handle',
   DataAvatarId = 'data___avatar___id',
-  DataAvatarUrl = 'data___avatar___url',
-  DataAvatarFilename = 'data___avatar___filename',
-  DataAvatarSize = 'data___avatar___size',
-  DataAvatarType = 'data___avatar___type',
+  DataAvatarParentId = 'data___avatar___parent___id',
+  DataAvatarParentChildren = 'data___avatar___parent___children',
+  DataAvatarChildren = 'data___avatar___children',
+  DataAvatarChildrenId = 'data___avatar___children___id',
+  DataAvatarChildrenChildren = 'data___avatar___children___children',
+  DataAvatarInternalContent = 'data___avatar___internal___content',
+  DataAvatarInternalContentDigest = 'data___avatar___internal___contentDigest',
+  DataAvatarInternalDescription = 'data___avatar___internal___description',
+  DataAvatarInternalFieldOwners = 'data___avatar___internal___fieldOwners',
+  DataAvatarInternalIgnoreType = 'data___avatar___internal___ignoreType',
+  DataAvatarInternalMediaType = 'data___avatar___internal___mediaType',
+  DataAvatarInternalOwner = 'data___avatar___internal___owner',
+  DataAvatarInternalType = 'data___avatar___internal___type',
+  DataAvatarRaw = 'data___avatar___raw',
+  DataAvatarRawId = 'data___avatar___raw___id',
+  DataAvatarRawUrl = 'data___avatar___raw___url',
+  DataAvatarRawFilename = 'data___avatar___raw___filename',
+  DataAvatarRawSize = 'data___avatar___raw___size',
+  DataAvatarRawType = 'data___avatar___raw___type',
+  DataAvatarLocalFiles = 'data___avatar___localFiles',
+  DataAvatarLocalFilesSourceInstanceName = 'data___avatar___localFiles___sourceInstanceName',
+  DataAvatarLocalFilesAbsolutePath = 'data___avatar___localFiles___absolutePath',
+  DataAvatarLocalFilesRelativePath = 'data___avatar___localFiles___relativePath',
+  DataAvatarLocalFilesExtension = 'data___avatar___localFiles___extension',
+  DataAvatarLocalFilesSize = 'data___avatar___localFiles___size',
+  DataAvatarLocalFilesPrettySize = 'data___avatar___localFiles___prettySize',
+  DataAvatarLocalFilesModifiedTime = 'data___avatar___localFiles___modifiedTime',
+  DataAvatarLocalFilesAccessTime = 'data___avatar___localFiles___accessTime',
+  DataAvatarLocalFilesChangeTime = 'data___avatar___localFiles___changeTime',
+  DataAvatarLocalFilesBirthTime = 'data___avatar___localFiles___birthTime',
+  DataAvatarLocalFilesRoot = 'data___avatar___localFiles___root',
+  DataAvatarLocalFilesDir = 'data___avatar___localFiles___dir',
+  DataAvatarLocalFilesBase = 'data___avatar___localFiles___base',
+  DataAvatarLocalFilesExt = 'data___avatar___localFiles___ext',
+  DataAvatarLocalFilesName = 'data___avatar___localFiles___name',
+  DataAvatarLocalFilesRelativeDirectory = 'data___avatar___localFiles___relativeDirectory',
+  DataAvatarLocalFilesDev = 'data___avatar___localFiles___dev',
+  DataAvatarLocalFilesMode = 'data___avatar___localFiles___mode',
+  DataAvatarLocalFilesNlink = 'data___avatar___localFiles___nlink',
+  DataAvatarLocalFilesUid = 'data___avatar___localFiles___uid',
+  DataAvatarLocalFilesGid = 'data___avatar___localFiles___gid',
+  DataAvatarLocalFilesRdev = 'data___avatar___localFiles___rdev',
+  DataAvatarLocalFilesIno = 'data___avatar___localFiles___ino',
+  DataAvatarLocalFilesAtimeMs = 'data___avatar___localFiles___atimeMs',
+  DataAvatarLocalFilesMtimeMs = 'data___avatar___localFiles___mtimeMs',
+  DataAvatarLocalFilesCtimeMs = 'data___avatar___localFiles___ctimeMs',
+  DataAvatarLocalFilesAtime = 'data___avatar___localFiles___atime',
+  DataAvatarLocalFilesMtime = 'data___avatar___localFiles___mtime',
+  DataAvatarLocalFilesCtime = 'data___avatar___localFiles___ctime',
+  DataAvatarLocalFilesBirthtime = 'data___avatar___localFiles___birthtime',
+  DataAvatarLocalFilesBirthtimeMs = 'data___avatar___localFiles___birthtimeMs',
+  DataAvatarLocalFilesBlksize = 'data___avatar___localFiles___blksize',
+  DataAvatarLocalFilesBlocks = 'data___avatar___localFiles___blocks',
+  DataAvatarLocalFilesUrl = 'data___avatar___localFiles___url',
+  DataAvatarLocalFilesId = 'data___avatar___localFiles___id',
+  DataAvatarLocalFilesChildren = 'data___avatar___localFiles___children',
   FieldsUrl = 'fields___url'
 }
 
@@ -1496,12 +1489,15 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyTable = 'data___agency___table',
   DataAgencyRecordId = 'data___agency___recordId',
   DataAgencyQueryName = 'data___agency___queryName',
-  DataAgencyDataEntries = 'data___agency___data___Entries',
-  DataAgencyDataWebsite = 'data___agency___data___website',
-  DataAgencyDataName = 'data___agency___data___name',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
-  DataAgencyDataAvatar = 'data___agency___data___avatar',
+  DataAgencyDataName = 'data___agency___data___name',
+  DataAgencyDataEntries = 'data___agency___data___Entries',
+  DataAgencyDataWebsite = 'data___agency___data___website',
+  DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
+  DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
+  DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
+  DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
   DataClient = 'data___client',
   DataCategory = 'data___category',
@@ -4938,6 +4934,7 @@ export enum SitePluginFieldsEnum {
   PluginOptionsTablesSeparateNodeType = 'pluginOptions___tables___separateNodeType',
   PluginOptionsTablesMappingImages = 'pluginOptions___tables___mapping___images',
   PluginOptionsTablesMappingCredits = 'pluginOptions___tables___mapping___credits',
+  PluginOptionsTablesMappingAvatar = 'pluginOptions___tables___mapping___avatar',
   PluginOptionsTablesMappingPhoto = 'pluginOptions___tables___mapping___photo',
   PluginOptionsTablesMappingDescription = 'pluginOptions___tables___mapping___description',
   PluginOptionsTablesSeparateMapType = 'pluginOptions___tables___separateMapType',
@@ -5131,6 +5128,7 @@ export type SitePluginPluginOptionsTablesFilterListInput = {
 export type SitePluginPluginOptionsTablesMapping = {
   images?: Maybe<Scalars['String']>;
   credits?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
 };
@@ -5138,6 +5136,7 @@ export type SitePluginPluginOptionsTablesMapping = {
 export type SitePluginPluginOptionsTablesMappingFilterInput = {
   images?: Maybe<StringQueryOperatorInput>;
   credits?: Maybe<StringQueryOperatorInput>;
+  avatar?: Maybe<StringQueryOperatorInput>;
   photo?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
 };
@@ -5208,7 +5207,10 @@ export type AgencyTemplateQueryVariables = {
 };
 
 
-export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name' | 'website'>> }>, paginatedCollectionPage?: Maybe<(
+export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<(
+      Pick<AirtableAgencyData, 'name' | 'website' | 'facebook_handle' | 'twitter_handle' | 'instagram_handle' | 'linkedin_handle'>
+      & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+    )> }>, paginatedCollectionPage?: Maybe<(
     Pick<PaginatedCollectionPage, 'id' | 'nodes'>
     & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
   )> };
@@ -5232,5 +5234,8 @@ export type WinnerTemplateQueryVariables = {
 
 export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableWinnerFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
       Pick<AirtableWinnerData, 'name' | 'tags' | 'year' | 'award' | 'special_award' | 'client'>
-      & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+      & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
+          Pick<AirtableAgencyData, 'name'>
+          & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
     )> }>, nextAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, previousAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }> };

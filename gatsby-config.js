@@ -35,6 +35,8 @@ module.exports = {
             tableName: 'Agencies',
             queryName: 'Agency',
             separateNodeType: true,
+            mapping: { avatar: 'fileNode' },
+            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
