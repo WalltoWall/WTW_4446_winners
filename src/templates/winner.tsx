@@ -18,6 +18,7 @@ import { HTMLContent } from '../components/HTMLContent'
 import { NextPrevious } from '../components/NextPrevious'
 import { AwardIcon } from '../components/AwardIcon'
 import { ImageGallery } from '../components/ImageGallery'
+import { Avatar } from '../components/Avatar'
 
 type WinnerTemplateProps = React.ComponentProps<typeof Layout> & {
   data: WinnerTemplateQuery
@@ -30,6 +31,8 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
   const agency = winner?.data?.agency?.[0]
+  const agencyAvatarFluid =
+    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
   const images = compact(
     winner?.data?.images?.localFiles?.map(
       (localFile) => localFile?.childCloudinaryAsset?.fluid,
@@ -189,8 +192,21 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
                     Creative Agency
                   </View>
                   <View as="dd">
-                    <Anchor href={agency?.fields?.url!}>
-                      {agency?.data?.name}
+                    <Anchor
+                      href={agency?.fields?.url!}
+                      css={{ display: 'inline-block' }}
+                    >
+                      <View
+                        css={mq({
+                          display: 'grid',
+                          gridTemplateColumns: 'auto 1fr',
+                          gap: linearScale('0.25rem', '0.5rem', 'space'),
+                          alignItems: 'center',
+                        })}
+                      >
+                        <Avatar variant="small" fluid={agencyAvatarFluid} />
+                        {agency?.data?.name}
+                      </View>
                     </Anchor>
                   </View>
                 </View>
@@ -246,6 +262,15 @@ export const query = graphql`
           }
           data {
             name
+            avatar {
+              localFiles {
+                childCloudinaryAsset {
+                  fluid(maxWidth: 50) {
+                    ...CloudinaryAssetFluid
+                  }
+                }
+              }
+            }
           }
         }
         credits {
