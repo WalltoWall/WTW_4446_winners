@@ -15,7 +15,7 @@ type PersonCardProps = React.ComponentProps<typeof View> & {
   href: string
   name: string
   title: string
-  company?: string
+  agencyName?: string
   award: string
   imageFluid?: CloudinaryAssetFluidFragment
 }
@@ -24,7 +24,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   href,
   name,
   title,
-  company,
+  agencyName,
   award,
   imageFluid,
   ...props
@@ -64,7 +64,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
       </Heading>
       <View css={{ lineHeight: t.lh.Title }}>
         <View as="p">{title}</View>
-        <View as="p">{company}</View>
+        <View as="p">{agencyName}</View>
       </View>
     </View>
   </View>
