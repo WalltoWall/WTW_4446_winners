@@ -10,3 +10,4 @@ jsconfig.json
 
 # IDE Specific
 jsconfig.json
+.vscode

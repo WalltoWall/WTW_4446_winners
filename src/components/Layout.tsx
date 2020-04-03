@@ -2,11 +2,11 @@ import React from 'react'
 import { Helmet } from 'react-helmet-async'
 
 import { t, mq } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { Header } from './Header'
 import { Footer } from './Footer'
 
-type LayoutProps = React.ComponentProps<typeof View>
+export type LayoutProps = ViewProps
 
 export const Layout: React.FC<LayoutProps> = ({ children, ...props }) => (
   <>

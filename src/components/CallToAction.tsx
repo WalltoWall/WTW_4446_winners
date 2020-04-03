@@ -2,12 +2,12 @@ import React from 'react'
 import { linearScale } from 'styled-system-scale'
 
 import { t, mq } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { BoundedBox } from './BoundedBox'
 import { Button } from './Button'
 import { Link } from './Link'
 
-type CallToActionProps = React.ComponentProps<typeof View> & {
+export type CallToActionProps = ViewProps & {
   buttonHref?: string
   buttonText?: string
 }
