@@ -50,7 +50,8 @@ export const AdPeoplePage: React.FC<AdPeoplePageProps> = ({
               <LargePersonCard
                 name={person.data?.name!}
                 title={person.data?.title!}
-                company={person.data?.company!}
+                agencyName={person.data?.agency?.[0]?.data?.name}
+                agencyHref={person.data?.agency?.[0]?.fields?.url}
                 award={person.data?.award!}
                 descriptionHTML={
                   person.data?.description?.childMarkdownRemark?.html
@@ -77,7 +78,14 @@ export const query = graphql`
         data {
           name
           title
-          company
+          agency {
+            fields {
+              url
+            }
+            data {
+              name
+            }
+          }
           award
           description {
             childMarkdownRemark {

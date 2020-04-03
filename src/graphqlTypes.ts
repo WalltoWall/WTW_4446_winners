@@ -44,11 +44,11 @@ export type AirtableAdPersonConnectionGroupArgs = {
 };
 
 export type AirtableAdPersonData = {
-  company?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Date']>;
   name?: Maybe<Scalars['String']>;
+  agency?: Maybe<Array<Maybe<AirtableAgency>>>;
   description?: Maybe<AirtableFieldtextmarkdown>;
   photo?: Maybe<AirtableFieldfileNode>;
 };
@@ -62,11 +62,11 @@ export type AirtableAdPersonDataYearArgs = {
 };
 
 export type AirtableAdPersonDataFilterInput = {
-  company?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   year?: Maybe<DateQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
+  agency?: Maybe<AirtableAgencyFilterListInput>;
   description?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   photo?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
@@ -171,11 +171,39 @@ export enum AirtableAdPersonFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataCompany = 'data___company',
   DataAward = 'data___award',
   DataTitle = 'data___title',
   DataYear = 'data___year',
   DataName = 'data___name',
+  DataAgency = 'data___agency',
+  DataAgencyId = 'data___agency___id',
+  DataAgencyParentId = 'data___agency___parent___id',
+  DataAgencyParentChildren = 'data___agency___parent___children',
+  DataAgencyChildren = 'data___agency___children',
+  DataAgencyChildrenId = 'data___agency___children___id',
+  DataAgencyChildrenChildren = 'data___agency___children___children',
+  DataAgencyInternalContent = 'data___agency___internal___content',
+  DataAgencyInternalContentDigest = 'data___agency___internal___contentDigest',
+  DataAgencyInternalDescription = 'data___agency___internal___description',
+  DataAgencyInternalFieldOwners = 'data___agency___internal___fieldOwners',
+  DataAgencyInternalIgnoreType = 'data___agency___internal___ignoreType',
+  DataAgencyInternalMediaType = 'data___agency___internal___mediaType',
+  DataAgencyInternalOwner = 'data___agency___internal___owner',
+  DataAgencyInternalType = 'data___agency___internal___type',
+  DataAgencyTable = 'data___agency___table',
+  DataAgencyRecordId = 'data___agency___recordId',
+  DataAgencyQueryName = 'data___agency___queryName',
+  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
+  DataAgencyDataName = 'data___agency___data___name',
+  DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
+  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
+  DataAgencyDataEntries = 'data___agency___data___Entries',
+  DataAgencyDataWebsite = 'data___agency___data___website',
+  DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
+  DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
+  DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
+  DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
+  DataAgencyFieldsUrl = 'data___agency___fields___url',
   DataDescriptionId = 'data___description___id',
   DataDescriptionParentId = 'data___description___parent___id',
   DataDescriptionParentChildren = 'data___description___parent___children',
@@ -325,9 +353,10 @@ export type AirtableAgencyConnectionGroupArgs = {
 };
 
 export type AirtableAgencyData = {
-  updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
   name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['Date']>;
+  Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   website?: Maybe<Scalars['String']>;
   instagram_handle?: Maybe<Scalars['String']>;
@@ -338,14 +367,6 @@ export type AirtableAgencyData = {
 };
 
 
-export type AirtableAgencyDataUpdated_AtArgs = {
-  formatString?: Maybe<Scalars['String']>;
-  fromNow?: Maybe<Scalars['Boolean']>;
-  difference?: Maybe<Scalars['String']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-
 export type AirtableAgencyDataCreated_AtArgs = {
   formatString?: Maybe<Scalars['String']>;
   fromNow?: Maybe<Scalars['Boolean']>;
@@ -353,10 +374,19 @@ export type AirtableAgencyDataCreated_AtArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
+
+export type AirtableAgencyDataUpdated_AtArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
 export type AirtableAgencyDataFilterInput = {
-  updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
+  updated_at?: Maybe<DateQueryOperatorInput>;
+  Ad_People?: Maybe<StringQueryOperatorInput>;
   Entries?: Maybe<StringQueryOperatorInput>;
   website?: Maybe<StringQueryOperatorInput>;
   instagram_handle?: Maybe<StringQueryOperatorInput>;
@@ -466,9 +496,10 @@ export enum AirtableAgencyFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
   DataName = 'data___name',
+  DataUpdatedAt = 'data___updated_at',
+  DataAdPeople = 'data___Ad_People',
   DataEntries = 'data___Entries',
   DataWebsite = 'data___website',
   DataInstagramHandle = 'data___instagram_handle',
@@ -783,17 +814,16 @@ export type AirtableCollegeWinnerConnectionGroupArgs = {
 };
 
 export type AirtableCollegeWinnerData = {
+  entrant_name?: Maybe<Scalars['String']>;
+  special_award?: Maybe<Scalars['String']>;
+  award?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  school?: Maybe<Scalars['String']>;
+  category?: Maybe<Array<Maybe<AirtableCategory>>>;
   year?: Maybe<Scalars['Date']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
-  name?: Maybe<Scalars['String']>;
-  entrant_name?: Maybe<Scalars['String']>;
-  school?: Maybe<Scalars['String']>;
-  award?: Maybe<Scalars['String']>;
-  category?: Maybe<Array<Maybe<AirtableCategory>>>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
-  special_award?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
   images?: Maybe<AirtableFieldfileNode>;
 };
@@ -823,17 +853,16 @@ export type AirtableCollegeWinnerDataCreated_AtArgs = {
 };
 
 export type AirtableCollegeWinnerDataFilterInput = {
+  entrant_name?: Maybe<StringQueryOperatorInput>;
+  special_award?: Maybe<StringQueryOperatorInput>;
+  award?: Maybe<StringQueryOperatorInput>;
+  name?: Maybe<StringQueryOperatorInput>;
+  description?: Maybe<StringQueryOperatorInput>;
+  school?: Maybe<StringQueryOperatorInput>;
+  category?: Maybe<AirtableCategoryFilterListInput>;
   year?: Maybe<DateQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
-  name?: Maybe<StringQueryOperatorInput>;
-  entrant_name?: Maybe<StringQueryOperatorInput>;
-  school?: Maybe<StringQueryOperatorInput>;
-  award?: Maybe<StringQueryOperatorInput>;
-  category?: Maybe<AirtableCategoryFilterListInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
-  special_award?: Maybe<StringQueryOperatorInput>;
-  description?: Maybe<StringQueryOperatorInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   images?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
@@ -846,7 +875,6 @@ export type AirtableCollegeWinnerEdge = {
 
 export type AirtableCollegeWinnerFields = {
   url?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Maybe<AirtableCollegeWinnerFieldsTags>>>;
 };
 
 export enum AirtableCollegeWinnerFieldsEnum {
@@ -939,13 +967,12 @@ export enum AirtableCollegeWinnerFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataYear = 'data___year',
-  DataUpdatedAt = 'data___updated_at',
-  DataCreatedAt = 'data___created_at',
-  DataName = 'data___name',
   DataEntrantName = 'data___entrant_name',
-  DataSchool = 'data___school',
+  DataSpecialAward = 'data___special_award',
   DataAward = 'data___award',
+  DataName = 'data___name',
+  DataDescription = 'data___description',
+  DataSchool = 'data___school',
   DataCategory = 'data___category',
   DataCategoryId = 'data___category___id',
   DataCategoryParentId = 'data___category___parent___id',
@@ -969,9 +996,9 @@ export enum AirtableCollegeWinnerFieldsEnum {
   DataCategoryDataLine_2 = 'data___category___data___line_2',
   DataCategoryDataEntries = 'data___category___data___Entries',
   DataCategoryDataWinnersCopy = 'data___category___data___Winners_copy',
-  DataTags = 'data___tags',
-  DataSpecialAward = 'data___special_award',
-  DataDescription = 'data___description',
+  DataYear = 'data___year',
+  DataUpdatedAt = 'data___updated_at',
+  DataCreatedAt = 'data___created_at',
   DataCreditsId = 'data___credits___id',
   DataCreditsParentId = 'data___credits___parent___id',
   DataCreditsParentChildren = 'data___credits___parent___children',
@@ -1054,29 +1081,11 @@ export enum AirtableCollegeWinnerFieldsEnum {
   DataImagesLocalFilesUrl = 'data___images___localFiles___url',
   DataImagesLocalFilesId = 'data___images___localFiles___id',
   DataImagesLocalFilesChildren = 'data___images___localFiles___children',
-  FieldsUrl = 'fields___url',
-  FieldsTags = 'fields___tags',
-  FieldsTagsTag = 'fields___tags___tag',
-  FieldsTagsUrl = 'fields___tags___url'
+  FieldsUrl = 'fields___url'
 }
 
 export type AirtableCollegeWinnerFieldsFilterInput = {
   url?: Maybe<StringQueryOperatorInput>;
-  tags?: Maybe<AirtableCollegeWinnerFieldsTagsFilterListInput>;
-};
-
-export type AirtableCollegeWinnerFieldsTags = {
-  tag?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-};
-
-export type AirtableCollegeWinnerFieldsTagsFilterInput = {
-  tag?: Maybe<StringQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
-};
-
-export type AirtableCollegeWinnerFieldsTagsFilterListInput = {
-  elemMatch?: Maybe<AirtableCollegeWinnerFieldsTagsFilterInput>;
 };
 
 export type AirtableCollegeWinnerFilterInput = {
@@ -1848,9 +1857,10 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyTable = 'data___agency___table',
   DataAgencyRecordId = 'data___agency___recordId',
   DataAgencyQueryName = 'data___agency___queryName',
-  DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataName = 'data___agency___data___name',
+  DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
+  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataWebsite = 'data___agency___data___website',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
@@ -5556,8 +5566,8 @@ export type AdPeoplePageQueryVariables = {};
 
 
 export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ data?: Maybe<(
-        Pick<AirtableAdPersonData, 'name' | 'title' | 'company' | 'award'>
-        & { description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, photo?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
+        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, photo?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
       )> }> } };
 
 export type CollegePageQueryVariables = {};
@@ -5572,8 +5582,8 @@ export type IndexPageQueryVariables = {};
 
 
 export type IndexPageQuery = { bestOfEntries: { nodes: Array<SpecialAwardWinnerFragment> }, adPeople: { nodes: Array<{ fields?: Maybe<Pick<AirtableAdPersonFields, 'url'>>, data?: Maybe<(
-        Pick<AirtableAdPersonData, 'name' | 'title' | 'company' | 'award'>
-        & { photo?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
+        & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, photo?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
       )> }> }, judgesEntries: { nodes: Array<SpecialAwardWinnerFragment> } };
 
 export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<(
@@ -5613,8 +5623,8 @@ export type CollegeWinnerTemplateQueryVariables = {
 };
 
 
-export type CollegeWinnerTemplateQuery = { airtableCollegeWinner?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableCollegeWinnerFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
-      Pick<AirtableCollegeWinnerData, 'name' | 'tags' | 'year' | 'award' | 'special_award' | 'school' | 'entrant_name'>
+export type CollegeWinnerTemplateQuery = { airtableCollegeWinner?: Maybe<{ data?: Maybe<(
+      Pick<AirtableCollegeWinnerData, 'name' | 'year' | 'award' | 'special_award' | 'school' | 'entrant_name'>
       & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
     )> }>, nextAirtableCollegeWinner?: Maybe<{ fields?: Maybe<Pick<AirtableCollegeWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableCollegeWinnerData, 'name'>> }>, previousAirtableCollegeWinner?: Maybe<{ fields?: Maybe<Pick<AirtableCollegeWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableCollegeWinnerData, 'name'>> }> };
 
@@ -5636,7 +5646,7 @@ export type WinnerTemplateQueryVariables = {
 
 
 export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableWinnerFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
-      Pick<AirtableWinnerData, 'name' | 'tags' | 'year' | 'award' | 'special_award' | 'client'>
+      Pick<AirtableWinnerData, 'name' | 'year' | 'award' | 'special_award' | 'client'>
       & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
           Pick<AirtableAgencyData, 'name'>
           & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
