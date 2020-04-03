@@ -29,6 +29,21 @@ const normalizeWinnerNode = (node) => ({
   ]),
 })
 
+const normalizeCollegeWinnerNode = (node) => ({
+  url: node.fields.url,
+  name: node.data.name,
+  award: node.data.award.toLowerCase(),
+  category: dlv(node, ['data', 'category', 0, 'data']),
+  image: dlv(node, [
+    'data',
+    'images',
+    'localFiles',
+    0,
+    'childCloudinaryAsset',
+    'fluid',
+  ]),
+})
+
 exports.createPages = async (gatsbyContext) => {
   const {
     actions,
@@ -103,13 +118,57 @@ exports.createPages = async (gatsbyContext) => {
           }
         }
       }
+      allAirtableCollegeWinner {
+        nodes {
+          recordId
+          fields {
+            url
+          }
+          data {
+            name
+            award
+            entrant_name
+            school
+            category {
+              id
+              data {
+                line_1
+                line_2
+              }
+            }
+            images {
+              localFiles {
+                childCloudinaryAsset {
+                  fluid(maxWidth: 800) {
+                    aspectRatio
+                    base64
+                    sizes
+                    src
+                    srcSet
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   `)
   const winnerNodes = queryResult.data.allAirtableWinner.nodes
+  const collegeWinnerNodes = queryResult.data.allAirtableCollegeWinner.nodes
 
   processPaginatedCollection({
     collection: winnerNodes.map(normalizeWinnerNode),
     name: 'winners',
+    createNode,
+    createNodeId,
+    createContentDigest,
+    getNode,
+  })
+
+  processPaginatedCollection({
+    collection: collegeWinnerNodes.map(normalizeCollegeWinnerNode),
+    name: 'collegeWinners',
     createNode,
     createNodeId,
     createContentDigest,
@@ -171,6 +230,21 @@ exports.createPages = async (gatsbyContext) => {
     })
   }
 
+  for (let i = 0; i < collegeWinnerNodes.length; i++) {
+    const node = collegeWinnerNodes[i]
+    const previousNode = collegeWinnerNodes[i - 1]
+    const nextNode = collegeWinnerNodes[i + 1]
+    createPage({
+      path: node.fields.url,
+      component: path.resolve(__dirname, 'src/templates/collegeWinner.tsx'),
+      context: {
+        recordId: node.recordId,
+        previousRecordId: previousNode ? previousNode.recordId : undefined,
+        nextRecordId: nextNode ? nextNode.recordId : undefined,
+      },
+    })
+  }
+
   const agencyNodes = getNodesByType('AirtableAgency')
   for (const node of agencyNodes)
     createPage({
@@ -210,6 +284,23 @@ exports.onCreateNode = ({ node, actions }) => {
 
     case 'AirtableWinner': {
       const url = `/winners/${airtableNodeToSlug(node)}/`
+      createNodeField({ node, name: 'url', value: url })
+
+      const tags = node.data.tags
+      createNodeField({
+        node,
+        name: 'tags',
+        value: tags.map((tag) => ({
+          tag,
+          url: `/tags/${slug(tag.toLowerCase())}/`,
+        })),
+      })
+
+      break
+    }
+
+    case 'AirtableCollegeWinner': {
+      const url = `/college/${airtableNodeToSlug(node)}/`
       createNodeField({ node, name: 'url', value: url })
 
       const tags = node.data.tags

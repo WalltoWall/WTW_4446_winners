@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 
 import { Award, Tag } from '../types'
-import { WinnerTemplateQuery } from '../graphqlTypes'
+import { CollegeWinnerTemplateQuery } from '../graphqlTypes'
 import { compact } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
@@ -16,19 +16,16 @@ import { NextPrevious } from '../components/NextPrevious'
 import { ImageGallery } from '../components/ImageGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
 
-type WinnerTemplateProps = React.ComponentProps<typeof Layout> & {
-  data: WinnerTemplateQuery
+type CollegeWinnerTemplateProps = React.ComponentProps<typeof Layout> & {
+  data: CollegeWinnerTemplateQuery
 }
 
-export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
+export const CollegeWinnerTemplate: React.FC<CollegeWinnerTemplateProps> = ({
   data,
   ...props
 }) => {
-  const winner = data.airtableWinner
+  const winner = data.airtableCollegeWinner
   const category = winner?.data?.category?.[0]?.data
-  const agency = winner?.data?.agency?.[0]
-  const agencyAvatarFluid =
-    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
   const images = compact(
     winner?.data?.images?.localFiles?.map(
       (localFile) => localFile?.childCloudinaryAsset?.fluid,
@@ -36,8 +33,8 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
   )
   const hasImages = images.length > 0
 
-  const nextWinner = data.nextAirtableWinner
-  const previousWinner = data.previousAirtableWinner
+  const nextWinner = data.nextAirtableCollegeWinner
+  const previousWinner = data.previousAirtableCollegeWinner
 
   return (
     <Layout {...props}>
@@ -87,11 +84,9 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
             categoryLine2={category?.line_2}
             tags={winner?.fields?.tags as Tag[]}
             creditsHTML={winner?.data?.credits?.childMarkdownRemark?.html}
-            entrantType="agency"
-            entrantName={agency?.data?.name}
-            entrantHref={agency?.fields?.url}
-            entrantAvatarFluid={agencyAvatarFluid}
-            client={winner?.data?.client}
+            entrantType="student"
+            entrantName={winner?.data?.entrant_name}
+            school={winner?.data?.school}
             css={mq({
               maxWidth: t.sz.Large,
               width: '100%',
@@ -109,21 +104,15 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
   )
 }
 
-export default WinnerTemplate
+export default CollegeWinnerTemplate
 
 export const query = graphql`
-  query WinnerTemplate(
+  query CollegeWinnerTemplate(
     $recordId: String!
     $nextRecordId: String
     $previousRecordId: String
   ) {
-    airtableWinner(recordId: { eq: $recordId }) {
-      fields {
-        tags {
-          tag
-          url
-        }
-      }
+    airtableCollegeWinner(recordId: { eq: $recordId }) {
       data {
         name
         year
@@ -135,24 +124,8 @@ export const query = graphql`
             line_2
           }
         }
-        client
-        agency {
-          fields {
-            url
-          }
-          data {
-            name
-            avatar {
-              localFiles {
-                childCloudinaryAsset {
-                  fluid(maxWidth: 50) {
-                    ...CloudinaryAssetFluid
-                  }
-                }
-              }
-            }
-          }
-        }
+        school
+        entrant_name
         credits {
           childMarkdownRemark {
             html
@@ -169,7 +142,9 @@ export const query = graphql`
         }
       }
     }
-    nextAirtableWinner: airtableWinner(recordId: { eq: $nextRecordId }) {
+    nextAirtableCollegeWinner: airtableCollegeWinner(
+      recordId: { eq: $nextRecordId }
+    ) {
       fields {
         url
       }
@@ -177,7 +152,7 @@ export const query = graphql`
         name
       }
     }
-    previousAirtableWinner: airtableWinner(
+    previousAirtableCollegeWinner: airtableCollegeWinner(
       recordId: { eq: $previousRecordId }
     ) {
       fields {
