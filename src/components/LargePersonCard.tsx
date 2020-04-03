@@ -10,11 +10,13 @@ import { BoundedBox } from './BoundedBox'
 import { Subheading } from './Subheading'
 import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
+import { Anchor } from './Anchor'
 
 type LargePersonCardProps = React.ComponentProps<typeof View> & {
   name: string
   title: string
-  company?: string
+  agencyName?: string
+  agencyHref?: string
   award: string
   descriptionHTML?: string
   imageFluid?: CloudinaryAssetFluidFragment
@@ -23,7 +25,8 @@ type LargePersonCardProps = React.ComponentProps<typeof View> & {
 export const LargePersonCard: React.FC<LargePersonCardProps> = ({
   name,
   title,
-  company,
+  agencyName,
+  agencyHref,
   award,
   imageFluid,
   descriptionHTML,
@@ -84,7 +87,11 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
           <Subheading>{award}</Subheading>
           <Heading css={mq({ fontSize: t.f.xl })}>{name}</Heading>
           <View as="p">
-            {title}, {company}
+            {agencyHref && (
+              <Anchor href={agencyHref}>
+                {title}, {agencyName}
+              </Anchor>
+            )}
           </View>
         </View>
         {descriptionHTML && <HTMLContent html={descriptionHTML} />}

@@ -50,6 +50,7 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Ad People',
+            tableLinks: ['agency'],
             queryName: 'AdPerson',
             separateNodeType: true,
             mapping: { photo: 'fileNode', description: 'text/markdown' },
