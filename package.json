@@ -61,14 +61,15 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "husky": "^4.2.3",
     "prettier": "^2.0.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.0-beta"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true,
     "trailingComma": "all",
     "proseWrap": "always",
-    "printWidth": 80
+    "printWidth": 80,
+    "arrowParens": "avoid"
   },
   "husky": {
     "hooks": {

@@ -15,7 +15,6 @@ export const firstLeft = <T>(arr: T[], idx: number) => {
 
   return arr[idx]
 }
-
 /**
  * Converts `input` into an array unless it is already an array.
  *
