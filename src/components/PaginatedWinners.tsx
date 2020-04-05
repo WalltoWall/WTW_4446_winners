@@ -32,7 +32,7 @@ export const PaginatedWinners = ({
         gap: linearScale('3rem', '6.25rem'),
       })}
     >
-      <CardList columns={[1, 3, 3, 4]}>
+      <CardList columns={[1, 2, 3, 3, 4]}>
         {(winners as Winner[]).map((winner) => (
           <WinnerCard
             key={winner.url}
@@ -40,7 +40,10 @@ export const PaginatedWinners = ({
             title={winner?.name}
             subtitle={winner?.category?.line_1}
             award={winner?.award}
-            imageFluid={winner.image}
+            imageFluid={winner.imageFluid}
+            agencyName={winner.agency?.name}
+            agencyHref={winner.agency?.url}
+            agencyAvatarFluid={winner.agency?.avatarFluid}
           />
         ))}
       </CardList>

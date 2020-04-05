@@ -9,5 +9,6 @@ export interface Winner {
   name?: string
   award?: Award
   category?: { line_1: string; line_2: string }
-  image?: FluidObject
+  imageFluid?: FluidObject
+  agency: { name: string; url: string; avatarFluid?: FluidObject }
 }
