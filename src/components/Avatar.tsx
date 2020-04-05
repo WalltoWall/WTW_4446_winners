@@ -5,6 +5,9 @@ import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 
 const variants = {
+  tiny: {
+    dimension: linearScale('1rem', '1.25rem'),
+  },
   small: {
     dimension: linearScale('1rem', '1.5rem'),
   },

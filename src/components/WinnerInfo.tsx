@@ -11,6 +11,7 @@ import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
 import { Anchor } from './Anchor'
 import { Tag } from './Tag'
+import { AgencyIdentifier } from './AgencyIdentifier'
 
 type WinnerInfoProps = ViewProps & {
   award: AwardIconProps['type']
@@ -156,19 +157,11 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
               <dl>
                 <dt css={{ fontWeight: t.fw.Semibold }}>Creative Agency</dt>
                 <dd>
-                  <Anchor href={entrantHref!} css={{ display: 'inline-block' }}>
-                    <div
-                      css={mq({
-                        display: 'grid',
-                        gridTemplateColumns: 'auto 1fr',
-                        gap: linearScale('0.25rem', '0.5rem', 'space'),
-                        alignItems: 'center',
-                      })}
-                    >
-                      <Avatar variant="small" fluid={entrantAvatarFluid} />
-                      {entrantName}
-                    </div>
-                  </Anchor>
+                  <AgencyIdentifier
+                    href={entrantHref!}
+                    name={entrantName!}
+                    avatarFluid={entrantAvatarFluid}
+                  />
                 </dd>
               </dl>
             </>
