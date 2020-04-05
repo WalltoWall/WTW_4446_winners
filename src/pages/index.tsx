@@ -60,21 +60,31 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             <Anchor href="/winners/">Best of Show Winners</Anchor>
           </Heading>
           <CardList columns={[1, 2]}>
-            {bestOfEntries.map((winner) => (
-              <WinnerCard
-                key={winner?.fields?.url}
-                variant="featuredWide"
-                href={winner?.fields?.url!}
-                title={winner?.data?.name}
-                subtitle={winner?.data?.special_award}
-                award={winner?.data?.award?.toLowerCase?.() as Award}
-                imageFluid={
-                  winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                    ?.fluid
-                }
-                isSpecialAward={true}
-              />
-            ))}
+            {bestOfEntries.map((winner) => {
+              const agency = winner?.data?.agency?.[0]
+
+              return (
+                <WinnerCard
+                  key={winner?.fields?.url}
+                  variant="featuredWide"
+                  href={winner?.fields?.url!}
+                  title={winner?.data?.name}
+                  subtitle={winner?.data?.special_award}
+                  award={winner?.data?.award?.toLowerCase?.() as Award}
+                  imageFluid={
+                    winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                  isSpecialAward={true}
+                  agencyName={agency?.data?.name!}
+                  agencyHref={agency?.fields?.url!}
+                  agencyAvatarFluid={
+                    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                />
+              )
+            })}
           </CardList>
         </div>
       </BoundedBox>
@@ -117,21 +127,31 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
           </Heading>
           <CardList columns={[1, 3]}>
-            {judgesEntries.map((winner) => (
-              <WinnerCard
-                key={winner?.fields?.url}
-                variant="featured"
-                href={winner?.fields?.url!}
-                title={winner?.data?.name}
-                subtitle={winner?.data?.special_award}
-                award={winner?.data?.award?.toLowerCase?.() as Award}
-                imageFluid={
-                  winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                    ?.fluid
-                }
-                isSpecialAward={true}
-              />
-            ))}
+            {judgesEntries.map((winner) => {
+              const agency = winner?.data?.agency?.[0]
+
+              return (
+                <WinnerCard
+                  key={winner?.fields?.url}
+                  variant="featured"
+                  href={winner?.fields?.url!}
+                  title={winner?.data?.name}
+                  subtitle={winner?.data?.special_award}
+                  award={winner?.data?.award?.toLowerCase?.() as Award}
+                  imageFluid={
+                    winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                  isSpecialAward={true}
+                  agencyName={agency?.data?.name!}
+                  agencyHref={agency?.fields?.url!}
+                  agencyAvatarFluid={
+                    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                />
+              )
+            })}
           </CardList>
         </div>
       </BoundedBox>
@@ -208,6 +228,23 @@ export const query = graphql`
       name
       award
       special_award
+      agency {
+        fields {
+          url
+        }
+        data {
+          name
+          avatar {
+            localFiles {
+              childCloudinaryAsset {
+                fluid(maxWidth: 1000) {
+                  ...CloudinaryAssetFluid
+                }
+              }
+            }
+          }
+        }
+      }
       images {
         localFiles {
           childCloudinaryAsset {
