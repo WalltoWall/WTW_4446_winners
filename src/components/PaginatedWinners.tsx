@@ -1,23 +1,23 @@
 import React from 'react'
 
 import { Winner } from '../types'
-import { useLoadMore } from '../hooks/useLoadMore'
+import { useLoadMore, UseLoadMoreArgs } from '../hooks/useLoadMore'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { CardList } from './CardList'
 import { WinnerCard } from './WinnerCard'
 import { Button } from './Button'
 
-type PaginatedWinnersProps = React.ComponentProps<typeof View> & {
-  firstPageId: Parameters<typeof useLoadMore>[0]['firstPageId']
-  initialPage: Parameters<typeof useLoadMore>[0]['initialPage']
+export type PaginatedWinnersProps = ViewProps & {
+  firstPageId: UseLoadMoreArgs['firstPageId']
+  initialPage: UseLoadMoreArgs['initialPage']
 }
 
-export const PaginatedWinners: React.FC<PaginatedWinnersProps> = ({
+export const PaginatedWinners = ({
   initialPage,
   firstPageId,
-}) => {
+}: PaginatedWinnersProps) => {
   const [{ latestPage, items: winners }, loadMore] = useLoadMore({
     firstPageId,
     initialPage,
@@ -44,7 +44,7 @@ export const PaginatedWinners: React.FC<PaginatedWinnersProps> = ({
           />
         ))}
       </CardList>
-      <View
+      <div
         css={mq({
           display: 'grid',
           gap: linearScale('0.375rem', '0.875rem'),
@@ -54,8 +54,7 @@ export const PaginatedWinners: React.FC<PaginatedWinnersProps> = ({
         <Button disabled={!hasNextPage} onClick={loadMore}>
           {hasNextPage ? 'Load more' : "You've reached the end!"}
         </Button>
-        <View
-          as="p"
+        <p
           css={mq({
             color: t.c.Gray60,
             fontSize: t.f['b-'],
@@ -63,8 +62,8 @@ export const PaginatedWinners: React.FC<PaginatedWinnersProps> = ({
           })}
         >
           Showing {winners.length} of {latestPage?.collection?.nodeCount ?? 0}
-        </View>
-      </View>
+        </p>
+      </div>
     </View>
   )
 }

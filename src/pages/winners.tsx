@@ -6,19 +6,18 @@ import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 import { WinnersPageQuery } from '../graphqlTypes'
 
 import { t, mq, linearScale } from '../theme'
-import { Layout } from '../components/Layout'
-import { View } from '../components/View'
+import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { FormSelect } from '../components/FormSelect'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 
-type WinnersPageProps = React.ComponentProps<typeof Layout> & {
+export type WinnersPage = LayoutProps & {
   data: WinnersPageQuery
 }
 
-export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
+export const WinnersPage = ({ data, ...props }: WinnersPage) => {
   const initialPage: WinnersPageQuery['paginatedCollectionPage'] | undefined =
     data?.paginatedCollectionPage
   const firstPages = data.allPaginatedCollectionPage.nodes
@@ -31,7 +30,7 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
   }, [])
 
   return (
-    <Layout>
+    <Layout {...props}>
       <Helmet>
         <title>Winners</title>
       </Helmet>
@@ -42,7 +41,7 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
           paddingBottom: linearScale('1.5rem', '3.5rem'),
         })}
       >
-        <View
+        <div
           css={mq({
             display: 'grid',
             gap: linearScale('0.6875rem', '1.375rem', 'space'),
@@ -51,7 +50,7 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             Winners
           </Heading>
-          <View
+          <div
             css={mq({
               display: 'grid',
               gap: linearScale('0.625rem', '1.875rem', 'space'),
@@ -74,8 +73,8 @@ export const WinnersPage: React.FC<WinnersPageProps> = ({ data }) => {
               ))}
             </FormSelect>
             <FormSearchInput css={mq({ gridColumn: ['1 / -1', 'auto'] })} />
-          </View>
-        </View>
+          </div>
+        </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
         <PaginatedWinners

@@ -1,15 +1,14 @@
 import React from 'react'
 
 import { t, mq } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { BoundedBox } from './BoundedBox'
 
-type HeroProps = React.ComponentProps<typeof View>
+export type HeroProps = ViewProps
 
-export const Hero: React.FC<HeroProps> = ({ children, ...props }) => (
+export const Hero = ({ children, ...props }: HeroProps) => (
   <View
-    as="section"
     {...props}
     css={mq({
       display: 'grid',
@@ -24,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ children, ...props }) => (
       css={{ backgroundColor: t.c.Black, height: '100%' }}
     />
     <BoundedBox css={{ textAlign: 'center' }}>
-      <View
+      <div
         css={{
           maxWidth: '45ch',
           marginLeft: 'auto',
@@ -33,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({ children, ...props }) => (
         }}
       >
         {children}
-      </View>
+      </div>
     </BoundedBox>
   </View>
 )

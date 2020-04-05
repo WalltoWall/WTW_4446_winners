@@ -44,11 +44,11 @@ export type AirtableAdPersonConnectionGroupArgs = {
 };
 
 export type AirtableAdPersonData = {
+  agency?: Maybe<Array<Maybe<AirtableAgency>>>;
   award?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Date']>;
   name?: Maybe<Scalars['String']>;
-  agency?: Maybe<Array<Maybe<AirtableAgency>>>;
   description?: Maybe<AirtableFieldtextmarkdown>;
   photo?: Maybe<AirtableFieldfileNode>;
 };
@@ -62,11 +62,11 @@ export type AirtableAdPersonDataYearArgs = {
 };
 
 export type AirtableAdPersonDataFilterInput = {
+  agency?: Maybe<AirtableAgencyFilterListInput>;
   award?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   year?: Maybe<DateQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
-  agency?: Maybe<AirtableAgencyFilterListInput>;
   description?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   photo?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
@@ -171,10 +171,6 @@ export enum AirtableAdPersonFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataAward = 'data___award',
-  DataTitle = 'data___title',
-  DataYear = 'data___year',
-  DataName = 'data___name',
   DataAgency = 'data___agency',
   DataAgencyId = 'data___agency___id',
   DataAgencyParentId = 'data___agency___parent___id',
@@ -193,9 +189,9 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyTable = 'data___agency___table',
   DataAgencyRecordId = 'data___agency___recordId',
   DataAgencyQueryName = 'data___agency___queryName',
-  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataName = 'data___agency___data___name',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
+  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataWebsite = 'data___agency___data___website',
@@ -204,6 +200,10 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
+  DataAward = 'data___award',
+  DataTitle = 'data___title',
+  DataYear = 'data___year',
+  DataName = 'data___name',
   DataDescriptionId = 'data___description___id',
   DataDescriptionParentId = 'data___description___parent___id',
   DataDescriptionParentChildren = 'data___description___parent___children',
@@ -353,9 +353,9 @@ export type AirtableAgencyConnectionGroupArgs = {
 };
 
 export type AirtableAgencyData = {
-  created_at?: Maybe<Scalars['Date']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
+  created_at?: Maybe<Scalars['Date']>;
   Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   website?: Maybe<Scalars['String']>;
@@ -367,14 +367,6 @@ export type AirtableAgencyData = {
 };
 
 
-export type AirtableAgencyDataCreated_AtArgs = {
-  formatString?: Maybe<Scalars['String']>;
-  fromNow?: Maybe<Scalars['Boolean']>;
-  difference?: Maybe<Scalars['String']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-
 export type AirtableAgencyDataUpdated_AtArgs = {
   formatString?: Maybe<Scalars['String']>;
   fromNow?: Maybe<Scalars['Boolean']>;
@@ -382,10 +374,18 @@ export type AirtableAgencyDataUpdated_AtArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
+
+export type AirtableAgencyDataCreated_AtArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
 export type AirtableAgencyDataFilterInput = {
-  created_at?: Maybe<DateQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
+  created_at?: Maybe<DateQueryOperatorInput>;
   Ad_People?: Maybe<StringQueryOperatorInput>;
   Entries?: Maybe<StringQueryOperatorInput>;
   website?: Maybe<StringQueryOperatorInput>;
@@ -496,9 +496,9 @@ export enum AirtableAgencyFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataCreatedAt = 'data___created_at',
   DataName = 'data___name',
   DataUpdatedAt = 'data___updated_at',
+  DataCreatedAt = 'data___created_at',
   DataAdPeople = 'data___Ad_People',
   DataEntries = 'data___Entries',
   DataWebsite = 'data___website',
@@ -1857,9 +1857,9 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyTable = 'data___agency___table',
   DataAgencyRecordId = 'data___agency___recordId',
   DataAgencyQueryName = 'data___agency___queryName',
-  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataName = 'data___agency___data___name',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
+  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataWebsite = 'data___agency___data___website',

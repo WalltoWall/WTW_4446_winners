@@ -1,13 +1,11 @@
 import React from 'react'
-import GatsbyImage from 'gatsby-image'
-
-import { CloudinaryAssetFluidFragment } from '../graphqlTypes'
+import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { Heading } from './Heading'
 import { Subheading } from './Subheading'
-import { AwardIcon } from './AwardIcon'
+import { AwardIcon, AwardIconProps } from './AwardIcon'
 import { AspectRatio } from './AspectRatio'
 import { Anchor } from './Anchor'
 import { Link } from './Link'
@@ -33,17 +31,17 @@ const variants = {
   },
 } as const
 
-type WinnerCardProps = React.ComponentProps<typeof View> & {
+export type WinnerCardProps = ViewProps & {
   variant?: keyof typeof variants
   href: string
   title?: string
   subtitle?: string
-  award?: React.ComponentProps<typeof AwardIcon>['type'] | null
+  award?: AwardIconProps['type'] | null
   isSpecialAward?: boolean
-  imageFluid?: CloudinaryAssetFluidFragment
+  imageFluid?: FluidObject
 }
 
-export const WinnerCard: React.FC<WinnerCardProps> = ({
+export const WinnerCard = ({
   variant: variantName = 'base',
   href,
   title,
@@ -52,7 +50,7 @@ export const WinnerCard: React.FC<WinnerCardProps> = ({
   isSpecialAward = false,
   imageFluid,
   ...props
-}) => {
+}: WinnerCardProps) => {
   const variant = variants[variantName]
 
   return (
@@ -76,7 +74,7 @@ export const WinnerCard: React.FC<WinnerCardProps> = ({
           )}
         </AspectRatio>
       </Link>
-      <View
+      <div
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
@@ -89,18 +87,20 @@ export const WinnerCard: React.FC<WinnerCardProps> = ({
       >
         {subtitle && isSpecialAward ? (
           <Subheading
-            forwardAs="h4"
+            forwardedAs="h4"
             css={mq({ fontSize: variant.subtitleFontSize })}
           >
             {subtitle}
           </Subheading>
         ) : (
-          <View
-            as="p"
-            css={mq({ color: t.c.Gray60, fontSize: variant.subtitleFontSize })}
+          <p
+            css={mq({
+              color: t.c.Gray60,
+              fontSize: variant.subtitleFontSize,
+            })}
           >
             {subtitle}
-          </View>
+          </p>
         )}
         {title && (
           <Heading as="h3">
@@ -118,7 +118,7 @@ export const WinnerCard: React.FC<WinnerCardProps> = ({
             })}
           />
         )}
-      </View>
+      </div>
     </View>
   )
 }

@@ -64,7 +64,7 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-interface UseLoadMoreArgs {
+export interface UseLoadMoreArgs {
   firstPageId: string
   initialPage?: Partial<ExpandedPageNode>
   directory?: string

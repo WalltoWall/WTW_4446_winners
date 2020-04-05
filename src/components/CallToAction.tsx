@@ -1,43 +1,41 @@
 import React from 'react'
-import { linearScale } from 'styled-system-scale'
 
-import { t, mq } from '../theme'
-import { View } from './View'
-import { BoundedBox } from './BoundedBox'
+import { t, mq, linearScale } from '../theme'
+import { BoundedBox, BoundedBoxProps } from './BoundedBox'
 import { Button } from './Button'
 import { Link } from './Link'
 
-type CallToActionProps = React.ComponentProps<typeof View> & {
+export type CallToActionProps = BoundedBoxProps & {
   buttonHref?: string
   buttonText?: string
 }
 
-export const CallToAction: React.FC<CallToActionProps> = ({
+export const CallToAction = ({
   children,
   buttonHref,
   buttonText = 'Learn more',
   ...props
-}) => (
+}: CallToActionProps) => (
   <BoundedBox
     forwardedAs="section"
     {...props}
     css={{ backgroundColor: t.c.White, textAlign: 'center' }}
   >
-    <View
+    <div
       css={mq({
         display: 'grid',
-        gap: linearScale('0.625rem', '2rem', { count: 3 }),
+        gap: linearScale('0.625rem', '2rem', 'space'),
         justifyItems: 'center',
       })}
     >
-      <View css={mq({ maxWidth: ['45ch', '80ch'], lineHeight: t.lh.Copy })}>
+      <div css={mq({ maxWidth: ['45ch', '80ch'], lineHeight: t.lh.Copy })}>
         {children}
-      </View>
+      </div>
       {buttonHref && (
         <Button as={Link} href={buttonHref}>
           {buttonText}
         </Button>
       )}
-    </View>
+    </div>
   </BoundedBox>
 )

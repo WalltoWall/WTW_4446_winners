@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { t, mq, linearScale } from '../theme'
-import { Link } from './Link'
+import { Link, LinkProps } from './Link'
 
-type TagProps = React.ComponentProps<typeof Link>
+export type TagProps = LinkProps
 
-export const Tag: React.FC<TagProps> = (props) => (
+export const Tag = (props: TagProps) => (
   <Link
     css={mq({
       backgroundColor: t.c.Gray85,

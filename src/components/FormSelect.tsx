@@ -1,16 +1,13 @@
 import React from 'react'
 
 import { mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { FormInput } from './FormInput'
 import { Icon } from './Icon'
 
-type FormSelectProps = React.ComponentProps<typeof View>
+export type FormSelectProps = ViewProps
 
-export const FormSelect: React.FC<FormSelectProps> = ({
-  children,
-  ...props
-}) => (
+export const FormSelect = ({ children, ...props }: FormSelectProps) => (
   <View {...props} css={{ position: 'relative' }}>
     <FormInput
       forwardedAs="select"

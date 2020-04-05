@@ -1,19 +1,19 @@
 import React from 'react'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
-type BoundedBoxProps = React.ComponentProps<typeof View> & {
+export type BoundedBoxProps = ViewProps & {
   maxWidth?: keyof typeof t.sz
-  innerProps?: React.ComponentProps<typeof View>
+  innerProps?: ViewProps
 }
 
-export const BoundedBox: React.FC<BoundedBoxProps> = ({
+export const BoundedBox = ({
   maxWidth,
   innerProps,
   children,
   ...props
-}) => (
+}: BoundedBoxProps) => (
   <View
     {...props}
     css={mq({
@@ -23,7 +23,7 @@ export const BoundedBox: React.FC<BoundedBoxProps> = ({
       paddingBottom: linearScale('2.5rem', '6.25rem'),
     })}
   >
-    <View
+    <div
       {...innerProps}
       css={{
         height: '100%',
@@ -33,6 +33,6 @@ export const BoundedBox: React.FC<BoundedBoxProps> = ({
       }}
     >
       {children}
-    </View>
+    </div>
   </View>
 )

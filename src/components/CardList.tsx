@@ -1,17 +1,17 @@
 import React from 'react'
 
 import { mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
-type CardListProps = React.ComponentProps<typeof View> & {
+export type CardListProps = ViewProps & {
   columns?: number[]
 }
 
-export const CardList: React.FC<CardListProps> = ({
+export const CardList = ({
   children,
   columns = [1],
   ...props
-}) => (
+}: CardListProps) => (
   <View
     as="ul"
     {...props}
@@ -23,9 +23,9 @@ export const CardList: React.FC<CardListProps> = ({
     })}
   >
     {React.Children.map(children, (child, i) => (
-      <View as="li" key={i} css={{ display: 'flex' }}>
+      <li key={i} css={{ display: 'flex' }}>
         {child}
-      </View>
+      </li>
     ))}
   </View>
 )

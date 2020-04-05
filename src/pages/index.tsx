@@ -6,22 +6,21 @@ import { IndexPageQuery } from '../graphqlTypes'
 import { Award } from '../types'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from '../components/View'
 import { WinnerCard } from '../components/WinnerCard'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
-import { Layout } from '../components/Layout'
+import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
 import { CallToAction } from '../components/CallToAction'
 import { CardList } from '../components/CardList'
 import { Hero } from '../components/Hero'
 
-type IndexPageProps = React.ComponentProps<typeof Layout> & {
+export type IndexPage = LayoutProps & {
   data: IndexPageQuery
 }
 
-export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
+export const IndexPage = ({ data, ...props }: IndexPage) => {
   const bestOfEntries = data.bestOfEntries.nodes
   const judgesEntries = data.judgesEntries.nodes
   const adPeople = data.adPeople.nodes
@@ -34,8 +33,8 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
           css={mq({
             fontSize: t.f.xl,
             lineHeight: t.lh.Title,
-            marginTop: linearScale('2.25rem', '3rem'),
-            marginBottom: linearScale('1rem', '1.5rem'),
+            marginTop: linearScale('2.25rem', '3rem', 'space'),
+            marginBottom: linearScale('1rem', '1.5rem', 'space'),
             color: t.c.Black,
             ...t.boxStyles.firstLastNoMargin,
           })}
@@ -44,15 +43,18 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
             2020 Pele Awards Winners Have Been Announced!
           </Anchor>
         </Heading>
-        <View as="p">
+        <p>
           This year’s Pele Awards Winners have been selected. Have a look at the
           very best design and advertising work in Hawai‘i. Mahalo to all
           participants and congratulations to all the winners.
-        </View>
+        </p>
       </Hero>
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
-        <View
-          css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/winners/">Best of Show Winners</Anchor>
@@ -74,11 +76,14 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
               />
             ))}
           </CardList>
-        </View>
+        </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
-        <View
-          css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/ad-people/">People of the Year</Anchor>
@@ -96,15 +101,17 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
                   person?.data?.photo?.localFiles?.[0]?.childCloudinaryAsset
                     ?.fluid
                 }
-                isSpecialAward={true}
               />
             ))}
           </CardList>
-        </View>
+        </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
-        <View
-          css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
@@ -126,22 +133,22 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
               />
             ))}
           </CardList>
-        </View>
+        </div>
       </BoundedBox>
       <CallToAction buttonText="Learn more" buttonHref={EVENT_SITE_URL}>
         <Heading
           css={mq({
             fontSize: t.f.xl,
-            marginBottom: linearScale('0.375rem', '1rem'),
+            marginBottom: linearScale('0.375rem', '1rem', 'space'),
           })}
         >
           Get ready to enter for 2021!
         </Heading>
-        <View as="p">
+        <p>
           Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
           Curabitur blandit tempus porttitor. Maecenas sed diam eget risus
           varius blandit sit amet non magna. Maecenas faucibus mollis interdum.
-        </View>
+        </p>
       </CallToAction>
     </Layout>
   )
