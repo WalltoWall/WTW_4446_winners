@@ -5,20 +5,16 @@ import { Helmet } from 'react-helmet-async'
 import { AdPeoplePageQuery } from '../graphqlTypes'
 
 import { t, mq, linearScale } from '../theme'
-import { Layout } from '../components/Layout'
+import { Layout, LayoutProps } from '../components/Layout'
 import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
 import { LargePersonCard } from '../components/LargePersonCard'
-import { View } from '../components/View'
 
-type AdPeoplePageProps = React.ComponentProps<typeof Layout> & {
+export type AdPeoplePage = LayoutProps & {
   data: AdPeoplePageQuery
 }
 
-export const AdPeoplePage: React.FC<AdPeoplePageProps> = ({
-  data,
-  ...props
-}) => {
+export const AdPeoplePage = ({ data, ...props }: AdPeoplePage) => {
   const people = data.allAirtableAdPerson.nodes
 
   return (
@@ -38,15 +34,14 @@ export const AdPeoplePage: React.FC<AdPeoplePageProps> = ({
         </Heading>
       </BoundedBox>
       <BoundedBox maxWidth="Large" css={{ backgroundColor: t.c.Gray95 }}>
-        <View
-          as="ul"
+        <ul
           css={mq({
             display: 'grid',
             gap: linearScale('0.875rem', '1.5rem', 'space'),
           })}
         >
           {people.map((person) => (
-            <View key={person.data?.name} as="li">
+            <li key={person.data?.name}>
               <LargePersonCard
                 name={person.data?.name!}
                 title={person.data?.title!}
@@ -61,9 +56,9 @@ export const AdPeoplePage: React.FC<AdPeoplePageProps> = ({
                     ?.fluid
                 }
               />
-            </View>
+            </li>
           ))}
-        </View>
+        </ul>
       </BoundedBox>
     </Layout>
   )

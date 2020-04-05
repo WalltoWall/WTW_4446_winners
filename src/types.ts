@@ -1,4 +1,4 @@
-import { CloudinaryAssetFluidFragment } from './graphqlTypes'
+import { FluidObject } from 'gatsby-image'
 
 export type Award = 'gold' | 'silver' | 'bronze'
 
@@ -9,5 +9,5 @@ export interface Winner {
   name?: string
   award?: Award
   category?: { line_1: string; line_2: string }
-  image?: CloudinaryAssetFluidFragment
+  image?: FluidObject
 }

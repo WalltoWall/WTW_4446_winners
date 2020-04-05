@@ -2,15 +2,11 @@ import React from 'react'
 import { a, useSpring, config } from 'react-spring'
 import delay from 'delay'
 
-import { View } from './View'
+import { View, ViewProps } from './View'
 
-type HamburgerIconProps = React.ComponentProps<typeof View> & {
-  isOpen?: boolean
-}
+type BarProps = ViewProps
 
-type BarProps = React.ComponentProps<typeof View>
-
-const Bar: React.FC<BarProps> = (props) => (
+const Bar = (props: BarProps) => (
   <View
     as={a(View)}
     {...props}
@@ -23,10 +19,14 @@ const Bar: React.FC<BarProps> = (props) => (
   />
 )
 
-export const HamburgerIcon: React.FC<HamburgerIconProps> = ({
+export type HamburgerIconProps = ViewProps & {
+  isOpen?: boolean
+}
+
+export const HamburgerIcon = ({
   isOpen = false,
   ...props
-}) => {
+}: HamburgerIconProps) => {
   const topSpring = useSpring({
     from: {
       y: `translateY(${isOpen ? 45 : 0}%)`,

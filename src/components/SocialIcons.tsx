@@ -1,18 +1,14 @@
 import React from 'react'
 
 import { mq, linearScale } from '../theme'
-import { View } from './View'
-import { SocialAnchor } from './SocialAnchor'
+import { View, ViewProps } from './View'
+import { SocialAnchor, SocialAnchorProps } from './SocialAnchor'
 import { Icon } from './Icon'
 
-type SocialIconProps = React.ComponentProps<typeof SocialAnchor>
+export type SocialIconProps = SocialAnchorProps
 
-const SocialIcon: React.FC<SocialIconProps> = ({
-  platform,
-  handle,
-  ...props
-}) => (
-  <SocialAnchor platform={platform} handle={handle} {...props}>
+const SocialIconAnchor = ({ platform, ...props }: SocialIconProps) => (
+  <SocialAnchor platform={platform} {...props}>
     <Icon
       name={platform}
       css={mq({
@@ -23,19 +19,19 @@ const SocialIcon: React.FC<SocialIconProps> = ({
   </SocialAnchor>
 )
 
-type SocialIconsProps = React.ComponentProps<typeof View> & {
+export type SocialIconsProps = ViewProps & {
   facebookHandle?: string
   instagramHandle?: string
   twitterHandle?: string
   linkedinHandle?: string
 }
 
-export const SocialIcons: React.FC<SocialIconsProps> = ({
+export const SocialIcons = ({
   facebookHandle,
   instagramHandle,
   twitterHandle,
   linkedinHandle,
-}) => (
+}: SocialIconsProps) => (
   <View
     css={mq({
       display: 'grid',
@@ -45,14 +41,16 @@ export const SocialIcons: React.FC<SocialIconsProps> = ({
     })}
   >
     {facebookHandle && (
-      <SocialIcon platform="facebook" handle={facebookHandle} />
+      <SocialIconAnchor platform="facebook" handle={facebookHandle} />
     )}
     {instagramHandle && (
-      <SocialIcon platform="instagram" handle={instagramHandle} />
+      <SocialIconAnchor platform="instagram" handle={instagramHandle} />
     )}
-    {twitterHandle && <SocialIcon platform="twitter" handle={twitterHandle} />}
+    {twitterHandle && (
+      <SocialIconAnchor platform="twitter" handle={twitterHandle} />
+    )}
     {linkedinHandle && (
-      <SocialIcon platform="linkedin" handle={linkedinHandle} />
+      <SocialIconAnchor platform="linkedin" handle={linkedinHandle} />
     )}
   </View>
 )

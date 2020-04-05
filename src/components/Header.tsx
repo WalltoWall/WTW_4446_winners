@@ -3,11 +3,11 @@ import React, { useState, useCallback } from 'react'
 import { navigation, EVENT_SITE_URL } from '../constants'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
 import { HamburgerIcon } from './HamburgerIcon'
-import { Anchor } from './Anchor'
+import { Anchor, AnchorProps } from './Anchor'
 import { Link } from './Link'
 import { Overlay } from './Overlay'
 import { Button } from './Button'
@@ -15,17 +15,12 @@ import { Icon } from './Icon'
 import { SVG } from './SVG'
 import { ReactComponent as AssetLogo2020SVG } from '../assets/logo-2020.svg'
 
-type NavItemProps = React.ComponentProps<typeof View> & {
-  href: string
-  target?: string
+type NavItemProps = ViewProps & {
+  href: AnchorProps['href']
+  target?: AnchorProps['target']
 }
 
-const NavItem: React.FC<NavItemProps> = ({
-  href,
-  target,
-  children,
-  ...props
-}) => (
+const NavItem = ({ href, target, children, ...props }: NavItemProps) => (
   <View as="li" {...props} css={mq({ textAlign: 'center' })}>
     <Anchor
       href={href}
@@ -37,17 +32,20 @@ const NavItem: React.FC<NavItemProps> = ({
   </View>
 )
 
-type HeaderProps = React.ComponentProps<typeof View>
+export type HeaderProps = ViewProps
 
-export const Header: React.FC<HeaderProps> = (props) => {
+export const Header = (props: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = useCallback(() => setIsMenuOpen((state) => !state), [])
   const closeMenu = useCallback(() => setIsMenuOpen(false), [])
 
   return (
-    <View as="header" css={{ position: 'relative', zIndex: t.z.Header }}>
+    <View
+      as="header"
+      {...props}
+      css={{ position: 'relative', zIndex: t.z.Header }}
+    >
       <BoundedBox
-        {...props}
         css={mq({
           backgroundColor: t.c.White,
           boxShadow: `0 1px 0 rgba(0, 0, 0, ${isMenuOpen ? 0 : 0.1})`,
@@ -60,7 +58,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           transitionProperty: 'boxShadow',
         })}
       >
-        <View
+        <div
           css={mq({
             display: 'grid',
             gridTemplateColumns: '1fr auto 1fr',
@@ -78,7 +76,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               alignItems: 'center',
             }}
           >
-            <View
+            <div
               css={mq({
                 borderRadius: '50%',
                 marginLeft: '-0.125rem',
@@ -88,7 +86,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               })}
             >
               <SVG svg={AssetLogo2020SVG} x={1} y={1} css={{ width: '100%' }} />
-            </View>
+            </div>
             <Heading
               css={mq({
                 fontSize: t.f.m,
@@ -108,8 +106,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           >
             <Anchor href="/">Pele Awards Winners</Anchor>
           </Heading>
-          <View
-            as="ul"
+          <ul
             css={mq({
               display: ['none', 'grid'],
               gap: '2.5rem',
@@ -121,10 +118,9 @@ export const Header: React.FC<HeaderProps> = (props) => {
                 {item.name}
               </NavItem>
             ))}
-          </View>
-          <View css={{ justifySelf: 'end' }}>
-            <View
-              as="button"
+          </ul>
+          <div css={{ justifySelf: 'end' }}>
+            <button
               onClick={toggleMenu}
               css={mq({
                 width: '1.5rem',
@@ -133,8 +129,8 @@ export const Header: React.FC<HeaderProps> = (props) => {
               })}
             >
               <HamburgerIcon isOpen={isMenuOpen} css={{ height: '100%' }} />
-            </View>
-            <View
+            </button>
+            <div
               css={mq({
                 display: ['none', null, 'grid'],
                 gap: '2.125rem',
@@ -142,21 +138,18 @@ export const Header: React.FC<HeaderProps> = (props) => {
                 alignItems: 'center',
               })}
             >
-              <View as="button">
+              <button>
                 <Icon name="search" css={{ width: '1.25rem' }} />
-              </View>
+              </button>
               <Button as={Link} href={EVENT_SITE_URL}>
                 Enter{' '}
-                <View
-                  as="span"
-                  css={mq({ display: ['none', null, null, 'inline'] })}
-                >
+                <span css={mq({ display: ['none', null, null, 'inline'] })}>
                   the 2021 Pele Awards
-                </View>
+                </span>
               </Button>
-            </View>
-          </View>
-        </View>
+            </div>
+          </div>
+        </div>
       </BoundedBox>
 
       {/* Mobile Nav */}

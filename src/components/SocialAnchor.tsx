@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { View } from './View'
-import { Anchor } from './Anchor'
+import { Anchor, AnchorProps } from './Anchor'
 
 const platforms = {
   facebook: (handle: string) => `https://facebook.com/${handle}/`,
@@ -10,17 +9,16 @@ const platforms = {
   linkedin: (handle: string) => `https://linkedin.com/company/${handle}/`,
 }
 
-type SocialLinkProps = React.ComponentProps<typeof View> & {
+export type SocialAnchorProps = Omit<AnchorProps, 'href'> & {
   platform: keyof typeof platforms
   handle: string
-  target?: React.ComponentProps<typeof Anchor>['target']
 }
 
-export const SocialAnchor: React.FC<SocialLinkProps> = ({
+export const SocialAnchor = ({
   platform,
   handle,
   ...props
-}) => {
+}: SocialAnchorProps) => {
   const href = platforms[platform](handle)
 
   return <Anchor href={href} {...props} />
