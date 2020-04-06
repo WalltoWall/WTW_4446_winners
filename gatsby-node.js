@@ -305,14 +305,19 @@ exports.createPages = async (gatsbyContext) => {
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
-  const airtableNodeToSlug = (node) =>
+  const airtableNodeToSlug = (node, withRecordIdSuffix = true) =>
     node.data.name
-      ? `${slug(node.data.name.toLowerCase())}-${node.recordId}`
+      ? [
+          slug(node.data.name.toLowerCase()),
+          withRecordIdSuffix ? node.recordId : false,
+        ]
+          .filter(Boolean)
+          .join('-')
       : node.recordId
 
   switch (node.internal.type) {
     case 'AirtableAgency': {
-      const url = `/agencies/${airtableNodeToSlug(node)}/`
+      const url = `/agencies/${airtableNodeToSlug(node, false)}/`
       createNodeField({ node, name: 'url', value: url })
       break
     }
