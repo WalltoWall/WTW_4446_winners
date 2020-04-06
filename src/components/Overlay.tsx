@@ -1,16 +1,13 @@
 import React from 'react'
 
 import { t } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
-type OverlayProps = React.ComponentProps<typeof View> & {
+export type OverlayProps = ViewProps & {
   isActive?: boolean
 }
 
-export const Overlay: React.FC<OverlayProps> = ({
-  isActive = true,
-  ...props
-}) => (
+export const Overlay = ({ isActive = true, ...props }: OverlayProps) => (
   <View
     {...props}
     css={{

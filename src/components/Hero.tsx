@@ -2,26 +2,25 @@ import React from 'react'
 import { FluidObject } from 'gatsby-image'
 
 import { t, mq } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { BoundedBox } from './BoundedBox'
 import { Img } from './Img'
 
-export type HeroProps = View & {
+export type HeroProps = ViewProps & {
   imageFluid?: FluidObject
   imageAlt?: string
   imageSrc?: string
 }
 
-export const Hero: React.FC<HeroProps> = ({
+export const Hero = ({
   children,
+  imageSrc,
   imageFluid,
   imageAlt,
-  imageSrc,
   ...props
-}) => (
+}: HeroProps) => (
   <View
-    as="section"
     {...props}
     css={mq({
       display: 'grid',
@@ -35,11 +34,10 @@ export const Hero: React.FC<HeroProps> = ({
       y={5}
       css={{ backgroundColor: t.c.Black, height: '100%' }}
     >
-      {/* TODO: should be changed to gatsby-image later */}
       {imageSrc && <Img src={imageSrc} alt={imageAlt} />}
     </AspectRatio>
     <BoundedBox css={{ textAlign: 'center' }}>
-      <View
+      <div
         css={{
           maxWidth: '45ch',
           marginLeft: 'auto',
@@ -48,7 +46,7 @@ export const Hero: React.FC<HeroProps> = ({
         }}
       >
         {children}
-      </View>
+      </div>
     </BoundedBox>
   </View>
 )

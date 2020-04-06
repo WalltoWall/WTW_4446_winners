@@ -1,26 +1,24 @@
 import React from 'react'
-import GatsbyImage from 'gatsby-image'
-
-import { CloudinaryAssetFluidFragment } from '../graphqlTypes'
+import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { Link } from './Link'
 import { Heading } from './Heading'
 import { Subheading } from './Subheading'
 import { Anchor } from './Anchor'
 
-type PersonCardProps = React.ComponentProps<typeof View> & {
+export type PersonCardProps = ViewProps & {
   href: string
   name: string
   title: string
   agencyName?: string
   award: string
-  imageFluid?: CloudinaryAssetFluidFragment
+  imageFluid?: FluidObject
 }
 
-export const PersonCard: React.FC<PersonCardProps> = ({
+export const PersonCard = ({
   href,
   name,
   title,
@@ -28,7 +26,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
   award,
   imageFluid,
   ...props
-}) => (
+}: PersonCardProps) => (
   <View
     {...props}
     css={mq({
@@ -49,7 +47,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({
         )}
       </AspectRatio>
     </Link>
-    <View
+    <div
       css={mq({
         display: 'grid',
         gap: linearScale('0.75rem', '1.5rem'),
@@ -62,10 +60,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({
       <Heading as="h3">
         <Anchor href={href}>{name}</Anchor>
       </Heading>
-      <View css={{ lineHeight: t.lh.Title }}>
-        <View as="p">{title}</View>
-        <View as="p">{agencyName}</View>
-      </View>
-    </View>
+      <div css={{ lineHeight: t.lh.Title }}>
+        <p>{title}</p>
+        <p>{agencyName}</p>
+      </div>
+    </div>
   </View>
 )

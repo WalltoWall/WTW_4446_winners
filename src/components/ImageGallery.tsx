@@ -1,24 +1,19 @@
 import React, { useState } from 'react'
-import GatsbyImage from 'gatsby-image'
+import GatsbyImage, { FluidObject } from 'gatsby-image'
+import { negateScale } from 'styled-system-scale'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import { CloudinaryAssetFluidFragment } from '../graphqlTypes'
-
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
-import { negateScale } from 'styled-system-scale'
 
 const ASPECT_RATIO = { x: [4, 16], y: [3, 9] }
 
-type ImageGalleryProps = React.ComponentProps<typeof View> & {
-  images: CloudinaryAssetFluidFragment[]
+export type ImageGalleryProps = ViewProps & {
+  images: FluidObject[]
 }
 
-export const ImageGallery: React.FC<ImageGalleryProps> = ({
-  images,
-  ...props
-}) => {
+export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeImage = images[activeIndex]
   const hasMultipleImages = images.length > 1
@@ -36,8 +31,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
         <GatsbyImage fluid={activeImage} css={{ height: '100%' }} />
       </AspectRatio>
       {hasMultipleImages && (
-        <View
-          as="ul"
+        <ul
           css={mq({
             display: 'flex',
             justifyContent: 'center',
@@ -47,16 +41,14 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
           })}
         >
           {images.map((image, i) => (
-            <View
-              as="li"
+            <li
               key={image.src}
               css={mq({
                 marginRight: linearScale('0.5rem', '1.625rem'),
                 marginBottom: linearScale('0.5rem', '1.625rem'),
               })}
             >
-              <View
-                as="button"
+              <button
                 onClick={() => setActiveIndex(i)}
                 css={mq({
                   borderColor: activeIndex === i ? t.c.Gray60 : t.c.White,
@@ -68,7 +60,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                   },
                 })}
               >
-                <VisuallyHidden>Image ${i + 1}</VisuallyHidden>
+                <VisuallyHidden>Display image ${i + 1}</VisuallyHidden>
                 <AspectRatio
                   x={ASPECT_RATIO.x}
                   y={ASPECT_RATIO.y}
@@ -79,10 +71,10 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                 >
                   <GatsbyImage fluid={image} css={{ height: '100%' }} />
                 </AspectRatio>
-              </View>
-            </View>
+              </button>
+            </li>
           ))}
-        </View>
+        </ul>
       )}
     </View>
   )

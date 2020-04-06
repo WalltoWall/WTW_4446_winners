@@ -1,19 +1,19 @@
 import React from 'react'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { FormInput } from './FormInput'
 import { Icon } from './Icon'
 
-type FormSearchInputProps = React.ComponentProps<typeof View> & {
+export type FormSearchInputProps = ViewProps & {
   placeholder?: string
 }
 
-export const FormSearchInput: React.FC<FormSearchInputProps> = ({
+export const FormSearchInput = ({
   children,
   placeholder = 'Search…',
   ...props
-}) => (
+}: FormSearchInputProps) => (
   <View {...props} css={{ position: 'relative' }}>
     <FormInput
       placeholder={placeholder}

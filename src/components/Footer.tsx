@@ -4,22 +4,17 @@ import { negateScale } from 'styled-system-scale'
 import { navigation } from '../constants'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
-import { Anchor } from './Anchor'
+import { Anchor, AnchorProps } from './Anchor'
 
-type NavItemProps = React.ComponentProps<typeof View> & {
-  href: string
-  target?: string
+type NavItemProps = ViewProps & {
+  href: AnchorProps['href']
+  target?: AnchorProps['target']
 }
 
-const NavItem: React.FC<NavItemProps> = ({
-  href,
-  target,
-  children,
-  ...props
-}) => (
+const NavItem = ({ href, target, children, ...props }: NavItemProps) => (
   <View
     as="li"
     {...props}
@@ -35,9 +30,9 @@ const NavItem: React.FC<NavItemProps> = ({
   </View>
 )
 
-type FooterProps = React.ComponentProps<typeof View>
+export type FooterProps = ViewProps
 
-export const Footer: React.FC<FooterProps> = (props) => (
+export const Footer = (props: FooterProps) => (
   <BoundedBox
     forwardedAs="footer"
     {...props}

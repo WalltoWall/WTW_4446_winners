@@ -6,11 +6,10 @@ import { IndexPageQuery } from '../graphqlTypes'
 import { Award } from '../types'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from '../components/View'
 import { WinnerCard } from '../components/WinnerCard'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
-import { Layout } from '../components/Layout'
+import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
 import { CardList } from '../components/CardList'
@@ -48,10 +47,11 @@ const sliceData = {
   },
 }
 
-type IndexPageProps = React.ComponentProps<typeof Layout> & {
+export type IndexPage = LayoutProps & {
   data: IndexPageQuery
 }
-export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
+
+export const IndexPage = ({ data, ...props }: IndexPage) => {
   const bestOfEntries = data.bestOfEntries.nodes
   const judgesEntries = data.judgesEntries.nodes
   const adPeople = data.adPeople.nodes
@@ -65,34 +65,50 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
       />
 
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
-        <View
-          css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/winners/">Best of Show Winners</Anchor>
           </Heading>
           <CardList columns={[1, 2]}>
-            {bestOfEntries.map(winner => (
-              <WinnerCard
-                key={winner?.fields?.url}
-                variant="featuredWide"
-                href={winner?.fields?.url!}
-                title={winner?.data?.name}
-                subtitle={winner?.data?.special_award}
-                award={winner?.data?.award?.toLowerCase?.() as Award}
-                imageFluid={
-                  winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                    ?.fluid
-                }
-                isSpecialAward={true}
-              />
-            ))}
+            {bestOfEntries.map(winner => {
+              const agency = winner?.data?.agency?.[0]
+
+              return (
+                <WinnerCard
+                  key={winner?.fields?.url}
+                  variant="featuredWide"
+                  href={winner?.fields?.url!}
+                  title={winner?.data?.name}
+                  subtitle={winner?.data?.special_award}
+                  award={winner?.data?.award?.toLowerCase?.() as Award}
+                  imageFluid={
+                    winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                  isSpecialAward={true}
+                  agencyName={agency?.data?.name!}
+                  agencyHref={agency?.fields?.url!}
+                  agencyAvatarFluid={
+                    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                />
+              )
+            })}
           </CardList>
-        </View>
+        </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
-        <View
-          css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/ad-people/">People of the Year</Anchor>
@@ -110,37 +126,49 @@ export const IndexPage: React.FC<IndexPageProps> = ({ data, ...props }) => {
                   person?.data?.photo?.localFiles?.[0]?.childCloudinaryAsset
                     ?.fluid
                 }
-                isSpecialAward={true}
               />
             ))}
           </CardList>
-        </View>
+        </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
-        <View
-          css={mq({ display: 'grid', gap: linearScale('0.625rem', '1.75rem') })}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
         >
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
           </Heading>
           <CardList columns={[1, 3]}>
-            {judgesEntries.map(winner => (
-              <WinnerCard
-                key={winner?.fields?.url}
-                variant="featured"
-                href={winner?.fields?.url!}
-                title={winner?.data?.name}
-                subtitle={winner?.data?.special_award}
-                award={winner?.data?.award?.toLowerCase?.() as Award}
-                imageFluid={
-                  winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                    ?.fluid
-                }
-                isSpecialAward={true}
-              />
-            ))}
+            {judgesEntries.map(winner => {
+              const agency = winner?.data?.agency?.[0]
+
+              return (
+                <WinnerCard
+                  key={winner?.fields?.url}
+                  variant="featured"
+                  href={winner?.fields?.url!}
+                  title={winner?.data?.name}
+                  subtitle={winner?.data?.special_award}
+                  award={winner?.data?.award?.toLowerCase?.() as Award}
+                  imageFluid={
+                    winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                  isSpecialAward={true}
+                  agencyName={agency?.data?.name!}
+                  agencyHref={agency?.fields?.url!}
+                  agencyAvatarFluid={
+                    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
+                      ?.fluid
+                  }
+                />
+              )
+            })}
           </CardList>
-        </View>
+        </div>
       </BoundedBox>
 
       <CallToActionSlice
@@ -206,6 +234,23 @@ export const query = graphql`
       name
       award
       special_award
+      agency {
+        fields {
+          url
+        }
+        data {
+          name
+          avatar {
+            localFiles {
+              childCloudinaryAsset {
+                fluid(maxWidth: 1000) {
+                  ...CloudinaryAssetFluid
+                }
+              }
+            }
+          }
+        }
+      }
       images {
         localFiles {
           childCloudinaryAsset {

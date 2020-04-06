@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { t } from '../theme'
-import { Link } from './Link'
+import { Link, LinkProps } from './Link'
 
-type AnchorProps = React.ComponentProps<typeof Link>
+export type AnchorProps = LinkProps
 
-export const Anchor: React.FC<AnchorProps> = (props) => (
+export const Anchor = (props: AnchorProps) => (
   <Link
     {...props}
     css={{

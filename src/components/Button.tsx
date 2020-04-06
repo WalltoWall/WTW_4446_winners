@@ -1,8 +1,7 @@
 import React from 'react'
-import { linearScale } from 'styled-system-scale'
 
-import { t, mq } from '../theme'
-import { View } from './View'
+import { t, mq, linearScale } from '../theme'
+import { View, ViewProps } from './View'
 
 const variants = {
   red: {
@@ -16,16 +15,16 @@ const variants = {
   },
 } as const
 
-type Button = View & {
+export type ButtonProps = ViewProps & {
   variant?: keyof typeof variants
   disabled?: boolean
 }
 
-export const Button: React.FC<Button> = ({
+export const Button = ({
   variant: variantName = 'red',
   disabled = false,
   ...props
-}) => {
+}: ButtonProps) => {
   const variant = variants[variantName]
 
   return (
@@ -41,10 +40,10 @@ export const Button: React.FC<Button> = ({
         color: disabled ? variant.colorDisabled : variant.color,
         cursor: disabled ? 'default' : 'pointer',
         fontSize: variant.fontSize,
-        paddingTop: linearScale('0.625rem', '1.125rem', { count: 3 }),
-        paddingBottom: linearScale('0.625rem', '1.125rem', { count: 3 }),
-        paddingLeft: linearScale('1rem', '1.625rem', { count: 3 }),
-        paddingRight: linearScale('1rem', '1.625rem', { count: 3 }),
+        paddingTop: linearScale('0.625rem', '1.125rem', 'space'),
+        paddingBottom: linearScale('0.625rem', '1.125rem', 'space'),
+        paddingLeft: linearScale('1rem', '1.625rem', 'space'),
+        paddingRight: linearScale('1rem', '1.625rem', 'space'),
         textAlign: 'center',
         transitionProperty: 'color, background-color',
         '&:hover, &:focus': {

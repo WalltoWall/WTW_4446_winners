@@ -4,16 +4,17 @@ import { negateScale } from 'styled-system-scale'
 import { Tag as TagType } from '../types'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
-import { AwardIcon } from './AwardIcon'
-import { Avatar } from './Avatar'
+import { View, ViewProps } from './View'
+import { AwardIcon, AwardIconProps } from './AwardIcon'
+import { Avatar, AvatarProps } from './Avatar'
 import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
 import { Anchor } from './Anchor'
 import { Tag } from './Tag'
+import { AgencyIdentifier } from './AgencyIdentifier'
 
-type WinnerInfoProps = React.ComponentProps<typeof View> & {
-  award: React.ComponentProps<typeof AwardIcon>['type']
+type WinnerInfoProps = ViewProps & {
+  award: AwardIconProps['type']
   specialAward?: string
   year: string
   categoryLine1?: string
@@ -21,7 +22,7 @@ type WinnerInfoProps = React.ComponentProps<typeof View> & {
   tags?: TagType[]
   creditsHTML?: string
   entrantType: 'agency' | 'student'
-  entrantAvatarFluid?: React.ComponentProps<typeof Avatar>['fluid']
+  entrantAvatarFluid?: AvatarProps['fluid']
   entrantName?: string
   entrantHref?: string
   client?: string
@@ -58,7 +59,7 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
         textAlign: ['center', 'left'],
       })}
     >
-      <View
+      <div
         css={mq({
           display: 'grid',
           rowGap: linearScale('1.25rem', '1.5rem'),
@@ -69,7 +70,7 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
           gridTemplateRows: [null, 'auto auto 1fr'],
         })}
       >
-        <View
+        <div
           css={mq({
             display: 'grid',
             gap: linearScale('0.5rem', '0.75rem'),
@@ -93,19 +94,14 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
               {specialAward}
             </Heading>
           )}
-        </View>
-        <View css={mq({ lineHeight: t.lh.Copy, gridColumn: [null, 1] })}>
-          <View as="p" css={{ fontWeight: t.fw.Semibold }}>
-            {year}
-          </View>
-          <View as="p" css={{ fontWeight: t.fw.Semibold }}>
-            {categoryLine1}
-          </View>
-          <View as="p">{categoryLine2}</View>
-        </View>
+        </div>
+        <div css={mq({ lineHeight: t.lh.Copy, gridColumn: [null, 1] })}>
+          <p css={{ fontWeight: t.fw.Semibold }}>{year}</p>
+          <p css={{ fontWeight: t.fw.Semibold }}>{categoryLine1}</p>
+          <p>{categoryLine2}</p>
+        </div>
         {hasTags && (
-          <View
-            as="ul"
+          <ul
             css={mq({
               display: 'flex',
               marginRight: negateScale(linearScale('0.5rem', '0.875rem')),
@@ -118,77 +114,61 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
             {tags.map(
               (tag) =>
                 tag?.url && (
-                  <View
+                  <li
                     key={tag.tag}
-                    as="li"
                     css={mq({
                       paddingRight: linearScale('0.5rem', '0.875rem'),
                       paddingBottom: linearScale('0.5rem', '0.875rem'),
                     })}
                   >
                     <Tag href={tag.url}>{tag.tag}</Tag>
-                  </View>
+                  </li>
                 ),
             )}
-          </View>
+          </ul>
         )}
-        <View
+        <div
           css={mq({
             display: 'grid',
             gap: linearScale('0.5rem', '1rem'),
             gridColumn: [null, 2],
             gridRow: [null, '1 / 4'],
+            lineHeight: t.lh.Copy,
           })}
         >
           {entrantType === 'student' && (
             <>
-              <View as="dl" css={{ lineHeight: t.lh.Copy }}>
-                <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
-                  Student Name
-                </View>
-                <View as="dd">{entrantName}</View>
-              </View>
-              <View as="dl" css={{ lineHeight: t.lh.Copy }}>
-                <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
-                  School
-                </View>
-                <View as="dd">{school}</View>
-              </View>
+              <dl>
+                <dt css={{ fontWeight: t.fw.Semibold }}>Student Name</dt>
+                <dd>{entrantName}</dd>
+              </dl>
+              <dl>
+                <dt css={{ fontWeight: t.fw.Semibold }}>School</dt>
+                <dd>{school}</dd>
+              </dl>
             </>
           )}
           {entrantType === 'agency' && (
             <>
-              <View as="dl" css={{ lineHeight: t.lh.Copy }}>
-                <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
-                  Client
-                </View>
-                <View as="dd">{client}</View>
-              </View>
-              <View as="dl" css={{ lineHeight: t.lh.Copy }}>
-                <View as="dt" css={{ fontWeight: t.fw.Semibold }}>
-                  Creative Agency
-                </View>
-                <View as="dd">
-                  <Anchor href={entrantHref!} css={{ display: 'inline-block' }}>
-                    <View
-                      css={mq({
-                        display: 'grid',
-                        gridTemplateColumns: 'auto 1fr',
-                        gap: linearScale('0.25rem', '0.5rem', 'space'),
-                        alignItems: 'center',
-                      })}
-                    >
-                      <Avatar variant="small" fluid={entrantAvatarFluid} />
-                      {entrantName}
-                    </View>
-                  </Anchor>
-                </View>
-              </View>
+              <dl>
+                <dt css={{ fontWeight: t.fw.Semibold }}>Client</dt>
+                <dd>{client}</dd>
+              </dl>
+              <dl>
+                <dt css={{ fontWeight: t.fw.Semibold }}>Creative Agency</dt>
+                <dd>
+                  <AgencyIdentifier
+                    href={entrantHref!}
+                    name={entrantName!}
+                    avatarFluid={entrantAvatarFluid}
+                  />
+                </dd>
+              </dl>
             </>
           )}
           <HTMLContent html={creditsHTML} />
-        </View>
-      </View>
+        </div>
+      </div>
     </View>
   )
 }

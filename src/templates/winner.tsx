@@ -7,8 +7,7 @@ import { WinnerTemplateQuery } from '../graphqlTypes'
 import { compact } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from '../components/View'
-import { Layout } from '../components/Layout'
+import { Layout, LayoutProps } from '../components/Layout'
 import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
@@ -16,14 +15,11 @@ import { NextPrevious } from '../components/NextPrevious'
 import { ImageGallery } from '../components/ImageGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
 
-type WinnerTemplateProps = React.ComponentProps<typeof Layout> & {
+export type WinnerTemplate = LayoutProps & {
   data: WinnerTemplateQuery
 }
 
-export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
-  data,
-  ...props
-}) => {
+export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
   const agency = winner?.data?.agency?.[0]
@@ -45,16 +41,15 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
         <title>{winner?.data?.name}</title>
       </Helmet>
       <BoundedBox forwardedAs="section" css={{ backgroundColor: t.c.Gray95 }}>
-        <View
+        <div
           css={mq({
             display: 'grid',
             gap: linearScale('1.875rem', '4rem'),
             justifyItems: 'center',
           })}
         >
-          <View css={{ textAlign: 'center' }}>
-            <View
-              as="p"
+          <div css={{ textAlign: 'center' }}>
+            <p
               css={mq({
                 color: t.c.Gray60,
                 fontSize: t.f['b-'],
@@ -62,13 +57,13 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
               })}
             >
               <Anchor href="/winners/">Winners</Anchor>
-            </View>
+            </p>
             <Heading css={mq({ fontSize: t.f.xl })}>
               {winner?.data?.name}
             </Heading>
-          </View>
+          </div>
           {hasImages && (
-            <View
+            <div
               css={{
                 width: '100%',
                 maxWidth: t.sz.Xlarge,
@@ -77,7 +72,7 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
               }}
             >
               <ImageGallery images={images} />
-            </View>
+            </div>
           )}
           <WinnerInfo
             award={winner?.data?.award?.toLowerCase?.() as Award}
@@ -103,7 +98,7 @@ export const WinnerTemplate: React.FC<WinnerTemplateProps> = ({
             nextHref={nextWinner?.fields?.url}
             nextLabel={nextWinner?.data?.name}
           />
-        </View>
+        </div>
       </BoundedBox>
     </Layout>
   )

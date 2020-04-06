@@ -44,11 +44,11 @@ export type AirtableAdPersonConnectionGroupArgs = {
 };
 
 export type AirtableAdPersonData = {
+  agency?: Maybe<Array<Maybe<AirtableAgency>>>;
   award?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Date']>;
   name?: Maybe<Scalars['String']>;
-  agency?: Maybe<Array<Maybe<AirtableAgency>>>;
   description?: Maybe<AirtableFieldtextmarkdown>;
   photo?: Maybe<AirtableFieldfileNode>;
 };
@@ -62,11 +62,11 @@ export type AirtableAdPersonDataYearArgs = {
 };
 
 export type AirtableAdPersonDataFilterInput = {
+  agency?: Maybe<AirtableAgencyFilterListInput>;
   award?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   year?: Maybe<DateQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
-  agency?: Maybe<AirtableAgencyFilterListInput>;
   description?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   photo?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
@@ -171,10 +171,6 @@ export enum AirtableAdPersonFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataAward = 'data___award',
-  DataTitle = 'data___title',
-  DataYear = 'data___year',
-  DataName = 'data___name',
   DataAgency = 'data___agency',
   DataAgencyId = 'data___agency___id',
   DataAgencyParentId = 'data___agency___parent___id',
@@ -193,9 +189,9 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyTable = 'data___agency___table',
   DataAgencyRecordId = 'data___agency___recordId',
   DataAgencyQueryName = 'data___agency___queryName',
-  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataName = 'data___agency___data___name',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
+  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataWebsite = 'data___agency___data___website',
@@ -204,6 +200,10 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
+  DataAward = 'data___award',
+  DataTitle = 'data___title',
+  DataYear = 'data___year',
+  DataName = 'data___name',
   DataDescriptionId = 'data___description___id',
   DataDescriptionParentId = 'data___description___parent___id',
   DataDescriptionParentChildren = 'data___description___parent___children',
@@ -353,9 +353,9 @@ export type AirtableAgencyConnectionGroupArgs = {
 };
 
 export type AirtableAgencyData = {
-  created_at?: Maybe<Scalars['Date']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
+  created_at?: Maybe<Scalars['Date']>;
   Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   website?: Maybe<Scalars['String']>;
@@ -367,14 +367,6 @@ export type AirtableAgencyData = {
 };
 
 
-export type AirtableAgencyDataCreated_AtArgs = {
-  formatString?: Maybe<Scalars['String']>;
-  fromNow?: Maybe<Scalars['Boolean']>;
-  difference?: Maybe<Scalars['String']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-
 export type AirtableAgencyDataUpdated_AtArgs = {
   formatString?: Maybe<Scalars['String']>;
   fromNow?: Maybe<Scalars['Boolean']>;
@@ -382,10 +374,18 @@ export type AirtableAgencyDataUpdated_AtArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
+
+export type AirtableAgencyDataCreated_AtArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
 export type AirtableAgencyDataFilterInput = {
-  created_at?: Maybe<DateQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
+  created_at?: Maybe<DateQueryOperatorInput>;
   Ad_People?: Maybe<StringQueryOperatorInput>;
   Entries?: Maybe<StringQueryOperatorInput>;
   website?: Maybe<StringQueryOperatorInput>;
@@ -496,9 +496,9 @@ export enum AirtableAgencyFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
-  DataCreatedAt = 'data___created_at',
   DataName = 'data___name',
   DataUpdatedAt = 'data___updated_at',
+  DataCreatedAt = 'data___created_at',
   DataAdPeople = 'data___Ad_People',
   DataEntries = 'data___Entries',
   DataWebsite = 'data___website',
@@ -1680,6 +1680,7 @@ export type AirtableWinnerConnectionGroupArgs = {
 };
 
 export type AirtableWinnerData = {
+  special_award?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -1692,7 +1693,6 @@ export type AirtableWinnerData = {
   created_at?: Maybe<Scalars['Date']>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
   images?: Maybe<AirtableFieldfileNode>;
-  special_award?: Maybe<Scalars['String']>;
 };
 
 
@@ -1720,6 +1720,7 @@ export type AirtableWinnerDataCreated_AtArgs = {
 };
 
 export type AirtableWinnerDataFilterInput = {
+  special_award?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
@@ -1732,7 +1733,6 @@ export type AirtableWinnerDataFilterInput = {
   created_at?: Maybe<DateQueryOperatorInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   images?: Maybe<AirtableFieldfileNodeFilterInput>;
-  special_award?: Maybe<StringQueryOperatorInput>;
 };
 
 export type AirtableWinnerEdge = {
@@ -1836,6 +1836,7 @@ export enum AirtableWinnerFieldsEnum {
   Table = 'table',
   RecordId = 'recordId',
   QueryName = 'queryName',
+  DataSpecialAward = 'data___special_award',
   DataAward = 'data___award',
   DataName = 'data___name',
   DataDescription = 'data___description',
@@ -1857,9 +1858,9 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyTable = 'data___agency___table',
   DataAgencyRecordId = 'data___agency___recordId',
   DataAgencyQueryName = 'data___agency___queryName',
-  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataName = 'data___agency___data___name',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
+  DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataWebsite = 'data___agency___data___website',
@@ -1978,7 +1979,6 @@ export enum AirtableWinnerFieldsEnum {
   DataImagesLocalFilesUrl = 'data___images___localFiles___url',
   DataImagesLocalFilesId = 'data___images___localFiles___id',
   DataImagesLocalFilesChildren = 'data___images___localFiles___children',
-  DataSpecialAward = 'data___special_award',
   FieldsUrl = 'fields___url',
   FieldsTags = 'fields___tags',
   FieldsTagsTag = 'fields___tags___tag',
@@ -4153,10 +4153,10 @@ export type Query = {
   allCloudinaryAsset: CloudinaryAssetConnection;
   airtableCollegeWinner?: Maybe<AirtableCollegeWinner>;
   allAirtableCollegeWinner: AirtableCollegeWinnerConnection;
-  airtableAdPerson?: Maybe<AirtableAdPerson>;
-  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableAgency?: Maybe<AirtableAgency>;
   allAirtableAgency: AirtableAgencyConnection;
+  airtableAdPerson?: Maybe<AirtableAdPerson>;
+  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableFieldtextmarkdown?: Maybe<AirtableFieldtextmarkdown>;
@@ -4429,27 +4429,6 @@ export type QueryAllAirtableCollegeWinnerArgs = {
 };
 
 
-export type QueryAirtableAdPersonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableAdPersonDataFilterInput>;
-  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableAdPersonArgs = {
-  filter?: Maybe<AirtableAdPersonFilterInput>;
-  sort?: Maybe<AirtableAdPersonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAgencyArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -4466,6 +4445,27 @@ export type QueryAirtableAgencyArgs = {
 export type QueryAllAirtableAgencyArgs = {
   filter?: Maybe<AirtableAgencyFilterInput>;
   sort?: Maybe<AirtableAgencySortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableAdPersonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableAdPersonDataFilterInput>;
+  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableAdPersonArgs = {
+  filter?: Maybe<AirtableAdPersonFilterInput>;
+  sort?: Maybe<AirtableAdPersonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5108,7 +5108,6 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsPluginsName = 'pluginCreator___pluginOptions___plugins___name',
   PluginCreatorPluginOptionsPluginsVersion = 'pluginCreator___pluginOptions___plugins___version',
   PluginCreatorPluginOptionsPluginsPluginFilepath = 'pluginCreator___pluginOptions___plugins___pluginFilepath',
-  PluginCreatorPluginOptionsDisplayName = 'pluginCreator___pluginOptions___displayName',
   PluginCreatorPluginOptionsApiKey = 'pluginCreator___pluginOptions___apiKey',
   PluginCreatorPluginOptionsConcurrency = 'pluginCreator___pluginOptions___concurrency',
   PluginCreatorPluginOptionsTables = 'pluginCreator___pluginOptions___tables',
@@ -5123,6 +5122,7 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsUploadFolder = 'pluginCreator___pluginOptions___uploadFolder',
   PluginCreatorPluginOptionsPath = 'pluginCreator___pluginOptions___path',
   PluginCreatorPluginOptionsPathCheck = 'pluginCreator___pluginOptions___pathCheck',
+  PluginCreatorPluginOptionsDisplayName = 'pluginCreator___pluginOptions___displayName',
   PluginCreatorNodeApIs = 'pluginCreator___nodeAPIs',
   PluginCreatorBrowserApIs = 'pluginCreator___browserAPIs',
   PluginCreatorSsrApIs = 'pluginCreator___ssrAPIs',
@@ -5316,7 +5316,6 @@ export enum SitePluginFieldsEnum {
   PluginOptionsPluginsName = 'pluginOptions___plugins___name',
   PluginOptionsPluginsVersion = 'pluginOptions___plugins___version',
   PluginOptionsPluginsPluginFilepath = 'pluginOptions___plugins___pluginFilepath',
-  PluginOptionsDisplayName = 'pluginOptions___displayName',
   PluginOptionsApiKey = 'pluginOptions___apiKey',
   PluginOptionsConcurrency = 'pluginOptions___concurrency',
   PluginOptionsTables = 'pluginOptions___tables',
@@ -5336,6 +5335,7 @@ export enum SitePluginFieldsEnum {
   PluginOptionsUploadFolder = 'pluginOptions___uploadFolder',
   PluginOptionsPath = 'pluginOptions___path',
   PluginOptionsPathCheck = 'pluginOptions___pathCheck',
+  PluginOptionsDisplayName = 'pluginOptions___displayName',
   NodeApIs = 'nodeAPIs',
   BrowserApIs = 'browserAPIs',
   SsrApIs = 'ssrAPIs',
@@ -5450,7 +5450,6 @@ export type SitePluginPackageJsonPeerDependenciesFilterListInput = {
 
 export type SitePluginPluginOptions = {
   plugins?: Maybe<Array<Maybe<SitePluginPluginOptionsPlugins>>>;
-  displayName?: Maybe<Scalars['Boolean']>;
   apiKey?: Maybe<Scalars['String']>;
   concurrency?: Maybe<Scalars['Int']>;
   tables?: Maybe<Array<Maybe<SitePluginPluginOptionsTables>>>;
@@ -5459,11 +5458,11 @@ export type SitePluginPluginOptions = {
   uploadFolder?: Maybe<Scalars['String']>;
   path?: Maybe<Scalars['String']>;
   pathCheck?: Maybe<Scalars['Boolean']>;
+  displayName?: Maybe<Scalars['Boolean']>;
 };
 
 export type SitePluginPluginOptionsFilterInput = {
   plugins?: Maybe<SitePluginPluginOptionsPluginsFilterListInput>;
-  displayName?: Maybe<BooleanQueryOperatorInput>;
   apiKey?: Maybe<StringQueryOperatorInput>;
   concurrency?: Maybe<IntQueryOperatorInput>;
   tables?: Maybe<SitePluginPluginOptionsTablesFilterListInput>;
@@ -5472,6 +5471,7 @@ export type SitePluginPluginOptionsFilterInput = {
   uploadFolder?: Maybe<StringQueryOperatorInput>;
   path?: Maybe<StringQueryOperatorInput>;
   pathCheck?: Maybe<BooleanQueryOperatorInput>;
+  displayName?: Maybe<BooleanQueryOperatorInput>;
 };
 
 export type SitePluginPluginOptionsPlugins = {
@@ -5588,7 +5588,10 @@ export type IndexPageQuery = { bestOfEntries: { nodes: Array<SpecialAwardWinnerF
 
 export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<(
     Pick<AirtableWinnerData, 'name' | 'award' | 'special_award'>
-    & { images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+    & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
+        Pick<AirtableAgencyData, 'name'>
+        & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+      )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
   )> };
 
 export type WinnersPageQueryVariables = {};

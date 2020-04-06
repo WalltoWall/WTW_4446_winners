@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
-type FormInputProps = React.ComponentProps<typeof View>
+export type FormInputProps = ViewProps
 
-export const FormInput: React.FC<FormInputProps> = (props) => (
+export const FormInput = (props: FormInputProps) => (
   <View
     as="input"
     {...props}
