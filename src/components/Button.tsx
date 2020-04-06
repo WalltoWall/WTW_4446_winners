@@ -16,12 +16,12 @@ const variants = {
   },
 } as const
 
-type ButtonProps = React.ComponentProps<typeof View> & {
+type Button = View & {
   variant?: keyof typeof variants
   disabled?: boolean
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<Button> = ({
   variant: variantName = 'red',
   disabled = false,
   ...props
