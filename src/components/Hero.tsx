@@ -2,12 +2,12 @@ import React from 'react'
 import { FluidObject } from 'gatsby-image'
 
 import { t, mq } from '../theme'
-import { View, ViewProps } from './View'
+import { View } from './View'
 import { AspectRatio } from './AspectRatio'
 import { BoundedBox } from './BoundedBox'
 import { Img } from './Img'
 
-export type HeroProps = ViewProps & {
+export type HeroProps = View & {
   imageFluid?: FluidObject
   imageAlt?: string
   imageSrc?: string
