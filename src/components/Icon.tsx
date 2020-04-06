@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SVG } from './SVG'
+import { SVG, SVGProps } from './SVG'
 import { ReactComponent as AssetIconAwardSVG } from '../assets/icon-award.svg'
 import { ReactComponent as AssetIconSearchSVG } from '../assets/icon-search.svg'
 import { ReactComponent as AssetIconChevronDownSVG } from '../assets/icon-chevron-down.svg'
@@ -10,12 +10,6 @@ import { ReactComponent as AssetIconFacebookSVG } from '../assets/icon-facebook.
 import { ReactComponent as AssetIconTwitterSVG } from '../assets/icon-twitter.svg'
 import { ReactComponent as AssetIconInstagramSVG } from '../assets/icon-instagram.svg'
 import { ReactComponent as AssetIconLinkedinSVG } from '../assets/icon-linkedin.svg'
-
-interface Icon {
-  svg: React.ComponentType
-  x: number
-  y: number
-}
 
 const icons = {
   award: { svg: AssetIconAwardSVG, x: 20, y: 20 },
@@ -29,12 +23,12 @@ const icons = {
   linkedin: { svg: AssetIconLinkedinSVG, x: 18, y: 17 },
 } as const
 
-type IconProps = Omit<React.ComponentProps<typeof SVG>, 'svg'> & {
+export type IconProps = Omit<SVGProps, 'svg' | 'x' | 'y'> & {
   name: keyof typeof icons
 }
 
-export const Icon: React.FC<IconProps> = ({ name, ...props }) => {
-  const icon: Icon = icons[name]
+export const Icon = ({ name, ...props }: IconProps) => {
+  const icon = icons[name]
 
   return (
     <SVG svg={icon.svg} x={icon.x} y={icon.y} role="presentation" {...props} />

@@ -1,11 +1,11 @@
 import React from 'react'
 
 import { t, mq } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
-type SubheadingProps = React.ComponentProps<typeof View>
+type SubheadingProps = ViewProps
 
-export const Subheading: React.FC<SubheadingProps> = (props) => (
+export const Subheading = (props: SubheadingProps) => (
   <View
     as="h3"
     {...props}

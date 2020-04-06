@@ -2,23 +2,23 @@ import React from 'react'
 import HTMLRenderer from 'react-html-renderer'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { Heading } from './Heading'
 import { Subheading } from './Subheading'
 import { Anchor } from './Anchor'
 
 export const baseHeadingCss = {
   lineHeight: t.lh.Title,
-  marginTop: linearScale('2.25rem', '3rem'),
-  marginBottom: linearScale('1rem', '1.5rem'),
+  marginTop: linearScale('2.25rem', '3rem', 'space'),
+  marginBottom: linearScale('1rem', '1.5rem', 'space'),
   color: t.c.Black,
   ...t.boxStyles.firstLastNoMargin,
-}
+} as const
 
 export const baseTextCss = {
-  marginBottom: linearScale('0.5rem', '0.875rem'),
+  marginBottom: linearScale('0.5rem', '0.875rem', 'space'),
   ...t.boxStyles.lastNoMargin,
-}
+} as const
 
 const components: React.ComponentProps<typeof HTMLRenderer>['components'] = {
   h1: (props) => (
@@ -41,36 +41,13 @@ const components: React.ComponentProps<typeof HTMLRenderer>['components'] = {
   ),
   p: (props) => <View as="p" {...props} css={mq({ ...baseTextCss })} />,
   ul: (props) => (
-    <View
-      as="ul"
-      {...props}
-      css={mq({
-        ...baseTextCss,
-        paddingLeft: linearScale('', ''),
-        listStyle: 'disc',
-      })}
-    />
+    <ul {...props} css={mq({ ...baseTextCss, listStyle: 'disc' })} />
   ),
   ol: (props) => (
-    <View
-      as="ol"
-      {...props}
-      css={mq({
-        ...baseTextCss,
-        paddingLeft: linearScale('', ''),
-        listStyle: 'disc',
-      })}
-    />
+    <ol {...props} css={mq({ ...baseTextCss, listStyle: 'decimal' })} />
   ),
   li: (props) => (
-    <View
-      as="li"
-      {...props}
-      css={mq({
-        ...baseTextCss,
-        marginBottom: 0,
-      })}
-    />
+    <li {...props} css={mq({ ...baseTextCss, marginBottom: 0 })} />
   ),
   // @ts-ignore
   a: ({ href, ...props }: { href: string }) => (
@@ -78,18 +55,18 @@ const components: React.ComponentProps<typeof HTMLRenderer>['components'] = {
   ),
 }
 
-type HTMLContentProps = React.ComponentProps<typeof View> & {
+export type HTMLContentProps = ViewProps & {
   html?: React.ComponentProps<typeof HTMLRenderer>['html']
   componentOverrides?: React.ComponentProps<
     typeof HTMLRenderer
   >['componentOverrides']
 }
 
-export const HTMLContent: React.FC<HTMLContentProps> = ({
+export const HTMLContent = ({
   html,
   componentOverrides,
   ...props
-}) => (
+}: HTMLContentProps) => (
   <View {...props} css={{ lineHeight: t.lh.Copy }}>
     <HTMLRenderer
       html={html}

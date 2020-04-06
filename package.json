@@ -63,6 +63,7 @@
     "prettier": "^2.0.2",
     "typescript": "^3.9.0-beta"
   },
+  "browserslist": ">1%, not ie 11, not op_mini all",
   "prettier": {
     "semi": false,
     "singleQuote": true,

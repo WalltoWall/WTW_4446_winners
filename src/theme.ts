@@ -176,9 +176,11 @@ export type Theme = typeof theme
 
 export const mq = facepaint(Object.values(theme.mediaQueries))
 
-// let lsCache = new Set()
+// let lsCache: Record<string, number> = {}
 export const ls = (min: string, max: string, _type?: 'space' | 'font') => {
-  // lsCache.add(`${min} / ${max}`)
+  // const stringified = `${min} / ${max}`
+  // if (!lsCache[stringified]) lsCache[stringified] = 0
+  // lsCache[stringified]++
   // console.log(lsCache)
   return linearScale(min, max, { count })
 }

@@ -3,7 +3,7 @@ import warning from 'tiny-warning'
 
 import { mq } from '../theme'
 import { castArray, zipFirstLeftWith } from '../utils'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
 const zipper = (x: number | null, y: number | null) => {
   warning(
@@ -16,26 +16,21 @@ const zipper = (x: number | null, y: number | null) => {
     : null
 }
 
-type AspectRatioProps = React.ComponentProps<typeof View> & {
+export type AspectRatioProps = ViewProps & {
   x: number | (number | null)[]
   y: number | (number | null)[]
 }
 
-export const AspectRatio: React.FC<AspectRatioProps> = ({
-  x,
-  y,
-  children,
-  ...props
-}) => (
+export const AspectRatio = ({ x, y, children, ...props }: AspectRatioProps) => (
   <View {...props} css={{ position: 'relative' }}>
-    <View
+    <div
       aria-hidden={true}
       css={mq({
         paddingTop: zipFirstLeftWith(zipper, castArray(x), castArray(y)),
       })}
     />
-    <View css={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+    <div css={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
       {children}
-    </View>
+    </div>
   </View>
 )

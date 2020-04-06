@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 
-import { t } from '../theme'
+export type ViewProps = React.AllHTMLAttributes<HTMLElement> & {
+  as?: React.ComponentProps<typeof View>['as']
+  forwardedAs?: React.ComponentProps<typeof View>['forwardedAs']
+  children?: React.ComponentProps<typeof View>['children']
+}
 
-export type View = React.ComponentProps<typeof View>
-
-export const View = styled.div({
-  transitionDuration: t.td.Normal,
-  transitionProperty: 'none',
-  transitionTimingFunction: 'ease-out',
-})
+export const View = styled.div({})

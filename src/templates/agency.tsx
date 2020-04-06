@@ -6,8 +6,7 @@ import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 import { AgencyTemplateQuery } from '../graphqlTypes'
 
 import { t, mq, linearScale } from '../theme'
-import { Layout } from '../components/Layout'
-import { View } from '../components/View'
+import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { PaginatedWinners } from '../components/PaginatedWinners'
@@ -15,11 +14,11 @@ import { Anchor } from '../components/Anchor'
 import { Avatar } from '../components/Avatar'
 import { SocialIcons } from '../components/SocialIcons'
 
-type AgencyTemplateProps = React.ComponentProps<typeof Layout> & {
+export type AgencyTemplate = LayoutProps & {
   data: AgencyTemplateQuery
 }
 
-export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
+export const AgencyTemplate = ({ data, ...props }: AgencyTemplate) => {
   const agency = data.airtableAgency
   const avatarFluid =
     agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
@@ -32,7 +31,7 @@ export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
   }, [agency])
 
   return (
-    <Layout>
+    <Layout {...props}>
       <Helmet>
         <title>{agency?.data?.name}</title>
       </Helmet>
@@ -42,14 +41,14 @@ export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
           paddingBottom: 0,
         })}
       >
-        <View
+        <div
           css={mq({
             display: 'grid',
             gap: linearScale('1.25rem', '1.75rem', 'space'),
             justifyItems: 'center',
           })}
         >
-          <View
+          <div
             css={mq({
               display: 'grid',
               gap: linearScale('0.625rem', '0.75rem', 'space'),
@@ -74,14 +73,14 @@ export const AgencyTemplate: React.FC<AgencyTemplateProps> = ({ data }) => {
                 {cleanWebsite}
               </Anchor>
             )}
-          </View>
+          </div>
           <SocialIcons
             facebookHandle={agency?.data?.facebook_handle}
             instagramHandle={agency?.data?.instagram_handle}
             twitterHandle={agency?.data?.twitter_handle}
             linkedinHandle={agency?.data?.linkedin_handle}
           />
-        </View>
+        </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
         <PaginatedWinners

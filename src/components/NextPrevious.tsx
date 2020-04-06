@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
-import { Link } from './Link'
+import { View, ViewProps } from './View'
+import { Link, LinkProps } from './Link'
 import { Icon } from './Icon'
 
 const variants = {
@@ -18,15 +18,15 @@ const variants = {
   },
 } as const
 
-type DirectionButtonProps = React.ComponentProps<typeof Link> & {
+type DirectionButtonProps = LinkProps & {
   variant: keyof typeof variants
 }
 
-const DirectionButton: React.FC<DirectionButtonProps> = ({
+const DirectionButton = ({
   variant: variantName,
   children,
   ...props
-}) => {
+}: DirectionButtonProps) => {
   const variant = variants[variantName]
 
   return (
@@ -39,7 +39,7 @@ const DirectionButton: React.FC<DirectionButtonProps> = ({
         justifyItems: 'center',
       })}
     >
-      <View
+      <div
         css={mq({
           backgroundColor: t.c.Gray70,
           width: linearScale('1.125rem', '1.5rem'),
@@ -58,35 +58,33 @@ const DirectionButton: React.FC<DirectionButtonProps> = ({
             transform: `translateX(${variant.svgOffsetX})`,
           })}
         />
-      </View>
-      <View css={mq({ fontSize: t.f['b-'], lineHeight: t.lh.Copy })}>
-        <View as="span" css={{ display: 'block', color: t.c.Black }}>
+      </div>
+      <div css={mq({ fontSize: t.f['b-'], lineHeight: t.lh.Copy })}>
+        <span css={{ display: 'block', color: t.c.Black }}>
           {variant.label}
-        </View>
+        </span>
         {children && (
-          <View as="span" css={{ display: 'block', color: t.c.Gray60 }}>
-            {children}
-          </View>
+          <span css={{ display: 'block', color: t.c.Gray60 }}>{children}</span>
         )}
-      </View>
+      </div>
     </Link>
   )
 }
 
-type NextPreviousProps = React.ComponentProps<typeof View> & {
+export type NextPreviousProps = ViewProps & {
   nextHref?: string
   nextLabel?: string
   previousHref?: string
   previousLabel?: string
 }
 
-export const NextPrevious: React.FC<NextPreviousProps> = ({
+export const NextPrevious = ({
   nextHref,
   nextLabel,
   previousHref,
   previousLabel,
   ...props
-}) => (
+}: NextPreviousProps) => (
   <View
     {...props}
     css={mq({

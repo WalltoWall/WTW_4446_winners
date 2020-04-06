@@ -8,7 +8,7 @@ import { Footer } from './Footer'
 
 export type LayoutProps = ViewProps
 
-export const Layout: React.FC<LayoutProps> = ({ children, ...props }) => (
+export const Layout = ({ children, ...props }: LayoutProps) => (
   <>
     <Helmet
       defaultTitle="Pele Awards Winners"
@@ -26,7 +26,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, ...props }) => (
       })}
     >
       <Header />
-      <View as="main">{children}</View>
+      <main>{children}</main>
       <Footer />
     </View>
   </>

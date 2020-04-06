@@ -4,7 +4,7 @@ import GatsbyImage from 'gatsby-image'
 import { CloudinaryAssetFluidFragment } from '../graphqlTypes'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { BoundedBox } from './BoundedBox'
 import { Subheading } from './Subheading'
@@ -12,7 +12,7 @@ import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
 import { Anchor } from './Anchor'
 
-type LargePersonCardProps = React.ComponentProps<typeof View> & {
+export type LargePersonCardProps = ViewProps & {
   name: string
   title: string
   agencyName?: string
@@ -22,7 +22,7 @@ type LargePersonCardProps = React.ComponentProps<typeof View> & {
   imageFluid?: CloudinaryAssetFluidFragment
 }
 
-export const LargePersonCard: React.FC<LargePersonCardProps> = ({
+export const LargePersonCard = ({
   name,
   title,
   agencyName,
@@ -32,7 +32,7 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
   descriptionHTML,
   children,
   ...props
-}) => (
+}: LargePersonCardProps) => (
   <View
     {...props}
     css={mq({
@@ -43,7 +43,7 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
       justifyItems: 'center',
     })}
   >
-    <View
+    <div
       css={mq({
         height: [null, '100%'],
         paddingLeft: ['1.5rem', 0],
@@ -66,9 +66,9 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
           <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
         )}
       </AspectRatio>
-    </View>
+    </div>
     <BoundedBox css={{ textAlign: 'center' }}>
-      <View
+      <div
         css={mq({
           maxWidth: '45ch',
           marginLeft: 'auto',
@@ -78,7 +78,7 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
           gap: linearScale('1rem', '1.5rem', 'space'),
         })}
       >
-        <View
+        <div
           css={mq({
             display: 'grid',
             gap: linearScale('0.5rem', '0.75rem', 'space'),
@@ -86,16 +86,16 @@ export const LargePersonCard: React.FC<LargePersonCardProps> = ({
         >
           <Subheading>{award}</Subheading>
           <Heading css={mq({ fontSize: t.f.xl })}>{name}</Heading>
-          <View as="p">
+          <p>
             {agencyHref && (
               <Anchor href={agencyHref}>
                 {title}, {agencyName}
               </Anchor>
             )}
-          </View>
-        </View>
+          </p>
+        </div>
         {descriptionHTML && <HTMLContent html={descriptionHTML} />}
-      </View>
+      </div>
     </BoundedBox>
   </View>
 )

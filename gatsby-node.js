@@ -14,20 +14,36 @@ const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
   'paginated-collections',
 )
 
-const normalizeWinnerNode = (node) => ({
-  url: node.fields.url,
-  name: node.data.name,
-  award: node.data.award.toLowerCase(),
-  category: dlv(node, ['data', 'category', 0, 'data']),
-  image: dlv(node, [
-    'data',
-    'images',
-    'localFiles',
-    0,
-    'childCloudinaryAsset',
-    'fluid',
-  ]),
-})
+const normalizeWinnerNode = (node) => {
+  const agency = dlv(node, ['data', 'agency', 0])
+
+  return {
+    url: node.fields.url,
+    name: node.data.name,
+    award: node.data.award.toLowerCase(),
+    category: dlv(node, ['data', 'category', 0, 'data']),
+    imageFluid: dlv(node, [
+      'data',
+      'images',
+      'localFiles',
+      0,
+      'childCloudinaryAsset',
+      'fluid',
+    ]),
+    agency: {
+      name: dlv(agency, ['data', 'name']),
+      url: dlv(agency, ['fields', 'url']),
+      avatarFluid: dlv(agency, [
+        'data',
+        'avatar',
+        'localFiles',
+        0,
+        'childCloudinaryAsset',
+        'fluid',
+      ]),
+    },
+  }
+}
 
 const normalizeCollegeWinnerNode = (node) => ({
   url: node.fields.url,
@@ -94,6 +110,25 @@ exports.createPages = async (gatsbyContext) => {
             tags
             agency {
               id
+              fields {
+                url
+              }
+              data {
+                name
+                avatar {
+                  localFiles {
+                    childCloudinaryAsset {
+                      fluid(maxWidth: 800) {
+                        aspectRatio
+                        base64
+                        sizes
+                        src
+                        srcSet
+                      }
+                    }
+                  }
+                }
+              }
             }
             category {
               id

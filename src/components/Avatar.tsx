@@ -2,9 +2,12 @@ import React from 'react'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq, linearScale } from '../theme'
-import { View } from './View'
+import { View, ViewProps } from './View'
 
 const variants = {
+  tiny: {
+    dimension: linearScale('1rem', '1.25rem'),
+  },
   small: {
     dimension: linearScale('1rem', '1.5rem'),
   },
@@ -13,18 +16,18 @@ const variants = {
   },
 } as const
 
-type AvatarProps = React.ComponentProps<typeof View> & {
+export type AvatarProps = ViewProps & {
   variant?: keyof typeof variants
   fluid?: FluidObject
   alt?: string
 }
 
-export const Avatar: React.FC<AvatarProps> = ({
+export const Avatar = ({
   variant: variantName = 'medium',
   fluid,
   alt,
   ...props
-}) => {
+}: AvatarProps) => {
   const variant = variants[variantName]
 
   return (
