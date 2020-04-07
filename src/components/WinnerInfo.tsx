@@ -31,11 +31,10 @@ type WinnerInfoProps = ViewProps & {
   categoryLine2?: string
   tags?: TagType[]
   creditsHTML?: string
-  entrantAvatarFluid?: AgencyIdentifierProps['avatarFluid']
-  entrantName?: string
-  entrantHref?: string
+  agencyAvatarFluid?: AgencyIdentifierProps['avatarFluid']
+  agencyName?: string
+  agencyHref?: string
   client?: string
-  school?: string
 }
 
 export const WinnerInfo: React.FC<WinnerInfoProps> = ({
@@ -47,10 +46,9 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
   categoryLine2,
   tags = [],
   creditsHTML,
-  entrantAvatarFluid,
-  entrantName,
-  entrantHref,
-  school,
+  agencyAvatarFluid,
+  agencyName,
+  agencyHref,
   client,
   ...props
 }) => {
@@ -122,7 +120,7 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
             })}
           >
             {tags.map(
-              (tag) =>
+              tag =>
                 tag?.url && (
                   <li
                     key={tag.tag}
@@ -154,9 +152,9 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
             <dt css={{ fontWeight: t.fw.Semibold }}>{variant.agencyLabel}</dt>
             <dd>
               <AgencyIdentifier
-                href={entrantHref!}
-                name={entrantName!}
-                avatarFluid={entrantAvatarFluid}
+                href={agencyHref!}
+                name={agencyName!}
+                avatarFluid={agencyAvatarFluid}
               />
             </dd>
           </dl>
