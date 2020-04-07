@@ -82,7 +82,7 @@ export const Footer = (props: FooterProps) => (
             marginBottom: negateScale(linearScale('0.375rem', '0.875rem')),
           })}
         >
-          {navigation.map((item) => (
+          {navigation.map(item => (
             <NavItem key={item.name} href={item.href}>
               {item.name}
             </NavItem>

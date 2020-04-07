@@ -36,7 +36,7 @@ export type HeaderProps = ViewProps
 
 export const Header = (props: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const toggleMenu = useCallback(() => setIsMenuOpen((state) => !state), [])
+  const toggleMenu = useCallback(() => setIsMenuOpen(state => !state), [])
   const closeMenu = useCallback(() => setIsMenuOpen(false), [])
 
   return (
@@ -113,7 +113,7 @@ export const Header = (props: HeaderProps) => {
               gridAutoFlow: 'column',
             })}
           >
-            {navigation.map((item) => (
+            {navigation.map(item => (
               <NavItem key={item.name} href={item.href}>
                 {item.name}
               </NavItem>
@@ -168,7 +168,7 @@ export const Header = (props: HeaderProps) => {
           }}
         >
           <View as="ul" css={{ display: 'grid', gap: '0.75rem' }}>
-            {navigation.map((item) => (
+            {navigation.map(item => (
               <NavItem key={item.name} href={item.href}>
                 {item.name}
               </NavItem>

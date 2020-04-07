@@ -8,7 +8,8 @@
     "build": "NODE_ENV=production gatsby build",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
-    "codegen": "graphql-codegen --config graphql-codegen.yml"
+    "codegen": "graphql-codegen --config graphql-codegen.yml",
+    "format": "prettier --write '{src,docs,types}/**/*.{ts,tsx,md}'"
   },
   "dependencies": {
     "@reach/visually-hidden": "^0.9.0",

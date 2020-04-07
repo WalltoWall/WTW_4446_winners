@@ -29,7 +29,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
 
   const images = compact(
     winner?.data?.images?.localFiles?.map(
-      (localFile) => localFile?.childCloudinaryAsset?.fluid,
+      localFile => localFile?.childCloudinaryAsset?.fluid,
     ) ?? [],
   )
   const hasImages = images.length > 0

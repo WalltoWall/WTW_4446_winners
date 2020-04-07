@@ -32,7 +32,7 @@ export const HamburgerIcon = ({
       y: `translateY(${isOpen ? 45 : 0}%)`,
       rot: `rotate(${isOpen ? 45 : 0})`,
     },
-    to: async (next) => {
+    to: async next => {
       if (isOpen) {
         next({ y: `translateY(${isOpen ? 45 : 0}%)` })
         await delay(200)
@@ -51,7 +51,7 @@ export const HamburgerIcon = ({
       y: `translateY(${isOpen ? -45 : 0}%)`,
       rot: `rotate(${isOpen ? -45 : 0}deg)`,
     },
-    to: async (next) => {
+    to: async next => {
       if (isOpen) {
         next({ y: `translateY(${isOpen ? -45 : 0}%)` })
         await delay(200)
