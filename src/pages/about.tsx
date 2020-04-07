@@ -1,4 +1,5 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 
 import { Layout, LayoutProps } from '../components/Layout'
@@ -13,9 +14,12 @@ import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { t, mq, linearScale } from '../theme'
 import { EVENT_SITE_URL } from '../constants'
 import AssetAboutHeroPNG from '../assets/temp/about-hero.png'
+import { AboutPageQuery } from '../graphqlTypes'
 import { ReactComponent as AssetAAFLogoSVG } from '../assets/aaf-logo.svg'
 
-type AboutPageProps = LayoutProps
+type AboutPageProps = LayoutProps & {
+  data: AboutPageQuery
+}
 
 const sliceData = {
   hero: {
@@ -88,7 +92,7 @@ const sliceData = {
   },
 }
 
-export const AboutPage: React.FC<AboutPageProps> = () => {
+export const AboutPage = ({ data }: AboutPageProps) => {
   return (
     <Layout>
       <Helmet>
@@ -116,3 +120,42 @@ export const AboutPage: React.FC<AboutPageProps> = () => {
 }
 
 export default AboutPage
+
+export const query = graphql`
+  query AboutPage {
+    aboutHeroText: airtableTextField(data: { uid: { eq: "About Hero Text" } }) {
+      data {
+        richText {
+          internal {
+            content
+          }
+        }
+      }
+    }
+    aboutWhiteColoredBox: airtableTextField(
+      data: { uid: { eq: "About White Colored Box" } }
+    ) {
+      data {
+        richText {
+          internal {
+            content
+          }
+        }
+      }
+    }
+    aboutCtaText: airtableTextField(data: { uid: { eq: "About CTA" } }) {
+      data {
+        richText {
+          internal {
+            content
+          }
+        }
+      }
+    }
+    aboutButtonText: airtableTextField(data: { uid: { eq: "About Button" } }) {
+      data {
+        plainText
+      }
+    }
+  }
+`

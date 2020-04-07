@@ -57,7 +57,7 @@ module.exports = {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Text Fields',
             queryName: 'TextField',
-            mapping: { 'rich text': 'text/markdown' },
+            mapping: { richText: 'text/markdown' },
             separateNodeType: true,
           },
           {
