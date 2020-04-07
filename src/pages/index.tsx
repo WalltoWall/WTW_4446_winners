@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 
-import { EVENT_SITE_URL } from '../constants'
 import { IndexPageQuery } from '../graphqlTypes'
 import { Award } from '../types'
 
@@ -15,37 +14,6 @@ import { Anchor } from '../components/Anchor'
 import { CardList } from '../components/CardList'
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
-import AssetIndexHeroPNG from '../assets/temp/index-hero.png'
-
-const sliceData = {
-  hero: {
-    textHTML: `
-      <h1>
-        <a href="/winners/">2020 Pele Awards Winners Have Been Announced!</a>
-      </h1>
-      <p>
-        This year’s Pele Awards Winners have been selected. Have a look at the
-        very best design and advertising work in Hawai‘i. Mahalo to all participants and congratulations to all the winners.
-      </p> 
-    `,
-    imageAlt: '2020 Peles Logo.',
-    imageSrc: AssetIndexHeroPNG,
-  },
-  cta: {
-    buttonText: 'Learn More',
-    buttonHref: EVENT_SITE_URL,
-    textHTML: `
-      <h1>
-        Get ready to enter for 2021!
-      </h1> 
-      <p>
-        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-        Curabitur blandit tempus porttitor. Maecenas sed diam eget risus
-        varius blandit sit amet non magna. Maecenas faucibus mollis interdum.
-      </p>
-    `,
-  },
-}
 
 export type IndexPage = LayoutProps & {
   data: IndexPageQuery
@@ -59,9 +27,11 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
   return (
     <Layout {...props}>
       <HeroSlice
-        textHTML={sliceData.hero.textHTML}
-        imageAlt={sliceData.hero.imageAlt}
-        imageSrc={sliceData.hero.imageSrc}
+        textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
+        imageFluid={
+          data.homeHeroImage?.data?.image?.localFiles?.[0]?.childCloudinaryAsset
+            ?.fluid
+        }
       />
 
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
@@ -172,9 +142,9 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
       </BoundedBox>
 
       <CallToActionSlice
-        buttonHref={sliceData.cta.buttonHref}
-        buttonText={sliceData.cta.buttonText}
-        textHTML={sliceData.cta.textHTML}
+        buttonHref={data.homeButtonHref?.data?.href}
+        buttonText={data.homeButtonText?.data?.plain_text}
+        textHTML={data.homeCtaText?.data?.rich_text?.childMarkdownRemark?.html}
       />
     </Layout>
   )
@@ -227,6 +197,51 @@ export const query = graphql`
     ) {
       nodes {
         ...SpecialAwardWinner
+      }
+    }
+    homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    homeButtonText: airtableTextField(
+      data: { uid: { eq: "Home CTA Button" } }
+    ) {
+      data {
+        plain_text
+      }
+    }
+    homeButtonHref: airtableLink(data: { uid: { eq: "Home CTA Button" } }) {
+      data {
+        href
+      }
+    }
+    homeHeroText: airtableTextField(data: { uid: { eq: "Home Hero Text" } }) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    homeHeroImage: airtableImageField(
+      data: { uid: { eq: "Home Hero Image" } }
+    ) {
+      data {
+        image {
+          localFiles {
+            childCloudinaryAsset {
+              fluid(maxWidth: 800) {
+                ...CloudinaryAssetFluid
+              }
+            }
+          }
+        }
       }
     }
   }
