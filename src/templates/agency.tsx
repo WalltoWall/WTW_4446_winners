@@ -22,6 +22,13 @@ export const AgencyTemplate = ({ data, ...props }: AgencyTemplate) => {
   const agency = data.airtableAgency
   const avatarFluid =
     agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
+  const hasSocialIcons = Boolean(
+    agency?.data?.facebook_handle ||
+      agency?.data?.instagram_handle ||
+      agency?.data?.twitter_handle ||
+      agency?.data?.linkedin_handle,
+  )
+
   const initialPage = data?.paginatedCollectionPage
 
   const cleanWebsite = useMemo(() => {
@@ -74,12 +81,14 @@ export const AgencyTemplate = ({ data, ...props }: AgencyTemplate) => {
               </Anchor>
             )}
           </div>
-          <SocialIcons
-            facebookHandle={agency?.data?.facebook_handle}
-            instagramHandle={agency?.data?.instagram_handle}
-            twitterHandle={agency?.data?.twitter_handle}
-            linkedinHandle={agency?.data?.linkedin_handle}
-          />
+          {hasSocialIcons && (
+            <SocialIcons
+              facebookHandle={agency?.data?.facebook_handle}
+              instagramHandle={agency?.data?.instagram_handle}
+              twitterHandle={agency?.data?.twitter_handle}
+              linkedinHandle={agency?.data?.linkedin_handle}
+            />
+          )}
         </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
