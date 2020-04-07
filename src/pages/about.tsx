@@ -1,4 +1,5 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 
 import { Layout, LayoutProps } from '../components/Layout'
@@ -11,84 +12,14 @@ import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 
 import { t, mq, linearScale } from '../theme'
-import { EVENT_SITE_URL } from '../constants'
-import AssetAboutHeroPNG from '../assets/temp/about-hero.png'
+import { AboutPageQuery } from '../graphqlTypes'
 import { ReactComponent as AssetAAFLogoSVG } from '../assets/aaf-logo.svg'
 
-type AboutPageProps = LayoutProps
-
-const sliceData = {
-  hero: {
-    textHTML: `
-      <h1>
-        <a href="/winners/">Each year, the Pele Awards recognizes excellence in advertising & design in Hawaii.</a>
-      </h1>
-      <p>
-        The Pele Awards have been a part of Hawaii’s advertising and design community for more than 40 years. 
-      </p> 
-    `,
-    imageAlt: 'Winners Trophy.',
-    imageSrc: AssetAboutHeroPNG,
-  },
-  sponsors: {},
-  boxes: {
-    whiteBoxChildren: (
-      <HTMLContent
-        html={`
-          <h1>
-            About AAF Hawaii
-          </h1> 
-          <p>
-            The Pele Awards is one of fifteen National District Competitions for the 
-            American Advertising Awards (also known as the ADDYs). The Pele Gold 
-            winners in all national categories are sent to the National Finals 
-            of the American Advertising Awards Competition to represent District 13.
-          </p>
-        `}
-        componentOverrides={{
-          h1: Comp => props => (
-            <View
-              as={Comp}
-              {...props}
-              css={mq({
-                fontSize: t.f.xl,
-                lineHeight: t.lh.Title,
-                marginTop: linearScale('2.25rem', '3rem'),
-                marginBottom: linearScale('1rem', '1.5rem'),
-                color: t.c.Black,
-                ...t.boxStyles.firstLastNoMargin,
-              })}
-            />
-          ),
-        }}
-      />
-    ),
-    redBoxChildren: (
-      <SVG
-        svg={AssetAAFLogoSVG}
-        x={236}
-        y={147}
-        css={mq({ width: ['6rem', '8rem', '10rem', '12rem'] })}
-      />
-    ),
-  },
-  cta: {
-    buttonText: 'Learn More',
-    buttonHref: EVENT_SITE_URL,
-    textHTML: `
-      <h1>
-        Get ready to enter for 2021!
-      </h1> 
-      <p>
-        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-        Curabitur blandit tempus porttitor. Maecenas sed diam eget risus
-        varius blandit sit amet non magna. Maecenas faucibus mollis interdum.
-      </p>
-    `,
-  },
+type AboutPageProps = LayoutProps & {
+  data: AboutPageQuery
 }
 
-export const AboutPage: React.FC<AboutPageProps> = () => {
+export const AboutPage = ({ data }: AboutPageProps) => {
   return (
     <Layout>
       <Helmet>
@@ -96,23 +27,116 @@ export const AboutPage: React.FC<AboutPageProps> = () => {
       </Helmet>
 
       <HeroSlice
-        textHTML={sliceData.hero.textHTML}
-        imageAlt={sliceData.hero.imageAlt}
-        imageSrc={sliceData.hero.imageSrc}
+        textHTML={
+          data.aboutHeroText?.data?.rich_text?.childMarkdownRemark?.html
+        }
+        imageFluid={
+          data.aboutHeroImage?.data?.image?.localFiles?.[0]
+            ?.childCloudinaryAsset?.fluid
+        }
       />
 
       <ColoredBoxesSlice
-        whiteBoxChildren={sliceData.boxes.whiteBoxChildren}
-        redBoxChildren={sliceData.boxes.redBoxChildren}
+        whiteBoxChildren={
+          <HTMLContent
+            html={
+              data.aboutWhiteColoredBox?.data?.rich_text?.childMarkdownRemark
+                ?.html
+            }
+            componentOverrides={{
+              h1: Comp => props => (
+                <View
+                  as={Comp}
+                  {...props}
+                  css={mq({
+                    fontSize: t.f.xl,
+                    lineHeight: t.lh.Title,
+                    marginTop: linearScale('2.25rem', '3rem'),
+                    marginBottom: linearScale('1rem', '1.5rem'),
+                    color: t.c.Black,
+                    ...t.boxStyles.firstLastNoMargin,
+                  })}
+                />
+              ),
+            }}
+          />
+        }
+        redBoxChildren={
+          <SVG
+            svg={AssetAAFLogoSVG}
+            x={236}
+            y={147}
+            css={mq({ width: ['6rem', '8rem', '10rem', '12rem'] })}
+          />
+        }
       />
 
       <CallToActionSlice
-        buttonHref={sliceData.cta.buttonHref}
-        buttonText={sliceData.cta.buttonText}
-        textHTML={sliceData.cta.textHTML}
+        buttonHref={data.aboutButtonHref?.data?.href}
+        buttonText={data.aboutButtonText?.data?.plain_text}
+        textHTML={data.aboutCtaText?.data?.rich_text?.childMarkdownRemark?.html}
       />
     </Layout>
   )
 }
 
 export default AboutPage
+
+export const query = graphql`
+  query AboutPage {
+    aboutHeroText: airtableTextField(data: { uid: { eq: "About Hero Text" } }) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    aboutHeroImage: airtableImageField(
+      data: { uid: { eq: "About Hero Image" } }
+    ) {
+      data {
+        image {
+          localFiles {
+            childCloudinaryAsset {
+              fluid(maxWidth: 800) {
+                ...CloudinaryAssetFluid
+              }
+            }
+          }
+        }
+      }
+    }
+    aboutWhiteColoredBox: airtableTextField(
+      data: { uid: { eq: "About White Colored Box" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    aboutCtaText: airtableTextField(data: { uid: { eq: "About CTA" } }) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    aboutButtonText: airtableTextField(data: { uid: { eq: "About Button" } }) {
+      data {
+        plain_text
+      }
+    }
+    aboutButtonHref: airtableLink(data: { uid: { eq: "About CTA Button" } }) {
+      data {
+        href
+      }
+    }
+  }
+`
