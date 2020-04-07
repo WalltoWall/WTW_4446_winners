@@ -23,13 +23,7 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
       {...props}
       css={mq({ display: 'grid', gap: linearScale('0.8125rem', '1.5rem') })}
     >
-      <AspectRatio
-        x={ASPECT_RATIO.x}
-        y={ASPECT_RATIO.y}
-        css={{ backgroundColor: t.c.Black }}
-      >
-        <GatsbyImage fluid={activeImage} css={{ height: '100%' }} />
-      </AspectRatio>
+      <GatsbyImage fluid={activeImage} />
       {hasMultipleImages && (
         <ul
           css={mq({
