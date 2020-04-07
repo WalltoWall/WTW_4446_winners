@@ -22,9 +22,11 @@ export type WinnerTemplate = LayoutProps & {
 export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
+
   const agency = winner?.data?.agency?.[0]
   const agencyAvatarFluid =
     agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
+
   const images = compact(
     winner?.data?.images?.localFiles?.map(
       (localFile) => localFile?.childCloudinaryAsset?.fluid,
@@ -75,6 +77,9 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
             </div>
           )}
           <WinnerInfo
+            variant={
+              winner?.data?.type === 'Professional' ? 'professional' : 'student'
+            }
             award={winner?.data?.award?.toLowerCase?.() as Award}
             specialAward={winner?.data?.special_award}
             year={winner?.data?.year}
@@ -82,7 +87,6 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
             categoryLine2={category?.line_2}
             tags={winner?.fields?.tags as Tag[]}
             creditsHTML={winner?.data?.credits?.childMarkdownRemark?.html}
-            entrantType="agency"
             entrantName={agency?.data?.name}
             entrantHref={agency?.fields?.url}
             entrantAvatarFluid={agencyAvatarFluid}
@@ -121,6 +125,7 @@ export const query = graphql`
       }
       data {
         name
+        type
         year
         award
         special_award
