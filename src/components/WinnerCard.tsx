@@ -117,10 +117,7 @@ export const WinnerCard = ({
             </p>
           )}
           {title && (
-            <Heading
-              forwardedAs="h3"
-              css={mq({ fontSize: t.f.m, fontWeight: t.fw.Medium })}
-            >
+            <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
               <Anchor href={href}>{title}</Anchor>
             </Heading>
           )}
