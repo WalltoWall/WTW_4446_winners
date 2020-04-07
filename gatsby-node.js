@@ -193,7 +193,8 @@ exports.createPages = async (gatsbyContext) => {
   }
 
   const winnerNodesByTag = allWinnerNodes.reduce((acc, curr) => {
-    for (const tag of curr.data.tags) acc[tag] = [...(acc[tag] || []), curr]
+    for (const tag of curr.data.tags || [])
+      acc[tag] = [...(acc[tag] || []), curr]
     return acc
   }, {})
 
@@ -276,7 +277,7 @@ exports.createPages = async (gatsbyContext) => {
     })
 
   const tags = allWinnerNodes.reduce((acc, curr) => {
-    for (const tag of curr.data.tags) acc.add(tag)
+    for (const tag of curr.data.tags || []) acc.add(tag)
     return acc
   }, new Set())
   for (const tag of tags)
@@ -310,7 +311,7 @@ exports.onCreateNode = ({ node, actions }) => {
       const url = `/winners/${airtableNodeToSlug(node)}/`
       createNodeField({ node, name: 'url', value: url })
 
-      const tags = node.data.tags
+      const tags = node.data.tags || []
       createNodeField({
         node,
         name: 'tags',

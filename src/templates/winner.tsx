@@ -161,7 +161,7 @@ export const query = graphql`
         images {
           localFiles {
             childCloudinaryAsset {
-              fluid(maxWidth: 1600) {
+              fluid(maxWidth: 2000) {
                 ...CloudinaryAssetFluid
               }
             }
