@@ -1,11 +1,11 @@
 import React from 'react'
-import { FluidObject } from 'gatsby-image'
+import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq } from '../theme'
 import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { BoundedBox } from './BoundedBox'
-import { Img } from './Img'
+import { ImageContainer } from './ImageContainer'
 
 export type HeroProps = ViewProps & {
   imageFluid?: FluidObject
@@ -29,12 +29,12 @@ export const Hero = ({
       alignItems: 'center',
     })}
   >
-    <AspectRatio
-      x={8}
-      y={5}
-      css={{ backgroundColor: t.c.Black, height: '100%' }}
-    >
-      {imageSrc && <Img src={imageSrc} alt={imageAlt} />}
+    <AspectRatio x={8} y={5} css={{ backgroundColor: t.c.Black }}>
+      {imageFluid && (
+        <ImageContainer>
+          <GatsbyImage fluid={imageFluid} alt={imageAlt} />
+        </ImageContainer>
+      )}
     </AspectRatio>
     <BoundedBox css={{ textAlign: 'center' }}>
       <div
