@@ -2,7 +2,6 @@ const dlv = require('dlv')
 const slug = require('slug')
 
 require('dotenv').config()
-
 module.exports = {
   plugins: [
     'gatsby-plugin-typescript',
@@ -57,7 +56,7 @@ module.exports = {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Text Fields',
             queryName: 'TextField',
-            mapping: { richText: 'text/markdown' },
+            mapping: { rich_text: 'text/markdown' },
             separateNodeType: true,
           },
           {
@@ -65,6 +64,12 @@ module.exports = {
             tableName: 'Image Fields',
             queryName: 'ImageField',
             mapping: { image: 'fileNode' },
+            separateNodeType: true,
+          },
+          {
+            baseId: process.env.AIRTABLE_BASE_ID,
+            tableName: 'Links',
+            queryName: 'Link',
             separateNodeType: true,
           },
         ],
