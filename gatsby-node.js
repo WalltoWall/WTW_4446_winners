@@ -45,21 +45,6 @@ const normalizeWinnerNode = (node) => {
   }
 }
 
-const normalizeCollegeWinnerNode = (node) => ({
-  url: node.fields.url,
-  name: node.data.name,
-  award: node.data.award.toLowerCase(),
-  category: dlv(node, ['data', 'category', 0, 'data']),
-  image: dlv(node, [
-    'data',
-    'images',
-    'localFiles',
-    0,
-    'childCloudinaryAsset',
-    'fluid',
-  ]),
-})
-
 exports.createPages = async (gatsbyContext) => {
   const {
     actions,
@@ -106,6 +91,7 @@ exports.createPages = async (gatsbyContext) => {
           }
           data {
             name
+            type
             award
             tags
             agency {
@@ -153,44 +139,18 @@ exports.createPages = async (gatsbyContext) => {
           }
         }
       }
-      allAirtableCollegeWinner {
-        nodes {
-          recordId
-          fields {
-            url
-          }
-          data {
-            name
-            award
-            entrant_name
-            school
-            category {
-              id
-              data {
-                line_1
-                line_2
-              }
-            }
-            images {
-              localFiles {
-                childCloudinaryAsset {
-                  fluid(maxWidth: 800) {
-                    aspectRatio
-                    base64
-                    sizes
-                    src
-                    srcSet
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   `)
-  const winnerNodes = queryResult.data.allAirtableWinner.nodes
-  const collegeWinnerNodes = queryResult.data.allAirtableCollegeWinner.nodes
+  const allWinnerNodes = queryResult.data.allAirtableWinner.nodes
+  const winnerNodes = allWinnerNodes.filter(
+    (node) => node.data.type === 'Professional',
+  )
+  const collegeWinnerNodes = allWinnerNodes.filter(
+    (node) => node.data.type === 'College',
+  )
+  const highSchoolWinnerNodes = allWinnerNodes.filter(
+    (node) => node.data.type === 'High School',
+  )
 
   processPaginatedCollection({
     collection: winnerNodes.map(normalizeWinnerNode),
@@ -202,8 +162,17 @@ exports.createPages = async (gatsbyContext) => {
   })
 
   processPaginatedCollection({
-    collection: collegeWinnerNodes.map(normalizeCollegeWinnerNode),
+    collection: collegeWinnerNodes.map(normalizeWinnerNode),
     name: 'collegeWinners',
+    createNode,
+    createNodeId,
+    createContentDigest,
+    getNode,
+  })
+
+  processPaginatedCollection({
+    collection: highSchoolWinnerNodes.map(normalizeWinnerNode),
+    name: 'highSchoolWinners',
     createNode,
     createNodeId,
     createContentDigest,
@@ -223,7 +192,7 @@ exports.createPages = async (gatsbyContext) => {
     processPaginatedCollection({ collection, name: `winners/${category}` })
   }
 
-  const winnerNodesByTag = winnerNodes.reduce((acc, curr) => {
+  const winnerNodesByTag = allWinnerNodes.reduce((acc, curr) => {
     for (const tag of curr.data.tags) acc[tag] = [...(acc[tag] || []), curr]
     return acc
   }, {})
@@ -234,7 +203,7 @@ exports.createPages = async (gatsbyContext) => {
     processPaginatedCollection({ collection, name: `tags/${tag}` })
   }
 
-  const winnerNodesByAgency = winnerNodes.reduce((acc, curr) => {
+  const winnerNodesByAgency = allWinnerNodes.reduce((acc, curr) => {
     for (const agency of curr.data.agency)
       acc[agency.id] = [...(acc[agency.id] || []), curr]
     return acc
@@ -271,7 +240,22 @@ exports.createPages = async (gatsbyContext) => {
     const nextNode = collegeWinnerNodes[i + 1]
     createPage({
       path: node.fields.url,
-      component: path.resolve(__dirname, 'src/templates/collegeWinner.tsx'),
+      component: path.resolve(__dirname, 'src/templates/winner.tsx'),
+      context: {
+        recordId: node.recordId,
+        previousRecordId: previousNode ? previousNode.recordId : undefined,
+        nextRecordId: nextNode ? nextNode.recordId : undefined,
+      },
+    })
+  }
+
+  for (let i = 0; i < highSchoolWinnerNodes.length; i++) {
+    const node = highSchoolWinnerNodes[i]
+    const previousNode = highSchoolWinnerNodes[i - 1]
+    const nextNode = highSchoolWinnerNodes[i + 1]
+    createPage({
+      path: node.fields.url,
+      component: path.resolve(__dirname, 'src/templates/winner.tsx'),
       context: {
         recordId: node.recordId,
         previousRecordId: previousNode ? previousNode.recordId : undefined,
@@ -291,7 +275,7 @@ exports.createPages = async (gatsbyContext) => {
       },
     })
 
-  const tags = winnerNodes.reduce((acc, curr) => {
+  const tags = allWinnerNodes.reduce((acc, curr) => {
     for (const tag of curr.data.tags) acc.add(tag)
     return acc
   }, new Set())
@@ -336,12 +320,6 @@ exports.onCreateNode = ({ node, actions }) => {
         })),
       })
 
-      break
-    }
-
-    case 'AirtableCollegeWinner': {
-      const url = `/college/${airtableNodeToSlug(node)}/`
-      createNodeField({ node, name: 'url', value: url })
       break
     }
 

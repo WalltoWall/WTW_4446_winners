@@ -32,15 +32,6 @@ module.exports = {
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
-            tableName: 'College Winners',
-            tableLinks: ['category'],
-            queryName: 'CollegeWinner',
-            separateNodeType: true,
-            mapping: { images: 'fileNode', credits: 'text/markdown' },
-            separateMapType: true,
-          },
-          {
-            baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Agencies',
             queryName: 'Agency',
             separateNodeType: true,
