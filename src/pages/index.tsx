@@ -185,7 +185,12 @@ export default IndexPage
 export const query = graphql`
   query IndexPage {
     bestOfEntries: allAirtableWinner(
-      filter: { data: { special_award: { regex: "/^Best of Show - /" } } }
+      filter: {
+        data: {
+          special_award: { regex: "/^Best of Show - /" }
+          type: { eq: "Professional" }
+        }
+      }
     ) {
       nodes {
         ...SpecialAwardWinner
