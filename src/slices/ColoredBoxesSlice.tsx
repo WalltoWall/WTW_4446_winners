@@ -5,8 +5,7 @@ import { BoundedBox } from '../components/BoundedBox'
 import { mq, t, linearScale } from '../theme'
 
 const Box: React.FC = ({ children, ...props }) => {
-  const py = linearScale('45px', '150px', 'space')
-  const px = linearScale('100px', '200px', 'space')
+  const p = linearScale('40px', '80px', 'space')
 
   return (
     <View
@@ -16,10 +15,8 @@ const Box: React.FC = ({ children, ...props }) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: py,
-        paddingBottom: py,
-        paddingLeft: px,
-        paddingRight: px,
+        padding: p,
+        minHeight: [null, null, '25rem', '32rem'],
       })}
       {...props}
     >
@@ -38,7 +35,11 @@ export const ColoredBoxesSlice: React.FC<ColoredBoxesSliceProps> = ({
   redBoxChildren,
 }) => {
   return (
-    <BoundedBox forwardedAs="section" css={{ background: t.c.Gray95 }}>
+    <BoundedBox
+      forwardedAs="section"
+      maxWidth="Xlarge"
+      css={{ background: t.c.Gray95 }}
+    >
       <View
         css={mq({
           display: 'grid',
