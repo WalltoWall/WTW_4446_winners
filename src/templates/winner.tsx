@@ -87,9 +87,9 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
             categoryLine2={category?.line_2}
             tags={winner?.fields?.tags as Tag[]}
             creditsHTML={winner?.data?.credits?.childMarkdownRemark?.html}
-            entrantName={agency?.data?.name}
-            entrantHref={agency?.fields?.url}
-            entrantAvatarFluid={agencyAvatarFluid}
+            agencyName={agency?.data?.name}
+            agencyHref={agency?.fields?.url}
+            agencyAvatarFluid={agencyAvatarFluid}
             client={winner?.data?.client}
             css={mq({
               maxWidth: t.sz.Large,
