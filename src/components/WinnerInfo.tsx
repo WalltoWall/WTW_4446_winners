@@ -6,14 +6,24 @@ import { Tag as TagType } from '../types'
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 import { AwardIcon, AwardIconProps } from './AwardIcon'
-import { Avatar, AvatarProps } from './Avatar'
 import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
-import { Anchor } from './Anchor'
 import { Tag } from './Tag'
-import { AgencyIdentifier } from './AgencyIdentifier'
+import { AgencyIdentifier, AgencyIdentifierProps } from './AgencyIdentifier'
+
+const variants = {
+  professional: {
+    clientLabel: 'Client',
+    agencyLabel: 'Creative Agency',
+  },
+  student: {
+    clientLabel: 'School',
+    agencyLabel: 'Student',
+  },
+}
 
 type WinnerInfoProps = ViewProps & {
+  variant: keyof typeof variants
   award: AwardIconProps['type']
   specialAward?: string
   year: string
@@ -21,8 +31,7 @@ type WinnerInfoProps = ViewProps & {
   categoryLine2?: string
   tags?: TagType[]
   creditsHTML?: string
-  entrantType: 'agency' | 'student'
-  entrantAvatarFluid?: AvatarProps['fluid']
+  entrantAvatarFluid?: AgencyIdentifierProps['avatarFluid']
   entrantName?: string
   entrantHref?: string
   client?: string
@@ -30,6 +39,7 @@ type WinnerInfoProps = ViewProps & {
 }
 
 export const WinnerInfo: React.FC<WinnerInfoProps> = ({
+  variant: variantName,
   award,
   specialAward,
   year,
@@ -37,7 +47,6 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
   categoryLine2,
   tags = [],
   creditsHTML,
-  entrantType,
   entrantAvatarFluid,
   entrantName,
   entrantHref,
@@ -45,6 +54,7 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
   client,
   ...props
 }) => {
+  const variant = variants[variantName]
   const hasTags = tags.length > 0
 
   return (
@@ -136,36 +146,20 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
             lineHeight: t.lh.Copy,
           })}
         >
-          {entrantType === 'student' && (
-            <>
-              <dl>
-                <dt css={{ fontWeight: t.fw.Semibold }}>Student Name</dt>
-                <dd>{entrantName}</dd>
-              </dl>
-              <dl>
-                <dt css={{ fontWeight: t.fw.Semibold }}>School</dt>
-                <dd>{school}</dd>
-              </dl>
-            </>
-          )}
-          {entrantType === 'agency' && (
-            <>
-              <dl>
-                <dt css={{ fontWeight: t.fw.Semibold }}>Client</dt>
-                <dd>{client}</dd>
-              </dl>
-              <dl>
-                <dt css={{ fontWeight: t.fw.Semibold }}>Creative Agency</dt>
-                <dd>
-                  <AgencyIdentifier
-                    href={entrantHref!}
-                    name={entrantName!}
-                    avatarFluid={entrantAvatarFluid}
-                  />
-                </dd>
-              </dl>
-            </>
-          )}
+          <dl>
+            <dt css={{ fontWeight: t.fw.Semibold }}>{variant.clientLabel}</dt>
+            <dd>{client}</dd>
+          </dl>
+          <dl>
+            <dt css={{ fontWeight: t.fw.Semibold }}>{variant.agencyLabel}</dt>
+            <dd>
+              <AgencyIdentifier
+                href={entrantHref!}
+                name={entrantName!}
+                avatarFluid={entrantAvatarFluid}
+              />
+            </dd>
+          </dl>
           <HTMLContent html={creditsHTML} />
         </div>
       </div>
