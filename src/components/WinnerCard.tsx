@@ -74,7 +74,7 @@ export const WinnerCard = ({
         <AspectRatio
           x={variant.imageAspectRatioX}
           y={variant.imageAspectRatioY}
-          css={{ backgroundColor: 'black' }}
+          css={{ backgroundColor: t.c.White }}
         >
           {imageFluid && (
             <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
@@ -89,6 +89,8 @@ export const WinnerCard = ({
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
           padding: variant.padding,
+          boxShadow: '0 -1px 0 rgba(0, 0, 0, 0.05)',
+          position: 'relative',
         })}
       >
         <div

@@ -34,7 +34,10 @@ export const Avatar = ({
     <View
       {...props}
       css={mq({
-        backgroundColor: fluid ? 'transparent' : t.c.Black,
+        background: fluid
+          ? 'transparent'
+          : `linear-gradient(to bottom right, purple, skyblue)`,
+        opacity: fluid ? 1 : 0.5,
         width: variant.dimension,
         height: variant.dimension,
         borderRadius: '50%',
