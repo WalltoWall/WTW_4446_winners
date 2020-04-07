@@ -40,7 +40,7 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePage) => {
             gap: linearScale('0.875rem', '1.5rem', 'space'),
           })}
         >
-          {people.map((person) => (
+          {people.map(person => (
             <li key={person.data?.name}>
               <LargePersonCard
                 name={person.data?.name!}

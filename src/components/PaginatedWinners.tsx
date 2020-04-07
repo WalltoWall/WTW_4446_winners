@@ -33,7 +33,7 @@ export const PaginatedWinners = ({
       })}
     >
       <CardList columns={[1, 2, 3, 3, 4]}>
-        {(winners as Winner[]).map((winner) => (
+        {(winners as Winner[]).map(winner => (
           <WinnerCard
             key={winner.url}
             href={winner.url}

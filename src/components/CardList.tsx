@@ -21,7 +21,7 @@ export const CardList = ({
       css={mq({
         display: 'grid',
         gap: linearScale('0.8125rem', '1.5rem'),
-        gridTemplateColumns: columns.map((qty) => `repeat(${qty}, 1fr)`),
+        gridTemplateColumns: columns.map(qty => `repeat(${qty}, 1fr)`),
         alignItems: 'stretch',
       })}
     >
