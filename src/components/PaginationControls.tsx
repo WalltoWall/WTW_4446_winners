@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import VisuallyHidden from '@reach/visually-hidden'
 
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
@@ -6,10 +7,12 @@ import { Icon } from './Icon'
 
 const variants = {
   previous: {
+    label: 'Previous',
     iconName: 'chevronLeft',
     svgOffsetX: '-10%',
   },
   next: {
+    label: 'Next',
     iconName: 'chevronRight',
     svgOffsetX: '10%',
   },
@@ -52,6 +55,7 @@ const DirectionButton = ({
           transform: `translateX(${variant.svgOffsetX})`,
         })}
       />
+      <VisuallyHidden>{variant.label}</VisuallyHidden>
     </View>
   )
 }

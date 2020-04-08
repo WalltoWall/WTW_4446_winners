@@ -8,31 +8,29 @@ export type BoundedBoxProps = ViewProps & {
   innerProps?: ViewProps
 }
 
-export const BoundedBox = ({
-  maxWidth,
-  innerProps,
-  children,
-  ...props
-}: BoundedBoxProps) => (
-  <View
-    {...props}
-    css={mq({
-      paddingLeft: linearScale('1rem', '4rem'),
-      paddingRight: linearScale('1rem', '4rem'),
-      paddingTop: linearScale('2.5rem', '6.25rem'),
-      paddingBottom: linearScale('2.5rem', '6.25rem'),
-    })}
-  >
-    <div
-      {...innerProps}
-      css={{
-        height: '100%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        maxWidth: maxWidth ? t.sz[maxWidth] : undefined,
-      }}
+export const BoundedBox = React.forwardRef(
+  ({ maxWidth, innerProps, children, ...props }: BoundedBoxProps, ref) => (
+    <View
+      ref={ref}
+      {...props}
+      css={mq({
+        paddingLeft: linearScale('1rem', '4rem'),
+        paddingRight: linearScale('1rem', '4rem'),
+        paddingTop: linearScale('2.5rem', '6.25rem'),
+        paddingBottom: linearScale('2.5rem', '6.25rem'),
+      })}
     >
-      {children}
-    </div>
-  </View>
+      <div
+        {...innerProps}
+        css={{
+          height: '100%',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          maxWidth: maxWidth ? t.sz[maxWidth] : undefined,
+        }}
+      >
+        {children}
+      </div>
+    </View>
+  ),
 )
