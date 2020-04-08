@@ -9,11 +9,11 @@ type CallToActionSliceProps = CallToActionProps & {
   textHTML?: string
 }
 
-export const CallToActionSlice: React.FC<CallToActionSliceProps> = ({
+export const CallToActionSlice = ({
   buttonHref,
   buttonText,
   textHTML,
-}) => {
+}: CallToActionSliceProps) => {
   return (
     <CallToAction buttonHref={buttonHref} buttonText={buttonText}>
       <HTMLContent
