@@ -4,6 +4,17 @@ import GatsbyImage, { FluidObject } from 'gatsby-image'
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 
+const colors: Record<string, [string, string]> = {
+  grape: ['#bc93c4', '#bed2e7'],
+  sprite: ['#f6b843', '#8ef5a7'],
+  icee: ['#fd75b5', '#5be4fd'],
+  pog: ['#ee8b74', '#ae7caf'],
+  mentos: ['#70c3dc', '#bfeeda'],
+  sunset: ['#d9646f', '#f3c26c'],
+  peach: ['#f5bef4', '#ffe4c1'],
+  chill: ['#b8b4ee', '#c4f7dc'],
+}
+
 const variants = {
   tiny: {
     dimension: linearScale('1rem', '1.25rem'),
