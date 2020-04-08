@@ -10,10 +10,42 @@ import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
 import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
-import { Anchor } from '../components/Anchor'
+import { Anchor, AnchorProps } from '../components/Anchor'
 import { NextPrevious } from '../components/NextPrevious'
 import { ImageGallery } from '../components/ImageGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
+
+const breadcrumbVariants = {
+  professional: {
+    href: '/winners/',
+    label: 'Winners',
+  },
+  college: {
+    href: '/college/',
+    label: 'College Winners',
+  },
+  highSchool: {
+    href: '/high-school/',
+    label: 'High School Winners',
+  },
+} as const
+
+type BreadcrumbProps = Omit<AnchorProps, 'href'> & {
+  variant?: keyof typeof breadcrumbVariants
+}
+
+const Breadcrumb = ({
+  variant: variantName = 'professional',
+  ...props
+}: BreadcrumbProps) => {
+  const variant = breadcrumbVariants[variantName]
+
+  return (
+    <Anchor href={variant.href} {...props}>
+      {variant.label}
+    </Anchor>
+  )
+}
 
 export type WinnerTemplate = LayoutProps & {
   data: WinnerTemplateQuery
@@ -58,7 +90,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
                 marginBottom: linearScale('0.5rem', '0.8125rem'),
               })}
             >
-              <Anchor href="/winners/">Winners</Anchor>
+              <Breadcrumb
+                variant={
+                  winner?.data?.type?.toLowerCase?.() as keyof typeof breadcrumbVariants
+                }
+              />
             </p>
             <Heading css={mq({ fontSize: t.f.xl })}>
               {winner?.data?.name}
