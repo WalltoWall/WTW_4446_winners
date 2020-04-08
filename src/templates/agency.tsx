@@ -62,7 +62,7 @@ export const AgencyTemplate = ({ data, ...props }: AgencyTemplate) => {
               justifyItems: 'center',
             })}
           >
-            <Avatar fluid={avatarFluid} />
+            <Avatar flavorSeed={agency?.data?.name} fluid={avatarFluid} />
             <Heading
               css={mq({
                 textAlign: 'center',

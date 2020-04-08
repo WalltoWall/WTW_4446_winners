@@ -1,10 +1,12 @@
 import React from 'react'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
-import { t, mq, linearScale } from '../theme'
+import { mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 
-const colors: Record<string, [string, string]> = {
+const DEFAULT_FLAVOR = ['#000', '#000'] as const
+
+const flavors: Record<string, readonly [string, string]> = {
   grape: ['#bc93c4', '#bed2e7'],
   sprite: ['#f6b843', '#8ef5a7'],
   icee: ['#fd75b5', '#5be4fd'],
@@ -13,6 +15,17 @@ const colors: Record<string, [string, string]> = {
   sunset: ['#d9646f', '#f3c26c'],
   peach: ['#f5bef4', '#ffe4c1'],
   chill: ['#b8b4ee', '#c4f7dc'],
+}
+
+export const seedToFlavor = (seed?: string) => {
+  if (!seed) return DEFAULT_FLAVOR
+
+  const flavorNames = Object.keys(flavors)
+  const charIndex = Math.max(Math.min(seed?.length ?? 0, 2) - 1, 0)
+  const flavorName =
+    flavorNames[seed.charCodeAt(charIndex) % (flavorNames.length - 1)]
+
+  return flavors[flavorName]
 }
 
 const variants = {
@@ -29,17 +42,20 @@ const variants = {
 
 export type AvatarProps = ViewProps & {
   variant?: keyof typeof variants
+  flavorSeed?: string
   fluid?: FluidObject
   alt?: string
 }
 
 export const Avatar = ({
   variant: variantName = 'medium',
+  flavorSeed,
   fluid,
   alt,
   ...props
 }: AvatarProps) => {
   const variant = variants[variantName]
+  const flavor = seedToFlavor(flavorSeed)
 
   return (
     <View
@@ -47,8 +63,7 @@ export const Avatar = ({
       css={mq({
         background: fluid
           ? 'transparent'
-          : `linear-gradient(to bottom right, purple, skyblue)`,
-        opacity: fluid ? 1 : 0.5,
+          : `linear-gradient(to bottom right, ${flavor[0]}, ${flavor[1]})`,
         width: variant.dimension,
         height: variant.dimension,
         borderRadius: '50%',
