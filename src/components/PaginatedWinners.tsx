@@ -10,7 +10,11 @@ import { WinnerCard } from './WinnerCard'
 import { Button } from './Button'
 import { Heading } from './Heading'
 
-const Text = (props: { children: React.ReactNode }) => {
+type TextProps = {
+  children: React.ReactNode
+}
+
+const Text = (props: TextProps) => {
   return (
     <p
       {...props}
@@ -23,7 +27,12 @@ const Text = (props: { children: React.ReactNode }) => {
   )
 }
 
-const NoWinners = () => {
+type NoWinnersProps = {
+  heading: string
+  text: string
+}
+
+const NoWinners = ({ heading, text }: NoWinnersProps) => {
   return (
     <div css={{ margin: '0 auto', maxWidth: '40ch', textAlign: 'center' }}>
       <Heading
@@ -32,9 +41,9 @@ const NoWinners = () => {
           lineHeight: t.lineHeights.TitleWide,
         })}
       >
-        Looks like there aren't any winners for this criteria.
+        {heading}
       </Heading>
-      <Text>Please try a different filter or year.</Text>
+      <Text>{text}</Text>
     </div>
   )
 }
@@ -80,6 +89,7 @@ export const PaginatedWinners = ({
               />
             ))}
           </CardList>
+
           <div
             css={mq({
               display: 'grid',
@@ -97,7 +107,10 @@ export const PaginatedWinners = ({
           </div>
         </>
       ) : (
-        <NoWinners />
+        <NoWinners
+          heading="Looks like there aren't any winners for this criteria."
+          text="Please try a different filter or year."
+        />
       )}
     </View>
   )
