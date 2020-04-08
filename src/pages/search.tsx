@@ -1,12 +1,11 @@
-import React, { useState, useCallback, useRef, useMemo } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { useLunr } from 'react-lunr'
-// import { usePaginatedCollection } from '@walltowall/hooks'
 
 import { WinnerSearchResult, Award } from '../types'
 import { SearchPageQuery } from '../graphqlTypes'
-import { chunk } from '../utils'
+import { usePaginatedCollection } from '../hooks/usePaginatedCollection'
 
 import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -22,10 +21,8 @@ export type SearchPageProps = LayoutProps & {
 }
 
 export const SearchPage = ({ data, ...props }: SearchPageProps) => {
-  const containerRef = useRef<typeof BoundedBox>()
   const queryRef = useRef<HTMLInputElement>()
   const [query, setQuery] = useState('')
-  const [page, setPage] = useState(1)
 
   const winnersResults: WinnerSearchResult[] = useLunr(
     query,
@@ -33,16 +30,16 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
     data?.localSearchWinners?.store,
   )
 
-  // const { page, totalPages, setPage } = usePaginatedCollection({
-  //   collection: winnersResults,
-  //   perPage: 8,
-  //   containerRef,
-  // })
-
-  const winnersResultsPages = useMemo(() => chunk(8, winnersResults), [
-    winnersResults,
-  ])
-  const winnersResultsCurrentPage = winnersResultsPages[page - 1] ?? []
+  const {
+    paginatedCollection,
+    page,
+    totalPages,
+    setPage,
+    containerRef,
+  } = usePaginatedCollection({
+    collection: winnersResults,
+    perPage: 2,
+  })
 
   const handleSubmit = useCallback(event => {
     event.preventDefault()
@@ -97,7 +94,7 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
             })}
           >
             <CardList columns={[1, 2, 3, 3, 4]}>
-              {winnersResultsCurrentPage.map(result => (
+              {paginatedCollection.map(result => (
                 <WinnerCard
                   key={result.url}
                   title={result.name}
@@ -112,9 +109,9 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
               ))}
             </CardList>
             <PaginationControls
-              totalPages={winnersResultsPages.length}
+              totalPages={totalPages}
               currentPage={page}
-              setPage={number => setPage(number)}
+              setPage={setPage}
               css={{ justifySelf: 'center' }}
             />
           </div>

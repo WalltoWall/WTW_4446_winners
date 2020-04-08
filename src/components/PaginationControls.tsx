@@ -76,12 +76,12 @@ export const PaginationControls = ({
     .fill(undefined)
     .map((_, i) => i + 1)
 
-  const incPage = useCallback(() => setPage(Math.max(currentPage - 1, 0)), [
+  const decPage = useCallback(() => setPage(Math.max(currentPage - 1, 1)), [
     currentPage,
     setPage,
   ])
 
-  const decPage = useCallback(
+  const incPage = useCallback(
     () => setPage(Math.min(currentPage + 1, totalPages)),
     [currentPage, setPage, totalPages],
   )
@@ -96,7 +96,7 @@ export const PaginationControls = ({
         alignItems: 'center',
       })}
     >
-      <DirectionButton variant="previous" onClick={incPage} />
+      <DirectionButton variant="previous" onClick={decPage} />
       <ul
         css={mq({
           display: 'grid',
@@ -121,7 +121,7 @@ export const PaginationControls = ({
           </li>
         ))}
       </ul>
-      <DirectionButton variant="next" onClick={decPage} />
+      <DirectionButton variant="next" onClick={incPage} />
     </View>
   )
 }
