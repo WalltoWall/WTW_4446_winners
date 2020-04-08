@@ -90,5 +90,65 @@ module.exports = {
         uploadFolder: 'gatsby-cloudinary',
       },
     },
+    {
+      resolve: 'gatsby-plugin-local-search',
+      options: {
+        name: 'winners',
+        engine: 'lunr',
+        query: `
+          query {
+            allAirtableWinner {
+              nodes {
+                recordId
+                fields {
+                  url
+                }
+                data {
+                  name
+                  award
+                  tags
+                  category {
+                    data {
+                      line_1
+                    }
+                  }
+                  images {
+                    localFiles {
+                      childCloudinaryAsset {
+                        fluid(maxWidth: 800) {
+                          aspectRatio
+                          sizes
+                          src
+                          srcSet
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `,
+        index: ['name', 'tags'],
+        store: ['url', 'name', 'award', 'categoryLine1', 'imageFluid'],
+        normalizer: ({ data }) =>
+          data.allAirtableWinner.nodes.map(node => ({
+            id: node.recordId,
+            url: dlv(node, ['fields', 'url']),
+            name: dlv(node, ['data', 'name']),
+            award: dlv(node, ['data', 'award']),
+            tags: (dlv(node, ['data', 'tags']) || []).join(' '),
+            categoryLine1: dlv(node, ['data', 'category', 0, 'data', 'line_1']),
+            imageFluid: dlv(node, [
+              'data',
+              'images',
+              'localFiles',
+              0,
+              'childCloudinaryAsset',
+              'fluid',
+            ]),
+          })),
+      },
+    },
   ],
 }
