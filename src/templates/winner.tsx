@@ -14,6 +14,7 @@ import { Anchor, AnchorProps } from '../components/Anchor'
 import { NextPrevious } from '../components/NextPrevious'
 import { ImageGallery } from '../components/ImageGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
+import { CallToActionSlice } from '../slices/CallToActionSlice'
 
 const breadcrumbVariants = {
   professional: {
@@ -52,6 +53,7 @@ export type WinnerTemplate = LayoutProps & {
 }
 
 export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
+  console.log({ data })
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
 
@@ -68,6 +70,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
 
   const nextWinner = data.nextAirtableWinner
   const previousWinner = data.previousAirtableWinner
+
+  const winnerCtaText =
+    data.winnerCtaText?.data?.rich_text?.childMarkdownRemark?.html
+  const winnerButtonText = data.winnerButtonText?.data?.plain_text
+  const winnerButtonHref = data.winnerButtonHref?.data?.href
 
   return (
     <Layout {...props}>
@@ -137,6 +144,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
             previousLabel={previousWinner?.data?.name}
             nextHref={nextWinner?.fields?.url}
             nextLabel={nextWinner?.data?.name}
+          />
+          <CallToActionSlice
+            buttonHref={winnerButtonHref}
+            buttonText={winnerButtonText}
+            textHTML={winnerCtaText}
           />
         </div>
       </BoundedBox>
@@ -221,6 +233,27 @@ export const query = graphql`
       }
       data {
         name
+      }
+    }
+    winnerCtaText: airtableTextField(data: { uid: { eq: "Winner CTA" } }) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    winnerButtonText: airtableTextField(
+      data: { uid: { eq: "Winner CTA Button Text" } }
+    ) {
+      data {
+        plain_text
+      }
+    }
+    winnerButtonHref: airtableLink(data: { uid: { eq: "Winner CTA Button" } }) {
+      data {
+        href
       }
     }
   }
