@@ -1,10 +1,12 @@
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, useMemo } from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { useLunr } from 'react-lunr'
+// import { usePaginatedCollection } from '@walltowall/hooks'
 
 import { WinnerSearchResult, Award } from '../types'
 import { SearchPageQuery } from '../graphqlTypes'
+import { chunk } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -20,8 +22,10 @@ export type SearchPageProps = LayoutProps & {
 }
 
 export const SearchPage = ({ data, ...props }: SearchPageProps) => {
-  const queryRef = useRef()
+  const containerRef = useRef<typeof BoundedBox>()
+  const queryRef = useRef<HTMLInputElement>()
   const [query, setQuery] = useState('')
+  const [page, setPage] = useState(1)
 
   const winnersResults: WinnerSearchResult[] = useLunr(
     query,
@@ -29,13 +33,22 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
     data?.localSearchWinners?.store,
   )
 
-  const handleSubmit = useCallback(
-    event => {
-      event.preventDefault()
-      setQuery(query?.trim?.())
-    },
-    [query],
-  )
+  // const { page, totalPages, setPage } = usePaginatedCollection({
+  //   collection: winnersResults,
+  //   perPage: 8,
+  //   containerRef,
+  // })
+
+  const winnersResultsPages = useMemo(() => chunk(8, winnersResults), [
+    winnersResults,
+  ])
+  const winnersResultsCurrentPage = winnersResultsPages[page - 1] ?? []
+
+  const handleSubmit = useCallback(event => {
+    event.preventDefault()
+    const newQuery = queryRef.current?.value?.trim?.()?.replace?.('*', '')
+    setQuery(newQuery ?? '')
+  }, [])
 
   return (
     <Layout {...props}>
@@ -43,6 +56,7 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
         <title>Search</title>
       </Helmet>
       <BoundedBox
+        ref={containerRef}
         css={mq({
           backgroundColor: t.c.White,
           paddingTop: linearScale('1.5rem', '3.5rem'),
@@ -68,42 +82,43 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
             })}
           >
             <FormSearchInput
-              value={query}
+              innerRef={queryRef}
               css={mq({ gridColumn: ['1 / -1', 'auto'] })}
             />
           </form>
         </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
-        <div
-          css={mq({
-            display: 'grid',
-            gap: linearScale('3rem', '6.25rem'),
-          })}
-        >
-          <CardList columns={[1, 2, 3, 3, 4]}>
-            {winnersResults.map(result => (
-              <WinnerCard
-                key={result.url}
-                title={result.name}
-                subtitle={result.categoryLine1}
-                award={result.award.toLowerCase() as Award}
-                href={result.url}
-                imageFluid={result.imageFluid}
-                agencyName={result.agencyName!}
-                agencyHref={result.agencyUrl!}
-                agencyAvatarFluid={result.agencyAvatarFluid}
-              />
-            ))}
-          </CardList>
-          <PaginationControls
-            totalPages={3}
-            currentPage={1}
-            onNext={() => console.log('on next')}
-            onPrevious={() => console.log('on previous')}
-            css={{ justifySelf: 'center' }}
-          />
-        </div>
+        {winnersResults.length > 0 && (
+          <div
+            css={mq({
+              display: 'grid',
+              gap: linearScale('3rem', '6.25rem'),
+            })}
+          >
+            <CardList columns={[1, 2, 3, 3, 4]}>
+              {winnersResultsCurrentPage.map(result => (
+                <WinnerCard
+                  key={result.url}
+                  title={result.name}
+                  subtitle={result.categoryLine1}
+                  award={result.award.toLowerCase() as Award}
+                  href={result.url}
+                  imageFluid={result.imageFluid}
+                  agencyName={result.agencyName!}
+                  agencyHref={result.agencyUrl!}
+                  agencyAvatarFluid={result.agencyAvatarFluid}
+                />
+              ))}
+            </CardList>
+            <PaginationControls
+              totalPages={winnersResultsPages.length}
+              currentPage={page}
+              setPage={number => setPage(number)}
+              css={{ justifySelf: 'center' }}
+            />
+          </div>
+        )}
       </BoundedBox>
     </Layout>
   )

@@ -149,7 +149,7 @@ module.exports = {
             }
           }
         `,
-        index: ['name', 'tags'],
+        index: ['name', 'tags', 'agencyName'],
         store: [
           'url',
           'name',
