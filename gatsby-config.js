@@ -58,6 +58,7 @@ module.exports = {
             queryName: 'TextField',
             mapping: { rich_text: 'text/markdown' },
             separateNodeType: true,
+            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
@@ -65,6 +66,7 @@ module.exports = {
             queryName: 'ImageField',
             mapping: { image: 'fileNode' },
             separateNodeType: true,
+            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
