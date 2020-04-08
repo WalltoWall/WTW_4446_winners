@@ -13,6 +13,7 @@ import { Heading } from '../components/Heading'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { CardList } from '../components/CardList'
 import { WinnerCard } from '../components/WinnerCard'
+import { PaginationControls } from '../components/PaginationControls'
 
 export type SearchPageProps = LayoutProps & {
   data: SearchPageQuery
@@ -74,21 +75,35 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
         </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
-        <CardList columns={[1, 2, 3, 3, 4]}>
-          {winnersResults.map(result => (
-            <WinnerCard
-              key={result.url}
-              title={result.name}
-              subtitle={result.categoryLine1}
-              award={result.award.toLowerCase() as Award}
-              href={result.url}
-              imageFluid={result.imageFluid}
-              agencyName={result.agencyName!}
-              agencyHref={result.agencyUrl!}
-              agencyAvatarFluid={result.agencyAvatarFluid}
-            />
-          ))}
-        </CardList>
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('3rem', '6.25rem'),
+          })}
+        >
+          <CardList columns={[1, 2, 3, 3, 4]}>
+            {winnersResults.map(result => (
+              <WinnerCard
+                key={result.url}
+                title={result.name}
+                subtitle={result.categoryLine1}
+                award={result.award.toLowerCase() as Award}
+                href={result.url}
+                imageFluid={result.imageFluid}
+                agencyName={result.agencyName!}
+                agencyHref={result.agencyUrl!}
+                agencyAvatarFluid={result.agencyAvatarFluid}
+              />
+            ))}
+          </CardList>
+          <PaginationControls
+            totalPages={3}
+            currentPage={1}
+            onNext={() => console.log('on next')}
+            onPrevious={() => console.log('on previous')}
+            css={{ justifySelf: 'center' }}
+          />
+        </div>
       </BoundedBox>
     </Layout>
   )
