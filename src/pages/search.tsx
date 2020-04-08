@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { useLunr } from 'react-lunr'
@@ -19,26 +19,19 @@ export type SearchPageProps = LayoutProps & {
 }
 
 export const SearchPage = ({ data, ...props }: SearchPageProps) => {
+  const queryRef = useRef()
   const [query, setQuery] = useState('')
-  const [bufferedQuery, setBufferedQuery] = useState(query)
+
   const winnersResults: WinnerSearchResult[] = useLunr(
-    bufferedQuery,
+    query,
     data?.localSearchWinners?.index,
     data?.localSearchWinners?.store,
-  )
-
-  const handleQueryInputChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault()
-      setQuery(event.target.value.trim())
-    },
-    [],
   )
 
   const handleSubmit = useCallback(
     event => {
       event.preventDefault()
-      setBufferedQuery(query?.trim?.())
+      setQuery(query?.trim?.())
     },
     [query],
   )
@@ -75,7 +68,6 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
           >
             <FormSearchInput
               value={query}
-              onChange={handleQueryInputChange}
               css={mq({ gridColumn: ['1 / -1', 'auto'] })}
             />
           </form>
@@ -91,8 +83,9 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
               award={result.award.toLowerCase() as Award}
               href={result.url}
               imageFluid={result.imageFluid}
-              agencyName="A"
-              agencyHref="/"
+              agencyName={result.agencyName!}
+              agencyHref={result.agencyUrl!}
+              agencyAvatarFluid={result.agencyAvatarFluid}
             />
           ))}
         </CardList>

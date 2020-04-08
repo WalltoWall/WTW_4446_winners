@@ -18,6 +18,9 @@ export interface WinnerSearchResult {
   name: string
   award: string
   categoryLine1: string
+  agencyName?: string
+  agencyUrl?: string
+  agencyAvatarFluid?: FluidObject
   imageFluid?: FluidObject
 }
 

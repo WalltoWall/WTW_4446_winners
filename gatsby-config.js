@@ -112,6 +112,26 @@ module.exports = {
                       line_1
                     }
                   }
+                  agency {
+                    fields {
+                      url
+                    }
+                    data {
+                      name
+                      avatar {
+                        localFiles {
+                          childCloudinaryAsset {
+                            fluid(maxWidth: 80) {
+                              aspectRatio
+                              sizes
+                              src
+                              srcSet
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                   images {
                     localFiles {
                       childCloudinaryAsset {
@@ -130,7 +150,16 @@ module.exports = {
           }
         `,
         index: ['name', 'tags'],
-        store: ['url', 'name', 'award', 'categoryLine1', 'imageFluid'],
+        store: [
+          'url',
+          'name',
+          'award',
+          'categoryLine1',
+          'agencyName',
+          'agencyUrl',
+          'agencyAvatarFluid',
+          'imageFluid',
+        ],
         normalizer: ({ data }) =>
           data.allAirtableWinner.nodes.map(node => ({
             id: node.recordId,
@@ -139,6 +168,19 @@ module.exports = {
             award: dlv(node, ['data', 'award']),
             tags: (dlv(node, ['data', 'tags']) || []).join(' '),
             categoryLine1: dlv(node, ['data', 'category', 0, 'data', 'line_1']),
+            agencyName: dlv(node, ['data', 'agency', 0, 'data', 'name']),
+            agencyUrl: dlv(node, ['data', 'agency', 0, 'fields', 'url']),
+            agencyAvatarFluid: dlv(node, [
+              'data',
+              'agency',
+              0,
+              'data',
+              'avatar',
+              'localFiles',
+              0,
+              'childCloudinaryAsset',
+              'fluid',
+            ]),
             imageFluid: dlv(node, [
               'data',
               'images',
