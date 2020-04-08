@@ -21,34 +21,32 @@ export const baseTextCss = {
 } as const
 
 const components: React.ComponentProps<typeof HTMLRenderer>['components'] = {
-  h1: (props) => (
+  h1: props => (
     <Heading forwardedAs="h3" {...props} css={mq({ ...baseHeadingCss })} />
   ),
-  h2: (props) => (
+  h2: props => (
     <Subheading forwardedAs="h4" {...props} css={mq({ ...baseHeadingCss })} />
   ),
-  h3: (props) => (
+  h3: props => (
     <Subheading forwardedAs="h5" {...props} css={mq({ ...baseHeadingCss })} />
   ),
-  h4: (props) => (
+  h4: props => (
     <Subheading forwardedAs="h6" {...props} css={mq({ ...baseHeadingCss })} />
   ),
-  h5: (props) => (
+  h5: props => (
     <Subheading forwardedAs="h6" {...props} css={mq({ ...baseHeadingCss })} />
   ),
-  h6: (props) => (
+  h6: props => (
     <Subheading forwardedAs="h6" {...props} css={mq({ ...baseHeadingCss })} />
   ),
-  p: (props) => <View as="p" {...props} css={mq({ ...baseTextCss })} />,
-  ul: (props) => (
+  p: props => <View as="p" {...props} css={mq({ ...baseTextCss })} />,
+  ul: props => (
     <ul {...props} css={mq({ ...baseTextCss, listStyle: 'disc' })} />
   ),
-  ol: (props) => (
+  ol: props => (
     <ol {...props} css={mq({ ...baseTextCss, listStyle: 'decimal' })} />
   ),
-  li: (props) => (
-    <li {...props} css={mq({ ...baseTextCss, marginBottom: 0 })} />
-  ),
+  li: props => <li {...props} css={mq({ ...baseTextCss, marginBottom: 0 })} />,
   // @ts-ignore
   a: ({ href, ...props }: { href: string }) => (
     <Anchor href={href} {...props} />

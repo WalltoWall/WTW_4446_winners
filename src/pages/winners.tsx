@@ -24,7 +24,7 @@ export const WinnersPage = ({ data, ...props }: WinnersPage) => {
 
   const [firstPageId, setFirstPageId] = useState(initialPage?.id!)
 
-  const handleCategoryChange = useCallback((event) => {
+  const handleCategoryChange = useCallback(event => {
     const newFirstPageId = event.target.value
     setFirstPageId(newFirstPageId)
   }, [])
@@ -66,7 +66,7 @@ export const WinnersPage = ({ data, ...props }: WinnersPage) => {
             </FormSelect>
             <FormSelect value={firstPageId} onChange={handleCategoryChange}>
               <option value={initialPage?.id}>All categories</option>
-              {firstPages.map((firstPage) => (
+              {firstPages.map(firstPage => (
                 <option key={firstPage.id} value={firstPage.id}>
                   {firstPage.collection.name.split('/')[1]}
                 </option>
