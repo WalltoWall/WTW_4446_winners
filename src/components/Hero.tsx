@@ -29,11 +29,17 @@ export const Hero = ({
       alignItems: 'center',
     })}
   >
-    <AspectRatio x={8} y={5} css={{ backgroundColor: t.c.Black }}>
+    <AspectRatio
+      x={8}
+      y={5}
+      css={{ backgroundColor: t.c.Black, height: '100%' }}
+    >
       {imageFluid && (
-        <ImageContainer>
-          <GatsbyImage fluid={imageFluid} alt={imageAlt} />
-        </ImageContainer>
+        <GatsbyImage
+          fluid={imageFluid}
+          alt={imageAlt}
+          style={{ height: '100%' }}
+        />
       )}
     </AspectRatio>
     <BoundedBox css={{ textAlign: 'center' }}>
