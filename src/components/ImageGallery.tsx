@@ -6,6 +6,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
+import { ImageContainer } from './ImageContainer'
 
 const ASPECT_RATIO = { x: [4, 16], y: [3, 9] }
 
@@ -23,7 +24,9 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
       {...props}
       css={mq({ display: 'grid', gap: linearScale('0.8125rem', '1.5rem') })}
     >
-      <GatsbyImage fluid={activeImage} />
+      <ImageContainer css={{ maxHeight: '50rem' }}>
+        <GatsbyImage fluid={activeImage} css={{ height: '100%' }} />
+      </ImageContainer>
       {hasMultipleImages && (
         <ul
           css={mq({
