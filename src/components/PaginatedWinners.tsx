@@ -24,6 +24,8 @@ export const PaginatedWinners = ({
   })
 
   const hasNextPage = Boolean(latestPage?.nextPage?.id)
+  const hasOnlyOnePage =
+    (latestPage?.index === 0 || latestPage?.index === undefined) && !hasNextPage
 
   return (
     <View
@@ -33,7 +35,7 @@ export const PaginatedWinners = ({
       })}
     >
       <CardList columns={[1, 2, 3, 3, 4]}>
-        {(winners as Winner[]).map((winner) => (
+        {(winners as Winner[]).map(winner => (
           <WinnerCard
             key={winner.url}
             href={winner.url}
@@ -47,26 +49,28 @@ export const PaginatedWinners = ({
           />
         ))}
       </CardList>
-      <div
-        css={mq({
-          display: 'grid',
-          gap: linearScale('0.375rem', '0.875rem'),
-          justifyContent: 'center',
-        })}
-      >
-        <Button disabled={!hasNextPage} onClick={loadMore}>
-          {hasNextPage ? 'Load more' : "You've reached the end!"}
-        </Button>
-        <p
+      {!hasOnlyOnePage && (
+        <div
           css={mq({
-            color: t.c.Gray60,
-            fontSize: t.f['b-'],
-            textAlign: 'center',
+            display: 'grid',
+            gap: linearScale('0.375rem', '0.875rem'),
+            justifyContent: 'center',
           })}
         >
-          Showing {winners.length} of {latestPage?.collection?.nodeCount ?? 0}
-        </p>
-      </div>
+          <Button disabled={!hasNextPage} onClick={loadMore}>
+            {hasNextPage ? 'Load more' : "You've reached the end!"}
+          </Button>
+          <p
+            css={mq({
+              color: t.c.Gray60,
+              fontSize: t.f['b-'],
+              textAlign: 'center',
+            })}
+          >
+            Showing {winners.length} of {latestPage?.collection?.nodeCount ?? 0}
+          </p>
+        </div>
+      )}
     </View>
   )
 }
