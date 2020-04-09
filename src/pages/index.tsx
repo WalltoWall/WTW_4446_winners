@@ -87,7 +87,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             {adPeople.map(person => (
               <PersonCard
                 key={person?.fields?.url}
-                href={person?.fields?.url!}
+                href="/ad-people/"
                 name={person?.data?.name!}
                 title={person?.data?.title!}
                 agencyName={person?.data?.agency?.[0]?.data?.name}
