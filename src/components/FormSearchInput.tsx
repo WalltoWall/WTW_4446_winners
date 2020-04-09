@@ -7,6 +7,7 @@ import { Icon } from './Icon'
 
 export type FormSearchInputProps<T = unknown> = ViewProps & {
   placeholder?: string
+  defaultValue?: string
   innerRef?:
     | ((instance: T | null) => void)
     | React.MutableRefObject<T | null>
@@ -19,6 +20,7 @@ export const FormSearchInput = React.forwardRef(
       innerRef,
       children,
       placeholder = 'Search…',
+      defaultValue,
       ...props
     }: FormSearchInputProps,
     ref,
@@ -27,6 +29,7 @@ export const FormSearchInput = React.forwardRef(
       <FormInput
         ref={innerRef}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         css={mq({
           paddingLeft: linearScale('2rem', '2.5rem', 'space'),
           '&::placeholder': {
