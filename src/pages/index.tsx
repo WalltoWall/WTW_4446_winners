@@ -14,6 +14,9 @@ import { Anchor } from '../components/Anchor'
 import { CardList } from '../components/CardList'
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
+import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
+import { HTMLContent } from '../components/HTMLContent'
+import { View } from '../components/View'
 
 export type IndexPage = LayoutProps & {
   data: IndexPageQuery
@@ -23,6 +26,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
   const bestOfEntries = data.bestOfEntries.nodes
   const judgesEntries = data.judgesEntries.nodes
   const adPeople = data.adPeople.nodes
+  const archives = data.archives.nodes
 
   return (
     <Layout {...props}>
@@ -101,7 +105,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
           </CardList>
         </div>
       </BoundedBox>
-      <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
+      <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
         <div
           css={mq({
             display: 'grid',
@@ -137,9 +141,64 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
                 />
               )
             })}
-          </CardList>
+          </CardList>{' '}
         </div>
       </BoundedBox>
+
+      <ColoredBoxesSlice
+        whiteBoxChildren={
+          <HTMLContent
+            html={`
+              <h1>Archives</h1>
+              <p>Browse Pele Awards Winners from previous years.</p>
+            `}
+            componentOverrides={{
+              h1: Comp => props => (
+                <View
+                  as={Comp}
+                  {...props}
+                  css={mq({
+                    fontSize: t.f.xl,
+                    lineHeight: t.lh.Title,
+                    marginTop: linearScale('2.25rem', '3rem'),
+                    marginBottom: linearScale('1rem', '1.5rem'),
+                    color: t.c.Black,
+                    ...t.boxStyles.firstLastNoMargin,
+                  })}
+                />
+              ),
+            }}
+          />
+        }
+        redBoxChildren={
+          <View
+            as="ul"
+            css={mq({
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gridGap: t.spaceScales.m,
+              fontWeight: t.fontWeights.Semibold,
+              fontSize: t.fontSizeScales.xl,
+            })}
+          >
+            {archives.map(a => (
+              <li key={a.data?.year}>
+                <Anchor
+                  href={a.data?.link!}
+                  css={{
+                    '&:hover, &:focus': {
+                      color: t.colors.White,
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  {a.data?.year}
+                </Anchor>
+              </li>
+            ))}
+          </View>
+        }
+      />
 
       <CallToActionSlice
         buttonHref={data.homeButtonHref?.data?.href}
@@ -241,6 +300,14 @@ export const query = graphql`
               }
             }
           }
+        }
+      }
+    }
+    archives: allAirtableArchive {
+      nodes {
+        data {
+          link
+          year
         }
       }
     }

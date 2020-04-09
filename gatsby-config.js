@@ -74,6 +74,12 @@ module.exports = {
             queryName: 'Link',
             separateNodeType: true,
           },
+          {
+            baseId: process.env.AIRTABLE_BASE_ID,
+            tableName: 'Archive',
+            queryName: 'Archive',
+            separateNodeType: true,
+          },
         ],
       },
     },

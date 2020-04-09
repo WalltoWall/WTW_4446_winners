@@ -5,7 +5,6 @@ import { t, mq } from '../theme'
 import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { BoundedBox } from './BoundedBox'
-import { ImageContainer } from './ImageContainer'
 
 export type HeroProps = ViewProps & {
   imageFluid?: FluidObject
