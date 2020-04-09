@@ -71,7 +71,11 @@ export interface UseLoadMoreArgs {
 }
 
 export const useLoadMore = (args: UseLoadMoreArgs) => {
-  const { firstPageId, initialPage, directory = 'paginated-collections' } = args
+  const {
+    firstPageId,
+    initialPage,
+    directory = '___paginated-collections',
+  } = args
 
   const [state, dispatch] = useReducer(reducer, initialPage, createInitialState)
 
