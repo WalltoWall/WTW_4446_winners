@@ -1,4 +1,5 @@
 import React from 'react'
+import VisuallyHidden from '@reach/visually-hidden'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq, linearScale } from '../theme'
