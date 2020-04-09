@@ -10,7 +10,7 @@ import { Icon } from './Icon'
 const colors = {
   gold: t.c.Gold40,
   silver: t.c.Gray70,
-  bronze: t.c.Bronze50,
+  bronze: t.c.Bronze70,
 } as const
 
 export type AwardIconProps = ViewProps & {

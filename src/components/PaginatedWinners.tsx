@@ -8,45 +8,7 @@ import { View, ViewProps } from './View'
 import { CardList } from './CardList'
 import { WinnerCard } from './WinnerCard'
 import { Button } from './Button'
-import { Heading } from './Heading'
-
-type TextProps = {
-  children: React.ReactNode
-}
-
-const Text = (props: TextProps) => {
-  return (
-    <p
-      {...props}
-      css={mq({
-        color: t.c.Gray60,
-        fontSize: t.f['b-'],
-        textAlign: 'center',
-      })}
-    />
-  )
-}
-
-type NoWinnersProps = {
-  heading: string
-  text: string
-}
-
-const NoWinners = ({ heading, text }: NoWinnersProps) => {
-  return (
-    <div css={{ margin: '0 auto', maxWidth: '40ch', textAlign: 'center' }}>
-      <Heading
-        css={mq({
-          marginBottom: t.spaceScales.t,
-          lineHeight: t.lineHeights.TitleWide,
-        })}
-      >
-        {heading}
-      </Heading>
-      <Text>{text}</Text>
-    </div>
-  )
-}
+import { EmptyMessage } from './EmptyMessage'
 
 export type PaginatedWinnersProps = ViewProps & {
   firstPageId: UseLoadMoreArgs['firstPageId']
@@ -102,18 +64,23 @@ export const PaginatedWinners = ({
               <Button disabled={!hasNextPage} onClick={loadMore}>
                 {hasNextPage ? 'Load more' : "You've reached the end!"}
               </Button>
-              <Text>
+              <span
+                css={mq({
+                  color: t.c.Gray60,
+                  fontSize: t.f['b-'],
+                  textAlign: 'center',
+                })}
+              >
                 Showing {winners.length} of{' '}
                 {latestPage?.collection?.nodeCount ?? 0}
-              </Text>
+              </span>
             </div>
           )}
         </>
       ) : (
-        <NoWinners
-          heading="Looks like there aren't any winners for this criteria."
-          text="Please try a different filter or year."
-        />
+        <EmptyMessage heading="Looks like there aren't any winners here.">
+          Please try a different filter or year.
+        </EmptyMessage>
       )}
     </View>
   )
