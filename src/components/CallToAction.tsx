@@ -28,7 +28,7 @@ export const CallToAction = ({
         justifyItems: 'center',
       })}
     >
-      <div css={mq({ maxWidth: ['45ch', '80ch'], lineHeight: t.lh.Copy })}>
+      <div css={mq({ maxWidth: ['42ch', '80ch'], lineHeight: t.lh.Copy })}>
         {children}
       </div>
       {buttonHref && (

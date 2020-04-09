@@ -85,10 +85,9 @@ const baseTheme = {
   fonts: Font,
   fontSizes: FontSize,
   fontSizeScales: {
-    'b-': linearScale('0.625rem', '0.875rem', { count }),
-    b: linearScale('0.6875rem', '1rem', { count }),
-    'b+': linearScale('0.6875rem', '1rem', { count }),
-    'm-': linearScale('0.6875rem', '1.125rem', { count }),
+    'b-': linearScale('0.75rem', '0.875rem', { count }),
+    b: linearScale('0.75rem', '1rem', { count }),
+    'm-': linearScale('0.75rem', '1.125rem', { count }),
     m: linearScale('0.875rem', '1.125rem', { count }),
     l: linearScale('0.8125rem', '1.25rem', { count }),
     xl: linearScale('1.125rem', '2rem', { count }),
