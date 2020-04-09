@@ -144,13 +144,13 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
             nextHref={nextWinner?.fields?.url}
             nextLabel={nextWinner?.data?.name}
           />
-          <CallToActionSlice
-            buttonHref={winnerButtonHref}
-            buttonText={winnerButtonText}
-            textHTML={winnerCtaText}
-          />
         </div>
       </BoundedBox>
+      <CallToActionSlice
+        buttonHref={winnerButtonHref}
+        buttonText={winnerButtonText}
+        textHTML={winnerCtaText}
+      />
     </Layout>
   )
 }
