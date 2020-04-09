@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useRef } from 'react'
-import { graphql } from 'gatsby'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
+import { withPrefix } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { useLunr } from 'react-lunr'
 
 import { WinnerSearchResult, Award } from '../types'
-import { SearchPageQuery } from '../graphqlTypes'
 import { usePaginatedCollection } from '../hooks/usePaginatedCollection'
 
 import { t, mq, linearScale } from '../theme'
@@ -19,19 +18,39 @@ import { EmptyMessage } from '../components/EmptyMessage'
 
 const RESULTS_PER_PAGE = 8
 
-export type SearchPageProps = LayoutProps & {
-  data: SearchPageQuery
+const fetchJson = async (url: string) => {
+  const req = await fetch(url)
+
+  return await req.json()
 }
 
-export const SearchPage = ({ data, ...props }: SearchPageProps) => {
+export type SearchPageProps = LayoutProps
+
+export const SearchPage = (props: SearchPageProps) => {
   const queryRef = useRef<HTMLInputElement>()
   const [query, setQuery] = useState('')
+  const [store, setStore] = useState<Record<string, WinnerSearchResult>>()
+  const [index, setIndex] = useState<string>()
 
-  const winnersResults = useLunr<WinnerSearchResult>(
-    query,
-    data?.localSearchWinners?.index,
-    data?.localSearchWinners?.store,
-  ) as WinnerSearchResult[]
+  useEffect(() => {
+    const asyncEffect = async () => {
+      const urls = [
+        withPrefix('/local-search/winners.index.json'),
+        withPrefix('/local-search/winners.store.json'),
+      ]
+
+      const [winnersIndex, winnersStore] = await Promise.all(
+        urls.map(fetchJson),
+      )
+
+      setIndex(winnersIndex)
+      setStore(winnersStore)
+    }
+
+    asyncEffect()
+  }, [])
+
+  const winnersResults = useLunr(query, index, store) as WinnerSearchResult[]
 
   const {
     paginatedCollection,
@@ -146,12 +165,3 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
 }
 
 export default SearchPage
-
-export const query = graphql`
-  query SearchPage {
-    localSearchWinners {
-      index
-      store
-    }
-  }
-`
