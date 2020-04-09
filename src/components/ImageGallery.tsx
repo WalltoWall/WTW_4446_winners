@@ -21,31 +21,30 @@ const ArrowButton = ({ onClick, side, ...props }: ArrowButtonProps) => {
     <button
       onClick={onClick}
       {...props}
-      css={{
+      css={mq({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '2.15rem',
-        height: '2.15rem',
+        width: ['1.6rem', '2.15rem'],
+        height: ['1.6rem', '2.15rem'],
         position: 'absolute',
-        left: isOnLeft ? '2rem' : undefined,
-        right: !isOnLeft ? '2rem' : undefined,
+        left: isOnLeft ? ['.5rem', '1rem', '1.5rem'] : undefined,
+        right: !isOnLeft ? ['.5rem', '1rem', '1.5rem'] : undefined,
         top: '50%',
         transform: 'translateY(-50%)',
         background: t.colors.White,
         borderRadius: '50%',
-        boxShadow:
-          '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05)',
         transition: 'background .2s ease',
 
-        '&:hover': {
+        '&:hover, &:focus': {
           background: t.colors.Gray85,
         },
-      }}
+      })}
     >
       <Icon
         name={isOnLeft ? 'chevronLeft' : 'chevronRight'}
-        css={{ width: '.5rem', color: t.colors.Black }}
+        css={mq({ width: ['.4rem', '.5rem'], color: t.colors.Black })}
       />
     </button>
   )
