@@ -36,17 +36,12 @@ const ArrowButton = ({ onClick, side, label, ...props }: ArrowButtonProps) => {
         background: t.colors.White,
         borderRadius: '50%',
         boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05)',
-        transition: 'background .2s ease',
-
-        '&:hover, &:focus': {
-          background: t.colors.Gray85,
-        },
       })}
     >
       <VisuallyHidden>{label}</VisuallyHidden>
       <Icon
         name={isOnLeft ? 'chevronLeft' : 'chevronRight'}
-        css={mq({ width: ['.4rem', '.5rem'], color: t.colors.Black })}
+        css={mq({ width: ['.4rem', '.5rem'], color: t.colors.Red40 })}
       />
     </button>
   )
