@@ -12,9 +12,10 @@ import { Icon } from './Icon'
 type ArrowButtonProps = {
   onClick: () => void
   side: 'left' | 'right'
+  label: 'string'
 }
 
-const ArrowButton = ({ onClick, side, ...props }: ArrowButtonProps) => {
+const ArrowButton = ({ onClick, side, label, ...props }: ArrowButtonProps) => {
   const isOnLeft = side === 'left'
 
   return (
@@ -42,6 +43,7 @@ const ArrowButton = ({ onClick, side, ...props }: ArrowButtonProps) => {
         },
       })}
     >
+      <VisuallyHidden>{label}</VisuallyHidden>
       <Icon
         name={isOnLeft ? 'chevronLeft' : 'chevronRight'}
         css={mq({ width: ['.4rem', '.5rem'], color: t.colors.Black })}
@@ -87,13 +89,9 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
             <ArrowButton
               onClick={prevImage}
               side="left"
-              aria-label="Previous image"
+              label="Previous image"
             />
-            <ArrowButton
-              onClick={nextImage}
-              side="right"
-              aria-label="Next image"
-            />
+            <ArrowButton onClick={nextImage} side="right" label="Next image" />
           </>
         )}
       </ImageContainer>
