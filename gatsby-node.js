@@ -1,6 +1,7 @@
 const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
+
 const {
   createPaginatedCollectionNodes,
 } = require('gatsby-plugin-paginated-collection')
@@ -83,7 +84,9 @@ exports.createPages = async gatsbyContext => {
 
   const queryResult = await graphql(`
     query {
-      allAirtableWinner {
+      allAirtableWinner(
+        sort: { fields: [data___category___data___line_1, data___name] }
+      ) {
         nodes {
           recordId
           fields {
@@ -141,7 +144,9 @@ exports.createPages = async gatsbyContext => {
       }
     }
   `)
+
   const allWinnerNodes = queryResult.data.allAirtableWinner.nodes
+
   const winnerNodes = allWinnerNodes.filter(
     node => node.data.type === 'Professional',
   )

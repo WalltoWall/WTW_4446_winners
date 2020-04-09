@@ -32,6 +32,7 @@ export const CallToAction = ({
         {children}
       </div>
       {buttonHref && (
+        // @ts-ignore
         <Button as={Link} href={buttonHref}>
           {buttonText}
         </Button>

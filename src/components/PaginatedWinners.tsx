@@ -63,6 +63,8 @@ export const PaginatedWinners = ({
   })
 
   const hasNextPage = Boolean(latestPage?.nextPage?.id)
+  const hasOnlyOnePage =
+    (latestPage?.index === 0 || latestPage?.index === undefined) && !hasNextPage
   const hasWinners = winners.length > 0
 
   return (
@@ -89,22 +91,23 @@ export const PaginatedWinners = ({
               />
             ))}
           </CardList>
-
-          <div
-            css={mq({
-              display: 'grid',
-              gap: linearScale('0.375rem', '0.875rem'),
-              justifyContent: 'center',
-            })}
-          >
-            <Button disabled={!hasNextPage} onClick={loadMore}>
-              {hasNextPage ? 'Load more' : "You've reached the end!"}
-            </Button>
-            <Text>
-              Showing {winners.length} of{' '}
-              {latestPage?.collection?.nodeCount ?? 0}
-            </Text>
-          </div>
+          {!hasOnlyOnePage && (
+            <div
+              css={mq({
+                display: 'grid',
+                gap: linearScale('0.375rem', '0.875rem'),
+                justifyContent: 'center',
+              })}
+            >
+              <Button disabled={!hasNextPage} onClick={loadMore}>
+                {hasNextPage ? 'Load more' : "You've reached the end!"}
+              </Button>
+              <Text>
+                Showing {winners.length} of{' '}
+                {latestPage?.collection?.nodeCount ?? 0}
+              </Text>
+            </div>
+          )}
         </>
       ) : (
         <NoWinners
