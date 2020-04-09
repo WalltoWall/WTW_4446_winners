@@ -35,8 +35,8 @@ export const SearchPage = (props: SearchPageProps) => {
   useEffect(() => {
     const asyncEffect = async () => {
       const urls = [
-        withPrefix('/local-search/winners.index.json'),
-        withPrefix('/local-search/winners.store.json'),
+        withPrefix('/___local-search/winners.index.json'),
+        withPrefix('/___local-search/winners.store.json'),
       ]
 
       const [winnersIndex, winnersStore] = await Promise.all(

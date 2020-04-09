@@ -13,10 +13,10 @@ const {
 const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
   __dirname,
   'public',
-  'paginated-collections',
+  '___paginated-collections',
 )
 
-const SEARCH_DIRECTORY = path.resolve(__dirname, 'public', 'local-search')
+const SEARCH_DIRECTORY = path.resolve(__dirname, 'public', '___local-search')
 
 const normalizeWinnerNode = node => {
   const agency = dlv(node, ['data', 'agency', 0])
