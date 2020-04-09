@@ -12,7 +12,7 @@ import { Icon } from './Icon'
 type ArrowButtonProps = {
   onClick: () => void
   side: 'left' | 'right'
-  label: 'string'
+  label: string
 }
 
 const ArrowButton = ({ onClick, side, label, ...props }: ArrowButtonProps) => {
