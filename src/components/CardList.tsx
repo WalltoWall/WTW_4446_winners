@@ -16,6 +16,14 @@ export const CardList = ({
   ...props
 }: CardListProps) => {
   const listItems = React.Children.toArray(children)
+  const itemWidth = Array(Math.max(columns.length, GAP.length))
+    .fill(undefined)
+    .map(
+      (_, i) =>
+        `calc(${100 / columns[Math.min(i, columns.length - 1)]}% - ${
+          GAP[Math.min(i, GAP.length - 1)]
+        })`,
+    )
 
   return (
     <View
@@ -40,9 +48,7 @@ export const CardList = ({
             display: 'flex',
             marginRight: GAP,
             marginBottom: GAP,
-            width: columns.map(
-              (qty, i) => `calc(${100 / qty}% - ${GAP[Math.min(i, 2)]})`,
-            ),
+            width: itemWidth,
           })}
         >
           {child}
