@@ -9,12 +9,12 @@ const variants = {
   previous: {
     label: 'Previous',
     iconName: 'chevronLeft',
-    svgOffsetX: '-10%',
+    iconOffsetX: '-10%',
   },
   next: {
     label: 'Next',
     iconName: 'chevronRight',
-    svgOffsetX: '10%',
+    iconOffsetX: '10%',
   },
 } as const
 
@@ -62,7 +62,7 @@ const DirectionButton = ({
           css={mq({
             color: t.c.White,
             width: ['0.3rem', '0.4rem', '0.5rem'],
-            transform: `translateX(${variant.svgOffsetX})`,
+            transform: `translateX(${variant.iconOffsetX})`,
           })}
         />
       </div>
