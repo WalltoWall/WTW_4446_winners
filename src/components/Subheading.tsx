@@ -11,7 +11,7 @@ export const Subheading = (props: SubheadingProps) => (
     {...props}
     css={mq({
       color: t.c.Red40,
-      fontSize: t.f['b+'],
+      fontSize: t.f.b,
       fontWeight: t.fw.Semibold,
       lineHeight: t.lh.Title,
     })}
