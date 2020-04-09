@@ -1,4 +1,5 @@
 import React from 'react'
+import VisuallyHidden from '@reach/visually-hidden'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq, linearScale } from '../theme'
@@ -37,7 +38,8 @@ export const PersonCard = ({
       width: '100%',
     })}
   >
-    <Link href={href} aria-label={name}>
+    <Link href={href}>
+      <VisuallyHidden>{name}</VisuallyHidden>
       <AspectRatio
         x={3}
         y={4}
