@@ -1,6 +1,7 @@
 const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
+
 const {
   createPaginatedCollectionNodes,
 } = require('gatsby-plugin-paginated-collection')
@@ -14,7 +15,7 @@ const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
   'paginated-collections',
 )
 
-const normalizeWinnerNode = (node) => {
+const normalizeWinnerNode = node => {
   const agency = dlv(node, ['data', 'agency', 0])
 
   return {
@@ -45,7 +46,7 @@ const normalizeWinnerNode = (node) => {
   }
 }
 
-exports.createPages = async (gatsbyContext) => {
+exports.createPages = async gatsbyContext => {
   const {
     actions,
     createNodeId,
@@ -83,7 +84,9 @@ exports.createPages = async (gatsbyContext) => {
 
   const queryResult = await graphql(`
     query {
-      allAirtableWinner {
+      allAirtableWinner(
+        sort: { fields: [data___category___data___line_1, data___name] }
+      ) {
         nodes {
           recordId
           fields {
@@ -141,15 +144,17 @@ exports.createPages = async (gatsbyContext) => {
       }
     }
   `)
+
   const allWinnerNodes = queryResult.data.allAirtableWinner.nodes
+
   const winnerNodes = allWinnerNodes.filter(
-    (node) => node.data.type === 'Professional',
+    node => node.data.type === 'Professional',
   )
   const collegeWinnerNodes = allWinnerNodes.filter(
-    (node) => node.data.type === 'College',
+    node => node.data.type === 'College',
   )
   const highSchoolWinnerNodes = allWinnerNodes.filter(
-    (node) => node.data.type === 'High School',
+    node => node.data.type === 'High School',
   )
 
   processPaginatedCollection({
@@ -315,7 +320,7 @@ exports.onCreateNode = ({ node, actions }) => {
       createNodeField({
         node,
         name: 'tags',
-        value: tags.map((tag) => ({
+        value: tags.map(tag => ({
           tag,
           url: `/tags/${slug(tag.toLowerCase())}/`,
         })),
