@@ -22,13 +22,13 @@ const variants = {
     imageAspectRatioX: 4,
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.5rem', 'space'),
-    subtitleFontSize: t.f['b+'],
+    subtitleFontSize: t.f.b,
   },
   featuredWide: {
     imageAspectRatioX: 8,
     imageAspectRatioY: 5,
     padding: linearScale('1rem', '1.5rem', 'space'),
-    subtitleFontSize: t.f['b+'],
+    subtitleFontSize: t.f.b,
   },
 } as const
 

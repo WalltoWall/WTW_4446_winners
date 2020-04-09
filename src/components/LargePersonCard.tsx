@@ -70,7 +70,7 @@ export const LargePersonCard = ({
     <BoundedBox css={{ textAlign: 'center' }}>
       <div
         css={mq({
-          maxWidth: '45ch',
+          maxWidth: '42ch',
           marginLeft: 'auto',
           marginRight: 'auto',
           lineHeight: t.lh.Copy,

@@ -45,7 +45,7 @@ export const Hero = ({
     <BoundedBox css={{ textAlign: 'center' }}>
       <div
         css={{
-          maxWidth: '45ch',
+          maxWidth: '42ch',
           marginLeft: 'auto',
           marginRight: 'auto',
           lineHeight: t.lh.Copy,

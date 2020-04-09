@@ -24,11 +24,11 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
   const queryRef = useRef<HTMLInputElement>()
   const [query, setQuery] = useState('')
 
-  const winnersResults: WinnerSearchResult[] = useLunr(
+  const winnersResults = useLunr<WinnerSearchResult>(
     query,
     data?.localSearchWinners?.index,
     data?.localSearchWinners?.store,
-  )
+  ) as WinnerSearchResult[]
 
   const {
     paginatedCollection,
