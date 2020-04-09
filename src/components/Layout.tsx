@@ -6,15 +6,25 @@ import { View, ViewProps } from './View'
 import { Header } from './Header'
 import { Footer } from './Footer'
 
-export type LayoutProps = ViewProps
+export type LayoutProps = ViewProps & {
+  metaDescription?: string
+}
 
-export const Layout = ({ children, ...props }: LayoutProps) => (
+export const Layout = ({
+  children,
+  metaDescription,
+  ...props
+}: LayoutProps) => (
   <>
     <Helmet
       defaultTitle="Pele Awards Winners"
       titleTemplate="%s | Pele Awards Winners"
     >
       <html lang="en" />
+      <meta
+        name="description"
+        content={metaDescription ?? "The Pele winner's site."}
+      />
     </Helmet>
     <View
       {...props}

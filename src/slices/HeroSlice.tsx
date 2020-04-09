@@ -10,12 +10,12 @@ type HeroSliceProps = HeroProps & {
   textHTML?: string
 }
 
-export const HeroSlice: React.FC<HeroSliceProps> = ({
+export const HeroSlice = ({
   textHTML,
   imageFluid,
   imageAlt,
   imageSrc,
-}) => {
+}: HeroSliceProps) => {
   return (
     <Hero imageFluid={imageFluid} imageAlt={imageAlt} imageSrc={imageSrc}>
       <HTMLContent

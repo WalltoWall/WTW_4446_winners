@@ -18,6 +18,7 @@ export enum Color {
   Bronze50 = '#c3724b',
   Gold40 = '#cd930d',
   Gray10 = '#161616',
+  Gray50 = '#757575',
   Gray60 = '#9a9a9a',
   Gray70 = '#b4b4b4',
   Gray80 = '#cbcbcb',

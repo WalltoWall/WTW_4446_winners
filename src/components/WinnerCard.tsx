@@ -70,7 +70,7 @@ export const WinnerCard = ({
         width: '100%',
       }}
     >
-      <Link href={href}>
+      <Link href={href} aria-label={title}>
         <AspectRatio
           x={variant.imageAspectRatioX}
           y={variant.imageAspectRatioY}

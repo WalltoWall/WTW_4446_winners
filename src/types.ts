@@ -12,3 +12,21 @@ export interface Winner {
   imageFluid?: FluidObject
   agency: { name: string; url: string; avatarFluid?: FluidObject }
 }
+
+export interface WinnerSearchResult {
+  url: string
+  name: string
+  award: string
+  categoryLine1: string
+  agencyName?: string
+  agencyUrl?: string
+  agencyAvatarFluid?: FluidObject
+  imageFluid?: FluidObject
+}
+
+export interface AdPersonSearchResult {
+  url: string
+  name: string
+  special_award: string
+  imageFluid?: FluidObject
+}
