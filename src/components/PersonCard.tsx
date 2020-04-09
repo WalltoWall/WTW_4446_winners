@@ -33,8 +33,8 @@ export const PersonCard = ({
     css={mq({
       backgroundColor: t.c.White,
       display: 'grid',
-      gridTemplateColumns: ['1fr 2fr', 'none', null, 'repeat(2, 1fr)'],
-      gridTemplateRows: ['none', '1fr auto', null, 'none'],
+      gridTemplateColumns: ['1fr 2fr', '1fr', null, 'repeat(2, 1fr)'],
+      gridTemplateRows: ['1fr', '1fr auto', null, '1fr'],
       width: '100%',
     })}
   >
