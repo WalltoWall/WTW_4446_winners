@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
@@ -14,6 +15,8 @@ const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
   'public',
   'paginated-collections',
 )
+
+const SEARCH_DIRECTORY = path.resolve(__dirname, 'public', 'local-search')
 
 const normalizeWinnerNode = node => {
   const agency = dlv(node, ['data', 'agency', 0])
@@ -291,6 +294,32 @@ exports.createPages = async gatsbyContext => {
       component: path.resolve(__dirname, 'src/templates/tag.tsx'),
       context: { paginatedCollectionName: `tags/${tag}` },
     })
+
+  /***
+   * Write search indexes.
+   */
+
+  const searchQueryResult = await graphql(`
+    query {
+      localSearchWinners {
+        index
+        store
+      }
+    }
+  `)
+
+  const { localSearchWinners } = searchQueryResult.data
+
+  fs.mkdirSync(SEARCH_DIRECTORY, { recusive: true })
+
+  fs.writeFileSync(
+    path.resolve(SEARCH_DIRECTORY, 'winners.index.json'),
+    localSearchWinners.index,
+  )
+  fs.writeFileSync(
+    path.resolve(SEARCH_DIRECTORY, 'winners.store.json'),
+    localSearchWinners.store,
+  )
 }
 
 exports.onCreateNode = ({ node, actions }) => {
