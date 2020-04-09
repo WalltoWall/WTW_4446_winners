@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useReducer } from 'react'
 
 import { navigation, EVENT_SITE_URL } from '../constants'
 
@@ -13,6 +13,7 @@ import { Overlay } from './Overlay'
 import { Button } from './Button'
 import { Icon } from './Icon'
 import { SVG } from './SVG'
+import { FormInput } from './FormInput'
 import { ReactComponent as AssetLogo2020SVG } from '../assets/logo-2020.svg'
 
 type NavItemProps = ViewProps & {
@@ -38,6 +39,7 @@ export const Header = (props: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = useCallback(() => setIsMenuOpen(state => !state), [])
   const closeMenu = useCallback(() => setIsMenuOpen(false), [])
+  const [isSearchOpen, toggleSearch] = useReducer(isOpen => !isOpen, false)
 
   return (
     <View
@@ -68,6 +70,7 @@ export const Header = (props: HeaderProps) => {
         >
           <Anchor
             href="/"
+            aria-label="Pele Winner's Home"
             css={{
               display: 'grid',
               gap: t.S[3],
@@ -121,6 +124,7 @@ export const Header = (props: HeaderProps) => {
           </ul>
           <div css={{ justifySelf: 'end' }}>
             <button
+              aria-label="Mobile menu toggle"
               onClick={toggleMenu}
               css={mq({
                 width: '1.5rem',
@@ -130,23 +134,51 @@ export const Header = (props: HeaderProps) => {
             >
               <HamburgerIcon isOpen={isMenuOpen} css={{ height: '100%' }} />
             </button>
+
             <div
               css={mq({
+                position: 'relative',
                 display: ['none', null, 'grid'],
                 gap: '2.125rem',
                 gridAutoFlow: 'column',
                 alignItems: 'center',
               })}
             >
-              <button>
+              <button
+                aria-label="Search field toggle"
+                onClick={toggleSearch}
+                css={{ zIndex: 2, position: 'relative' }}
+              >
                 <Icon name="search" css={{ width: '1.25rem' }} />
               </button>
+
               <Button as={Link} href={EVENT_SITE_URL}>
                 Enter{' '}
                 <span css={mq({ display: ['none', null, null, 'inline'] })}>
                   the 2021 Pele Awards
                 </span>
               </Button>
+
+              <div
+                css={mq({
+                  position: 'absolute',
+                  zIndex: 1,
+                  top: 0,
+                  left: '-0.5rem',
+                  right: 0,
+                  bottom: 0,
+                  background: t.colors.White,
+                  transition: 'opacity .2s linear',
+                  opacity: isSearchOpen ? 1 : 0,
+                })}
+              >
+                <FormInput
+                  type="search"
+                  aria-label="Search"
+                  aria-hidden={!isSearchOpen}
+                  css={{ height: '100%', paddingLeft: '2.5rem' }}
+                />
+              </div>
             </div>
           </div>
         </div>

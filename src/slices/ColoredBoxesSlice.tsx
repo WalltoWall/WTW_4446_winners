@@ -4,7 +4,7 @@ import { View, ViewProps } from '../components/View'
 import { BoundedBox } from '../components/BoundedBox'
 import { mq, t, linearScale } from '../theme'
 
-const Box: React.FC = ({ children, ...props }) => {
+const Box = ({ children, ...props }: { children: React.ReactNode }) => {
   const p = linearScale('40px', '80px', 'space')
 
   return (
@@ -30,10 +30,10 @@ type ColoredBoxesSliceProps = ViewProps & {
   redBoxChildren: React.ReactNode
 }
 
-export const ColoredBoxesSlice: React.FC<ColoredBoxesSliceProps> = ({
+export const ColoredBoxesSlice = ({
   whiteBoxChildren,
   redBoxChildren,
-}) => {
+}: ColoredBoxesSliceProps) => {
   return (
     <BoundedBox
       forwardedAs="section"

@@ -37,9 +37,15 @@ const DirectionButton = ({
         gap: linearScale('0.375rem', '0.5rem'),
         textAlign: 'center',
         justifyItems: 'center',
+        '&:hover, &:focus': {
+          '.icon': {
+            backgroundColor: t.c.Gray60,
+          },
+        },
       })}
     >
       <div
+        className="icon"
         css={mq({
           backgroundColor: t.c.Gray70,
           width: linearScale('1.125rem', '1.5rem'),
@@ -48,6 +54,7 @@ const DirectionButton = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          transitionProperty: 'background-color',
         })}
       >
         <Icon
@@ -60,7 +67,13 @@ const DirectionButton = ({
         />
       </div>
       <div css={mq({ fontSize: t.f['b-'], lineHeight: t.lh.Copy })}>
-        <span css={{ display: 'block', color: t.c.Black }}>
+        <span
+          css={{
+            display: 'block',
+            color: t.c.Black,
+            transitionProperty: 'color',
+          }}
+        >
           {variant.label}
         </span>
         {children && (

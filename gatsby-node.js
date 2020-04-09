@@ -107,7 +107,7 @@ exports.createPages = async gatsbyContext => {
                 avatar {
                   localFiles {
                     childCloudinaryAsset {
-                      fluid(maxWidth: 800) {
+                      fluid(maxWidth: 80) {
                         aspectRatio
                         base64
                         sizes

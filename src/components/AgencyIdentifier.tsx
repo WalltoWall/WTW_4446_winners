@@ -44,7 +44,11 @@ export const AgencyIdentifier = ({
         fontWeight: t.fw.Medium,
       })}
     >
-      <Avatar variant={variant.avatarVariant} fluid={avatarFluid} />
+      <Avatar
+        variant={variant.avatarVariant}
+        flavorSeed={name}
+        fluid={avatarFluid}
+      />
       {name}
     </Anchor>
   )

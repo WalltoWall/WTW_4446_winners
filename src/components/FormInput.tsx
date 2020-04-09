@@ -5,9 +5,10 @@ import { View, ViewProps } from './View'
 
 export type FormInputProps = ViewProps
 
-export const FormInput = (props: FormInputProps) => (
+export const FormInput = React.forwardRef((props: FormInputProps, ref) => (
   <View
     as="input"
+    ref={ref}
     {...props}
     css={mq({
       borderColor: t.c.Gray90,
@@ -23,4 +24,4 @@ export const FormInput = (props: FormInputProps) => (
       lineHeight: t.lh.Title,
     })}
   />
-)
+))
