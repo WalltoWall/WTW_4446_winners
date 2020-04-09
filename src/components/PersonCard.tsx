@@ -32,7 +32,8 @@ export const PersonCard = ({
     css={mq({
       backgroundColor: t.c.White,
       display: 'grid',
-      gridTemplateColumns: ['1fr 2fr', 'repeat(2, 1fr)'],
+      gridTemplateColumns: ['1fr 2fr', 'none', null, 'repeat(2, 1fr)'],
+      gridTemplateRows: ['none', '1fr auto', null, 'none'],
       width: '100%',
     })}
   >
@@ -51,9 +52,10 @@ export const PersonCard = ({
       css={mq({
         display: 'grid',
         gap: linearScale('0.75rem', '1.5rem'),
-        padding: linearScale('1.5rem', '2rem'),
+        padding: linearScale('1rem', '1.5rem'),
         alignContent: 'center',
         textAlign: 'center',
+        minHeight: ['inherit', '13rem', null, 'inherit'],
       })}
     >
       <Subheading as="p">{award}</Subheading>
