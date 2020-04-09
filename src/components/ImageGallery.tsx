@@ -9,41 +9,68 @@ import { AspectRatio } from './AspectRatio'
 import { ImageContainer } from './ImageContainer'
 import { Icon } from './Icon'
 
-type ArrowButtonProps = {
-  onClick: () => void
-  side: 'left' | 'right'
-  label: string
+const variants = {
+  previous: {
+    label: 'Previous image',
+    iconName: 'chevronLeft',
+    iconOffsetX: '-10%',
+    left: ['.5rem', '1rem', '1.5rem'],
+    right: undefined,
+  },
+  next: {
+    label: 'Previous image',
+    iconName: 'chevronRight',
+    iconOffsetX: '10%',
+    left: undefined,
+    right: ['.5rem', '1rem', '1.5rem'],
+  },
+} as const
+
+type ArrowButtonProps = ViewProps & {
+  variant: keyof typeof variants
 }
 
-const ArrowButton = ({ onClick, side, label, ...props }: ArrowButtonProps) => {
-  const isOnLeft = side === 'left'
+const ArrowButton = ({
+  variant: variantName,
+  label,
+  ...props
+}: ArrowButtonProps) => {
+  const variant = variants[variantName]
 
   return (
-    <button
-      onClick={onClick}
+    <View
+      as="button"
       {...props}
       css={mq({
-        display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
-        width: ['1.6rem', '2.15rem'],
-        height: ['1.6rem', '2.15rem'],
-        position: 'absolute',
-        left: isOnLeft ? ['.5rem', '1rem', '1.5rem'] : undefined,
-        right: !isOnLeft ? ['.5rem', '1rem', '1.5rem'] : undefined,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        background: t.colors.White,
+        backgroundColor: t.colors.White,
         borderRadius: '50%',
         boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05)',
+        color: t.c.Gray10,
+        display: 'flex',
+        height: ['1.6rem', '2.15rem'],
+        justifyContent: 'center',
+        left: variant.left,
+        position: 'absolute',
+        right: variant.right,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        transitionProperty: 'color',
+        width: ['1.6rem', '2.15rem'],
+        '&:hover, &:focus': {
+          color: t.c.Red40,
+        },
       })}
     >
       <VisuallyHidden>{label}</VisuallyHidden>
       <Icon
-        name={isOnLeft ? 'chevronLeft' : 'chevronRight'}
-        css={mq({ width: ['.4rem', '.5rem'], color: t.colors.Red40 })}
+        name={variant.iconName}
+        css={mq({
+          width: ['.4rem', '.5rem'],
+          transform: `translateX(${variant.iconOffsetX})`,
+        })}
       />
-    </button>
+    </View>
   )
 }
 
@@ -81,12 +108,8 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
         <GatsbyImage fluid={activeImage} css={{ height: '100%' }} />
         {hasMultipleImages && (
           <>
-            <ArrowButton
-              onClick={prevImage}
-              side="left"
-              label="Previous image"
-            />
-            <ArrowButton onClick={nextImage} side="right" label="Next image" />
+            <ArrowButton variant="previous" onClick={prevImage} />
+            <ArrowButton variant="next" onClick={nextImage} />
           </>
         )}
       </ImageContainer>
