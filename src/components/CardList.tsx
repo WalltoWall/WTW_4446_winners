@@ -1,13 +1,15 @@
 import React from 'react'
+import { negateScale } from 'styled-system-scale'
 
-import { mq } from '../theme'
+import { mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 
 export type CardListProps = ViewProps & {
   columns?: number[]
 }
 
-const MARGIN = [0.8125, 1.5]
+const GAP = linearScale('0.8125rem', '1.5rem')
+
 export const CardList = ({
   children,
   columns = [1],
@@ -22,7 +24,8 @@ export const CardList = ({
       css={mq({
         display: 'flex',
         flexWrap: 'wrap',
-        margin: MARGIN.map(m => `-${m}rem`),
+        marginRight: negateScale(GAP),
+        marginBottom: negateScale(GAP),
         alignItems: 'stretch',
         // If we have enough items to create more than one row, left align.
         justifyContent: columns.map(qty =>
@@ -35,12 +38,10 @@ export const CardList = ({
           key={i}
           css={mq({
             display: 'flex',
-            margin: MARGIN.map(m => `${m}rem`),
+            marginRight: GAP,
+            marginBottom: GAP,
             width: columns.map(
-              (qty, i) =>
-                `calc(${(100 / qty).toPrecision(4)}% - ${
-                  (i === 0 ? MARGIN[0] : MARGIN[1]) * 2
-                }rem)`,
+              (qty, i) => `calc(${100 / qty}% - ${GAP[Math.min(i, 2)]})`,
             ),
           })}
         >
