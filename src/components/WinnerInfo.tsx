@@ -150,7 +150,12 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
           </dl>
           <dl>
             <dt css={{ fontWeight: t.fw.Semibold }}>{variant.agencyLabel}</dt>
-            <dd>
+            <dd
+              css={mq({
+                display: 'flex',
+                justifyContent: ['center', 'flex-start'],
+              })}
+            >
               <AgencyIdentifier
                 href={agencyHref!}
                 name={agencyName!}
