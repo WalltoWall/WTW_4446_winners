@@ -53,7 +53,6 @@ export type WinnerTemplate = LayoutProps & {
 }
 
 export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
-  console.log({ data })
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
 
