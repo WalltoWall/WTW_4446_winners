@@ -16,6 +16,8 @@ import { CardList } from '../components/CardList'
 import { WinnerCard } from '../components/WinnerCard'
 import { PaginationControls } from '../components/PaginationControls'
 
+const RESULTS_PER_PAGE = 8
+
 export type SearchPageProps = LayoutProps & {
   data: SearchPageQuery
 }
@@ -38,11 +40,12 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
     containerRef,
   } = usePaginatedCollection({
     collection: winnersResults,
-    perPage: 2,
+    perPage: 8,
   })
 
   const handleSubmit = useCallback(event => {
     event.preventDefault()
+    queryRef.current?.blur?.()
     const newQuery = queryRef.current?.value?.trim?.()?.replace?.('*', '')
     setQuery(newQuery ?? '')
   }, [])
@@ -53,7 +56,6 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
         <title>Search</title>
       </Helmet>
       <BoundedBox
-        ref={containerRef}
         css={mq({
           backgroundColor: t.c.White,
           paddingTop: linearScale('1.5rem', '3.5rem'),
@@ -85,7 +87,7 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
           </form>
         </div>
       </BoundedBox>
-      <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
+      <BoundedBox ref={containerRef} css={{ backgroundColor: t.c.Gray95 }}>
         {winnersResults.length > 0 && (
           <div
             css={mq({
@@ -108,12 +110,25 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
                 />
               ))}
             </CardList>
-            <PaginationControls
-              totalPages={totalPages}
-              currentPage={page}
-              setPage={setPage}
-              css={{ justifySelf: 'center' }}
-            />
+            <div
+              css={mq({
+                display: 'grid',
+                gap: linearScale('0.5rem', '0.875rem'),
+                justifyContent: 'center',
+              })}
+            >
+              <span css={mq({ fontSize: t.f['b-'] })}>
+                Showing {(page - 1) * RESULTS_PER_PAGE + 1}–
+                {Math.min(page * RESULTS_PER_PAGE, winnersResults.length)} of{' '}
+                {winnersResults.length} results
+              </span>
+              <PaginationControls
+                totalPages={totalPages}
+                currentPage={page}
+                setPage={setPage}
+                css={{ justifySelf: 'center' }}
+              />
+            </div>
           </div>
         )}
       </BoundedBox>
