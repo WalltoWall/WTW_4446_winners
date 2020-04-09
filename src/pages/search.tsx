@@ -15,6 +15,7 @@ import { FormSearchInput } from '../components/FormSearchInput'
 import { CardList } from '../components/CardList'
 import { WinnerCard } from '../components/WinnerCard'
 import { PaginationControls } from '../components/PaginationControls'
+import { EmptyMessage } from '../components/EmptyMessage'
 
 const RESULTS_PER_PAGE = 8
 
@@ -88,7 +89,7 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
         </div>
       </BoundedBox>
       <BoundedBox ref={containerRef} css={{ backgroundColor: t.c.Gray95 }}>
-        {winnersResults.length > 0 && (
+        {winnersResults.length > 0 ? (
           <div
             css={mq({
               display: 'grid',
@@ -130,6 +131,14 @@ export const SearchPage = ({ data, ...props }: SearchPageProps) => {
               />
             </div>
           </div>
+        ) : query.length > 0 ? (
+          <EmptyMessage heading="Looks like there aren't any winners here.">
+            Please try a different search term.
+          </EmptyMessage>
+        ) : (
+          <EmptyMessage heading="Enter a search term above">
+            Results will appear here.
+          </EmptyMessage>
         )}
       </BoundedBox>
     </Layout>
