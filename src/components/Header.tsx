@@ -70,6 +70,7 @@ export const Header = (props: HeaderProps) => {
         >
           <Anchor
             href="/"
+            aria-label="Pele Winner's Home"
             css={{
               display: 'grid',
               gap: t.S[3],
@@ -123,6 +124,7 @@ export const Header = (props: HeaderProps) => {
           </ul>
           <div css={{ justifySelf: 'end' }}>
             <button
+              aria-label="Mobile menu toggle"
               onClick={toggleMenu}
               css={mq({
                 width: '1.5rem',
@@ -143,6 +145,7 @@ export const Header = (props: HeaderProps) => {
               })}
             >
               <button
+                aria-label="Search field toggle"
                 onClick={toggleSearch}
                 css={{ zIndex: 2, position: 'relative' }}
               >
@@ -169,7 +172,12 @@ export const Header = (props: HeaderProps) => {
                   opacity: isSearchOpen ? 1 : 0,
                 })}
               >
-                <FormInput css={{ height: '100%', paddingLeft: '2.5rem' }} />
+                <FormInput
+                  type="search"
+                  aria-label="Search"
+                  aria-hidden={!isSearchOpen}
+                  css={{ height: '100%', paddingLeft: '2.5rem' }}
+                />
               </div>
             </div>
           </div>

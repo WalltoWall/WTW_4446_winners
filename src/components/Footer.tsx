@@ -92,7 +92,7 @@ export const Footer = (props: FooterProps) => (
       <View
         as="p"
         css={mq({
-          color: t.c.Gray60,
+          color: t.c.Gray50,
           fontSize: t.f['b-'],
           gridColumn: [null, 1],
           gridRow: [null, 2],

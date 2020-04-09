@@ -36,7 +36,7 @@ export const PersonCard = ({
       width: '100%',
     })}
   >
-    <Link href={href}>
+    <Link href={href} aria-label={name}>
       <AspectRatio
         x={3}
         y={4}
