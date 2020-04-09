@@ -6,6 +6,7 @@
     "develop": "ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
     "start": "yarn develop",
     "build": "NODE_ENV=production gatsby build",
+    "deploy": "yarn build && netlify deploy -d public",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "codegen": "graphql-codegen --config graphql-codegen.yml",

@@ -12,40 +12,36 @@ import { Icon } from './Icon'
 type ArrowButtonProps = {
   onClick: () => void
   side: 'left' | 'right'
+  label: string
 }
 
-const ArrowButton = ({ onClick, side, ...props }: ArrowButtonProps) => {
+const ArrowButton = ({ onClick, side, label, ...props }: ArrowButtonProps) => {
   const isOnLeft = side === 'left'
 
   return (
     <button
       onClick={onClick}
       {...props}
-      css={{
+      css={mq({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '2.15rem',
-        height: '2.15rem',
+        width: ['1.6rem', '2.15rem'],
+        height: ['1.6rem', '2.15rem'],
         position: 'absolute',
-        left: isOnLeft ? '2rem' : undefined,
-        right: !isOnLeft ? '2rem' : undefined,
+        left: isOnLeft ? ['.5rem', '1rem', '1.5rem'] : undefined,
+        right: !isOnLeft ? ['.5rem', '1rem', '1.5rem'] : undefined,
         top: '50%',
         transform: 'translateY(-50%)',
         background: t.colors.White,
         borderRadius: '50%',
-        boxShadow:
-          '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        transition: 'background .2s ease',
-
-        '&:hover': {
-          background: t.colors.Gray85,
-        },
-      }}
+        boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05)',
+      })}
     >
+      <VisuallyHidden>{label}</VisuallyHidden>
       <Icon
         name={isOnLeft ? 'chevronLeft' : 'chevronRight'}
-        css={{ width: '.5rem', color: t.colors.Black }}
+        css={mq({ width: ['.4rem', '.5rem'], color: t.colors.Red40 })}
       />
     </button>
   )
@@ -88,13 +84,9 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
             <ArrowButton
               onClick={prevImage}
               side="left"
-              aria-label="Previous image"
+              label="Previous image"
             />
-            <ArrowButton
-              onClick={nextImage}
-              side="right"
-              aria-label="Next image"
-            />
+            <ArrowButton onClick={nextImage} side="right" label="Next image" />
           </>
         )}
       </ImageContainer>

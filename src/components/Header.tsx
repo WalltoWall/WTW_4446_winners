@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useReducer } from 'react'
+import VisuallyHidden from '@reach/visually-hidden'
 
 import { navigation, EVENT_SITE_URL } from '../constants'
 
@@ -70,7 +71,6 @@ export const Header = (props: HeaderProps) => {
         >
           <Anchor
             href="/"
-            aria-label="Pele Winner's Home"
             css={{
               display: 'grid',
               gap: t.S[3],
@@ -88,6 +88,7 @@ export const Header = (props: HeaderProps) => {
                 width: linearScale('2rem', '3.625rem'),
               })}
             >
+              <VisuallyHidden>Pele Winner's Home</VisuallyHidden>
               <SVG svg={AssetLogo2020SVG} x={1} y={1} css={{ width: '100%' }} />
             </div>
             <Heading
@@ -124,7 +125,6 @@ export const Header = (props: HeaderProps) => {
           </ul>
           <div css={{ justifySelf: 'end' }}>
             <button
-              aria-label="Mobile menu toggle"
               onClick={toggleMenu}
               css={mq({
                 width: '1.5rem',
@@ -132,6 +132,7 @@ export const Header = (props: HeaderProps) => {
                 display: [null, null, 'none'],
               })}
             >
+              <VisuallyHidden>Mobile menu toggle</VisuallyHidden>
               <HamburgerIcon isOpen={isMenuOpen} css={{ height: '100%' }} />
             </button>
 
@@ -145,10 +146,10 @@ export const Header = (props: HeaderProps) => {
               })}
             >
               <button
-                aria-label="Search field toggle"
                 onClick={toggleSearch}
                 css={{ zIndex: 2, position: 'relative' }}
               >
+                <VisuallyHidden>Search field toggle</VisuallyHidden>
                 <Icon name="search" css={{ width: '1.25rem' }} />
               </button>
 
