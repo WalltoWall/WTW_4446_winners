@@ -5,12 +5,19 @@ import { View, ViewProps } from './View'
 import { FormInput } from './FormInput'
 import { Icon } from './Icon'
 
-export type FormSelectProps = ViewProps
+export type FormSelectProps = ViewProps & {
+  defaultValue?: string
+}
 
-export const FormSelect = ({ children, ...props }: FormSelectProps) => (
+export const FormSelect = ({
+  children,
+  defaultValue,
+  ...props
+}: FormSelectProps) => (
   <View {...props} css={{ position: 'relative' }}>
     <FormInput
       forwardedAs="select"
+      defaultValue={defaultValue}
       css={mq({
         paddingRight: linearScale('1.75rem', '2.5rem', 'space'),
       })}
