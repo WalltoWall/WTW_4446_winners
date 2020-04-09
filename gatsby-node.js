@@ -310,7 +310,7 @@ exports.createPages = async gatsbyContext => {
 
   const { localSearchWinners } = searchQueryResult.data
 
-  fs.mkdirSync(SEARCH_DIRECTORY, { recusive: true })
+  fs.mkdirSync(SEARCH_DIRECTORY, { recursive: true })
 
   fs.writeFileSync(
     path.resolve(SEARCH_DIRECTORY, 'winners.index.json'),
