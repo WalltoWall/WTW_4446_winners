@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useReducer } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { navigate } from 'gatsby'
 import VisuallyHidden from '@reach/visually-hidden'
+import { negateScale } from 'styled-system-scale'
 
-import { navigation, EVENT_SITE_URL } from '../constants'
+import { navigation } from '../constants'
 import { t, mq, linearScale } from '../theme'
 import { getSearchQuery } from '../utils'
 
@@ -11,9 +12,7 @@ import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
 import { HamburgerIcon } from './HamburgerIcon'
 import { Anchor, AnchorProps } from './Anchor'
-import { Link } from './Link'
 import { Overlay } from './Overlay'
-import { Button } from './Button'
 import { Icon } from './Icon'
 import { SVG } from './SVG'
 import { FormInput } from './FormInput'
@@ -39,10 +38,20 @@ const NavItem = ({ href, target, children, ...props }: NavItemProps) => (
 export type HeaderProps = ViewProps
 
 export const Header = (props: HeaderProps) => {
+  const searchInputRef = useRef<HTMLInputElement>()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = useCallback(() => setIsMenuOpen(state => !state), [])
   const closeMenu = useCallback(() => setIsMenuOpen(false), [])
-  const [isSearchOpen, toggleSearch] = useReducer(isOpen => !isOpen, false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  const toggleSearch = useCallback(() => {
+    setIsSearchOpen(state => !state)
+
+    // Opposite since current state is before the setIsSearchOpen call.
+    if (!isSearchOpen) searchInputRef.current?.focus?.()
+    else searchInputRef.current?.blur?.()
+  }, [isSearchOpen])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -155,22 +164,23 @@ export const Header = (props: HeaderProps) => {
                 gap: '2.125rem',
                 gridAutoFlow: 'column',
                 alignItems: 'center',
+                justifyContent: 'end',
               })}
             >
               <button
                 onClick={toggleSearch}
-                css={{ zIndex: 2, position: 'relative' }}
+                css={{
+                  // Search input zIndex = 1
+                  zIndex: 2,
+                  position: 'relative',
+                }}
               >
                 <VisuallyHidden>Search field toggle</VisuallyHidden>
-                <Icon name="search" css={{ width: '1.25rem' }} />
+                <Icon
+                  name="search"
+                  css={mq({ width: linearScale('0.875rem', '1.125rem') })}
+                />
               </button>
-
-              <Button as={Link} href={EVENT_SITE_URL}>
-                Enter{' '}
-                <span css={mq({ display: ['none', null, null, 'inline'] })}>
-                  the 2021 Pele Awards
-                </span>
-              </Button>
 
               <form
                 onSubmit={handleSubmit}
@@ -178,21 +188,27 @@ export const Header = (props: HeaderProps) => {
                   position: 'absolute',
                   zIndex: 1,
                   top: 0,
-                  left: '-0.5rem',
+                  left: negateScale(linearScale('0.75rem', '1rem', 'space')),
                   right: 0,
                   bottom: 0,
                   background: t.colors.White,
                   transition: 'opacity .2s linear',
                   opacity: isSearchOpen ? 1 : 0,
+                  transitionDuration: t.td.Fast,
                 })}
               >
                 <FormInput
+                  ref={searchInputRef}
                   defaultValue={getSearchQuery()}
                   name="search"
                   type="search"
                   aria-label="Search"
                   aria-hidden={!isSearchOpen}
-                  css={{ height: '100%', paddingLeft: '2.5rem' }}
+                  placeholder="Search all winners…"
+                  css={mq({
+                    height: '100%',
+                    paddingLeft: linearScale('2rem', '2.5rem', 'space'),
+                  })}
                 />
               </form>
             </div>
