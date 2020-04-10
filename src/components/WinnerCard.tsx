@@ -71,7 +71,15 @@ export const WinnerCard = ({
         width: '100%',
       }}
     >
-      <Link href={href}>
+      <Link
+        href={href}
+        tabIndex={-1}
+        css={{
+          '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
+            color: t.c.Red40,
+          },
+        }}
+      >
         <VisuallyHidden>{title}</VisuallyHidden>
         <AspectRatio
           x={variant.imageAspectRatioX}
@@ -84,6 +92,7 @@ export const WinnerCard = ({
         </AspectRatio>
       </Link>
       <div
+        className="metadata"
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
@@ -122,7 +131,9 @@ export const WinnerCard = ({
           )}
           {title && (
             <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
-              <Anchor href={href}>{title}</Anchor>
+              <Anchor className="title-link" href={href}>
+                {title}
+              </Anchor>
             </Heading>
           )}
           <AgencyIdentifier

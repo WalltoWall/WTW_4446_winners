@@ -31,7 +31,7 @@ export const EmptyMessage = ({
     {children && (
       <div
         css={mq({
-          color: t.c.Gray60,
+          color: t.c.Gray50,
           fontSize: t.f['b-'],
           textAlign: 'center',
         })}
