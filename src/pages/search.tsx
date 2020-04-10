@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { withPrefix } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { useLunr } from 'react-lunr'
 
 import { WinnerSearchResult, Award } from '../types'
 import { usePaginatedCollection } from '../hooks/usePaginatedCollection'
+import { getSearchQuery } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -15,6 +16,7 @@ import { CardList } from '../components/CardList'
 import { WinnerCard } from '../components/WinnerCard'
 import { PaginationControls } from '../components/PaginationControls'
 import { EmptyMessage } from '../components/EmptyMessage'
+import { useURLParamState } from '../hooks/useURLParamState'
 
 const RESULTS_PER_PAGE = 8
 
@@ -24,11 +26,15 @@ const fetchJson = async (url: string) => {
   return await req.json()
 }
 
-export type SearchPageProps = LayoutProps
+export type SearchPageProps = LayoutProps & {
+  initialQuery: string
+}
 
-export const SearchPage = (props: SearchPageProps) => {
-  const queryRef = useRef<HTMLInputElement>()
-  const [query, setQuery] = useState('')
+export const SearchPage = ({
+  initialQuery = '',
+  ...props
+}: SearchPageProps) => {
+  const [query, setQuery] = useURLParamState('query', getSearchQuery())
   const [store, setStore] = useState<Record<string, WinnerSearchResult>>()
   const [index, setIndex] = useState<string>()
 
@@ -48,7 +54,7 @@ export const SearchPage = (props: SearchPageProps) => {
     }
 
     asyncEffect()
-  }, [])
+  }, [setIndex])
 
   const winnersResults = useLunr(query, index, store) as WinnerSearchResult[]
 
@@ -63,12 +69,18 @@ export const SearchPage = (props: SearchPageProps) => {
     perPage: 8,
   })
 
-  const handleSubmit = useCallback(event => {
-    event.preventDefault()
-    queryRef.current?.blur?.()
-    const newQuery = queryRef.current?.value?.trim?.()?.replace?.('*', '')
-    setQuery(newQuery ?? '')
-  }, [])
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      const target = e.target as typeof e.target & {
+        search: HTMLInputElement
+      }
+      target.search.blur()
+
+      setQuery(target.search.value)
+    },
+    [setQuery],
+  )
 
   return (
     <Layout {...props}>
@@ -101,7 +113,8 @@ export const SearchPage = (props: SearchPageProps) => {
             })}
           >
             <FormSearchInput
-              innerRef={queryRef}
+              name="search"
+              defaultValue={query}
               css={mq({ gridColumn: ['1 / -1', 'auto'] })}
             />
           </form>
@@ -121,7 +134,7 @@ export const SearchPage = (props: SearchPageProps) => {
                   key={result.url}
                   title={result.name}
                   subtitle={result.categoryLine1}
-                  award={result.award.toLowerCase() as Award}
+                  award={result.award?.toLowerCase() as Award}
                   href={result.url}
                   imageFluid={result.imageFluid}
                   agencyName={result.agencyName!}
@@ -150,7 +163,7 @@ export const SearchPage = (props: SearchPageProps) => {
               />
             </div>
           </div>
-        ) : query.length > 0 ? (
+        ) : query?.length ?? 0 > 0 ? (
           <EmptyMessage heading="Looks like there aren't any winners here.">
             Please try a different search term.
           </EmptyMessage>

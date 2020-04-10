@@ -123,3 +123,10 @@ export const chunk = <T>(size: number, arr: T[]): T[][] =>
         : [...array.slice(0, -1), [...array.slice(-1)[0], item]],
     [] as T[][],
   )
+
+export const getSearchQuery = () => {
+  if (typeof window === 'undefined') return ''
+  const params = new URLSearchParams(location.search)
+
+  return params.get('query') ?? ''
+}

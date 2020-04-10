@@ -21,12 +21,14 @@ export const FormSearchInput = React.forwardRef(
       children,
       placeholder = 'Search…',
       defaultValue,
+      name,
       ...props
     }: FormSearchInputProps,
     ref,
   ) => (
     <View ref={ref} {...props} css={{ position: 'relative' }}>
       <FormInput
+        name={name}
         ref={innerRef}
         type="search"
         placeholder={placeholder}

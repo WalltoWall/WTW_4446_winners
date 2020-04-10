@@ -1,18 +1,18 @@
 import React, { useState, useCallback, useRef } from 'react'
+import { navigate } from 'gatsby'
 import VisuallyHidden from '@reach/visually-hidden'
 import { negateScale } from 'styled-system-scale'
 
-import { navigation, EVENT_SITE_URL } from '../constants'
-
+import { navigation } from '../constants'
 import { t, mq, linearScale } from '../theme'
+import { getSearchQuery } from '../utils'
+
 import { View, ViewProps } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
 import { HamburgerIcon } from './HamburgerIcon'
 import { Anchor, AnchorProps } from './Anchor'
-import { Link } from './Link'
 import { Overlay } from './Overlay'
-import { Button } from './Button'
 import { Icon } from './Icon'
 import { SVG } from './SVG'
 import { FormInput } from './FormInput'
@@ -52,6 +52,16 @@ export const Header = (props: HeaderProps) => {
     if (!isSearchOpen) searchInputRef.current?.focus?.()
     else searchInputRef.current?.blur?.()
   }, [isSearchOpen])
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const target = e.target as typeof e.target & {
+      search: { value: string }
+    }
+    const params = new URLSearchParams(`query=${target.search.value}`)
+    navigate(`/search/?${params.toString()}`)
+  }
 
   return (
     <View
@@ -172,14 +182,8 @@ export const Header = (props: HeaderProps) => {
                 />
               </button>
 
-              {/* <Button as={Link} href={EVENT_SITE_URL}> */}
-              {/*   Enter{' '} */}
-              {/*   <span css={mq({ display: ['none', null, null, 'inline'] })}> */}
-              {/*     the Pele Awards */}
-              {/*   </span> */}
-              {/* </Button> */}
-
-              <div
+              <form
+                onSubmit={handleSubmit}
                 css={mq({
                   position: 'absolute',
                   zIndex: 1,
@@ -195,6 +199,8 @@ export const Header = (props: HeaderProps) => {
               >
                 <FormInput
                   ref={searchInputRef}
+                  defaultValue={getSearchQuery()}
+                  name="search"
                   type="search"
                   aria-label="Search"
                   aria-hidden={!isSearchOpen}
@@ -204,7 +210,7 @@ export const Header = (props: HeaderProps) => {
                     paddingLeft: linearScale('2rem', '2.5rem', 'space'),
                   })}
                 />
-              </div>
+              </form>
             </div>
           </div>
         </div>
