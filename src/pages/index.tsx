@@ -23,8 +23,8 @@ export type IndexPage = LayoutProps & {
 }
 
 export const IndexPage = ({ data, ...props }: IndexPage) => {
-  const bestOfEntries = data.bestOfEntries.nodes
-  const judgesEntries = data.judgesEntries.nodes
+  const bestOfWinners = data.bestOfWinners.nodes
+  const judgesWinners = data.judgesWinners.nodes
   const adPeople = data.adPeople.nodes
   const archives = data.archives.nodes
 
@@ -49,7 +49,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             <Anchor href="/winners/">Best of Show Winners</Anchor>
           </Heading>
           <CardList columns={[1, 2]}>
-            {bestOfEntries.map(winner => {
+            {bestOfWinners.map(winner => {
               const agency = winner?.data?.agency?.[0]
 
               return (
@@ -116,7 +116,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
           </Heading>
           <CardList columns={[1, 3]}>
-            {judgesEntries.map(winner => {
+            {judgesWinners.map(winner => {
               const agency = winner?.data?.agency?.[0]
 
               return (
@@ -141,7 +141,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
                 />
               )
             })}
-          </CardList>{' '}
+          </CardList>
         </div>
       </BoundedBox>
 
@@ -213,7 +213,7 @@ export default IndexPage
 
 export const query = graphql`
   query IndexPage {
-    bestOfEntries: allAirtableWinner(
+    bestOfWinners: allAirtableWinner(
       filter: {
         data: {
           special_award: { regex: "/^Best of Show - /" }
@@ -251,7 +251,7 @@ export const query = graphql`
         }
       }
     }
-    judgesEntries: allAirtableWinner(
+    judgesWinners: allAirtableWinner(
       filter: { data: { special_award: { regex: "/^Judge's Award - /" } } }
     ) {
       nodes {
