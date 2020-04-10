@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect, useCallback } from 'react'
+import { useRef, useMemo, useState, useCallback, useLayoutEffect } from 'react'
 
 import { chunk } from '../utils'
 
@@ -11,7 +11,7 @@ type UsePaginatedCollectionArgs<T> = {
   paramKey?: string
 }
 
-export const usePaginatedCollection = <Container, T>({
+export const usePaginatedCollection = <Container extends Element, T>({
   collection,
   perPage = 20,
   initialPage = 1,
@@ -45,7 +45,7 @@ export const usePaginatedCollection = <Container, T>({
       const searchParams = new URLSearchParams(location.search)
       searchParams.set(paramKey, idx)
 
-      history.replaceState(
+      history.pushState(
         null,
         '',
         `${window.location.pathname}?${searchParams.toString()}`,
@@ -66,15 +66,25 @@ export const usePaginatedCollection = <Container, T>({
     [page, setPage],
   )
 
-  useEffect(() => {
-    const containerEl = containerRef?.current
-    if (!containerEl) return
+  useLayoutEffect(() => {
+    const readPageFromURL = () => {
+      const containerEl = containerRef?.current
+      if (!containerEl) return
 
-    const searchParams = new URLSearchParams(location.search)
-    const currPage = searchParams.get(paramKey)
+      const searchParams = new URLSearchParams(location.search)
+      const currPage = searchParams.get(paramKey)
 
-    if (currPage) containerEl.scrollIntoView({ behavior: 'smooth' })
-  }, [containerRef, page, paramKey])
+      if (!currPage) return
+
+      containerEl.scrollIntoView({ behavior: 'smooth' })
+      set(Math.max(Math.min(Number.parseInt(currPage), totalPages), 1))
+    }
+
+    readPageFromURL()
+    window.addEventListener('popstate', readPageFromURL)
+
+    return () => window.removeEventListener('popstate', readPageFromURL)
+  }, [containerRef, page, paramKey, totalPages])
 
   return {
     paginatedCollection,

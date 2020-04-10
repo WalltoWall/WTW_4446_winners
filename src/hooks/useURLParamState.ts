@@ -1,4 +1,4 @@
-import { useState, useMemo, useLayoutEffect, useCallback } from 'react'
+import { useState, useMemo, useLayoutEffect } from 'react'
 
 const IS_BROWSER = typeof window !== 'undefined'
 
