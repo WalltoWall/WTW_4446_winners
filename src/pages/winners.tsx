@@ -15,12 +15,14 @@ import { FormSearchInput } from '../components/FormSearchInput'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 import { CardList } from '../components/CardList'
 import { WinnerCard } from '../components/WinnerCard'
+import { getSearchQuery } from '../utils'
 
 export type WinnersPage = LayoutProps & {
   data: WinnersPageQuery
 }
 
 export const WinnersPage = ({ data, ...props }: WinnersPage) => {
+  const [query, setQuery] = useState(getSearchQuery)
   const bestOfWinners = data.bestOfWinners.nodes
   const judgesWinners = data.judgesWinners.nodes
 
@@ -30,6 +32,9 @@ export const WinnersPage = ({ data, ...props }: WinnersPage) => {
 
   const [firstPageId, setFirstPageId] = useState(initialPage?.id!)
   const isInitialPageSelected = firstPageId === initialPage?.id
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setQuery(e.target.value)
 
   const handleCategoryChange = useCallback(event => {
     const newFirstPageId = event.target.value
@@ -79,7 +84,11 @@ export const WinnersPage = ({ data, ...props }: WinnersPage) => {
                 </option>
               ))}
             </FormSelect>
-            <FormSearchInput css={mq({ gridColumn: ['1 / -1', 'auto'] })} />
+            <FormSearchInput
+              value={query}
+              onChange={handleInputChange}
+              css={mq({ gridColumn: ['1 / -1', 'auto'] })}
+            />
           </div>
         </div>
       </BoundedBox>
