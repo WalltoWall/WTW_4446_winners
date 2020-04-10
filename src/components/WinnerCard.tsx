@@ -18,18 +18,42 @@ const variants = {
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.25rem', 'space'),
     subtitleFontSize: t.f['b-'],
+    flexDirection: ['row', 'column'],
+    width: ['50%', '100%'],
+    awardIconVariant: {
+      top: {
+        display: ['block', 'none'],
+      },
+      bottom: {
+        display: ['none', 'block'],
+      },
+    },
   },
   featured: {
     imageAspectRatioX: 4,
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
+    flexDirection: 'column',
+    width: '100%',
+    awardIconVariant: {
+      bottom: {
+        display: 'block',
+      },
+    },
   },
   featuredWide: {
     imageAspectRatioX: 8,
     imageAspectRatioY: 5,
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
+    flexDirection: 'column',
+    width: '100%',
+    awardIconVariant: {
+      bottom: {
+        display: 'block',
+      },
+    },
   },
 } as const
 
@@ -64,21 +88,22 @@ export const WinnerCard = ({
   return (
     <View
       {...props}
-      css={{
+      css={mq({
         backgroundColor: t.c.White,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: variant.flexDirection,
         width: '100%',
-      }}
+      })}
     >
       <Link
         href={href}
         tabIndex={-1}
-        css={{
+        css={mq({
           '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
             color: t.c.Red40,
           },
-        }}
+          width: variant.width,
+        })}
       >
         <VisuallyHidden>{title}</VisuallyHidden>
         <AspectRatio
@@ -96,6 +121,7 @@ export const WinnerCard = ({
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
+          width: variant.width,
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
@@ -108,10 +134,20 @@ export const WinnerCard = ({
           css={mq({
             display: 'grid',
             gap: linearScale('0.375rem', '0.5rem', 'space'),
-            gridTemplateRows: 'auto auto 1fr',
-            alignItems: 'start',
+            gridTemplateRows: ['auto', 'auto auto 1fr'],
+            alignItems: ['center', 'start'],
           })}
         >
+          {award && variant.awardIconVariant.top && (
+            <AwardIcon
+              type={award}
+              css={mq({
+                alignSelf: 'end',
+                width: ['0.8125rem', '1.25rem'],
+                display: variant.awardIconVariant.top.display,
+              })}
+            />
+          )}
           {subtitle && isSpecialAward ? (
             <Subheading
               forwardedAs="h4"
@@ -150,6 +186,7 @@ export const WinnerCard = ({
             css={mq({
               alignSelf: 'end',
               width: ['0.8125rem', '1.25rem'],
+              display: variant.awardIconVariant.bottom.display,
             })}
           />
         )}
