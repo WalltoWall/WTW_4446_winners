@@ -73,6 +73,7 @@ export const WinnerCard = ({
     >
       <Link
         href={href}
+        tabIndex={-1}
         css={{
           '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
             color: t.c.Red40,
