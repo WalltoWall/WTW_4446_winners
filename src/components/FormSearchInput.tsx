@@ -32,6 +32,7 @@ export const FormSearchInput = React.forwardRef(
       <FormInput
         name={name}
         ref={innerRef}
+        type="search"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
