@@ -66,7 +66,7 @@ export const PaginatedWinners = ({
               </Button>
               <span
                 css={mq({
-                  color: t.c.Gray60,
+                  color: t.c.Gray50,
                   fontSize: t.f['b-'],
                   textAlign: 'center',
                 })}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { t, mq, linearScale } from '../theme'
+import { mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 import { FormInput } from './FormInput'
 import { Icon } from './Icon'
@@ -32,9 +32,6 @@ export const FormSearchInput = React.forwardRef(
         defaultValue={defaultValue}
         css={mq({
           paddingLeft: linearScale('2rem', '2.5rem', 'space'),
-          '&::placeholder': {
-            color: t.c.Gray60,
-          },
         })}
       />
       <Icon
