@@ -1,14 +1,11 @@
 import React from 'react'
 
-import { View } from './View'
-import { AspectRatio, AspectRatioProps } from './AspectRatio'
+import { View, ViewProps } from './View'
 
-export type SVGProps = AspectRatioProps & {
+export type SVGProps = ViewProps & {
   svg: React.ComponentType
 }
 
-export const SVG = ({ svg: SvgComp, x, y, ...props }: SVGProps) => (
-  <AspectRatio x={x} y={y} {...props}>
-    <View as={SvgComp} css={{ width: '100%', height: '100%' }} />
-  </AspectRatio>
+export const SVG = ({ svg: SvgComp, ...props }: SVGProps) => (
+  <View as={SvgComp} {...props} />
 )

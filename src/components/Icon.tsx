@@ -12,25 +12,23 @@ import { ReactComponent as AssetIconInstagramSVG } from '../assets/icon-instagra
 import { ReactComponent as AssetIconLinkedinSVG } from '../assets/icon-linkedin.svg'
 
 const icons = {
-  award: { svg: AssetIconAwardSVG, x: 20, y: 20 },
-  search: { svg: AssetIconSearchSVG, x: 20, y: 20 },
-  chevronDown: { svg: AssetIconChevronDownSVG, x: 14, y: 7 },
-  chevronLeft: { svg: AssetIconChevronLeftSVG, x: 8, y: 14 },
-  chevronRight: { svg: AssetIconChevronRightSVG, x: 8, y: 14 },
-  facebook: { svg: AssetIconFacebookSVG, x: 10, y: 18 },
-  twitter: { svg: AssetIconTwitterSVG, x: 18, y: 15 },
-  instagram: { svg: AssetIconInstagramSVG, x: 1, y: 1 },
-  linkedin: { svg: AssetIconLinkedinSVG, x: 18, y: 17 },
+  award: AssetIconAwardSVG,
+  search: AssetIconSearchSVG,
+  chevronDown: AssetIconChevronDownSVG,
+  chevronLeft: AssetIconChevronLeftSVG,
+  chevronRight: AssetIconChevronRightSVG,
+  facebook: AssetIconFacebookSVG,
+  twitter: AssetIconTwitterSVG,
+  instagram: AssetIconInstagramSVG,
+  linkedin: AssetIconLinkedinSVG,
 } as const
 
-export type IconProps = Omit<SVGProps, 'svg' | 'x' | 'y'> & {
+export type IconProps = Omit<SVGProps, 'svg'> & {
   name: keyof typeof icons
 }
 
 export const Icon = ({ name, ...props }: IconProps) => {
-  const icon = icons[name]
+  const Icon = icons[name]
 
-  return (
-    <SVG svg={icon.svg} x={icon.x} y={icon.y} role="presentation" {...props} />
-  )
+  return <SVG svg={Icon} role="presentation" {...props} />
 }

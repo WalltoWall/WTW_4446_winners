@@ -3,9 +3,9 @@ import { linearScale } from 'styled-system-scale'
 
 export enum Size {
   Small = '48rem',
-  Medium = '60rem',
-  Large = '80rem',
-  Xlarge = '100rem',
+  Medium = '75rem',
+  Large = '90rem',
+  Xlarge = '110rem',
 }
 const breakpoints = Object.values(Size)
 
