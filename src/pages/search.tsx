@@ -5,6 +5,7 @@ import { useLunr } from 'react-lunr'
 
 import { WinnerSearchResult, Award } from '../types'
 import { usePaginatedCollection } from '../hooks/usePaginatedCollection'
+import { getSearchQuery } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -24,11 +25,16 @@ const fetchJson = async (url: string) => {
   return await req.json()
 }
 
-export type SearchPageProps = LayoutProps
+export type SearchPageProps = LayoutProps & {
+  initialQuery: string
+}
 
-export const SearchPage = (props: SearchPageProps) => {
+export const SearchPage = ({
+  initialQuery = '',
+  ...props
+}: SearchPageProps) => {
   const queryRef = useRef<HTMLInputElement>()
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(getSearchQuery)
   const [store, setStore] = useState<Record<string, WinnerSearchResult>>()
   const [index, setIndex] = useState<string>()
 
@@ -102,6 +108,7 @@ export const SearchPage = (props: SearchPageProps) => {
           >
             <FormSearchInput
               innerRef={queryRef}
+              defaultValue={query}
               css={mq({ gridColumn: ['1 / -1', 'auto'] })}
             />
           </form>
@@ -121,7 +128,7 @@ export const SearchPage = (props: SearchPageProps) => {
                   key={result.url}
                   title={result.name}
                   subtitle={result.categoryLine1}
-                  award={result.award.toLowerCase() as Award}
+                  award={result.award?.toLowerCase() as Award}
                   href={result.url}
                   imageFluid={result.imageFluid}
                   agencyName={result.agencyName!}

@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useReducer } from 'react'
+import { navigate } from 'gatsby'
 import VisuallyHidden from '@reach/visually-hidden'
 
 import { navigation, EVENT_SITE_URL } from '../constants'
-
 import { t, mq, linearScale } from '../theme'
+import { getSearchQuery } from '../utils'
+
 import { View, ViewProps } from './View'
 import { Heading } from './Heading'
 import { BoundedBox } from './BoundedBox'
@@ -41,6 +43,16 @@ export const Header = (props: HeaderProps) => {
   const toggleMenu = useCallback(() => setIsMenuOpen(state => !state), [])
   const closeMenu = useCallback(() => setIsMenuOpen(false), [])
   const [isSearchOpen, toggleSearch] = useReducer(isOpen => !isOpen, false)
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const target = e.target as typeof e.target & {
+      search: { value: string }
+    }
+    const params = new URLSearchParams(`query=${target.search.value}`)
+    navigate(`/search/?${params.toString()}`)
+  }
 
   return (
     <View
@@ -160,7 +172,8 @@ export const Header = (props: HeaderProps) => {
                 </span>
               </Button>
 
-              <div
+              <form
+                onSubmit={handleSubmit}
                 css={mq({
                   position: 'absolute',
                   zIndex: 1,
@@ -174,12 +187,14 @@ export const Header = (props: HeaderProps) => {
                 })}
               >
                 <FormInput
+                  defaultValue={getSearchQuery()}
+                  name="search"
                   type="search"
                   aria-label="Search"
                   aria-hidden={!isSearchOpen}
                   css={{ height: '100%', paddingLeft: '2.5rem' }}
                 />
-              </div>
+              </form>
             </div>
           </div>
         </div>
