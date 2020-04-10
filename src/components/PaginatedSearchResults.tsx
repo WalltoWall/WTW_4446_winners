@@ -12,9 +12,12 @@ import { WinnerCard } from '../components/WinnerCard'
 import { PaginationControls } from '../components/PaginationControls'
 import { EmptyMessage } from '../components/EmptyMessage'
 
-type SearchResultsProps = {
+export type PaginatedSearchResultsProps = {
   query: string
-  filterOptions?: {}
+  filterOptions?: {
+    category?: string
+    year?: number
+  }
 }
 
 const RESULTS_PER_PAGE = 8
@@ -25,7 +28,10 @@ const fetchJson = async (url: string) => {
   return await req.json()
 }
 
-export const PaginatedSearchResults = ({ query }: SearchResultsProps) => {
+export const PaginatedSearchResults = ({
+  query,
+  filterOptions,
+}: PaginatedSearchResultsProps) => {
   const [store, setStore] = useState<Record<string, WinnerSearchResult>>()
   const [index, setIndex] = useState<string>()
 
@@ -47,7 +53,12 @@ export const PaginatedSearchResults = ({ query }: SearchResultsProps) => {
     asyncEffect()
   }, [setIndex])
 
-  const winnersResults = useLunr(query, index, store) as WinnerSearchResult[]
+  let searchResults = useLunr(query, index, store) as WinnerSearchResult[]
+  if (filterOptions?.category) {
+    searchResults = searchResults.filter(
+      result => result.categoryLine1 === filterOptions.category,
+    )
+  }
 
   const {
     paginatedCollection,
@@ -56,13 +67,13 @@ export const PaginatedSearchResults = ({ query }: SearchResultsProps) => {
     setPage,
     containerRef,
   } = usePaginatedCollection({
-    collection: winnersResults,
+    collection: searchResults,
     perPage: 8,
   })
 
   return (
     <BoundedBox ref={containerRef} css={{ backgroundColor: t.c.Gray95 }}>
-      {winnersResults.length > 0 ? (
+      {searchResults.length > 0 ? (
         <div
           css={mq({
             display: 'grid',
@@ -93,8 +104,8 @@ export const PaginatedSearchResults = ({ query }: SearchResultsProps) => {
           >
             <span css={mq({ fontSize: t.f['b-'] })}>
               Showing {(page - 1) * RESULTS_PER_PAGE + 1}–
-              {Math.min(page * RESULTS_PER_PAGE, winnersResults.length)} of{' '}
-              {winnersResults.length} results
+              {Math.min(page * RESULTS_PER_PAGE, searchResults.length)} of{' '}
+              {searchResults.length} results
             </span>
             <PaginationControls
               totalPages={totalPages}
