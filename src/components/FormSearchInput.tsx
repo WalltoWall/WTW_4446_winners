@@ -21,7 +21,9 @@ export const FormSearchInput = React.forwardRef(
       children,
       placeholder = 'Search…',
       defaultValue,
+      value,
       name,
+      onChange,
       ...props
     }: FormSearchInputProps,
     ref,
@@ -32,6 +34,8 @@ export const FormSearchInput = React.forwardRef(
         ref={innerRef}
         type="search"
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         defaultValue={defaultValue}
         css={mq({
           paddingLeft: linearScale('2rem', '2.5rem', 'space'),
