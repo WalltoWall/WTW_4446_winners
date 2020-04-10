@@ -64,8 +64,6 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         redBoxChildren={
           <SVG
             svg={AssetAAFLogoSVG}
-            x={236}
-            y={147}
             css={mq({ width: ['6rem', '8rem', '10rem', '12rem'] })}
           />
         }
