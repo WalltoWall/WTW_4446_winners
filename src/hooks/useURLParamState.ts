@@ -1,6 +1,6 @@
 import { useState, useMemo, useLayoutEffect } from 'react'
 
-const IS_BROWSER = typeof window !== 'undefined'
+import { IS_BROWSER } from '../utils'
 
 type UseURLParamStateOptions = {
   updateType?: 'replace' | 'push'
