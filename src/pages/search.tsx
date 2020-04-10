@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { withPrefix } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 import { useLunr } from 'react-lunr'
@@ -16,6 +16,7 @@ import { CardList } from '../components/CardList'
 import { WinnerCard } from '../components/WinnerCard'
 import { PaginationControls } from '../components/PaginationControls'
 import { EmptyMessage } from '../components/EmptyMessage'
+import { useURLParamState } from '../hooks/useURLParamState'
 
 const RESULTS_PER_PAGE = 8
 
@@ -33,8 +34,7 @@ export const SearchPage = ({
   initialQuery = '',
   ...props
 }: SearchPageProps) => {
-  const queryRef = useRef<HTMLInputElement>()
-  const [query, setQuery] = useState(getSearchQuery)
+  const [query, setQuery] = useURLParamState('query', getSearchQuery())
   const [store, setStore] = useState<Record<string, WinnerSearchResult>>()
   const [index, setIndex] = useState<string>()
 
@@ -54,7 +54,7 @@ export const SearchPage = ({
     }
 
     asyncEffect()
-  }, [])
+  }, [setIndex])
 
   const winnersResults = useLunr(query, index, store) as WinnerSearchResult[]
 
@@ -69,12 +69,18 @@ export const SearchPage = ({
     perPage: 8,
   })
 
-  const handleSubmit = useCallback(event => {
-    event.preventDefault()
-    queryRef.current?.blur?.()
-    const newQuery = queryRef.current?.value?.trim?.()?.replace?.('*', '')
-    setQuery(newQuery ?? '')
-  }, [])
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      const target = e.target as typeof e.target & {
+        search: HTMLInputElement
+      }
+      target.search.blur()
+
+      setQuery(target.search.value)
+    },
+    [setQuery],
+  )
 
   return (
     <Layout {...props}>
@@ -107,7 +113,7 @@ export const SearchPage = ({
             })}
           >
             <FormSearchInput
-              innerRef={queryRef}
+              name="search"
               defaultValue={query}
               css={mq({ gridColumn: ['1 / -1', 'auto'] })}
             />
@@ -157,7 +163,7 @@ export const SearchPage = ({
               />
             </div>
           </div>
-        ) : query.length > 0 ? (
+        ) : query?.length ?? 0 > 0 ? (
           <EmptyMessage heading="Looks like there aren't any winners here.">
             Please try a different search term.
           </EmptyMessage>
