@@ -154,6 +154,7 @@ export const Header = (props: HeaderProps) => {
                 gap: '2.125rem',
                 gridAutoFlow: 'column',
                 alignItems: 'center',
+                justifyContent: 'end',
               })}
             >
               <button
@@ -171,12 +172,12 @@ export const Header = (props: HeaderProps) => {
                 />
               </button>
 
-              <Button as={Link} href={EVENT_SITE_URL}>
-                Enter{' '}
-                <span css={mq({ display: ['none', null, null, 'inline'] })}>
-                  the 2021 Pele Awards
-                </span>
-              </Button>
+              {/* <Button as={Link} href={EVENT_SITE_URL}> */}
+              {/*   Enter{' '} */}
+              {/*   <span css={mq({ display: ['none', null, null, 'inline'] })}> */}
+              {/*     the Pele Awards */}
+              {/*   </span> */}
+              {/* </Button> */}
 
               <div
                 css={mq({
