@@ -27,6 +27,9 @@ export const FormInput = React.forwardRef((props: FormInputProps, ref) => (
         borderColor: 'rgba(207, 24, 55, 0.3)',
         boxShadow: '0 0 0 2px rgba(207, 24, 55, 0.1)',
       },
+      '&::placeholder': {
+        color: t.c.Gray50,
+      },
     })}
   />
 ))
