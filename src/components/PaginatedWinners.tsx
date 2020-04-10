@@ -13,11 +13,15 @@ import { EmptyMessage } from './EmptyMessage'
 export type PaginatedWinnersProps = ViewProps & {
   firstPageId: UseLoadMoreArgs['firstPageId']
   initialPage: UseLoadMoreArgs['initialPage']
+  totalCountAddend?: number
+  showingCountAddend?: number
 }
 
 export const PaginatedWinners = ({
   initialPage,
   firstPageId,
+  totalCountAddend = 0,
+  showingCountAddend = 0,
 }: PaginatedWinnersProps) => {
   const [{ latestPage, items: winners }, loadMore] = useLoadMore({
     firstPageId,
@@ -71,8 +75,8 @@ export const PaginatedWinners = ({
                   textAlign: 'center',
                 })}
               >
-                Showing {winners.length} of{' '}
-                {latestPage?.collection?.nodeCount ?? 0}
+                Showing {winners.length + showingCountAddend} of{' '}
+                {(latestPage?.collection?.nodeCount ?? 0) + totalCountAddend}
               </span>
             </div>
           )}

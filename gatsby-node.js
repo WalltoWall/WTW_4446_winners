@@ -99,6 +99,7 @@ exports.createPages = async gatsbyContext => {
             name
             type
             award
+            special_award
             tags
             agency {
               id
@@ -160,8 +161,15 @@ exports.createPages = async gatsbyContext => {
     node => node.data.type === 'High School',
   )
 
+  // Remove Judge's and Best of Show awards since they are statically
+  // displayed.
   processPaginatedCollection({
-    collection: winnerNodes.map(normalizeWinnerNode),
+    collection: winnerNodes
+      .filter(
+        node =>
+          !/^(Judge's Award|Best of Show) - /.test(node.data.special_award),
+      )
+      .map(normalizeWinnerNode),
     name: 'winners',
     createNode,
     createNodeId,
