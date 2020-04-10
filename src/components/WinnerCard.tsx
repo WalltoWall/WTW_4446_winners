@@ -19,7 +19,9 @@ const variants = {
     padding: linearScale('1rem', '1.25rem', 'space'),
     subtitleFontSize: t.f['b-'],
     flexDirection: ['row', 'column'],
-    width: ['50%', '100%'],
+    textAlign: ['center', 'inherit'],
+    justifyItems: ['center', 'inherit'],
+    FlexItemWidth: ['50%', '100%'],
     awardIconVariant: {
       top: {
         display: ['block', 'none'],
@@ -28,6 +30,7 @@ const variants = {
         display: ['none', 'block'],
       },
     },
+    agentJustifySelf: ['center', 'start'],
   },
   featured: {
     imageAspectRatioX: 4,
@@ -35,12 +38,15 @@ const variants = {
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
     flexDirection: 'column',
-    width: '100%',
+    textAlign: 'inherit',
+    justifyItems: 'inherit',
+    FlexItemWidth: '100%',
     awardIconVariant: {
       bottom: {
         display: 'block',
       },
     },
+    agentJustifySelf: 'start',
   },
   featuredWide: {
     imageAspectRatioX: 8,
@@ -48,12 +54,16 @@ const variants = {
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
     flexDirection: 'column',
-    width: '100%',
+    textAlign: 'inherit',
+    justifyItems: 'inherit',
+    FlexItemWidth: '100%',
     awardIconVariant: {
       bottom: {
         display: 'block',
       },
     },
+
+    agentJustifySelf: 'start',
   },
 } as const
 
@@ -102,7 +112,7 @@ export const WinnerCard = ({
           '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
             color: t.c.Red40,
           },
-          width: variant.width,
+          width: variant.FlexItemWidth,
         })}
       >
         <VisuallyHidden>{title}</VisuallyHidden>
@@ -121,12 +131,12 @@ export const WinnerCard = ({
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
-          width: variant.width,
+          width: variant.FlexItemWidth,
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
           padding: variant.padding,
-          boxShadow: '0 -1px 0 rgba(0, 0, 0, 0.05)',
+          boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}
       >
@@ -136,6 +146,8 @@ export const WinnerCard = ({
             gap: linearScale('0.375rem', '0.5rem', 'space'),
             gridTemplateRows: ['auto', 'auto auto 1fr'],
             alignItems: ['center', 'start'],
+            justifyItems: variant.justifyItems,
+            textAlign: variant.textAlign,
           })}
         >
           {award && variant.awardIconVariant.top && (
@@ -151,7 +163,9 @@ export const WinnerCard = ({
           {subtitle && isSpecialAward ? (
             <Subheading
               forwardedAs="h4"
-              css={mq({ fontSize: variant.subtitleFontSize })}
+              css={mq({
+                fontSize: variant.subtitleFontSize,
+              })}
             >
               {subtitle}
             </Subheading>
@@ -177,7 +191,10 @@ export const WinnerCard = ({
             name={agencyName}
             href={agencyHref}
             avatarFluid={agencyAvatarFluid}
-            css={{ alignSelf: 'end', justifySelf: 'start' }}
+            css={mq({
+              alignSelf: 'end',
+              justifySelf: variant.agentJustifySelf,
+            })}
           />
         </div>
         {award && (
