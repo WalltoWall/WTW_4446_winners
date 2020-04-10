@@ -1,3 +1,5 @@
+export const IS_BROWSER = typeof window !== 'undefined'
+
 /**
  * Finds the first non-nullish value in an array starting from `idx` and
  * searching left.
