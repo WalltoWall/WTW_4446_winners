@@ -89,7 +89,7 @@ export const Header = (props: HeaderProps) => {
               })}
             >
               <VisuallyHidden>Pele Winner's Home</VisuallyHidden>
-              <SVG svg={AssetLogo2020SVG} x={1} y={1} css={{ width: '100%' }} />
+              <SVG svg={AssetLogo2020SVG} css={{ width: '100%' }} />
             </div>
             <Heading
               css={mq({
