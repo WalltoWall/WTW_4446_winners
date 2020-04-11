@@ -82,47 +82,6 @@ exports.createPages = async gatsbyContext => {
   }
 
   /***
-   * Create pages for each year and category type.
-   */
-
-  const winnerPageResult = await graphql(`
-    query {
-      allPaginatedCollectionPage(
-        filter: { collection: { name: { regex: "/^winners//" } } }
-      ) {
-        nodes {
-          collection {
-            name
-            id
-          }
-        }
-      }
-      allAirtableWinner {
-        distinct(field: data___year)
-      }
-    }
-  `)
-  const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
-  const years = winnerPageResult.data.allAirtableWinner.distinct
-
-  years.forEach(year => {
-    collections.forEach(c => {
-      const category = c.name.split('/')[1]
-      const categoryId = c.id
-
-      createPage({
-        path: `/winners/${year}/${category}`,
-        component: path.resolve(__dirname, 'src/templates/winners.tsx'),
-        context: {
-          category,
-          categoryId,
-          year,
-        },
-      })
-    })
-  })
-
-  /***
    * Create paginated collections for each category.
    */
 
@@ -276,6 +235,43 @@ exports.createPages = async gatsbyContext => {
   /***
    * Create pages.
    */
+
+  const winnerPageResult = await graphql(`
+    query {
+      allPaginatedCollectionPage(
+        filter: { collection: { name: { regex: "/^winners//" } } }
+      ) {
+        nodes {
+          collection {
+            name
+            id
+          }
+        }
+      }
+      allAirtableWinner {
+        distinct(field: data___year)
+      }
+    }
+  `)
+  const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
+  const years = winnerPageResult.data.allAirtableWinner.distinct
+
+  years.forEach(year => {
+    collections.forEach(c => {
+      const category = c.collection.name.split('/')[1]
+      const categoryId = c.collection.id
+
+      createPage({
+        path: `/winners/${year}/${slug(category.toLowerCase())}`,
+        component: path.resolve(__dirname, 'src/templates/winners.tsx'),
+        context: {
+          category,
+          categoryId,
+          year,
+        },
+      })
+    })
+  })
 
   for (let i = 0; i < winnerNodes.length; i++) {
     const node = winnerNodes[i]
