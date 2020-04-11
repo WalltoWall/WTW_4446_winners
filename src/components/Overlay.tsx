@@ -14,7 +14,7 @@ export const Overlay = ({ isActive = true, ...props }: OverlayProps) => (
       backgroundColor: t.c.Black,
       bottom: 0,
       left: 0,
-      opacity: isActive ? 0.5 : 0,
+      opacity: isActive ? 0.25 : 0,
       pointerEvents: isActive ? 'auto' : 'none',
       position: 'fixed',
       right: 0,
