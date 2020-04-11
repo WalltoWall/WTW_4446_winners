@@ -45,7 +45,7 @@ export const Header = (props: HeaderProps) => {
           image {
             localFiles {
               childCloudinaryAsset {
-                fluid(maxWidth: 128) {
+                fluid(maxWidth: 144) {
                   ...CloudinaryAssetFluid
                 }
               }
@@ -193,7 +193,7 @@ export const Header = (props: HeaderProps) => {
         <div
           css={mq({
             display: 'grid',
-            gap: '1.5rem',
+            gap: '1rem',
             backgroundColor: t.c.Gray95,
             padding: '1.5rem',
             fontSize: t.f['l+'],
@@ -227,6 +227,7 @@ export const Header = (props: HeaderProps) => {
             <NavItem href="/high-school/">High School</NavItem>
             <NavItem href="/college/">College</NavItem>
             <NavItem href="/about/">About</NavItem>
+            <NavItem href="/">How to enter</NavItem>
           </ul>
         </div>
 
