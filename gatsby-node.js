@@ -87,26 +87,35 @@ exports.createPages = async gatsbyContext => {
 
   const winnerPageResult = await graphql(`
     query {
+      allPaginatedCollectionPage(
+        filter: { collection: { name: { regex: "/^winners//" } } }
+      ) {
+        nodes {
+          collection {
+            name
+            id
+          }
+        }
+      }
       allAirtableWinner {
-        categoryIds: distinct(field: data___category___id)
-        categories: distinct(field: data___category___data___line_1)
-        years: distinct(field: data___year)
+        distinct(field: data___year)
       }
     }
   `)
-  const {
-    categoryIds,
-    categories,
-    years,
-  } = winnerPageResult.data.allAirtableWinner
+  const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
+  const years = winnerPageResult.data.allAirtableWinner.distinct
+
   years.forEach(year => {
-    categories.forEach((category, idx) => {
+    collections.forEach(c => {
+      const category = c.name.split('/')[1]
+      const categoryId = c.id
+
       createPage({
         path: `/winners/${year}/${category}`,
         component: path.resolve(__dirname, 'src/templates/winners.tsx'),
         context: {
           category,
-          categoryId: categoryIds[idx],
+          categoryId,
           year,
         },
       })
