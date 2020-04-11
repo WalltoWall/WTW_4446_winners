@@ -163,6 +163,7 @@ export const Header = (props: HeaderProps) => {
                 <FormSearchInput
                   ref={searchInputRef}
                   name="query"
+                  aria-label="Search"
                   css={mq({ width: [null, '8.5rem', '14rem'] })}
                 />
               </form>
@@ -212,6 +213,7 @@ export const Header = (props: HeaderProps) => {
           <form onSubmit={handleSearchSubmit}>
             <FormSearchInput
               name="query"
+              aria-label="Search"
               css={{ textAlign: 'center', fontSize: 'inherit' }}
             />
           </form>
