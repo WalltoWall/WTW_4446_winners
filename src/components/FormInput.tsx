@@ -18,10 +18,10 @@ export const FormInput = React.forwardRef((props: FormInputProps, ref) => (
       borderWidth: '1px',
       fontSize: t.f['b-'],
       lineHeight: t.lh.Title,
-      paddingBottom: linearScale('0.6875rem', '0.75rem', 'space'),
       paddingLeft: linearScale('0.75rem', '1rem', 'space'),
       paddingRight: linearScale('0.75rem', '1rem', 'space'),
-      paddingTop: linearScale('0.6875rem', '0.75rem', 'space'),
+      paddingBottom: '0.6875rem',
+      paddingTop: '0.6875rem',
       transitionProperty: 'border-color, box-shadow',
       width: '100%',
       '&:focus': {

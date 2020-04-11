@@ -14,7 +14,7 @@ export const HeaderDropdown = ({ children, ...props }: HeaderDropdownProps) => {
       {...props}
       css={mq({
         backgroundColor: t.c.Gray95,
-        paddingLeft: linearScale('5rem', '6rem'),
+        paddingLeft: linearScale('4rem', '6.5rem'),
         paddingBottom: '3rem',
         paddingTop: '2rem',
       })}
