@@ -1,6 +1,6 @@
 import { useState, useMemo, useLayoutEffect } from 'react'
 
-const IS_BROWSER = typeof window !== 'undefined'
+import { IS_BROWSER } from '../utils'
 
 type UseURLParamStateOptions = {
   updateType?: 'replace' | 'push'
@@ -14,12 +14,12 @@ export const useURLParamState = (
   const { updateType = 'replace' } = options
 
   const [state, setState] = useState(() => {
-    if (!IS_BROWSER) return initialValue
+    if (!IS_BROWSER) return initialValue as string
 
     const params = new URLSearchParams(location.search)
     const paramValue = params.get(key)
 
-    return paramValue ?? initialValue
+    return paramValue ?? (initialValue as string)
   })
 
   useLayoutEffect(() => {
