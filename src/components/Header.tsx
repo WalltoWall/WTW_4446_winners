@@ -13,6 +13,7 @@ import { FormSearchInput } from './FormSearchInput'
 import { Overlay } from './Overlay'
 import { Icon } from './Icon'
 import { FormInput } from './FormInput'
+import { HeaderDropdown, HeaderDropdownSection } from './HeaderDropdown'
 
 type NavItemsProps = ViewProps & {
   href: AnchorProps['href']
@@ -31,9 +32,13 @@ export type HeaderProps = ViewProps
 export const Header = (props: HeaderProps) => {
   const searchInputRef = useRef<HTMLInputElement>()
 
-  const [isMobileOpen, setIsMenuOpen] = useState(false)
-  const toggleMobile = useCallback(() => setIsMenuOpen(state => !state), [])
-  const closeMobile = useCallback(() => setIsMenuOpen(false), [])
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const toggleMobile = useCallback(() => setIsMobileOpen(state => !state), [])
+  const closeMobile = useCallback(() => setIsMobileOpen(false), [])
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const isOverlayVisible = isDropdownOpen || isMobileOpen
 
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const toggleSearch = useCallback(() => {
@@ -149,7 +154,9 @@ export const Header = (props: HeaderProps) => {
                   position: 'absolute',
                   top: '50%',
                   transform: 'translateY(-45%)',
+                  transitionProperty: 'color',
                   zIndex: 2,
+                  '&:hover, &:focus': { color: t.c.Red40 },
                 })}
               >
                 <Icon
@@ -157,20 +164,22 @@ export const Header = (props: HeaderProps) => {
                   css={mq({ width: linearScale('0.875rem', '1.125rem') })}
                 />
               </button>
-              <FormInput
-                ref={searchInputRef}
-                name="search"
-                type="search"
-                placeholder="Search…"
-                css={mq({
-                  opacity: isSearchOpen ? 1 : 0,
-                  transitionProperty: 'opacity',
-                  transitionDuration: t.td.Fast,
-                  paddingLeft: linearScale('2rem', '2.5rem', 'space'),
-                  pointerEvents: isSearchOpen ? 'auto' : 'none',
-                  zIndex: 1,
-                })}
-              />
+              <form onSubmit={handleSearchSubmit}>
+                <FormInput
+                  ref={searchInputRef}
+                  name="query"
+                  type="search"
+                  placeholder="Search…"
+                  css={mq({
+                    opacity: isSearchOpen ? 1 : 0,
+                    transitionProperty: 'opacity',
+                    transitionDuration: t.td.Fast,
+                    paddingLeft: linearScale('2rem', '2.5rem', 'space'),
+                    pointerEvents: isSearchOpen ? 'auto' : 'none',
+                    zIndex: 1,
+                  })}
+                />
+              </form>
             </div>
           </div>
           <button
@@ -234,9 +243,79 @@ export const Header = (props: HeaderProps) => {
             <NavItem href="/about/">About</NavItem>
           </ul>
         </div>
+
+        {/* Dropdown menu */}
+        <HeaderDropdown
+          css={{
+            display: 'none',
+            boxShadow: isDropdownOpen
+              ? '0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15)'
+              : 'none',
+            position: 'relative',
+            zIndex: t.z.HeaderMobileMenu,
+          }}
+        >
+          <HeaderDropdownSection
+            heading="See all winners"
+            headingHref="/winners/"
+          >
+            <ul
+              css={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, auto)',
+                rowGap: '0.875rem',
+                columnGap: '3.5rem',
+              }}
+            >
+              <li>
+                <Anchor href="/">Advertising Industry Self-Promotion</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">Elements of Advertising</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">Film, Video & Sound</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">Integrated Advertising Campaign</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">Integrated Branded Content Campaign</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">Out-of-Home & Ambient Media</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">Radio Advertising</Anchor>
+              </li>
+            </ul>
+          </HeaderDropdownSection>
+          <HeaderDropdownSection heading="Past years" headingHref="/winners/">
+            <ul
+              css={{
+                display: 'grid',
+                rowGap: '0.875rem',
+                columnGap: '3.5rem',
+              }}
+            >
+              <li>
+                <Anchor href="/">2019</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">2018</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">2017</Anchor>
+              </li>
+              <li>
+                <Anchor href="/">2016</Anchor>
+              </li>
+            </ul>
+          </HeaderDropdownSection>
+        </HeaderDropdown>
       </View>
       <Overlay
-        isActive={isMobileOpen}
+        isActive={isOverlayVisible}
         onClick={closeMobile}
         css={{ zIndex: t.z.HeaderOverlay }}
       />
