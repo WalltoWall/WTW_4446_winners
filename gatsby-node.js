@@ -82,6 +82,38 @@ exports.createPages = async gatsbyContext => {
   }
 
   /***
+   * Create pages for each year and category type.
+   */
+
+  const winnerPageResult = await graphql(`
+    query {
+      allAirtableWinner {
+        categoryIds: distinct(field: data___category___id)
+        categories: distinct(field: data___category___data___line_1)
+        years: distinct(field: data___year)
+      }
+    }
+  `)
+  const {
+    categoryIds,
+    categories,
+    years,
+  } = winnerPageResult.data.allAirtableWinner
+  years.forEach(year => {
+    categories.forEach((category, idx) => {
+      createPage({
+        path: `/winners/${year}/${category}`,
+        component: path.resolve(__dirname, 'src/templates/winners.tsx'),
+        context: {
+          category,
+          categoryId: categoryIds[idx],
+          year,
+        },
+      })
+    })
+  })
+
+  /***
    * Create paginated collections for each category.
    */
 

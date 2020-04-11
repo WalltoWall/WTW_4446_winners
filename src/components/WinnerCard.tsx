@@ -18,18 +18,52 @@ const variants = {
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.25rem', 'space'),
     subtitleFontSize: t.f['b-'],
+    flexDirection: ['row', 'column'],
+    textAlign: ['center', 'inherit'],
+    justifyItems: ['center', 'inherit'],
+    FlexItemWidth: ['50%', '100%'],
+    awardIconVariant: {
+      top: {
+        display: ['block', 'none'],
+      },
+      bottom: {
+        display: ['none', 'block'],
+      },
+    },
+    agentJustifySelf: ['center', 'start'],
   },
   featured: {
     imageAspectRatioX: 4,
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
+    flexDirection: 'column',
+    textAlign: 'inherit',
+    justifyItems: 'inherit',
+    FlexItemWidth: '100%',
+    awardIconVariant: {
+      bottom: {
+        display: 'block',
+      },
+    },
+    agentJustifySelf: 'start',
   },
   featuredWide: {
     imageAspectRatioX: 8,
     imageAspectRatioY: 5,
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
+    flexDirection: 'column',
+    textAlign: 'inherit',
+    justifyItems: 'inherit',
+    FlexItemWidth: '100%',
+    awardIconVariant: {
+      bottom: {
+        display: 'block',
+      },
+    },
+
+    agentJustifySelf: 'start',
   },
 } as const
 
@@ -64,21 +98,22 @@ export const WinnerCard = ({
   return (
     <View
       {...props}
-      css={{
+      css={mq({
         backgroundColor: t.c.White,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: variant.flexDirection,
         width: '100%',
-      }}
+      })}
     >
       <Link
         href={href}
         tabIndex={-1}
-        css={{
+        css={mq({
           '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
             color: t.c.Red40,
           },
-        }}
+          width: variant.FlexItemWidth,
+        })}
       >
         <VisuallyHidden>{title}</VisuallyHidden>
         <AspectRatio
@@ -96,11 +131,12 @@ export const WinnerCard = ({
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
+          width: variant.FlexItemWidth,
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
           padding: variant.padding,
-          boxShadow: '0 -1px 0 rgba(0, 0, 0, 0.05)',
+          boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}
       >
@@ -108,14 +144,28 @@ export const WinnerCard = ({
           css={mq({
             display: 'grid',
             gap: linearScale('0.375rem', '0.5rem', 'space'),
-            gridTemplateRows: 'auto auto 1fr',
-            alignItems: 'start',
+            gridTemplateRows: ['auto', 'auto auto 1fr'],
+            alignItems: ['center', 'start'],
+            justifyItems: variant.justifyItems,
+            textAlign: variant.textAlign,
           })}
         >
+          {award && variant.awardIconVariant.top && (
+            <AwardIcon
+              type={award}
+              css={mq({
+                alignSelf: 'end',
+                width: ['0.8125rem', '1.25rem'],
+                display: variant.awardIconVariant.top.display,
+              })}
+            />
+          )}
           {subtitle && isSpecialAward ? (
             <Subheading
               forwardedAs="h4"
-              css={mq({ fontSize: variant.subtitleFontSize })}
+              css={mq({
+                fontSize: variant.subtitleFontSize,
+              })}
             >
               {subtitle}
             </Subheading>
@@ -141,7 +191,10 @@ export const WinnerCard = ({
             name={agencyName}
             href={agencyHref}
             avatarFluid={agencyAvatarFluid}
-            css={{ alignSelf: 'end', justifySelf: 'start' }}
+            css={mq({
+              alignSelf: 'end',
+              justifySelf: variant.agentJustifySelf,
+            })}
           />
         </div>
         {award && (
@@ -150,6 +203,7 @@ export const WinnerCard = ({
             css={mq({
               alignSelf: 'end',
               width: ['0.8125rem', '1.25rem'],
+              display: variant.awardIconVariant.bottom.display,
             })}
           />
         )}
