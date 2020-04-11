@@ -11,8 +11,6 @@ import { Anchor, AnchorProps } from './Anchor'
 import { HamburgerIcon } from './HamburgerIcon'
 import { FormSearchInput } from './FormSearchInput'
 import { Overlay } from './Overlay'
-import { Icon } from './Icon'
-import { FormInput } from './FormInput'
 import { HeaderDropdown, HeaderDropdownSection } from './HeaderDropdown'
 
 type NavItemsProps = ViewProps & {
@@ -39,15 +37,6 @@ export const Header = (props: HeaderProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const isOverlayVisible = isDropdownOpen || isMobileOpen
-
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const toggleSearch = useCallback(() => {
-    setIsSearchOpen(state => !state)
-
-    // Opposite since current state is before the setIsSearchOpen call.
-    if (!isSearchOpen) searchInputRef.current?.focus?.()
-    else searchInputRef.current?.blur?.()
-  }, [isSearchOpen])
 
   const logoImageData: LogoImageQuery = useStaticQuery(graphql`
     query LogoImage {
@@ -111,24 +100,29 @@ export const Header = (props: HeaderProps) => {
           <Link href="/">
             <div
               css={mq({
-                backgroundColor: t.c.Gray10,
-                height: linearScale('3rem', '4rem'),
-                width: linearScale('3rem', '4rem'),
+                backgroundColor: t.c.Gray70,
+                height: linearScale('3rem', '4.5rem'),
+                width: linearScale('3rem', '4.5rem'),
               })}
             >
               {logoImageFluid && (
-                <GatsbyImage fluid={logoImageFluid} alt="Pele Awards" />
+                <GatsbyImage
+                  fluid={logoImageFluid}
+                  alt="Pele Awards"
+                  css={{ width: '100%', height: '100%' }}
+                />
               )}
             </div>
           </Link>
           <div
             css={mq({
               display: ['none', 'grid'],
-              gap: '1.5rem',
               gridAutoFlow: 'column',
-              justifyContent: 'start',
-              paddingLeft: '2rem',
-              paddingRight: '2rem',
+              alignItems: 'center',
+              gap: linearScale('1rem', '2rem'),
+              paddingLeft: linearScale('0.75rem', '2rem'),
+              paddingRight: '1rem',
+              gridTemplateColumns: '1fr auto',
             })}
           >
             <ul
@@ -136,7 +130,7 @@ export const Header = (props: HeaderProps) => {
                 display: 'grid',
                 gridAutoFlow: 'column',
                 justifyContent: 'start',
-                gap: '2rem',
+                gap: linearScale('1rem', '2rem'),
                 alignItems: 'center',
               })}
             >
@@ -146,38 +140,30 @@ export const Header = (props: HeaderProps) => {
               <NavItem href="/college/">College</NavItem>
               <NavItem href="/about/">About</NavItem>
             </ul>
-            <div css={{ position: 'relative' }}>
-              <button
-                onClick={toggleSearch}
+            <div
+              css={mq({
+                display: 'grid',
+                gap: linearScale('0.75rem', '1.5rem'),
+                gridAutoFlow: 'column',
+                alignItems: 'center',
+              })}
+            >
+              <ul
                 css={mq({
-                  left: linearScale('0.75rem', '1rem', 'space'),
-                  position: 'absolute',
-                  top: '50%',
-                  transform: 'translateY(-45%)',
-                  transitionProperty: 'color',
-                  zIndex: 2,
-                  '&:hover, &:focus': { color: t.c.Red40 },
+                  display: 'grid',
+                  gridAutoFlow: 'column',
+                  justifyContent: 'start',
+                  gap: linearScale('1rem', '2rem'),
+                  alignItems: 'center',
                 })}
               >
-                <Icon
-                  name="search"
-                  css={mq({ width: linearScale('0.875rem', '1.125rem') })}
-                />
-              </button>
+                <NavItem href="/">How to enter</NavItem>
+              </ul>
               <form onSubmit={handleSearchSubmit}>
-                <FormInput
+                <FormSearchInput
                   ref={searchInputRef}
                   name="query"
-                  type="search"
-                  placeholder="Search…"
-                  css={mq({
-                    opacity: isSearchOpen ? 1 : 0,
-                    transitionProperty: 'opacity',
-                    transitionDuration: t.td.Fast,
-                    paddingLeft: linearScale('2rem', '2.5rem', 'space'),
-                    pointerEvents: isSearchOpen ? 'auto' : 'none',
-                    zIndex: 1,
-                  })}
+                  css={mq({ width: [null, '8.5rem', '14rem'] })}
                 />
               </form>
             </div>
