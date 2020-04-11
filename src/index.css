@@ -25,14 +25,15 @@ select {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   background: transparent;
-  border: 0;
   border-radius: 0;
+  border: 0;
   color: inherit;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   outline: none;
   padding: 0;
+  text-align: inherit;
 }
 
 button {
