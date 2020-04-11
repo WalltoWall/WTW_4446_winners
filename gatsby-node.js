@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
+const kebabCase = require('lodash.kebabcase')
 
 const {
   createPaginatedCollectionNodes,
@@ -262,7 +263,7 @@ exports.createPages = async gatsbyContext => {
       const categoryId = c.collection.id
 
       createPage({
-        path: `/winners/${year}/${slug(category.toLowerCase())}`,
+        path: `/winners/${year}/${kebabCase(category.toLowerCase())}`,
         component: path.resolve(__dirname, 'src/templates/winners.tsx'),
         context: {
           category,
