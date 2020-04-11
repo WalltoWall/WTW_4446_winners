@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { mq, linearScale } from '../theme'
+import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 import { FormInput } from './FormInput'
 import { Icon } from './Icon'
@@ -26,7 +26,11 @@ export const FormSearchInput = React.forwardRef(
     }: FormSearchInputProps,
     ref,
   ) => (
-    <View ref={ref} {...props} css={{ position: 'relative' }}>
+    <View
+      ref={ref}
+      {...props}
+      css={mq({ position: 'relative', fontSize: t.f['b-'] })}
+    >
       <FormInput
         name={name}
         ref={innerRef}
@@ -35,6 +39,7 @@ export const FormSearchInput = React.forwardRef(
         defaultValue={defaultValue}
         css={mq({
           paddingLeft: linearScale('2rem', '2.5rem', 'space'),
+          fontSize: 'inherit',
         })}
       />
       <Icon

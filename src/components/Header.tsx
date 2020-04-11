@@ -1,35 +1,26 @@
 import React, { useState, useCallback, useRef } from 'react'
-import { navigate } from 'gatsby'
-import VisuallyHidden from '@reach/visually-hidden'
-import { negateScale } from 'styled-system-scale'
+import { navigate, graphql, useStaticQuery } from 'gatsby'
+import GatsbyImage from 'gatsby-image'
 
-import { navigation } from '../constants'
+import { LogoImageQuery } from '../graphqlTypes'
+
 import { t, mq, linearScale } from '../theme'
-import { getSearchQuery } from '../utils'
-
 import { View, ViewProps } from './View'
-import { Heading } from './Heading'
-import { BoundedBox } from './BoundedBox'
-import { HamburgerIcon } from './HamburgerIcon'
+import { Link } from './Link'
 import { Anchor, AnchorProps } from './Anchor'
+import { HamburgerIcon } from './HamburgerIcon'
+import { FormSearchInput } from './FormSearchInput'
 import { Overlay } from './Overlay'
 import { Icon } from './Icon'
-import { SVG } from './SVG'
 import { FormInput } from './FormInput'
-import { ReactComponent as AssetLogo2020SVG } from '../assets/logo-2020.svg'
 
-type NavItemProps = ViewProps & {
+type NavItemsProps = ViewProps & {
   href: AnchorProps['href']
-  target?: AnchorProps['target']
 }
 
-const NavItem = ({ href, target, children, ...props }: NavItemProps) => (
-  <View as="li" {...props} css={mq({ textAlign: 'center' })}>
-    <Anchor
-      href={href}
-      target={target}
-      css={mq({ fontSize: linearScale('0.875rem', '1.125rem') })}
-    >
+const NavItem = ({ href, children, ...props }: NavItemsProps) => (
+  <View as="li" {...props}>
+    <Anchor href={href} css={{ fontWeight: t.fw.Medium }}>
       {children}
     </Anchor>
   </View>
@@ -40,11 +31,11 @@ export type HeaderProps = ViewProps
 export const Header = (props: HeaderProps) => {
   const searchInputRef = useRef<HTMLInputElement>()
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const toggleMenu = useCallback(() => setIsMenuOpen(state => !state), [])
-  const closeMenu = useCallback(() => setIsMenuOpen(false), [])
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isMobileOpen, setIsMenuOpen] = useState(false)
+  const toggleMobile = useCallback(() => setIsMenuOpen(state => !state), [])
+  const closeMobile = useCallback(() => setIsMenuOpen(false), [])
 
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const toggleSearch = useCallback(() => {
     setIsSearchOpen(state => !state)
 
@@ -53,198 +44,202 @@ export const Header = (props: HeaderProps) => {
     else searchInputRef.current?.blur?.()
   }, [isSearchOpen])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const logoImageData: LogoImageQuery = useStaticQuery(graphql`
+    query LogoImage {
+      airtableImageField(data: { uid: { eq: "Header Logo" } }) {
+        data {
+          image {
+            localFiles {
+              childCloudinaryAsset {
+                fluid(maxWidth: 128) {
+                  ...CloudinaryAssetFluid
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+  const logoImageFluid =
+    logoImageData.airtableImageField?.data?.image?.localFiles?.[0]
+      ?.childCloudinaryAsset?.fluid
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const target = e.target as typeof e.target & {
-      search: { value: string }
+      query: { value: string }
     }
-    const params = new URLSearchParams(`query=${target.search.value}`)
+    const params = new URLSearchParams()
+    params.set('query', target.query.value.trim())
     navigate(`/search/?${params.toString()}`)
   }
 
   return (
-    <View
-      as="header"
-      {...props}
-      css={{ position: 'relative', zIndex: t.z.Header }}
-    >
-      <BoundedBox
-        css={mq({
-          backgroundColor: t.c.White,
-          boxShadow: `0 1px 0 rgba(0, 0, 0, ${isMenuOpen ? 0 : 0.1})`,
-          paddingBottom: linearScale('0.75rem', '1.25rem'),
-          paddingTop: linearScale('0.75rem', '1.25rem'),
-          paddingLeft: linearScale('1rem', '2rem'),
-          paddingRight: linearScale('1rem', '2rem'),
-          position: 'relative',
-          zIndex: t.z.HeaderMobileBar,
-          transitionProperty: 'boxShadow',
-        })}
+    <>
+      <div css={mq({ height: linearScale('3rem', '4rem') })} />
+      <View
+        as="header"
+        {...props}
+        css={{
+          position: 'fixed',
+          zIndex: t.z.Header,
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
       >
-        <div
+        <nav
           css={mq({
-            display: 'grid',
-            gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
-            gap: linearScale('1rem', '2rem'),
+            backgroundColor: t.c.White,
+            boxShadow: `0 1px 0 rgba(0, 0, 0, ${isMobileOpen ? 0 : 0.1})`,
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridTemplateColumns: [null, 'auto 1fr'],
+            justifyContent: ['space-between', 'start'],
+            position: 'relative',
+            zIndex: t.z.HeaderBar,
           })}
         >
-          <Anchor
-            href="/"
-            css={{
-              display: 'grid',
-              gap: t.S[3],
-              gridAutoFlow: 'column',
-              justifySelf: 'start',
-              alignItems: 'center',
-            }}
-          >
+          <Link href="/">
             <div
               css={mq({
-                borderRadius: '50%',
-                marginLeft: '-0.125rem',
-                overflow: 'hidden',
-                height: linearScale('2rem', '3.625rem'),
-                width: linearScale('2rem', '3.625rem'),
+                backgroundColor: t.c.Gray10,
+                height: linearScale('3rem', '4rem'),
+                width: linearScale('3rem', '4rem'),
               })}
             >
-              <VisuallyHidden>Pele Winner's Home</VisuallyHidden>
-              <SVG svg={AssetLogo2020SVG} css={{ width: '100%' }} />
+              {logoImageFluid && (
+                <GatsbyImage fluid={logoImageFluid} alt="Pele Awards" />
+              )}
             </div>
-            <Heading
-              css={mq({
-                fontSize: t.f.m,
-                fontWeight: t.fw.Medium,
-                display: ['none', null, null, 'block'],
-              })}
-            >
-              Pele Awards Winners
-            </Heading>
-          </Anchor>
-          <Heading
-            css={mq({
-              fontSize: t.f.b,
-              textAlign: 'center',
-              display: [null, 'none'],
-            })}
-          >
-            <Anchor href="/">Pele Awards Winners</Anchor>
-          </Heading>
-          <ul
+          </Link>
+          <div
             css={mq({
               display: ['none', 'grid'],
-              gap: '2.5rem',
+              gap: '1.5rem',
               gridAutoFlow: 'column',
+              justifyContent: 'start',
+              paddingLeft: '2rem',
+              paddingRight: '2rem',
             })}
           >
-            {navigation.map(item => (
-              <NavItem key={item.name} href={item.href}>
-                {item.name}
-              </NavItem>
-            ))}
-          </ul>
-          <div css={{ justifySelf: 'end' }}>
-            <button
-              onClick={toggleMenu}
+            <ul
               css={mq({
-                width: '1.5rem',
-                height: '0.9rem',
-                display: [null, null, 'none'],
-              })}
-            >
-              <VisuallyHidden>Mobile menu toggle</VisuallyHidden>
-              <HamburgerIcon isOpen={isMenuOpen} css={{ height: '100%' }} />
-            </button>
-
-            <div
-              css={mq({
-                position: 'relative',
-                display: ['none', null, 'grid'],
-                gap: '2.125rem',
+                display: 'grid',
                 gridAutoFlow: 'column',
+                justifyContent: 'start',
+                gap: '2rem',
                 alignItems: 'center',
-                justifyContent: 'end',
               })}
             >
+              <NavItem href="/winners/">Winners</NavItem>
+              <NavItem href="/ad-people/">Ad People</NavItem>
+              <NavItem href="/high-school/">High School</NavItem>
+              <NavItem href="/college/">College</NavItem>
+              <NavItem href="/about/">About</NavItem>
+            </ul>
+            <div css={{ position: 'relative' }}>
               <button
                 onClick={toggleSearch}
-                css={{
-                  // Search input zIndex = 1
+                css={mq({
+                  left: linearScale('0.75rem', '1rem', 'space'),
+                  position: 'absolute',
+                  top: '50%',
+                  transform: 'translateY(-45%)',
                   zIndex: 2,
-                  position: 'relative',
-                }}
+                })}
               >
-                <VisuallyHidden>Search field toggle</VisuallyHidden>
                 <Icon
                   name="search"
                   css={mq({ width: linearScale('0.875rem', '1.125rem') })}
                 />
               </button>
-
-              <form
-                onSubmit={handleSubmit}
+              <FormInput
+                ref={searchInputRef}
+                name="search"
+                type="search"
+                placeholder="Search…"
                 css={mq({
-                  position: 'absolute',
-                  zIndex: 1,
-                  top: 0,
-                  left: negateScale(linearScale('0.75rem', '1rem', 'space')),
-                  right: 0,
-                  bottom: 0,
-                  background: t.colors.White,
-                  transition: 'opacity .2s linear',
                   opacity: isSearchOpen ? 1 : 0,
+                  transitionProperty: 'opacity',
                   transitionDuration: t.td.Fast,
+                  paddingLeft: linearScale('2rem', '2.5rem', 'space'),
+                  pointerEvents: isSearchOpen ? 'auto' : 'none',
+                  zIndex: 1,
                 })}
-              >
-                <FormInput
-                  ref={searchInputRef}
-                  defaultValue={getSearchQuery()}
-                  name="search"
-                  type="search"
-                  aria-label="Search"
-                  aria-hidden={!isSearchOpen}
-                  placeholder="Search all winners…"
-                  css={mq({
-                    height: '100%',
-                    paddingLeft: linearScale('2rem', '2.5rem', 'space'),
-                  })}
-                />
-              </form>
+              />
             </div>
           </div>
-        </div>
-      </BoundedBox>
+          <button
+            onClick={toggleMobile}
+            css={mq({
+              color: t.c.Gray60,
+              display: [null, 'none'],
+              height: '100%',
+              paddingLeft: '1rem',
+              paddingRight: '1rem',
+              transitionProperty: 'color',
+              '&:hover, &:focus': {
+                color: t.c.Gray10,
+              },
+            })}
+          >
+            <HamburgerIcon
+              isOpen={isMobileOpen}
+              css={{ width: '1.25rem', height: '0.75rem' }}
+            />
+          </button>
+        </nav>
 
-      {/* Mobile Nav */}
-      <View css={mq({ display: [null, null, 'none'] })}>
-        <BoundedBox
-          forwardedAs="nav"
-          css={{
-            backgroundColor: t.c.White,
-            boxShadow: `0 3px 6px rgba(0, 0, 0, 0.25)`,
-            left: 0,
+        {/* Mobile menu */}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: '1.5rem',
+            backgroundColor: t.c.Gray95,
+            padding: '1.5rem',
+            fontSize: t.f['l+'],
             position: 'absolute',
+            left: 0,
             right: 0,
-            transform: `translateY(${isMenuOpen ? '0%' : '-120%'})`,
+            boxShadow: isMobileOpen
+              ? '0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15)'
+              : 'none',
+            transform: `translateY(${isMobileOpen ? '0%' : '-100%'})`,
             transitionProperty: 'transform',
             zIndex: t.z.HeaderMobileMenu,
-          }}
+            justifyContent: 'center',
+          })}
         >
-          <View as="ul" css={{ display: 'grid', gap: '0.75rem' }}>
-            {navigation.map(item => (
-              <NavItem key={item.name} href={item.href}>
-                {item.name}
-              </NavItem>
-            ))}
-          </View>
-        </BoundedBox>
-        <Overlay
-          isActive={isMenuOpen}
-          onClick={closeMenu}
-          css={{ zIndex: t.z.HeaderMobileBackdrop }}
-        />
+          <form onSubmit={handleSearchSubmit}>
+            <FormSearchInput
+              name="query"
+              css={{ textAlign: 'center', fontSize: 'inherit' }}
+            />
+          </form>
+          <ul
+            css={mq({
+              display: 'grid',
+              gap: '1rem',
+              textAlign: 'center',
+            })}
+          >
+            <NavItem href="/winners/">Winners</NavItem>
+            <NavItem href="/ad-people/">Ad People</NavItem>
+            <NavItem href="/high-school/">High School</NavItem>
+            <NavItem href="/college/">College</NavItem>
+            <NavItem href="/about/">About</NavItem>
+          </ul>
+        </div>
       </View>
-    </View>
+      <Overlay
+        isActive={isMobileOpen}
+        onClick={closeMobile}
+        css={{ zIndex: t.z.HeaderOverlay }}
+      />
+    </>
   )
 }

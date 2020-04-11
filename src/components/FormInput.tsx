@@ -11,8 +11,9 @@ export const FormInput = React.forwardRef((props: FormInputProps, ref) => (
     ref={ref}
     {...props}
     css={mq({
+      backgroundColor: t.c.White,
       borderColor: t.c.Gray90,
-      borderRadius: '3px',
+      borderRadius: '4px',
       borderStyle: 'solid',
       borderWidth: '1px',
       fontSize: t.f['b-'],

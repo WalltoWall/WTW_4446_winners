@@ -53,10 +53,10 @@ export enum LineHeight {
 
 export enum ZIndex {
   Base = 0,
-  Header = 1,
-  HeaderMobileBackdrop = 0,
+  Header = 2,
+  HeaderBar = 2,
+  HeaderOverlay = 1,
   HeaderMobileMenu = 1,
-  HeaderMobileBar = 2,
 }
 
 export enum TransitionDuration {
@@ -90,6 +90,7 @@ const baseTheme = {
     'm-': linearScale('0.75rem', '1.125rem', { count }),
     m: linearScale('0.875rem', '1.125rem', { count }),
     l: linearScale('0.8125rem', '1.25rem', { count }),
+    'l+': linearScale('1rem', '1.25rem', { count }),
     xl: linearScale('1.125rem', '2rem', { count }),
   },
   fontWeights: FontWeight,
