@@ -8,11 +8,13 @@ import { BoundedBox } from '../components/BoundedBox'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 
 type LoadMoreWinnersProps = {
+  children?: React.ReactNode
   firstPageId: string
   initialPage: WinnersTemplateQuery['paginatedCollectionPage']
 }
 
 export const LoadMoreWinners = ({
+  children,
   firstPageId,
   initialPage,
 }: LoadMoreWinnersProps) => {
@@ -21,6 +23,8 @@ export const LoadMoreWinners = ({
       <div
         css={mq({ display: 'grid', gap: linearScale('0.8125rem', '1.5rem') })}
       >
+        {children}
+
         <PaginatedWinners
           firstPageId={firstPageId}
           initialPage={initialPage as Partial<ExpandedPageNode>}
