@@ -12,6 +12,8 @@ import { Heading } from '../components/Heading'
 import { FormSelect } from '../components/FormSelect'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { BoundedBox } from '../components/BoundedBox'
+import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
+import { LoadMoreWinners } from '../components/LoadMoreWinners'
 
 export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
@@ -25,9 +27,12 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
   const [year, setYear] = useState('2020')
 
   const firstPages = data.allPaginatedCollectionPage.nodes
+
   const initialPage: WinnersTemplateQuery['paginatedCollectionPage'] =
     data?.paginatedCollectionPage
   const firstPageId = initialPage!.id
+  const initialCollection = firstPages.find(fp => fp.id === firstPageId)
+    ?.collection
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -102,7 +107,16 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
         </div>
       </BoundedBox>
 
-      {/* {TODO: Paginated winners} */}
+      {query.length >= 1 ? (
+        <PaginatedSearchResults
+          query={query}
+          filterOptions={{
+            category: trimCollectionNamespace(initialCollection?.name),
+          }}
+        />
+      ) : (
+        <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage} />
+      )}
     </Layout>
   )
 }
