@@ -272,6 +272,14 @@ exports.createPages = async gatsbyContext => {
         },
       })
     })
+
+    createPage({
+      path: `/winners/${year}`,
+      component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+      context: {
+        year,
+      },
+    })
   })
 
   for (let i = 0; i < winnerNodes.length; i++) {
