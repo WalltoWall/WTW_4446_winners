@@ -6171,25 +6171,6 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFie
       )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
   )> };
 
-export type WinnersPageQueryVariables = {};
-
-
-export type WinnersPageQuery = { paginatedCollectionPage?: Maybe<(
-    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
-    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'id' | 'nodeCount'> }
-  )>, allPaginatedCollectionPage: { nodes: Array<(
-      Pick<PaginatedCollectionPage, 'id'>
-      & { collection: Pick<PaginatedCollection, 'id' | 'name'> }
-    )> }, bestOfWinners: { nodes: Array<SpecialAwardWinnerFragment> }, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> } };
-
-export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<(
-    Pick<AirtableWinnerData, 'name' | 'award' | 'special_award'>
-    & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
-        Pick<AirtableAgencyData, 'name'>
-        & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-      )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-  )> };
-
 export type AgencyTemplateQueryVariables = {
   recordId: Scalars['String'];
   paginatedCollectionName: Scalars['String'];
