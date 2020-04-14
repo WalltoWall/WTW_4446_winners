@@ -4,14 +4,12 @@ import kebabCase from 'lodash.kebabcase'
 
 import { t, mq, linearScale } from '../theme'
 import { WinnersTemplateQuery } from '../graphqlTypes'
+import { trimCollectionNamespace } from '../utils'
 
 import { Heading } from '../components/Heading'
 import { FormSelect } from '../components/FormSelect'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { BoundedBox } from '../components/BoundedBox'
-
-const trimCollectionNamespace = (collectionName: string | undefined) =>
-  collectionName?.split('/')[1]
 
 export type WinnerFiltersProps = {
   years: string[]
@@ -40,7 +38,10 @@ export const WinnerFilters = ({
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const pageId = e.target.value
     const page = firstPages.find(fp => fp.id === pageId)
-    const categorySlug = kebabCase(page?.collection.name.split('/')[1])
+    const categorySlug = kebabCase(page?.collection.name.split('/')[1]).replace(
+      'advertising',
+      'ad',
+    )
 
     navigate(`/winners/${year}/${categorySlug}`)
   }

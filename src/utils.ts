@@ -1,5 +1,8 @@
 export const IS_BROWSER = typeof window !== 'undefined'
 
+export const trimCollectionNamespace = (collectionName: string | undefined) =>
+  collectionName?.split('/')[1]
+
 /**
  * Finds the first non-nullish value in an array starting from `idx` and
  * searching left.
