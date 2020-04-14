@@ -10,19 +10,19 @@ const variants = {
     fontSize: t.f['b-'],
     gap: linearScale('0.25rem', '0.4rem', 'space'),
     avatarVariant: 'tiny',
-    AvatarDisplay: 'block',
+    avatarDisplay: 'block',
   },
   base: {
     fontSize: t.f['b'],
     gap: linearScale('0.25rem', '0.4rem', 'space'),
     avatarVariant: 'small',
-    AvatarDisplay: 'block',
+    avatarDisplay: 'block',
   },
-  smallNoAvatar: {
+  smallNoAvatarOnMobile: {
     fontSize: t.f['b-'],
     gap: linearScale('0.25rem', '0.4rem', 'space'),
     avatarVariant: 'tiny',
-    AvatarDisplay: ['none', 'block'],
+    avatarDisplay: ['none', 'block'],
   },
 } as const
 
@@ -30,7 +30,6 @@ export type AgencyIdentifierProps = AnchorProps & {
   variant?: keyof typeof variants
   name: string
   avatarFluid?: FluidObject
-  hideAvatarOnMobileForBaseWinnerCardVariant?: boolean
 }
 
 export const AgencyIdentifier = ({
@@ -58,7 +57,7 @@ export const AgencyIdentifier = ({
         flavorSeed={name}
         fluid={avatarFluid}
         css={mq({
-          display: variant.AvatarDisplay,
+          display: variant.avatarDisplay,
         })}
       />
       {name}
