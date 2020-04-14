@@ -26,9 +26,10 @@ export const AboutPage = ({ data }: AboutPageProps) => {
 
   data.aboutSponsors.nodes.forEach(node => {
     const sponsor: Sponsor = {
-      url: node.data?.logo?.localFiles?.[0]?.url,
+      src: node.data?.logo?.localFiles?.[0]?.url,
       type: node.data?.type as Sponsor['type'],
       name: node.data?.name,
+      url: node.data?.url,
     }
 
     switch (node.data?.type) {
@@ -169,6 +170,7 @@ export const query = graphql`
     ) {
       nodes {
         data {
+          url
           name
           logo {
             localFiles {
