@@ -60,7 +60,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
 
       <ColoredBoxesSlice
         css={{ paddingBottom: 0 }}
-        whiteBoxChildren={
+        leftBoxChildren={
           <HTMLContent
             html={
               data.aboutWhiteColoredBox?.data?.rich_text?.childMarkdownRemark
@@ -84,7 +84,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
             }}
           />
         }
-        redBoxChildren={
+        rightBoxChildren={
           <SVG
             svg={AssetAAFLogoSVG}
             css={mq({ width: ['6rem', '8rem', '10rem', '12rem'] })}

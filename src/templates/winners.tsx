@@ -20,6 +20,8 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
 
+  console.log(data, props)
+
   const firstPages = data.allPaginatedCollectionPage.nodes
   const initialPage = data!.paginatedCollectionPage
   const firstPageId = initialPage!.id

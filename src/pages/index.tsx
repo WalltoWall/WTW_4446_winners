@@ -2,10 +2,8 @@ import React from 'react'
 import { graphql } from 'gatsby'
 
 import { IndexPageQuery } from '../graphqlTypes'
-import { Award } from '../types'
 import { t, mq, linearScale } from '../theme'
 
-import { WinnerCard } from '../components/WinnerCard'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -105,7 +103,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
       </BoundedBox>
 
       <ColoredBoxesSlice
-        whiteBoxChildren={
+        leftBoxChildren={
           <HTMLContent
             html={`
               <h1>Archives</h1>
@@ -129,7 +127,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             }}
           />
         }
-        redBoxChildren={
+        rightBoxChildren={
           <View
             as="ul"
             css={mq({
