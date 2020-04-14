@@ -24,7 +24,7 @@ type SponsorsProps = ViewProps & {
 // TODO: Extract to component.
 const GAP = t.spaceScales.l
 const NEGATIVE_GAP = negateScale(GAP)
-const WIDTHS = ['25%', '20%', '16.66%']
+const WIDTHS = ['25%', '19%', '15%']
 const ITEM_WIDTHS = Array.from({
   length: Math.max(GAP.length, WIDTHS.length),
 }).map((_, i) => `calc(${WIDTHS[i]} - ${GAP[i]})`)
@@ -37,23 +37,28 @@ const Sponsors = ({ sponsors, ...props }: SponsorsProps) => {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
+        alignItems: 'center',
         marginRight: NEGATIVE_GAP,
         marginBottom: NEGATIVE_GAP,
       })}
     >
       {sponsors.map(s => (
-        <img
-          alt={s.name}
-          src={s.url}
+        <div
+          css={mq({ width: ITEM_WIDTHS, marginBottom: GAP, marginRight: GAP })}
           key={s.name}
-          loading="lazy"
-          css={mq({
-            marginRight: GAP,
-            marginBottom: GAP,
-            width: ITEM_WIDTHS,
-            maxHeight: linearScale('3.25rem', '6rem'),
-          })}
-        />
+        >
+          <img
+            alt={s.name}
+            src={s.url}
+            loading="lazy"
+            css={mq({
+              display: 'block',
+              maxHeight: linearScale('3rem', '6rem'),
+              margin: '0 auto',
+              maxWidth: linearScale('4rem', '8rem'),
+            })}
+          />
+        </div>
       ))}
     </View>
   )
