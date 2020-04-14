@@ -9,12 +9,12 @@ export type RibbonProps = {
 export const Ribbon = ({ children, ...props }: RibbonProps) => {
   return (
     <span
+      {...props}
       css={mq({
         display: 'flex',
         color: t.colors.White,
         fontWeight: t.fontWeights.Bold,
       })}
-      {...props}
     >
       <span
         css={mq({
