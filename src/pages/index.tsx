@@ -103,6 +103,14 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
       </BoundedBox>
 
       <ColoredBoxesSlice
+        css={{ paddingBottom: 0 }}
+        leftBackgroundColor="Black"
+        leftBoxChildren={<></>}
+        rightBackgroundColor="White"
+        rightBoxChildren={<></>}
+      />
+
+      <ColoredBoxesSlice
         leftBoxChildren={
           <HTMLContent
             html={`

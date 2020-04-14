@@ -122,7 +122,14 @@ export const WinnerCard = ({
           })}
         >
           {isNationalWinner && (
-            <Ribbon css={mq({ right: 0, top: t.space[4] })}>
+            <Ribbon
+              css={mq({
+                position: 'absolute',
+                right: 0,
+                top: t.space[4],
+                zIndex: t.zIndices.Ribbon,
+              })}
+            >
               2020 National Winner
             </Ribbon>
           )}

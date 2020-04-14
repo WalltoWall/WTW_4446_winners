@@ -11,16 +11,14 @@ export const Ribbon = ({ children, ...props }: RibbonProps) => {
     <span
       css={mq({
         display: 'flex',
-        position: 'absolute',
         color: t.colors.White,
-        zIndex: t.zIndices.Ribbon,
         fontWeight: t.fontWeights.Bold,
       })}
       {...props}
     >
       <span
         css={mq({
-          background: 'transparent',
+          backgroundColor: 'transparent',
           width: '10px',
           borderTop: `19px solid ${t.colors.Red40}`,
           borderBottom: `19px solid ${t.colors.Red40}`,
@@ -29,7 +27,7 @@ export const Ribbon = ({ children, ...props }: RibbonProps) => {
       />
       <span
         css={mq({
-          background: t.colors.Red40,
+          backgroundColor: t.colors.Red40,
           padding: '.75rem',
           fontSize: '.875rem',
         })}
