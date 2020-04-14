@@ -1,16 +1,18 @@
 import React from 'react'
+import { negateScale } from 'styled-system-scale'
 
 import { mq, t, linearScale } from '../theme'
 
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { View, ViewProps } from '../components/View'
-import { negateScale } from 'styled-system-scale'
+import { Link } from '../components/Link'
 
 export type Sponsor = {
   url?: string
   type?: 'high school' | 'professional'
   name?: string
+  src?: string
 }
 type SponsorsSliceProps = {
   highSchool: Sponsor[]
@@ -43,13 +45,14 @@ const Sponsors = ({ sponsors, ...props }: SponsorsProps) => {
       })}
     >
       {sponsors.map(s => (
-        <div
+        <Link
+          href={s.url!}
           css={mq({ width: ITEM_WIDTHS, marginBottom: GAP, marginRight: GAP })}
           key={s.name}
         >
           <img
             alt={s.name}
-            src={s.url}
+            src={s.src}
             loading="lazy"
             css={mq({
               display: 'block',
@@ -58,7 +61,7 @@ const Sponsors = ({ sponsors, ...props }: SponsorsProps) => {
               maxWidth: linearScale('4rem', '8rem'),
             })}
           />
-        </div>
+        </Link>
       ))}
     </View>
   )
