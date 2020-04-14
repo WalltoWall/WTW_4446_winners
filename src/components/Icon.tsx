@@ -10,6 +10,7 @@ import { ReactComponent as AssetIconFacebookSVG } from '../assets/icon-facebook.
 import { ReactComponent as AssetIconTwitterSVG } from '../assets/icon-twitter.svg'
 import { ReactComponent as AssetIconInstagramSVG } from '../assets/icon-instagram.svg'
 import { ReactComponent as AssetIconLinkedinSVG } from '../assets/icon-linkedin.svg'
+import { ReactComponent as AssetIconMedalSVG } from '../assets/icon-medal.svg'
 
 const icons = {
   award: AssetIconAwardSVG,
@@ -21,6 +22,7 @@ const icons = {
   twitter: AssetIconTwitterSVG,
   instagram: AssetIconInstagramSVG,
   linkedin: AssetIconLinkedinSVG,
+  medal: AssetIconMedalSVG,
 } as const
 
 export type IconProps = Omit<SVGProps, 'svg'> & {
