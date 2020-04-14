@@ -53,8 +53,6 @@ export enum LineHeight {
 
 export enum ZIndex {
   Base = 0,
-  Ribbon = 1,
-  RibbonMask = 2,
   Header = 2,
   HeaderBar = 2,
   HeaderOverlay = 1,
