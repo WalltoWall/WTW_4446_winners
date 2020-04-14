@@ -10,6 +10,7 @@ import { SVG } from '../components/SVG'
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
+import { SponsorsSlice, Sponsor } from '../slices/SponsorsSlice'
 
 import { t, mq, linearScale } from '../theme'
 import { AboutPageQuery } from '../graphqlTypes'
@@ -20,6 +21,26 @@ type AboutPageProps = LayoutProps & {
 }
 
 export const AboutPage = ({ data }: AboutPageProps) => {
+  let highSchoolSponsors: Sponsor[] = []
+  let professionalSponsors: Sponsor[] = []
+
+  data.aboutSponsors.nodes.forEach(node => {
+    const sponsor: Sponsor = {
+      url: node.data?.logo?.localFiles?.[0]?.url,
+      type: node.data?.type as Sponsor['type'],
+      name: node.data?.name,
+    }
+
+    switch (node.data?.type) {
+      case 'high school':
+        return highSchoolSponsors.push(sponsor)
+      case 'professional':
+        return professionalSponsors.push(sponsor)
+      default:
+        return
+    }
+  })
+
   return (
     <Layout>
       <Helmet>
@@ -37,6 +58,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
       />
 
       <ColoredBoxesSlice
+        css={{ paddingBottom: 0 }}
         whiteBoxChildren={
           <HTMLContent
             html={
@@ -67,6 +89,11 @@ export const AboutPage = ({ data }: AboutPageProps) => {
             css={mq({ width: ['6rem', '8rem', '10rem', '12rem'] })}
           />
         }
+      />
+
+      <SponsorsSlice
+        highSchool={highSchoolSponsors}
+        professional={professionalSponsors}
       />
 
       <CallToActionSlice
@@ -134,6 +161,22 @@ export const query = graphql`
     aboutButtonHref: airtableLink(data: { uid: { eq: "About CTA Button" } }) {
       data {
         href
+      }
+    }
+    aboutSponsors: allAirtableSponsors(
+      filter: { data: { year: { eq: "2020" } } }
+      sort: { fields: data___type }
+    ) {
+      nodes {
+        data {
+          name
+          logo {
+            localFiles {
+              url
+            }
+          }
+          type
+        }
       }
     }
   }
