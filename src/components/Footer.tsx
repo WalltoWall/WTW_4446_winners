@@ -1,8 +1,6 @@
 import React from 'react'
 import { negateScale } from 'styled-system-scale'
 
-import { navigation } from '../constants'
-
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 import { Heading } from './Heading'
@@ -82,11 +80,11 @@ export const Footer = (props: FooterProps) => (
             marginBottom: negateScale(linearScale('0.375rem', '0.875rem')),
           })}
         >
-          {navigation.map(item => (
-            <NavItem key={item.name} href={item.href}>
-              {item.name}
-            </NavItem>
-          ))}
+          <NavItem href="/winners/">Winners</NavItem>
+          <NavItem href="/ad-people/">Ad People</NavItem>
+          <NavItem href="/high-school/">High School</NavItem>
+          <NavItem href="/college/">College</NavItem>
+          <NavItem href="/about/">About</NavItem>
         </View>
       </View>
       <View
