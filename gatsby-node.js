@@ -261,9 +261,13 @@ exports.createPages = async gatsbyContext => {
     collections.forEach(c => {
       const category = c.collection.name.split('/')[1]
       const categoryId = c.collection.id
+      const categorySlug = kebabCase(category.toLowerCase()).replace(
+        'advertising',
+        'ad',
+      )
 
       createPage({
-        path: `/winners/${year}/${kebabCase(category.toLowerCase())}`,
+        path: `/winners/${year}/${categorySlug}/`,
         component: path.resolve(__dirname, 'src/templates/winners.tsx'),
         context: {
           category,
@@ -274,12 +278,20 @@ exports.createPages = async gatsbyContext => {
     })
 
     createPage({
-      path: `/winners/${year}`,
+      path: `/winners/${year}/`,
       component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
       context: {
         year,
       },
     })
+  })
+
+  createPage({
+    path: `/winners/`,
+    component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+    context: {
+      year: '2020',
+    },
   })
 
   for (let i = 0; i < winnerNodes.length; i++) {
