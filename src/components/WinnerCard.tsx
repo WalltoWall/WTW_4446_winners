@@ -11,6 +11,7 @@ import { AspectRatio } from './AspectRatio'
 import { Anchor } from './Anchor'
 import { Link } from './Link'
 import { AgencyIdentifier } from './AgencyIdentifier'
+import { Ribbon } from './Ribbon'
 
 const variants = {
   base: {
@@ -85,6 +86,7 @@ export const WinnerCard = ({
   agencyName,
   agencyHref,
   agencyAvatarFluid,
+  isNationalWinner,
   ...props
 }: WinnerCardProps) => {
   const variant = variants[variantName]
@@ -113,8 +115,17 @@ export const WinnerCard = ({
         <AspectRatio
           x={variant.imageAspectRatioX}
           y={variant.imageAspectRatioY}
-          css={mq({ backgroundColor: t.c.White, height: ['100%', 'inherit'] })}
+          css={mq({
+            backgroundColor: t.c.White,
+            height: ['100%', 'inherit'],
+            position: 'relative',
+          })}
         >
+          {isNationalWinner && (
+            <Ribbon css={mq({ right: 0, top: t.space[4] })}>
+              2020 National Winner
+            </Ribbon>
+          )}
           {imageFluid && (
             <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
           )}

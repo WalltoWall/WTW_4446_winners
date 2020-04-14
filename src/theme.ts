@@ -53,6 +53,8 @@ export enum LineHeight {
 
 export enum ZIndex {
   Base = 0,
+  Ribbon = 1,
+  RibbonMask = 2,
   Header = 2,
   HeaderBar = 2,
   HeaderOverlay = 1,
@@ -99,6 +101,7 @@ const baseTheme = {
   // Spacing
   space: [0, 4, 8, 16, 24, 32, 64, 128, 256, 512],
   spaceScales: {
+    xt: linearScale('6px', '10px', { count }),
     t: linearScale('10px', '16px', { count }),
     s: linearScale('12px', '24px', { count }),
     m: linearScale('18px', '32px', { count }),
