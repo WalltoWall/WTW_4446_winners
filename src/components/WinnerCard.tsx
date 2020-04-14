@@ -18,23 +18,22 @@ const variants = {
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.25rem', 'space'),
     flexDirection: ['row', 'column'],
-    FlexItemWidth: ['50%', '100%'],
+    flexItemWidth: ['50%', '100%'],
     gridTemplateColumns: ['none', '1fr auto'],
     textAlign: ['center', 'inherit'],
-
     subtitleFontSize: t.f['b-'],
     awardGridRow: ['1', 'auto'],
     awardJustifySelf: ['center', 'end'],
     awardAlignSelf: ['center', 'end'],
     agentJustifySelf: ['center', 'start'],
-    agencyIdentifierVariant: 'smallNoAvatar',
+    agencyIdentifierVariant: 'smallNoAvatarOnMobile',
   },
   featured: {
     imageAspectRatioX: 4,
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.5rem', 'space'),
     flexDirection: 'column',
-    FlexItemWidth: '100%',
+    flexItemWidth: '100%',
     gridTemplateColumns: '1fr auto',
     textAlign: 'inherit',
     subtitleFontSize: t.f.b,
@@ -50,7 +49,7 @@ const variants = {
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
     flexDirection: 'column',
-    FlexItemWidth: '100%',
+    flexItemWidth: '100%',
     gridTemplateColumns: '1fr auto',
     textAlign: 'inherit',
     awardGridRow: 'auto',
@@ -106,7 +105,7 @@ export const WinnerCard = ({
           '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
             color: t.c.Red40,
           },
-          width: variant.FlexItemWidth,
+          width: variant.flexItemWidth,
         })}
       >
         <VisuallyHidden>{title}</VisuallyHidden>
@@ -125,7 +124,8 @@ export const WinnerCard = ({
         css={mq({
           backgroundColor: t.c.White,
           display: 'grid',
-          width: variant.FlexItemWidth,
+          width: variant.flexItemWidth,
+          alignContent: 'center',
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: variant.gridTemplateColumns,
