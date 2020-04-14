@@ -4609,18 +4609,18 @@ export type Query = {
   allMarkdownRemark: MarkdownRemarkConnection;
   cloudinaryAsset?: Maybe<CloudinaryAsset>;
   allCloudinaryAsset: CloudinaryAssetConnection;
-  airtableAdPerson?: Maybe<AirtableAdPerson>;
-  allAirtableAdPerson: AirtableAdPersonConnection;
-  airtableImageField?: Maybe<AirtableImageField>;
-  allAirtableImageField: AirtableImageFieldConnection;
   airtableAgency?: Maybe<AirtableAgency>;
   allAirtableAgency: AirtableAgencyConnection;
+  airtableAdPerson?: Maybe<AirtableAdPerson>;
+  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableTextField?: Maybe<AirtableTextField>;
   allAirtableTextField: AirtableTextFieldConnection;
   airtableFieldfileNode?: Maybe<AirtableFieldfileNode>;
   allAirtableFieldfileNode: AirtableFieldfileNodeConnection;
+  airtableImageField?: Maybe<AirtableImageField>;
+  allAirtableImageField: AirtableImageFieldConnection;
   airtableLink?: Maybe<AirtableLink>;
   allAirtableLink: AirtableLinkConnection;
   airtableArchive?: Maybe<AirtableArchive>;
@@ -4873,47 +4873,6 @@ export type QueryAllCloudinaryAssetArgs = {
 };
 
 
-export type QueryAirtableAdPersonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableAdPersonDataFilterInput>;
-  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableAdPersonArgs = {
-  filter?: Maybe<AirtableAdPersonFilterInput>;
-  sort?: Maybe<AirtableAdPersonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryAirtableImageFieldArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableImageFieldDataFilterInput>;
-};
-
-
-export type QueryAllAirtableImageFieldArgs = {
-  filter?: Maybe<AirtableImageFieldFilterInput>;
-  sort?: Maybe<AirtableImageFieldSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAgencyArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -4930,6 +4889,27 @@ export type QueryAirtableAgencyArgs = {
 export type QueryAllAirtableAgencyArgs = {
   filter?: Maybe<AirtableAgencyFilterInput>;
   sort?: Maybe<AirtableAgencySortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableAdPersonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableAdPersonDataFilterInput>;
+  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableAdPersonArgs = {
+  filter?: Maybe<AirtableAdPersonFilterInput>;
+  sort?: Maybe<AirtableAdPersonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -4988,6 +4968,26 @@ export type QueryAirtableFieldfileNodeArgs = {
 export type QueryAllAirtableFieldfileNodeArgs = {
   filter?: Maybe<AirtableFieldfileNodeFilterInput>;
   sort?: Maybe<AirtableFieldfileNodeSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableImageFieldArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableImageFieldDataFilterInput>;
+};
+
+
+export type QueryAllAirtableImageFieldArgs = {
+  filter?: Maybe<AirtableImageFieldFilterInput>;
+  sort?: Maybe<AirtableImageFieldSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5469,6 +5469,9 @@ export type SitePageConnectionGroupArgs = {
 };
 
 export type SitePageContext = {
+  category?: Maybe<Scalars['String']>;
+  categoryId?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['Date']>;
   recordId?: Maybe<Scalars['String']>;
   previousRecordId?: Maybe<Scalars['String']>;
   nextRecordId?: Maybe<Scalars['String']>;
@@ -5476,6 +5479,9 @@ export type SitePageContext = {
 };
 
 export type SitePageContextFilterInput = {
+  category?: Maybe<StringQueryOperatorInput>;
+  categoryId?: Maybe<StringQueryOperatorInput>;
+  year?: Maybe<DateQueryOperatorInput>;
   recordId?: Maybe<StringQueryOperatorInput>;
   previousRecordId?: Maybe<StringQueryOperatorInput>;
   nextRecordId?: Maybe<StringQueryOperatorInput>;
@@ -5581,6 +5587,9 @@ export enum SitePageFieldsEnum {
   InternalOwner = 'internal___owner',
   InternalType = 'internal___type',
   IsCreatedByStatefulCreatePages = 'isCreatedByStatefulCreatePages',
+  ContextCategory = 'context___category',
+  ContextCategoryId = 'context___categoryId',
+  ContextYear = 'context___year',
   ContextRecordId = 'context___recordId',
   ContextPreviousRecordId = 'context___previousRecordId',
   ContextNextRecordId = 'context___nextRecordId',
@@ -6112,6 +6121,11 @@ export type CloudinaryAssetFluidFragment = Pick<CloudinaryAssetFluid, 'aspectRat
 
 export type CloudinaryAssetFixedFragment = Pick<CloudinaryAssetFixed, 'base64' | 'height' | 'src' | 'srcSet' | 'width'>;
 
+export type LogoImageQueryVariables = {};
+
+
+export type LogoImageQuery = { airtableImageField?: Maybe<{ data?: Maybe<{ image?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }> }> };
+
 export type AboutPageQueryVariables = {};
 
 
@@ -6157,10 +6171,24 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFie
       )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
   )> };
 
-export type WinnersPageQueryVariables = {};
+export type AgencyTemplateQueryVariables = {
+  recordId: Scalars['String'];
+  paginatedCollectionName: Scalars['String'];
+};
 
 
-export type WinnersPageQuery = { paginatedCollectionPage?: Maybe<(
+export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<(
+      Pick<AirtableAgencyData, 'name' | 'website' | 'facebook_handle' | 'twitter_handle' | 'instagram_handle' | 'linkedin_handle'>
+      & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+    )> }>, paginatedCollectionPage?: Maybe<(
+    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
+    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
+  )> };
+
+export type AllWinnersTemplateQueryVariables = {};
+
+
+export type AllWinnersTemplateQuery = { paginatedCollectionPage?: Maybe<(
     Pick<PaginatedCollectionPage, 'id' | 'nodes'>
     & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'id' | 'nodeCount'> }
   )>, allPaginatedCollectionPage: { nodes: Array<(
@@ -6174,20 +6202,6 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFie
         Pick<AirtableAgencyData, 'name'>
         & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
       )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-  )> };
-
-export type AgencyTemplateQueryVariables = {
-  recordId: Scalars['String'];
-  paginatedCollectionName: Scalars['String'];
-};
-
-
-export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<(
-      Pick<AirtableAgencyData, 'name' | 'website' | 'facebook_handle' | 'twitter_handle' | 'instagram_handle' | 'linkedin_handle'>
-      & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-    )> }>, paginatedCollectionPage?: Maybe<(
-    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
-    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
   )> };
 
 export type TagTemplateQueryVariables = {
@@ -6214,3 +6228,16 @@ export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ ta
           & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
         )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
     )> }>, nextAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, previousAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, winnerCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, winnerButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, winnerButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
+
+export type WinnersTemplateQueryVariables = {
+  categoryId: Scalars['String'];
+};
+
+
+export type WinnersTemplateQuery = { paginatedCollectionPage?: Maybe<(
+    Pick<PaginatedCollectionPage, 'id' | 'nodes'>
+    & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'id' | 'nodeCount'> }
+  )>, allPaginatedCollectionPage: { nodes: Array<(
+      Pick<PaginatedCollectionPage, 'id'>
+      & { collection: Pick<PaginatedCollection, 'id' | 'name'> }
+    )> } };

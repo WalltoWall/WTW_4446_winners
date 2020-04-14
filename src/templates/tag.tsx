@@ -9,6 +9,7 @@ import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
+import { Subheading } from '../components/Subheading'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 
 export type TagTemplate = LayoutProps & {
@@ -22,7 +23,7 @@ export const TagTemplate = ({ data, ...props }: TagTemplate) => {
   return (
     <Layout {...props}>
       <Helmet>
-        <title>Winners</title>
+        <title>Tag: {tag}</title>
       </Helmet>
       <BoundedBox
         css={mq({
@@ -35,11 +36,17 @@ export const TagTemplate = ({ data, ...props }: TagTemplate) => {
           css={mq({
             display: 'grid',
             gap: linearScale('0.6875rem', '1.375rem', 'space'),
+            textAlign: 'center',
           })}
         >
-          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-            Tag: {tag}
-          </Heading>
+          <div
+            css={mq({ display: 'grid', gap: linearScale('0.25rem', '0.5rem') })}
+          >
+            <p css={mq({ fontSize: t.f['b-'], color: t.c.Gray60 })}>
+              Winners tagged with
+            </p>
+            <Heading css={mq({ fontSize: t.f.xl })}>{tag}</Heading>
+          </div>
         </div>
       </BoundedBox>
       <BoundedBox css={{ backgroundColor: t.c.Gray95 }}>
