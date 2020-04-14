@@ -49,6 +49,7 @@ export const SpecialWinners = ({
                   ?.fluid
               }
               isSpecialAward={true}
+              isNationalWinner={winner?.data?.national_winner}
               agencyName={agency?.data?.name!}
               agencyHref={agency?.fields?.url!}
               agencyAvatarFluid={
