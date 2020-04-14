@@ -154,7 +154,7 @@ export const WinnerCard = ({
             <AwardIcon
               type={award}
               css={mq({
-                alignSelf: 'end',
+                alignSelf: 'center',
                 width: ['0.8125rem', '1.25rem'],
                 display: variant.awardIconVariant.top.display,
               })}
@@ -192,7 +192,7 @@ export const WinnerCard = ({
             href={agencyHref}
             avatarFluid={agencyAvatarFluid}
             css={mq({
-              alignSelf: 'end',
+              alignSelf: ['center', 'end'],
               justifySelf: variant.agentJustifySelf,
             })}
           />
