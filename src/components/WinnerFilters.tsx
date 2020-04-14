@@ -82,11 +82,7 @@ export const WinnerFilters = ({
           <FormSelect value={firstPageId} onChange={handleCategoryChange}>
             <option value="/">All categories</option>
             {firstPages.map(firstPage => (
-              <option
-                key={firstPage.id}
-                value={firstPage.id}
-                selected={firstPage.id === initialPage!.id}
-              >
+              <option key={firstPage.id} value={firstPage.id}>
                 {trimCollectionNamespace(firstPage.collection.name)}
               </option>
             ))}

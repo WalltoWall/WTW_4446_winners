@@ -3,8 +3,8 @@ import { graphql } from 'gatsby'
 
 import { IndexPageQuery } from '../graphqlTypes'
 import { Award } from '../types'
-
 import { t, mq, linearScale } from '../theme'
+
 import { WinnerCard } from '../components/WinnerCard'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
@@ -12,11 +12,13 @@ import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
 import { CardList } from '../components/CardList'
+import { HTMLContent } from '../components/HTMLContent'
+import { View } from '../components/View'
+import { SpecialWinners } from '../components/SpecialWinners'
+
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
-import { HTMLContent } from '../components/HTMLContent'
-import { View } from '../components/View'
 
 export type IndexPage = LayoutProps & {
   data: IndexPageQuery
@@ -45,38 +47,16 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             gap: linearScale('0.625rem', '1.75rem', 'space'),
           })}
         >
-          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-            <Anchor href="/winners/">Best of Show Winners</Anchor>
-          </Heading>
-          <CardList columns={[1, 2]}>
-            {bestOfWinners.map(winner => {
-              const agency = winner?.data?.agency?.[0]
-
-              return (
-                <WinnerCard
-                  key={winner?.fields?.url}
-                  variant="featuredWide"
-                  href={winner?.fields?.url!}
-                  title={winner?.data?.name}
-                  subtitle={winner?.data?.special_award}
-                  award={winner?.data?.award?.toLowerCase?.() as Award}
-                  imageFluid={
-                    winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                      ?.fluid
-                  }
-                  isSpecialAward={true}
-                  agencyName={agency?.data?.name!}
-                  agencyHref={agency?.fields?.url!}
-                  agencyAvatarFluid={
-                    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
-                      ?.fluid
-                  }
-                />
-              )
-            })}
-          </CardList>
+          <SpecialWinners
+            heading="Best of Show Winners"
+            headingHref="/winners/"
+            columns={[1, 2]}
+            winners={bestOfWinners}
+            variant="featuredWide"
+          />
         </div>
       </BoundedBox>
+
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
         <div
           css={mq({
@@ -87,6 +67,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
           <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
             <Anchor href="/ad-people/">People of the Year</Anchor>
           </Heading>
+
           <CardList columns={[1, 3]}>
             {adPeople.map(person => (
               <PersonCard
@@ -105,6 +86,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
           </CardList>
         </div>
       </BoundedBox>
+
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
         <div
           css={mq({
@@ -112,36 +94,13 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
             gap: linearScale('0.625rem', '1.75rem', 'space'),
           })}
         >
-          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-            <Anchor href="/winners/">Judge&rsquo;s Choice Awards</Anchor>
-          </Heading>
-          <CardList columns={[1, 3]}>
-            {judgesWinners.map(winner => {
-              const agency = winner?.data?.agency?.[0]
-
-              return (
-                <WinnerCard
-                  key={winner?.fields?.url}
-                  variant="featured"
-                  href={winner?.fields?.url!}
-                  title={winner?.data?.name}
-                  subtitle={winner?.data?.special_award}
-                  award={winner?.data?.award?.toLowerCase?.() as Award}
-                  imageFluid={
-                    winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                      ?.fluid
-                  }
-                  isSpecialAward={true}
-                  agencyName={agency?.data?.name!}
-                  agencyHref={agency?.fields?.url!}
-                  agencyAvatarFluid={
-                    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
-                      ?.fluid
-                  }
-                />
-              )
-            })}
-          </CardList>
+          <SpecialWinners
+            heading="Judge's Choice Awards"
+            headingHref="/winners/"
+            columns={[1, 3]}
+            winners={judgesWinners}
+            variant="featured"
+          />
         </div>
       </BoundedBox>
 
@@ -320,6 +279,7 @@ export const query = graphql`
     data {
       name
       award
+      national_winner
       special_award
       agency {
         fields {

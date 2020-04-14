@@ -71,6 +71,7 @@ export type WinnerCardProps = ViewProps & {
   agencyName: string
   agencyHref: string
   agencyAvatarFluid?: FluidObject
+  isNationalWinner?: boolean
 }
 
 export const WinnerCard = ({
