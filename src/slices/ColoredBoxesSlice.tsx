@@ -26,13 +26,17 @@ const Box = ({ children, ...props }: { children: React.ReactNode }) => {
 }
 
 type ColoredBoxesSliceProps = ViewProps & {
-  whiteBoxChildren: React.ReactNode
-  redBoxChildren: React.ReactNode
+  leftBoxChildren: React.ReactNode
+  leftBackgroundColor?: keyof typeof t.colors
+  rightBoxChildren: React.ReactNode
+  rightBackgroundColor?: keyof typeof t.colors
 }
 
 export const ColoredBoxesSlice = ({
-  whiteBoxChildren,
-  redBoxChildren,
+  leftBoxChildren,
+  leftBackgroundColor = 'White',
+  rightBoxChildren,
+  rightBackgroundColor = 'Red40',
   ...props
 }: ColoredBoxesSliceProps) => {
   return (
@@ -48,14 +52,16 @@ export const ColoredBoxesSlice = ({
           gridTemplateColumns: ['1fr', '1fr 1fr'],
         })}
       >
-        <Box css={{ background: t.colors.White }}>{whiteBoxChildren}</Box>
+        <Box css={{ background: t.colors[leftBackgroundColor] }}>
+          {leftBoxChildren}
+        </Box>
         <Box
           css={{
             color: t.colors.White,
-            background: t.colors.Red40,
+            background: t.colors[rightBackgroundColor],
           }}
         >
-          {redBoxChildren}
+          {rightBoxChildren}
         </Box>
       </View>
     </BoundedBox>
