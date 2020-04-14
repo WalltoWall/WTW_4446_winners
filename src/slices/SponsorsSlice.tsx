@@ -74,7 +74,7 @@ export const SponsorsSlice = ({
   return (
     <BoundedBox
       forwardedAs="section"
-      maxWidth="Xlarge"
+      maxWidth="Large"
       css={{ background: t.colors.Gray95 }}
     >
       <Heading
