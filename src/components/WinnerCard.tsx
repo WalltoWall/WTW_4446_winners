@@ -17,36 +17,32 @@ const variants = {
     imageAspectRatioX: 4,
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.25rem', 'space'),
-    subtitleFontSize: t.f['b-'],
     flexDirection: ['row', 'column'],
-    textAlign: ['center', 'inherit'],
-    justifyItems: ['center', 'inherit'],
     FlexItemWidth: ['50%', '100%'],
-    awardIconVariant: {
-      top: {
-        display: ['block', 'none'],
-      },
-      bottom: {
-        display: ['none', 'block'],
-      },
-    },
+    gridTemplateColumns: ['none', '1fr auto'],
+    textAlign: ['center', 'inherit'],
+
+    subtitleFontSize: t.f['b-'],
+    awardGridRow: ['1', 'auto'],
+    awardJustifySelf: ['center', 'end'],
+    awardAlignSelf: ['center', 'end'],
     agentJustifySelf: ['center', 'start'],
+    agencyIdentifierVariant: 'smallNoAvatar',
   },
   featured: {
     imageAspectRatioX: 4,
     imageAspectRatioY: 3,
     padding: linearScale('1rem', '1.5rem', 'space'),
-    subtitleFontSize: t.f.b,
     flexDirection: 'column',
-    textAlign: 'inherit',
-    justifyItems: 'inherit',
     FlexItemWidth: '100%',
-    awardIconVariant: {
-      bottom: {
-        display: 'block',
-      },
-    },
+    gridTemplateColumns: '1fr auto',
+    textAlign: 'inherit',
+    subtitleFontSize: t.f.b,
+    awardGridRow: 'auto',
+    awardJustifySelf: 'end',
+    awardAlignSelf: 'end',
     agentJustifySelf: 'start',
+    agencyIdentifierVariant: 'small',
   },
   featuredWide: {
     imageAspectRatioX: 8,
@@ -54,16 +50,14 @@ const variants = {
     padding: linearScale('1rem', '1.5rem', 'space'),
     subtitleFontSize: t.f.b,
     flexDirection: 'column',
-    textAlign: 'inherit',
-    justifyItems: 'inherit',
     FlexItemWidth: '100%',
-    awardIconVariant: {
-      bottom: {
-        display: 'block',
-      },
-    },
-
+    gridTemplateColumns: '1fr auto',
+    textAlign: 'inherit',
+    awardGridRow: 'auto',
+    awardJustifySelf: 'end',
+    awardAlignSelf: 'end',
     agentJustifySelf: 'start',
+    agencyIdentifierVariant: 'small',
   },
 } as const
 
@@ -119,7 +113,7 @@ export const WinnerCard = ({
         <AspectRatio
           x={variant.imageAspectRatioX}
           y={variant.imageAspectRatioY}
-          css={{ backgroundColor: t.c.White }}
+          css={mq({ backgroundColor: t.c.White, height: ['100%', 'inherit'] })}
         >
           {imageFluid && (
             <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
@@ -134,7 +128,7 @@ export const WinnerCard = ({
           width: variant.FlexItemWidth,
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
-          gridTemplateColumns: '1fr auto',
+          gridTemplateColumns: variant.gridTemplateColumns,
           padding: variant.padding,
           boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
@@ -146,20 +140,9 @@ export const WinnerCard = ({
             gap: linearScale('0.375rem', '0.5rem', 'space'),
             gridTemplateRows: ['auto', 'auto auto 1fr'],
             alignItems: ['center', 'start'],
-            justifyItems: variant.justifyItems,
             textAlign: variant.textAlign,
           })}
         >
-          {award && variant.awardIconVariant.top && (
-            <AwardIcon
-              type={award}
-              css={mq({
-                alignSelf: 'center',
-                width: ['0.8125rem', '1.25rem'],
-                display: variant.awardIconVariant.top.display,
-              })}
-            />
-          )}
           {subtitle && isSpecialAward ? (
             <Subheading
               forwardedAs="h4"
@@ -187,7 +170,7 @@ export const WinnerCard = ({
             </Heading>
           )}
           <AgencyIdentifier
-            variant="small"
+            variant={variant.agencyIdentifierVariant}
             name={agencyName}
             href={agencyHref}
             avatarFluid={agencyAvatarFluid}
@@ -201,9 +184,10 @@ export const WinnerCard = ({
           <AwardIcon
             type={award}
             css={mq({
-              alignSelf: 'end',
               width: ['0.8125rem', '1.25rem'],
-              display: variant.awardIconVariant.bottom.display,
+              gridRow: variant.awardGridRow,
+              justifySelf: variant.awardJustifySelf,
+              alignSelf: variant.awardAlignSelf,
             })}
           />
         )}
