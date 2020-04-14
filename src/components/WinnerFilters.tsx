@@ -43,7 +43,7 @@ export const WinnerFilters = ({
       'ad',
     )
 
-    navigate(`/winners/${year}/${categorySlug}`)
+    navigate(`/winners/${year}/${categorySlug}/`)
   }
 
   return (
