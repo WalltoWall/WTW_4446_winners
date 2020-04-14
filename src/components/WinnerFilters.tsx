@@ -74,7 +74,7 @@ export const WinnerFilters = ({
         >
           <FormSelect value={year} onChange={handleYearChange}>
             {years.map(y => (
-              <option value={y} selected={year === y} key={y}>
+              <option value={y} key={y}>
                 {y}
               </option>
             ))}

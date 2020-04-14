@@ -33,12 +33,14 @@ type ColoredBoxesSliceProps = ViewProps & {
 export const ColoredBoxesSlice = ({
   whiteBoxChildren,
   redBoxChildren,
+  ...props
 }: ColoredBoxesSliceProps) => {
   return (
     <BoundedBox
       forwardedAs="section"
       maxWidth="Xlarge"
       css={{ background: t.c.Gray95 }}
+      {...props}
     >
       <View
         css={mq({
