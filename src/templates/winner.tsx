@@ -12,9 +12,10 @@ import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor, AnchorProps } from '../components/Anchor'
 import { NextPrevious } from '../components/NextPrevious'
-import { ImageGallery } from '../components/ImageGallery'
+import { MediaGallery } from '../components/MediaGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
+import { FluidObject } from 'gatsby-image'
 
 const breadcrumbVariants = {
   professional: {
@@ -65,7 +66,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
       localFile => localFile?.childCloudinaryAsset?.fluid,
     ) ?? [],
   )
-  const hasImages = images.length > 0
+  const vimeoLink = winner?.data?.video
+  const vimeoThumbnail = winner?.data?.video_thumbnail?.localFiles?.[0]
+    ?.childCloudinaryAsset?.fluid as FluidObject
+
+  const hasMedia = images.length > 0 || Boolean(vimeoLink)
 
   const nextWinner = data.nextAirtableWinner
   const previousWinner = data.previousAirtableWinner
@@ -80,6 +85,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
       <Helmet>
         <title>{winner?.data?.name}</title>
       </Helmet>
+
       <BoundedBox forwardedAs="section" css={{ backgroundColor: t.c.Gray95 }}>
         <div
           css={mq({
@@ -106,7 +112,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
               {winner?.data?.name}
             </Heading>
           </div>
-          {hasImages && (
+          {hasMedia && (
             <div
               css={{
                 width: '100%',
@@ -115,7 +121,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
                 marginRight: 'auto',
               }}
             >
-              <ImageGallery images={images} />
+              <MediaGallery
+                images={images}
+                vimeoLink={vimeoLink}
+                vimeoThumbnail={vimeoThumbnail}
+              />
             </div>
           )}
           <WinnerInfo
@@ -176,6 +186,16 @@ export const query = graphql`
         year
         award
         special_award
+        video
+        video_thumbnail {
+          localFiles {
+            childCloudinaryAsset {
+              fluid(maxWidth: 200) {
+                ...CloudinaryAssetFluid
+              }
+            }
+          }
+        }
         category {
           data {
             line_1

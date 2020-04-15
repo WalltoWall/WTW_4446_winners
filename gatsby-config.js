@@ -26,7 +26,11 @@ module.exports = {
             tableLinks: ['agency', 'category'],
             queryName: 'Winner',
             separateNodeType: true,
-            mapping: { images: 'fileNode', credits: 'text/markdown' },
+            mapping: {
+              images: 'fileNode',
+              credits: 'text/markdown',
+              video_thumbnail: 'fileNode',
+            },
             separateMapType: true,
           },
           {
