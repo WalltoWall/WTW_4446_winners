@@ -134,7 +134,7 @@ export const Header = (props: HeaderProps) => {
                 alignItems: 'center',
               })}
             >
-              <NavItem href="/winners">Winners</NavItem>
+              <NavItem href="/winners/">Winners</NavItem>
               <NavItem href="/ad-people/">Ad People</NavItem>
               <NavItem href="/high-school/">High School</NavItem>
               <NavItem href="/college/">College</NavItem>
