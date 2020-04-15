@@ -119,7 +119,6 @@ export const MediaGallery = ({
         x={16}
         y={9}
         css={{
-          maxHeight: '50rem',
           position: 'relative',
           background: t.colors.Black,
         }}
