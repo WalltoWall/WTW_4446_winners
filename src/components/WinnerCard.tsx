@@ -121,20 +121,19 @@ export const WinnerCard = ({
             position: 'relative',
           })}
         >
+          {imageFluid && (
+            <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
+          )}
           {isNationalWinner && (
             <Ribbon
               css={mq({
                 position: 'absolute',
                 right: 0,
                 top: t.space[4],
-                zIndex: t.zIndices.Ribbon,
               })}
             >
               2020 National Winner
             </Ribbon>
-          )}
-          {imageFluid && (
-            <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
           )}
         </AspectRatio>
       </Link>
