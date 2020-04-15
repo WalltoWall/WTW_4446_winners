@@ -13,10 +13,14 @@ import { CardList } from '../components/CardList'
 import { HTMLContent } from '../components/HTMLContent'
 import { View } from '../components/View'
 import { SpecialWinners } from '../components/SpecialWinners'
+import { SVG } from '../components/SVG'
+import { Button } from '../components/Button'
+import { Link } from '../components/Link'
 
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
+import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
 
 export type IndexPage = LayoutProps & {
   data: IndexPageQuery
@@ -105,9 +109,47 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
       <ColoredBoxesSlice
         css={{ paddingBottom: 0 }}
         leftBackgroundColor="Black"
-        leftBoxChildren={<></>}
+        leftBoxChildren={
+          <SVG
+            svg={AssetAAALogoSVG}
+            css={mq({ width: ['6rem', '8rem', '10rem', '12rem'] })}
+          />
+        }
         rightBackgroundColor="White"
-        rightBoxChildren={<></>}
+        rightBoxChildren={
+          <>
+            <HTMLContent
+              html={
+                data.homeNationalWinners?.data?.rich_text?.childMarkdownRemark
+                  ?.html
+              }
+              css={mq({ color: t.colors.Black, marginBottom: t.spaceScales.s })}
+              componentOverrides={{
+                h1: Comp => props => (
+                  <View
+                    as={Comp}
+                    {...props}
+                    css={mq({
+                      fontSize: t.f.xl,
+                      lineHeight: t.lh.Title,
+                      marginTop: linearScale('2.25rem', '3rem'),
+                      marginBottom: linearScale('1rem', '1.5rem'),
+                      color: t.c.Black,
+                      ...t.boxStyles.firstLastNoMargin,
+                    })}
+                  />
+                ),
+              }}
+            />
+
+            {data.homeButtonHref?.data?.href && (
+              // @ts-ignore
+              <Button as={Link} href={data.homeButtonHref.data.href}>
+                {data.homeButtonText?.data?.plain_text}
+              </Button>
+            )}
+          </>
+        }
       />
 
       <ColoredBoxesSlice
@@ -221,6 +263,25 @@ export const query = graphql`
     ) {
       nodes {
         ...SpecialAwardWinner
+      }
+    }
+    homeNationalWinners: airtableTextField(
+      data: { uid: { eq: "Home National Winners" } }
+    ) {
+      data {
+        plain_text
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    homeNationalWinnersHref: airtableLink(
+      data: { uid: { eq: "Home National Winners" } }
+    ) {
+      data {
+        href
       }
     }
     homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
