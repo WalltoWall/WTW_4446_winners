@@ -2361,6 +2361,8 @@ export type AirtableWinnerData = {
   images?: Maybe<AirtableFieldfileNode>;
   description?: Maybe<Scalars['String']>;
   special_award?: Maybe<Scalars['String']>;
+  video?: Maybe<Scalars['String']>;
+  video_thumbnail?: Maybe<AirtableFieldfileNode>;
   national_winner?: Maybe<Scalars['Boolean']>;
 };
 
@@ -2403,6 +2405,8 @@ export type AirtableWinnerDataFilterInput = {
   images?: Maybe<AirtableFieldfileNodeFilterInput>;
   description?: Maybe<StringQueryOperatorInput>;
   special_award?: Maybe<StringQueryOperatorInput>;
+  video?: Maybe<StringQueryOperatorInput>;
+  video_thumbnail?: Maybe<AirtableFieldfileNodeFilterInput>;
   national_winner?: Maybe<BooleanQueryOperatorInput>;
 };
 
@@ -2650,6 +2654,64 @@ export enum AirtableWinnerFieldsEnum {
   DataImagesLocalFilesChildren = 'data___images___localFiles___children',
   DataDescription = 'data___description',
   DataSpecialAward = 'data___special_award',
+  DataVideo = 'data___video',
+  DataVideoThumbnailId = 'data___video_thumbnail___id',
+  DataVideoThumbnailParentId = 'data___video_thumbnail___parent___id',
+  DataVideoThumbnailParentChildren = 'data___video_thumbnail___parent___children',
+  DataVideoThumbnailChildren = 'data___video_thumbnail___children',
+  DataVideoThumbnailChildrenId = 'data___video_thumbnail___children___id',
+  DataVideoThumbnailChildrenChildren = 'data___video_thumbnail___children___children',
+  DataVideoThumbnailInternalContent = 'data___video_thumbnail___internal___content',
+  DataVideoThumbnailInternalContentDigest = 'data___video_thumbnail___internal___contentDigest',
+  DataVideoThumbnailInternalDescription = 'data___video_thumbnail___internal___description',
+  DataVideoThumbnailInternalFieldOwners = 'data___video_thumbnail___internal___fieldOwners',
+  DataVideoThumbnailInternalIgnoreType = 'data___video_thumbnail___internal___ignoreType',
+  DataVideoThumbnailInternalMediaType = 'data___video_thumbnail___internal___mediaType',
+  DataVideoThumbnailInternalOwner = 'data___video_thumbnail___internal___owner',
+  DataVideoThumbnailInternalType = 'data___video_thumbnail___internal___type',
+  DataVideoThumbnailRaw = 'data___video_thumbnail___raw',
+  DataVideoThumbnailRawId = 'data___video_thumbnail___raw___id',
+  DataVideoThumbnailRawUrl = 'data___video_thumbnail___raw___url',
+  DataVideoThumbnailRawFilename = 'data___video_thumbnail___raw___filename',
+  DataVideoThumbnailRawSize = 'data___video_thumbnail___raw___size',
+  DataVideoThumbnailRawType = 'data___video_thumbnail___raw___type',
+  DataVideoThumbnailLocalFiles = 'data___video_thumbnail___localFiles',
+  DataVideoThumbnailLocalFilesSourceInstanceName = 'data___video_thumbnail___localFiles___sourceInstanceName',
+  DataVideoThumbnailLocalFilesAbsolutePath = 'data___video_thumbnail___localFiles___absolutePath',
+  DataVideoThumbnailLocalFilesRelativePath = 'data___video_thumbnail___localFiles___relativePath',
+  DataVideoThumbnailLocalFilesExtension = 'data___video_thumbnail___localFiles___extension',
+  DataVideoThumbnailLocalFilesSize = 'data___video_thumbnail___localFiles___size',
+  DataVideoThumbnailLocalFilesPrettySize = 'data___video_thumbnail___localFiles___prettySize',
+  DataVideoThumbnailLocalFilesModifiedTime = 'data___video_thumbnail___localFiles___modifiedTime',
+  DataVideoThumbnailLocalFilesAccessTime = 'data___video_thumbnail___localFiles___accessTime',
+  DataVideoThumbnailLocalFilesChangeTime = 'data___video_thumbnail___localFiles___changeTime',
+  DataVideoThumbnailLocalFilesBirthTime = 'data___video_thumbnail___localFiles___birthTime',
+  DataVideoThumbnailLocalFilesRoot = 'data___video_thumbnail___localFiles___root',
+  DataVideoThumbnailLocalFilesDir = 'data___video_thumbnail___localFiles___dir',
+  DataVideoThumbnailLocalFilesBase = 'data___video_thumbnail___localFiles___base',
+  DataVideoThumbnailLocalFilesExt = 'data___video_thumbnail___localFiles___ext',
+  DataVideoThumbnailLocalFilesName = 'data___video_thumbnail___localFiles___name',
+  DataVideoThumbnailLocalFilesRelativeDirectory = 'data___video_thumbnail___localFiles___relativeDirectory',
+  DataVideoThumbnailLocalFilesDev = 'data___video_thumbnail___localFiles___dev',
+  DataVideoThumbnailLocalFilesMode = 'data___video_thumbnail___localFiles___mode',
+  DataVideoThumbnailLocalFilesNlink = 'data___video_thumbnail___localFiles___nlink',
+  DataVideoThumbnailLocalFilesUid = 'data___video_thumbnail___localFiles___uid',
+  DataVideoThumbnailLocalFilesGid = 'data___video_thumbnail___localFiles___gid',
+  DataVideoThumbnailLocalFilesRdev = 'data___video_thumbnail___localFiles___rdev',
+  DataVideoThumbnailLocalFilesIno = 'data___video_thumbnail___localFiles___ino',
+  DataVideoThumbnailLocalFilesAtimeMs = 'data___video_thumbnail___localFiles___atimeMs',
+  DataVideoThumbnailLocalFilesMtimeMs = 'data___video_thumbnail___localFiles___mtimeMs',
+  DataVideoThumbnailLocalFilesCtimeMs = 'data___video_thumbnail___localFiles___ctimeMs',
+  DataVideoThumbnailLocalFilesAtime = 'data___video_thumbnail___localFiles___atime',
+  DataVideoThumbnailLocalFilesMtime = 'data___video_thumbnail___localFiles___mtime',
+  DataVideoThumbnailLocalFilesCtime = 'data___video_thumbnail___localFiles___ctime',
+  DataVideoThumbnailLocalFilesBirthtime = 'data___video_thumbnail___localFiles___birthtime',
+  DataVideoThumbnailLocalFilesBirthtimeMs = 'data___video_thumbnail___localFiles___birthtimeMs',
+  DataVideoThumbnailLocalFilesBlksize = 'data___video_thumbnail___localFiles___blksize',
+  DataVideoThumbnailLocalFilesBlocks = 'data___video_thumbnail___localFiles___blocks',
+  DataVideoThumbnailLocalFilesUrl = 'data___video_thumbnail___localFiles___url',
+  DataVideoThumbnailLocalFilesId = 'data___video_thumbnail___localFiles___id',
+  DataVideoThumbnailLocalFilesChildren = 'data___video_thumbnail___localFiles___children',
   DataNationalWinner = 'data___national_winner',
   FieldsUrl = 'fields___url',
   FieldsTags = 'fields___tags',
@@ -5906,6 +5968,7 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsPluginsName = 'pluginCreator___pluginOptions___plugins___name',
   PluginCreatorPluginOptionsPluginsVersion = 'pluginCreator___pluginOptions___plugins___version',
   PluginCreatorPluginOptionsPluginsPluginFilepath = 'pluginCreator___pluginOptions___plugins___pluginFilepath',
+  PluginCreatorPluginOptionsDisplayName = 'pluginCreator___pluginOptions___displayName',
   PluginCreatorPluginOptionsApiKey = 'pluginCreator___pluginOptions___apiKey',
   PluginCreatorPluginOptionsConcurrency = 'pluginCreator___pluginOptions___concurrency',
   PluginCreatorPluginOptionsTables = 'pluginCreator___pluginOptions___tables',
@@ -5925,7 +5988,6 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsStore = 'pluginCreator___pluginOptions___store',
   PluginCreatorPluginOptionsPath = 'pluginCreator___pluginOptions___path',
   PluginCreatorPluginOptionsPathCheck = 'pluginCreator___pluginOptions___pathCheck',
-  PluginCreatorPluginOptionsDisplayName = 'pluginCreator___pluginOptions___displayName',
   PluginCreatorNodeApIs = 'pluginCreator___nodeAPIs',
   PluginCreatorBrowserApIs = 'pluginCreator___browserAPIs',
   PluginCreatorSsrApIs = 'pluginCreator___ssrAPIs',
@@ -6119,6 +6181,7 @@ export enum SitePluginFieldsEnum {
   PluginOptionsPluginsName = 'pluginOptions___plugins___name',
   PluginOptionsPluginsVersion = 'pluginOptions___plugins___version',
   PluginOptionsPluginsPluginFilepath = 'pluginOptions___plugins___pluginFilepath',
+  PluginOptionsDisplayName = 'pluginOptions___displayName',
   PluginOptionsApiKey = 'pluginOptions___apiKey',
   PluginOptionsConcurrency = 'pluginOptions___concurrency',
   PluginOptionsTables = 'pluginOptions___tables',
@@ -6129,6 +6192,7 @@ export enum SitePluginFieldsEnum {
   PluginOptionsTablesSeparateNodeType = 'pluginOptions___tables___separateNodeType',
   PluginOptionsTablesMappingImages = 'pluginOptions___tables___mapping___images',
   PluginOptionsTablesMappingCredits = 'pluginOptions___tables___mapping___credits',
+  PluginOptionsTablesMappingVideoThumbnail = 'pluginOptions___tables___mapping___video_thumbnail',
   PluginOptionsTablesMappingAvatar = 'pluginOptions___tables___mapping___avatar',
   PluginOptionsTablesMappingPhoto = 'pluginOptions___tables___mapping___photo',
   PluginOptionsTablesMappingDescription = 'pluginOptions___tables___mapping___description',
@@ -6146,7 +6210,6 @@ export enum SitePluginFieldsEnum {
   PluginOptionsStore = 'pluginOptions___store',
   PluginOptionsPath = 'pluginOptions___path',
   PluginOptionsPathCheck = 'pluginOptions___pathCheck',
-  PluginOptionsDisplayName = 'pluginOptions___displayName',
   NodeApIs = 'nodeAPIs',
   BrowserApIs = 'browserAPIs',
   SsrApIs = 'ssrAPIs',
@@ -6261,6 +6324,7 @@ export type SitePluginPackageJsonPeerDependenciesFilterListInput = {
 
 export type SitePluginPluginOptions = {
   plugins?: Maybe<Array<Maybe<SitePluginPluginOptionsPlugins>>>;
+  displayName?: Maybe<Scalars['Boolean']>;
   apiKey?: Maybe<Scalars['String']>;
   concurrency?: Maybe<Scalars['Int']>;
   tables?: Maybe<Array<Maybe<SitePluginPluginOptionsTables>>>;
@@ -6274,11 +6338,11 @@ export type SitePluginPluginOptions = {
   store?: Maybe<Array<Maybe<Scalars['String']>>>;
   path?: Maybe<Scalars['String']>;
   pathCheck?: Maybe<Scalars['Boolean']>;
-  displayName?: Maybe<Scalars['Boolean']>;
 };
 
 export type SitePluginPluginOptionsFilterInput = {
   plugins?: Maybe<SitePluginPluginOptionsPluginsFilterListInput>;
+  displayName?: Maybe<BooleanQueryOperatorInput>;
   apiKey?: Maybe<StringQueryOperatorInput>;
   concurrency?: Maybe<IntQueryOperatorInput>;
   tables?: Maybe<SitePluginPluginOptionsTablesFilterListInput>;
@@ -6292,7 +6356,6 @@ export type SitePluginPluginOptionsFilterInput = {
   store?: Maybe<StringQueryOperatorInput>;
   path?: Maybe<StringQueryOperatorInput>;
   pathCheck?: Maybe<BooleanQueryOperatorInput>;
-  displayName?: Maybe<BooleanQueryOperatorInput>;
 };
 
 export type SitePluginPluginOptionsPlugins = {
@@ -6342,6 +6405,7 @@ export type SitePluginPluginOptionsTablesFilterListInput = {
 export type SitePluginPluginOptionsTablesMapping = {
   images?: Maybe<Scalars['String']>;
   credits?: Maybe<Scalars['String']>;
+  video_thumbnail?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -6353,6 +6417,7 @@ export type SitePluginPluginOptionsTablesMapping = {
 export type SitePluginPluginOptionsTablesMappingFilterInput = {
   images?: Maybe<StringQueryOperatorInput>;
   credits?: Maybe<StringQueryOperatorInput>;
+  video_thumbnail?: Maybe<StringQueryOperatorInput>;
   avatar?: Maybe<StringQueryOperatorInput>;
   photo?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
@@ -6488,8 +6553,8 @@ export type WinnerTemplateQueryVariables = {
 
 
 export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableWinnerFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
-      Pick<AirtableWinnerData, 'name' | 'type' | 'year' | 'award' | 'special_award' | 'client'>
-      & { category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
+      Pick<AirtableWinnerData, 'name' | 'type' | 'year' | 'award' | 'special_award' | 'video' | 'client'>
+      & { video_thumbnail?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }>, category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
           Pick<AirtableAgencyData, 'name'>
           & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
         )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }

@@ -76,25 +76,36 @@ const ArrowButton = ({
 
 const ASPECT_RATIO = { x: [4, 16], y: [3, 9] }
 
-export type ImageGalleryProps = ViewProps & {
+export type MediaGalleryProps = ViewProps & {
   images: FluidObject[]
+  vimeoLink?: string | null
+  vimeoThumbnail?: FluidObject
 }
 
-export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
+export const MediaGallery = ({
+  images,
+  vimeoLink,
+  vimeoThumbnail,
+  ...props
+}: MediaGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const activeImage = images[activeIndex]
-  const hasMultipleImages = images.length > 1
 
-  const nextImage = () =>
+  const media = [vimeoThumbnail, ...images].filter(Boolean)
+  const activeMedia = media[activeIndex]
+  const hasMultipleMedia = media.length > 1
+
+  const isShowingVideo = activeIndex === 0 && Boolean(vimeoLink)
+
+  const nextMedia = () =>
     setActiveIndex(idx => {
-      if (idx === images.length - 1) return 0
+      if (idx === media.length - 1) return 0
 
       return idx + 1
     })
 
-  const prevImage = () =>
+  const prevMedia = () =>
     setActiveIndex(idx => {
-      if (idx === 0) return images.length - 1
+      if (idx === 0) return media.length - 1
 
       return idx - 1
     })
@@ -104,16 +115,40 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
       {...props}
       css={mq({ display: 'grid', gap: linearScale('0.8125rem', '1.5rem') })}
     >
-      <ImageContainer css={{ maxHeight: '50rem', position: 'relative' }}>
-        <GatsbyImage fluid={activeImage} css={{ height: '100%' }} />
-        {hasMultipleImages && (
+      <AspectRatio
+        x={16}
+        y={9}
+        css={{
+          maxHeight: '50rem',
+          position: 'relative',
+          background: t.colors.Black,
+        }}
+      >
+        {/* TODO: When plan is upgraded, add iframe query options for customization and privacy */}
+        {isShowingVideo ? (
+          <iframe
+            src={`${vimeoLink?.replace('vimeo.com', 'player.vimeo.com/video')}`}
+            frameBorder="0"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            css={{ height: '100%', width: '100%' }}
+          />
+        ) : (
+          <ImageContainer>
+            <GatsbyImage
+              fluid={activeMedia as FluidObject}
+              css={{ height: '100%' }}
+            />
+          </ImageContainer>
+        )}
+        {hasMultipleMedia && (
           <>
-            <ArrowButton variant="previous" onClick={prevImage} />
-            <ArrowButton variant="next" onClick={nextImage} />
+            <ArrowButton variant="previous" onClick={prevMedia} />
+            <ArrowButton variant="next" onClick={nextMedia} />
           </>
         )}
-      </ImageContainer>
-      {hasMultipleImages && (
+      </AspectRatio>
+      {hasMultipleMedia && (
         <ul
           css={mq({
             display: 'flex',
@@ -123,9 +158,9 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
             marginBottom: negateScale(linearScale('0.5rem', '1.625rem')),
           })}
         >
-          {images.map((image, i) => (
+          {media.map((media, i) => (
             <li
-              key={image.src}
+              key={media.src}
               css={mq({
                 marginRight: linearScale('0.5rem', '1.625rem'),
                 marginBottom: linearScale('0.5rem', '1.625rem'),
@@ -152,7 +187,7 @@ export const ImageGallery = ({ images, ...props }: ImageGalleryProps) => {
                     width: linearScale('4.25rem', '13rem'),
                   })}
                 >
-                  <GatsbyImage fluid={image} css={{ height: '100%' }} />
+                  <GatsbyImage fluid={media} css={{ height: '100%' }} />
                 </AspectRatio>
               </button>
             </li>
