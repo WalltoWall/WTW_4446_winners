@@ -64,7 +64,7 @@ exports.createPages = async gatsbyContext => {
   const { createNode, createPage } = actions
   const { program } = store.getState()
 
-  const processPaginatedCollection = ({ collection, name, pageSize = 8 }) => {
+  const processPaginatedCollection = ({ collection, name, pageSize = 12 }) => {
     const nodeInput = createPaginatedCollectionNodes({
       collection,
       name,
