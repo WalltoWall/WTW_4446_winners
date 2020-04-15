@@ -20,7 +20,7 @@ export type PaginatedSearchResultsProps = {
   }
 }
 
-const RESULTS_PER_PAGE = 8
+const RESULTS_PER_PAGE = 12
 
 const fetchJson = async (url: string) => {
   const req = await fetch(url)
