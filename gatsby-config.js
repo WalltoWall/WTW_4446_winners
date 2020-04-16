@@ -8,6 +8,7 @@ module.exports = {
     'gatsby-plugin-svgr',
     'gatsby-plugin-react-helmet-async',
     'gatsby-plugin-paginated-collection',
+    'gatsby-plugin-imgix',
     {
       resolve: 'gatsby-plugin-styled-components',
       options: {
@@ -27,7 +28,6 @@ module.exports = {
             queryName: 'Winner',
             separateNodeType: true,
             mapping: {
-              images: 'fileNode',
               credits: 'text/markdown',
               video_thumbnail: 'fileNode',
             },
@@ -92,6 +92,13 @@ module.exports = {
             separateNodeType: true,
             separateMapType: true,
           },
+          {
+            baseId: process.env.AIRTABLE_BASE_ID,
+            tableName: 'Images Test',
+            queryName: 'ImagesTest',
+            separateNodeType: true,
+            separateMapType: true,
+          },
         ],
       },
     },
@@ -153,15 +160,11 @@ module.exports = {
                     }
                   }
                   images {
-                    localFiles {
-                      childCloudinaryAsset {
-                        fluid(maxWidth: 800) {
-                          aspectRatio
-                          sizes
-                          src
-                          srcSet
-                        }
-                      }
+                    fluid(maxWidth: 500) {
+                      aspectRatio
+                      sizes
+                      src
+                      srcSet
                     }
                   }
                 }
@@ -201,14 +204,7 @@ module.exports = {
               'childCloudinaryAsset',
               'fluid',
             ]),
-            imageFluid: dlv(node, [
-              'data',
-              'images',
-              'localFiles',
-              0,
-              'childCloudinaryAsset',
-              'fluid',
-            ]),
+            imageFluid: dlv(node, ['data', 'images', 0, 'fluid']),
           })),
       },
     },

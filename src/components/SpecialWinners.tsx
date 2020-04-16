@@ -44,10 +44,7 @@ export const SpecialWinners = ({
               title={winner?.data?.name}
               subtitle={winner?.data?.special_award}
               award={winner?.data?.award?.toLowerCase?.() as Award}
-              imageFluid={
-                winner?.data?.images?.localFiles?.[0]?.childCloudinaryAsset
-                  ?.fluid
-              }
+              imageFluid={winner?.data?.images?.[0]?.fluid}
               isSpecialAward={true}
               isNationalWinner={winner?.data?.national_winner}
               agencyName={agency?.data?.name!}

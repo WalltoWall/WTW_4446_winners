@@ -3,6 +3,7 @@ const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
 const kebabCase = require('lodash.kebabcase')
+const { buildFluidGatsbyImage2 } = require('gatsby-plugin-imgix')
 
 const {
   createPaginatedCollectionNodes,
@@ -28,14 +29,7 @@ const normalizeWinnerNode = node => {
     award: node.data.award.toLowerCase(),
     nationalWinner: Boolean(node.data.national_winner),
     category: dlv(node, ['data', 'category', 0, 'data']),
-    imageFluid: dlv(node, [
-      'data',
-      'images',
-      'localFiles',
-      0,
-      'childCloudinaryAsset',
-      'fluid',
-    ]),
+    imageFluid: dlv(node, ['data', 'images', 0, 'fluid']),
     agency: {
       name: dlv(agency, ['data', 'name']),
       url: dlv(agency, ['fields', 'url']),
@@ -134,16 +128,12 @@ exports.createPages = async gatsbyContext => {
               }
             }
             images {
-              localFiles {
-                childCloudinaryAsset {
-                  fluid(maxWidth: 800) {
-                    aspectRatio
-                    base64
-                    sizes
-                    src
-                    srcSet
-                  }
-                }
+              fluid(maxWidth: 500) {
+                aspectRatio
+                base64
+                sizes
+                src
+                srcSet
               }
             }
           }
@@ -432,4 +422,46 @@ exports.onCreateNode = ({ node, actions }) => {
       break
     }
   }
+}
+
+exports.createSchemaCustomization = gatsbyContext => {
+  const { actions } = gatsbyContext
+  const { createTypes } = actions
+
+  const types = `
+    type AirtableWinnerDataImages {
+      fluid(
+        maxWidth: Int
+        maxHeight: Int
+        srcSetBreakpoints: [Int!]
+      ): ImgixImageFluidType
+      fixed(width: Int, height: Int): ImgixImageFixedType
+    }
+  `
+
+  createTypes(types)
+}
+
+exports.createResolvers = gatsbyContext => {
+  const { createResolvers } = gatsbyContext
+
+  const resolveFluid = (parent, args) =>
+    parent.url
+      ? buildFluidGatsbyImage2(
+          `https://test-source.imgix.net/${encodeURIComponent(parent.url)}`,
+          args,
+          process.env.IMGIX_SECURE_URL_TOKEN,
+        )
+      : undefined
+
+  const resolveFixed = () => {}
+
+  const resolvers = {
+    AirtableWinnerDataImages: {
+      fluid: { resolve: resolveFluid },
+      fixed: { resolve: resolveFixed },
+    },
+  }
+
+  createResolvers(resolvers)
 }

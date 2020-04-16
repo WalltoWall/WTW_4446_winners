@@ -366,12 +366,8 @@ export const query = graphql`
         }
       }
       images {
-        localFiles {
-          childCloudinaryAsset {
-            fluid(maxWidth: 1000) {
-              ...CloudinaryAssetFluid
-            }
-          }
+        fluid(maxWidth: 1000) {
+          ...GatsbyImgixFluid
         }
       }
     }

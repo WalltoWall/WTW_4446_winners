@@ -61,11 +61,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const agencyAvatarFluid =
     agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
 
-  const images = compact(
-    winner?.data?.images?.localFiles?.map(
-      localFile => localFile?.childCloudinaryAsset?.fluid,
-    ) ?? [],
-  )
+  const images = compact(winner?.data?.images?.map(image => image?.fluid) ?? [])
   const vimeoLink = winner?.data?.video
   const vimeoThumbnail = winner?.data?.video_thumbnail?.localFiles?.[0]
     ?.childCloudinaryAsset?.fluid as FluidObject
@@ -226,12 +222,8 @@ export const query = graphql`
           }
         }
         images {
-          localFiles {
-            childCloudinaryAsset {
-              fluid(maxWidth: 2000) {
-                ...CloudinaryAssetFluid
-              }
-            }
+          fluid(maxWidth: 1000) {
+            ...GatsbyImgixFluid
           }
         }
       }
