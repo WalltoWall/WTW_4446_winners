@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import { navigate } from 'gatsby'
 import kebabCase from 'lodash.kebabcase'
 
@@ -28,20 +28,34 @@ export const WinnerFilters = ({
   query,
   onQueryChange,
 }: WinnerFiltersProps) => {
-  const [year, setYear] = useState(initialYear)
+  const yearRef = useRef<HTMLSelectElement>(null)
+  const categoryRef = useRef<HTMLSelectElement>(null)
 
   const firstPageId = initialPage!.id
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setYear(e.target.value)
-
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const pageId = e.target.value
+  const getCategorySlugFromPageId = (pageId: string) => {
     const page = firstPages.find(fp => fp.id === pageId)
-    const categorySlug = kebabCase(page?.collection.name.split('/')[1]).replace(
+
+    return kebabCase(page?.collection.name.split('/')[1]).replace(
       'advertising',
       'ad',
     )
+  }
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const pageId = categoryRef.current?.value
+    if (!pageId) return
+
+    const categorySlug = getCategorySlugFromPageId(pageId)
+
+    navigate(`/winners/${e.target.value}/${categorySlug}`)
+  }
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const categorySlug = getCategorySlugFromPageId(e.target.value)
+    const year = yearRef.current?.value
+
+    if (!year) return
 
     navigate(`/winners/${year}/${categorySlug}/`)
   }
@@ -72,7 +86,11 @@ export const WinnerFilters = ({
             justifyItems: 'center',
           })}
         >
-          <FormSelect value={year} onChange={handleYearChange}>
+          <FormSelect
+            value={initialYear}
+            onChange={handleYearChange}
+            ref={yearRef}
+          >
             {years.map(y => (
               <option value={y} key={y}>
                 {y}
@@ -82,6 +100,7 @@ export const WinnerFilters = ({
           <FormSelect
             defaultValue={firstPageId}
             value={firstPageId}
+            ref={categoryRef}
             onChange={handleCategoryChange}
           >
             <option value="/">All categories</option>
