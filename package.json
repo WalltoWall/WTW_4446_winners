@@ -1,9 +1,10 @@
 {
   "name": "WTW_4446_winners",
   "private": true,
+  "version": "0.1.0",
   "scripts": {
     "clean": "gatsby clean",
-    "develop": "cross-env ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
     "start": "yarn develop",
     "build": "cross-env NODE_ENV=production gatsby build",
     "deploy": "yarn build && netlify deploy -d public",

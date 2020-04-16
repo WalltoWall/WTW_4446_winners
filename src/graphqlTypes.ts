@@ -204,8 +204,8 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataWebsite = 'data___agency___data___website',
-  DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
+  DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
@@ -364,11 +364,11 @@ export type AirtableAgencyData = {
   created_at?: Maybe<Scalars['Date']>;
   Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
   website?: Maybe<Scalars['String']>;
-  facebook_handle?: Maybe<Scalars['String']>;
   instagram_handle?: Maybe<Scalars['String']>;
+  avatar?: Maybe<AirtableFieldfileNode>;
+  facebook_handle?: Maybe<Scalars['String']>;
   linkedin_handle?: Maybe<Scalars['String']>;
   twitter_handle?: Maybe<Scalars['String']>;
-  avatar?: Maybe<AirtableFieldfileNode>;
 };
 
 
@@ -394,11 +394,11 @@ export type AirtableAgencyDataFilterInput = {
   created_at?: Maybe<DateQueryOperatorInput>;
   Ad_People?: Maybe<StringQueryOperatorInput>;
   website?: Maybe<StringQueryOperatorInput>;
-  facebook_handle?: Maybe<StringQueryOperatorInput>;
   instagram_handle?: Maybe<StringQueryOperatorInput>;
+  avatar?: Maybe<AirtableFieldfileNodeFilterInput>;
+  facebook_handle?: Maybe<StringQueryOperatorInput>;
   linkedin_handle?: Maybe<StringQueryOperatorInput>;
   twitter_handle?: Maybe<StringQueryOperatorInput>;
-  avatar?: Maybe<AirtableFieldfileNodeFilterInput>;
 };
 
 export type AirtableAgencyEdge = {
@@ -507,10 +507,7 @@ export enum AirtableAgencyFieldsEnum {
   DataCreatedAt = 'data___created_at',
   DataAdPeople = 'data___Ad_People',
   DataWebsite = 'data___website',
-  DataFacebookHandle = 'data___facebook_handle',
   DataInstagramHandle = 'data___instagram_handle',
-  DataLinkedinHandle = 'data___linkedin_handle',
-  DataTwitterHandle = 'data___twitter_handle',
   DataAvatarId = 'data___avatar___id',
   DataAvatarParentId = 'data___avatar___parent___id',
   DataAvatarParentChildren = 'data___avatar___parent___children',
@@ -568,6 +565,9 @@ export enum AirtableAgencyFieldsEnum {
   DataAvatarLocalFilesUrl = 'data___avatar___localFiles___url',
   DataAvatarLocalFilesId = 'data___avatar___localFiles___id',
   DataAvatarLocalFilesChildren = 'data___avatar___localFiles___children',
+  DataFacebookHandle = 'data___facebook_handle',
+  DataLinkedinHandle = 'data___linkedin_handle',
+  DataTwitterHandle = 'data___twitter_handle',
   FieldsUrl = 'fields___url'
 }
 
@@ -1712,6 +1712,245 @@ export type AirtableImageFieldSortInput = {
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
+export type AirtableImagesTest = Node & {
+  id: Scalars['ID'];
+  parent?: Maybe<Node>;
+  children: Array<Node>;
+  internal: Internal;
+  table?: Maybe<Scalars['String']>;
+  recordId?: Maybe<Scalars['String']>;
+  queryName?: Maybe<Scalars['String']>;
+  data?: Maybe<AirtableImagesTestData>;
+};
+
+export type AirtableImagesTestConnection = {
+  totalCount: Scalars['Int'];
+  edges: Array<AirtableImagesTestEdge>;
+  nodes: Array<AirtableImagesTest>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars['String']>;
+  group: Array<AirtableImagesTestGroupConnection>;
+};
+
+
+export type AirtableImagesTestConnectionDistinctArgs = {
+  field: AirtableImagesTestFieldsEnum;
+};
+
+
+export type AirtableImagesTestConnectionGroupArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  field: AirtableImagesTestFieldsEnum;
+};
+
+export type AirtableImagesTestData = {
+  Attachments?: Maybe<Array<Maybe<AirtableImagesTestDataAttachments>>>;
+};
+
+export type AirtableImagesTestDataAttachments = {
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableImagesTestDataAttachmentsThumbnails>;
+};
+
+export type AirtableImagesTestDataAttachmentsFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsFilterInput>;
+};
+
+export type AirtableImagesTestDataAttachmentsFilterListInput = {
+  elemMatch?: Maybe<AirtableImagesTestDataAttachmentsFilterInput>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnails = {
+  small?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsSmall>;
+  large?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsLarge>;
+  full?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsFull>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsFilterInput = {
+  small?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableImagesTestDataAttachmentsThumbnailsFullFilterInput>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImagesTestDataAttachmentsThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableImagesTestDataFilterInput = {
+  Attachments?: Maybe<AirtableImagesTestDataAttachmentsFilterListInput>;
+};
+
+export type AirtableImagesTestEdge = {
+  next?: Maybe<AirtableImagesTest>;
+  node: AirtableImagesTest;
+  previous?: Maybe<AirtableImagesTest>;
+};
+
+export enum AirtableImagesTestFieldsEnum {
+  Id = 'id',
+  ParentId = 'parent___id',
+  ParentParentId = 'parent___parent___id',
+  ParentParentParentId = 'parent___parent___parent___id',
+  ParentParentParentChildren = 'parent___parent___parent___children',
+  ParentParentChildren = 'parent___parent___children',
+  ParentParentChildrenId = 'parent___parent___children___id',
+  ParentParentChildrenChildren = 'parent___parent___children___children',
+  ParentParentInternalContent = 'parent___parent___internal___content',
+  ParentParentInternalContentDigest = 'parent___parent___internal___contentDigest',
+  ParentParentInternalDescription = 'parent___parent___internal___description',
+  ParentParentInternalFieldOwners = 'parent___parent___internal___fieldOwners',
+  ParentParentInternalIgnoreType = 'parent___parent___internal___ignoreType',
+  ParentParentInternalMediaType = 'parent___parent___internal___mediaType',
+  ParentParentInternalOwner = 'parent___parent___internal___owner',
+  ParentParentInternalType = 'parent___parent___internal___type',
+  ParentChildren = 'parent___children',
+  ParentChildrenId = 'parent___children___id',
+  ParentChildrenParentId = 'parent___children___parent___id',
+  ParentChildrenParentChildren = 'parent___children___parent___children',
+  ParentChildrenChildren = 'parent___children___children',
+  ParentChildrenChildrenId = 'parent___children___children___id',
+  ParentChildrenChildrenChildren = 'parent___children___children___children',
+  ParentChildrenInternalContent = 'parent___children___internal___content',
+  ParentChildrenInternalContentDigest = 'parent___children___internal___contentDigest',
+  ParentChildrenInternalDescription = 'parent___children___internal___description',
+  ParentChildrenInternalFieldOwners = 'parent___children___internal___fieldOwners',
+  ParentChildrenInternalIgnoreType = 'parent___children___internal___ignoreType',
+  ParentChildrenInternalMediaType = 'parent___children___internal___mediaType',
+  ParentChildrenInternalOwner = 'parent___children___internal___owner',
+  ParentChildrenInternalType = 'parent___children___internal___type',
+  ParentInternalContent = 'parent___internal___content',
+  ParentInternalContentDigest = 'parent___internal___contentDigest',
+  ParentInternalDescription = 'parent___internal___description',
+  ParentInternalFieldOwners = 'parent___internal___fieldOwners',
+  ParentInternalIgnoreType = 'parent___internal___ignoreType',
+  ParentInternalMediaType = 'parent___internal___mediaType',
+  ParentInternalOwner = 'parent___internal___owner',
+  ParentInternalType = 'parent___internal___type',
+  Children = 'children',
+  ChildrenId = 'children___id',
+  ChildrenParentId = 'children___parent___id',
+  ChildrenParentParentId = 'children___parent___parent___id',
+  ChildrenParentParentChildren = 'children___parent___parent___children',
+  ChildrenParentChildren = 'children___parent___children',
+  ChildrenParentChildrenId = 'children___parent___children___id',
+  ChildrenParentChildrenChildren = 'children___parent___children___children',
+  ChildrenParentInternalContent = 'children___parent___internal___content',
+  ChildrenParentInternalContentDigest = 'children___parent___internal___contentDigest',
+  ChildrenParentInternalDescription = 'children___parent___internal___description',
+  ChildrenParentInternalFieldOwners = 'children___parent___internal___fieldOwners',
+  ChildrenParentInternalIgnoreType = 'children___parent___internal___ignoreType',
+  ChildrenParentInternalMediaType = 'children___parent___internal___mediaType',
+  ChildrenParentInternalOwner = 'children___parent___internal___owner',
+  ChildrenParentInternalType = 'children___parent___internal___type',
+  ChildrenChildren = 'children___children',
+  ChildrenChildrenId = 'children___children___id',
+  ChildrenChildrenParentId = 'children___children___parent___id',
+  ChildrenChildrenParentChildren = 'children___children___parent___children',
+  ChildrenChildrenChildren = 'children___children___children',
+  ChildrenChildrenChildrenId = 'children___children___children___id',
+  ChildrenChildrenChildrenChildren = 'children___children___children___children',
+  ChildrenChildrenInternalContent = 'children___children___internal___content',
+  ChildrenChildrenInternalContentDigest = 'children___children___internal___contentDigest',
+  ChildrenChildrenInternalDescription = 'children___children___internal___description',
+  ChildrenChildrenInternalFieldOwners = 'children___children___internal___fieldOwners',
+  ChildrenChildrenInternalIgnoreType = 'children___children___internal___ignoreType',
+  ChildrenChildrenInternalMediaType = 'children___children___internal___mediaType',
+  ChildrenChildrenInternalOwner = 'children___children___internal___owner',
+  ChildrenChildrenInternalType = 'children___children___internal___type',
+  ChildrenInternalContent = 'children___internal___content',
+  ChildrenInternalContentDigest = 'children___internal___contentDigest',
+  ChildrenInternalDescription = 'children___internal___description',
+  ChildrenInternalFieldOwners = 'children___internal___fieldOwners',
+  ChildrenInternalIgnoreType = 'children___internal___ignoreType',
+  ChildrenInternalMediaType = 'children___internal___mediaType',
+  ChildrenInternalOwner = 'children___internal___owner',
+  ChildrenInternalType = 'children___internal___type',
+  InternalContent = 'internal___content',
+  InternalContentDigest = 'internal___contentDigest',
+  InternalDescription = 'internal___description',
+  InternalFieldOwners = 'internal___fieldOwners',
+  InternalIgnoreType = 'internal___ignoreType',
+  InternalMediaType = 'internal___mediaType',
+  InternalOwner = 'internal___owner',
+  InternalType = 'internal___type',
+  Table = 'table',
+  RecordId = 'recordId',
+  QueryName = 'queryName',
+  DataAttachments = 'data___Attachments',
+  DataAttachmentsId = 'data___Attachments___id',
+  DataAttachmentsUrl = 'data___Attachments___url',
+  DataAttachmentsFilename = 'data___Attachments___filename',
+  DataAttachmentsSize = 'data___Attachments___size',
+  DataAttachmentsType = 'data___Attachments___type'
+}
+
+export type AirtableImagesTestFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableImagesTestDataFilterInput>;
+};
+
+export type AirtableImagesTestGroupConnection = {
+  totalCount: Scalars['Int'];
+  edges: Array<AirtableImagesTestEdge>;
+  nodes: Array<AirtableImagesTest>;
+  pageInfo: PageInfo;
+  field: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+};
+
+export type AirtableImagesTestSortInput = {
+  fields?: Maybe<Array<Maybe<AirtableImagesTestFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
+};
+
 export type AirtableLink = Node & {
   id: Scalars['ID'];
   parent?: Maybe<Node>;
@@ -2153,14 +2392,14 @@ export type AirtableTextFieldConnectionGroupArgs = {
 
 export type AirtableTextFieldData = {
   uid?: Maybe<Scalars['String']>;
-  rich_text?: Maybe<AirtableFieldtextmarkdown>;
   plain_text?: Maybe<Scalars['String']>;
+  rich_text?: Maybe<AirtableFieldtextmarkdown>;
 };
 
 export type AirtableTextFieldDataFilterInput = {
   uid?: Maybe<StringQueryOperatorInput>;
-  rich_text?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   plain_text?: Maybe<StringQueryOperatorInput>;
+  rich_text?: Maybe<AirtableFieldtextmarkdownFilterInput>;
 };
 
 export type AirtableTextFieldEdge = {
@@ -2260,6 +2499,7 @@ export enum AirtableTextFieldFieldsEnum {
   RecordId = 'recordId',
   QueryName = 'queryName',
   DataUid = 'data___uid',
+  DataPlainText = 'data___plain_text',
   DataRichTextId = 'data___rich_text___id',
   DataRichTextParentId = 'data___rich_text___parent___id',
   DataRichTextParentChildren = 'data___rich_text___parent___children',
@@ -2284,8 +2524,7 @@ export enum AirtableTextFieldFieldsEnum {
   DataRichTextChildMarkdownRemarkHeadings = 'data___rich_text___childMarkdownRemark___headings',
   DataRichTextChildMarkdownRemarkTimeToRead = 'data___rich_text___childMarkdownRemark___timeToRead',
   DataRichTextChildMarkdownRemarkTableOfContents = 'data___rich_text___childMarkdownRemark___tableOfContents',
-  DataRichTextChildMarkdownRemarkChildren = 'data___rich_text___childMarkdownRemark___children',
-  DataPlainText = 'data___plain_text'
+  DataRichTextChildMarkdownRemarkChildren = 'data___rich_text___childMarkdownRemark___children'
 }
 
 export type AirtableTextFieldFilterInput = {
@@ -2350,20 +2589,20 @@ export type AirtableWinnerData = {
   name?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
   agency?: Maybe<Array<Maybe<AirtableAgency>>>;
+  images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
+  description?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Date']>;
+  special_award?: Maybe<Scalars['String']>;
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   type?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
-  images?: Maybe<AirtableFieldfileNode>;
-  description?: Maybe<Scalars['String']>;
-  special_award?: Maybe<Scalars['String']>;
+  national_winner?: Maybe<Scalars['Boolean']>;
   video?: Maybe<Scalars['String']>;
   video_thumbnail?: Maybe<AirtableFieldfileNode>;
-  national_winner?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2394,20 +2633,107 @@ export type AirtableWinnerDataFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
   agency?: Maybe<AirtableAgencyFilterListInput>;
+  images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
+  description?: Maybe<StringQueryOperatorInput>;
   year?: Maybe<DateQueryOperatorInput>;
+  special_award?: Maybe<StringQueryOperatorInput>;
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
+  tags?: Maybe<StringQueryOperatorInput>;
   type?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
-  images?: Maybe<AirtableFieldfileNodeFilterInput>;
-  description?: Maybe<StringQueryOperatorInput>;
-  special_award?: Maybe<StringQueryOperatorInput>;
+  national_winner?: Maybe<BooleanQueryOperatorInput>;
   video?: Maybe<StringQueryOperatorInput>;
   video_thumbnail?: Maybe<AirtableFieldfileNodeFilterInput>;
-  national_winner?: Maybe<BooleanQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataImages = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  fixed?: Maybe<ImgixImageFixedType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableWinnerDataImagesThumbnails>;
+};
+
+
+export type AirtableWinnerDataImagesFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+  maxHeight?: Maybe<Scalars['Int']>;
+  srcSetBreakpoints?: Maybe<Array<Scalars['Int']>>;
+};
+
+
+export type AirtableWinnerDataImagesFixedArgs = {
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  fixed?: Maybe<ImgixImageFixedTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableWinnerDataImagesThumbnailsFilterInput>;
+};
+
+export type AirtableWinnerDataImagesFilterListInput = {
+  elemMatch?: Maybe<AirtableWinnerDataImagesFilterInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnails = {
+  small?: Maybe<AirtableWinnerDataImagesThumbnailsSmall>;
+  large?: Maybe<AirtableWinnerDataImagesThumbnailsLarge>;
+  full?: Maybe<AirtableWinnerDataImagesThumbnailsFull>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsFilterInput = {
+  small?: Maybe<AirtableWinnerDataImagesThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableWinnerDataImagesThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableWinnerDataImagesThumbnailsFullFilterInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
 };
 
 export type AirtableWinnerEdge = {
@@ -2537,12 +2863,35 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataWebsite = 'data___agency___data___website',
-  DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
+  DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
+  DataImages = 'data___images',
+  DataImagesFluidBase64 = 'data___images___fluid___base64',
+  DataImagesFluidAspectRatio = 'data___images___fluid___aspectRatio',
+  DataImagesFluidSrc = 'data___images___fluid___src',
+  DataImagesFluidSrcSet = 'data___images___fluid___srcSet',
+  DataImagesFluidSrcWebp = 'data___images___fluid___srcWebp',
+  DataImagesFluidSrcSetWebp = 'data___images___fluid___srcSetWebp',
+  DataImagesFluidSizes = 'data___images___fluid___sizes',
+  DataImagesFixedBase64 = 'data___images___fixed___base64',
+  DataImagesFixedAspectRatio = 'data___images___fixed___aspectRatio',
+  DataImagesFixedWidth = 'data___images___fixed___width',
+  DataImagesFixedHeight = 'data___images___fixed___height',
+  DataImagesFixedSrc = 'data___images___fixed___src',
+  DataImagesFixedSrcSet = 'data___images___fixed___srcSet',
+  DataImagesFixedSrcWebp = 'data___images___fixed___srcWebp',
+  DataImagesFixedSrcSetWebp = 'data___images___fixed___srcSetWebp',
+  DataImagesId = 'data___images___id',
+  DataImagesUrl = 'data___images___url',
+  DataImagesFilename = 'data___images___filename',
+  DataImagesSize = 'data___images___size',
+  DataImagesType = 'data___images___type',
+  DataDescription = 'data___description',
   DataYear = 'data___year',
+  DataSpecialAward = 'data___special_award',
   DataClient = 'data___client',
   DataCategory = 'data___category',
   DataCategoryId = 'data___category___id',
@@ -2566,6 +2915,7 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
   DataCategoryDataEntries = 'data___category___data___Entries',
+  DataTags = 'data___tags',
   DataType = 'data___type',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
@@ -2594,66 +2944,7 @@ export enum AirtableWinnerFieldsEnum {
   DataCreditsChildMarkdownRemarkTimeToRead = 'data___credits___childMarkdownRemark___timeToRead',
   DataCreditsChildMarkdownRemarkTableOfContents = 'data___credits___childMarkdownRemark___tableOfContents',
   DataCreditsChildMarkdownRemarkChildren = 'data___credits___childMarkdownRemark___children',
-  DataTags = 'data___tags',
-  DataImagesId = 'data___images___id',
-  DataImagesParentId = 'data___images___parent___id',
-  DataImagesParentChildren = 'data___images___parent___children',
-  DataImagesChildren = 'data___images___children',
-  DataImagesChildrenId = 'data___images___children___id',
-  DataImagesChildrenChildren = 'data___images___children___children',
-  DataImagesInternalContent = 'data___images___internal___content',
-  DataImagesInternalContentDigest = 'data___images___internal___contentDigest',
-  DataImagesInternalDescription = 'data___images___internal___description',
-  DataImagesInternalFieldOwners = 'data___images___internal___fieldOwners',
-  DataImagesInternalIgnoreType = 'data___images___internal___ignoreType',
-  DataImagesInternalMediaType = 'data___images___internal___mediaType',
-  DataImagesInternalOwner = 'data___images___internal___owner',
-  DataImagesInternalType = 'data___images___internal___type',
-  DataImagesRaw = 'data___images___raw',
-  DataImagesRawId = 'data___images___raw___id',
-  DataImagesRawUrl = 'data___images___raw___url',
-  DataImagesRawFilename = 'data___images___raw___filename',
-  DataImagesRawSize = 'data___images___raw___size',
-  DataImagesRawType = 'data___images___raw___type',
-  DataImagesLocalFiles = 'data___images___localFiles',
-  DataImagesLocalFilesSourceInstanceName = 'data___images___localFiles___sourceInstanceName',
-  DataImagesLocalFilesAbsolutePath = 'data___images___localFiles___absolutePath',
-  DataImagesLocalFilesRelativePath = 'data___images___localFiles___relativePath',
-  DataImagesLocalFilesExtension = 'data___images___localFiles___extension',
-  DataImagesLocalFilesSize = 'data___images___localFiles___size',
-  DataImagesLocalFilesPrettySize = 'data___images___localFiles___prettySize',
-  DataImagesLocalFilesModifiedTime = 'data___images___localFiles___modifiedTime',
-  DataImagesLocalFilesAccessTime = 'data___images___localFiles___accessTime',
-  DataImagesLocalFilesChangeTime = 'data___images___localFiles___changeTime',
-  DataImagesLocalFilesBirthTime = 'data___images___localFiles___birthTime',
-  DataImagesLocalFilesRoot = 'data___images___localFiles___root',
-  DataImagesLocalFilesDir = 'data___images___localFiles___dir',
-  DataImagesLocalFilesBase = 'data___images___localFiles___base',
-  DataImagesLocalFilesExt = 'data___images___localFiles___ext',
-  DataImagesLocalFilesName = 'data___images___localFiles___name',
-  DataImagesLocalFilesRelativeDirectory = 'data___images___localFiles___relativeDirectory',
-  DataImagesLocalFilesDev = 'data___images___localFiles___dev',
-  DataImagesLocalFilesMode = 'data___images___localFiles___mode',
-  DataImagesLocalFilesNlink = 'data___images___localFiles___nlink',
-  DataImagesLocalFilesUid = 'data___images___localFiles___uid',
-  DataImagesLocalFilesGid = 'data___images___localFiles___gid',
-  DataImagesLocalFilesRdev = 'data___images___localFiles___rdev',
-  DataImagesLocalFilesIno = 'data___images___localFiles___ino',
-  DataImagesLocalFilesAtimeMs = 'data___images___localFiles___atimeMs',
-  DataImagesLocalFilesMtimeMs = 'data___images___localFiles___mtimeMs',
-  DataImagesLocalFilesCtimeMs = 'data___images___localFiles___ctimeMs',
-  DataImagesLocalFilesAtime = 'data___images___localFiles___atime',
-  DataImagesLocalFilesMtime = 'data___images___localFiles___mtime',
-  DataImagesLocalFilesCtime = 'data___images___localFiles___ctime',
-  DataImagesLocalFilesBirthtime = 'data___images___localFiles___birthtime',
-  DataImagesLocalFilesBirthtimeMs = 'data___images___localFiles___birthtimeMs',
-  DataImagesLocalFilesBlksize = 'data___images___localFiles___blksize',
-  DataImagesLocalFilesBlocks = 'data___images___localFiles___blocks',
-  DataImagesLocalFilesUrl = 'data___images___localFiles___url',
-  DataImagesLocalFilesId = 'data___images___localFiles___id',
-  DataImagesLocalFilesChildren = 'data___images___localFiles___children',
-  DataDescription = 'data___description',
-  DataSpecialAward = 'data___special_award',
+  DataNationalWinner = 'data___national_winner',
   DataVideo = 'data___video',
   DataVideoThumbnailId = 'data___video_thumbnail___id',
   DataVideoThumbnailParentId = 'data___video_thumbnail___parent___id',
@@ -2712,7 +3003,6 @@ export enum AirtableWinnerFieldsEnum {
   DataVideoThumbnailLocalFilesUrl = 'data___video_thumbnail___localFiles___url',
   DataVideoThumbnailLocalFilesId = 'data___video_thumbnail___localFiles___id',
   DataVideoThumbnailLocalFilesChildren = 'data___video_thumbnail___localFiles___children',
-  DataNationalWinner = 'data___national_winner',
   FieldsUrl = 'fields___url',
   FieldsTags = 'fields___tags',
   FieldsTagsTag = 'fields___tags___tag',
@@ -3657,6 +3947,48 @@ export type FloatQueryOperatorInput = {
   lte?: Maybe<Scalars['Float']>;
   in?: Maybe<Array<Maybe<Scalars['Float']>>>;
   nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
+};
+
+export type ImgixImageFixedType = {
+  base64: Scalars['String'];
+  aspectRatio: Scalars['Float'];
+  width: Scalars['Float'];
+  height: Scalars['Float'];
+  src: Scalars['String'];
+  srcSet: Scalars['String'];
+  srcWebp: Scalars['String'];
+  srcSetWebp: Scalars['String'];
+};
+
+export type ImgixImageFixedTypeFilterInput = {
+  base64?: Maybe<StringQueryOperatorInput>;
+  aspectRatio?: Maybe<FloatQueryOperatorInput>;
+  width?: Maybe<FloatQueryOperatorInput>;
+  height?: Maybe<FloatQueryOperatorInput>;
+  src?: Maybe<StringQueryOperatorInput>;
+  srcSet?: Maybe<StringQueryOperatorInput>;
+  srcWebp?: Maybe<StringQueryOperatorInput>;
+  srcSetWebp?: Maybe<StringQueryOperatorInput>;
+};
+
+export type ImgixImageFluidType = {
+  base64: Scalars['String'];
+  aspectRatio: Scalars['Float'];
+  src: Scalars['String'];
+  srcSet: Scalars['String'];
+  srcWebp: Scalars['String'];
+  srcSetWebp: Scalars['String'];
+  sizes: Scalars['String'];
+};
+
+export type ImgixImageFluidTypeFilterInput = {
+  base64?: Maybe<StringQueryOperatorInput>;
+  aspectRatio?: Maybe<FloatQueryOperatorInput>;
+  src?: Maybe<StringQueryOperatorInput>;
+  srcSet?: Maybe<StringQueryOperatorInput>;
+  srcWebp?: Maybe<StringQueryOperatorInput>;
+  srcSetWebp?: Maybe<StringQueryOperatorInput>;
+  sizes?: Maybe<StringQueryOperatorInput>;
 };
 
 export type Internal = {
@@ -4914,24 +5246,26 @@ export type Query = {
   allMarkdownRemark: MarkdownRemarkConnection;
   cloudinaryAsset?: Maybe<CloudinaryAsset>;
   allCloudinaryAsset: CloudinaryAssetConnection;
-  airtableAgency?: Maybe<AirtableAgency>;
-  allAirtableAgency: AirtableAgencyConnection;
   airtableAdPerson?: Maybe<AirtableAdPerson>;
   allAirtableAdPerson: AirtableAdPersonConnection;
   airtableImageField?: Maybe<AirtableImageField>;
   allAirtableImageField: AirtableImageFieldConnection;
+  airtableAgency?: Maybe<AirtableAgency>;
+  allAirtableAgency: AirtableAgencyConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableTextField?: Maybe<AirtableTextField>;
   allAirtableTextField: AirtableTextFieldConnection;
-  airtableLink?: Maybe<AirtableLink>;
-  allAirtableLink: AirtableLinkConnection;
-  airtableArchive?: Maybe<AirtableArchive>;
-  allAirtableArchive: AirtableArchiveConnection;
   airtableFieldfileNode?: Maybe<AirtableFieldfileNode>;
   allAirtableFieldfileNode: AirtableFieldfileNodeConnection;
   airtableSponsors?: Maybe<AirtableSponsors>;
   allAirtableSponsors: AirtableSponsorsConnection;
+  airtableLink?: Maybe<AirtableLink>;
+  allAirtableLink: AirtableLinkConnection;
+  airtableArchive?: Maybe<AirtableArchive>;
+  allAirtableArchive: AirtableArchiveConnection;
+  airtableImagesTest?: Maybe<AirtableImagesTest>;
+  allAirtableImagesTest: AirtableImagesTestConnection;
   airtableFieldtextmarkdown?: Maybe<AirtableFieldtextmarkdown>;
   allAirtableFieldtextmarkdown: AirtableFieldtextmarkdownConnection;
   airtableWinner?: Maybe<AirtableWinner>;
@@ -5180,27 +5514,6 @@ export type QueryAllCloudinaryAssetArgs = {
 };
 
 
-export type QueryAirtableAgencyArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableAgencyDataFilterInput>;
-  fields?: Maybe<AirtableAgencyFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableAgencyArgs = {
-  filter?: Maybe<AirtableAgencyFilterInput>;
-  sort?: Maybe<AirtableAgencySortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAdPersonArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -5237,6 +5550,27 @@ export type QueryAirtableImageFieldArgs = {
 export type QueryAllAirtableImageFieldArgs = {
   filter?: Maybe<AirtableImageFieldFilterInput>;
   sort?: Maybe<AirtableImageFieldSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableAgencyArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableAgencyDataFilterInput>;
+  fields?: Maybe<AirtableAgencyFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableAgencyArgs = {
+  filter?: Maybe<AirtableAgencyFilterInput>;
+  sort?: Maybe<AirtableAgencySortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5282,6 +5616,44 @@ export type QueryAllAirtableTextFieldArgs = {
 };
 
 
+export type QueryAirtableFieldfileNodeArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  raw?: Maybe<AirtableFieldfileNodeRawFilterListInput>;
+  localFiles?: Maybe<FileFilterListInput>;
+};
+
+
+export type QueryAllAirtableFieldfileNodeArgs = {
+  filter?: Maybe<AirtableFieldfileNodeFilterInput>;
+  sort?: Maybe<AirtableFieldfileNodeSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableSponsorsArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableSponsorsDataFilterInput>;
+};
+
+
+export type QueryAllAirtableSponsorsArgs = {
+  filter?: Maybe<AirtableSponsorsFilterInput>;
+  sort?: Maybe<AirtableSponsorsSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryAirtableLinkArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -5322,25 +5694,7 @@ export type QueryAllAirtableArchiveArgs = {
 };
 
 
-export type QueryAirtableFieldfileNodeArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  raw?: Maybe<AirtableFieldfileNodeRawFilterListInput>;
-  localFiles?: Maybe<FileFilterListInput>;
-};
-
-
-export type QueryAllAirtableFieldfileNodeArgs = {
-  filter?: Maybe<AirtableFieldfileNodeFilterInput>;
-  sort?: Maybe<AirtableFieldfileNodeSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryAirtableSponsorsArgs = {
+export type QueryAirtableImagesTestArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -5348,13 +5702,13 @@ export type QueryAirtableSponsorsArgs = {
   table?: Maybe<StringQueryOperatorInput>;
   recordId?: Maybe<StringQueryOperatorInput>;
   queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableSponsorsDataFilterInput>;
+  data?: Maybe<AirtableImagesTestDataFilterInput>;
 };
 
 
-export type QueryAllAirtableSponsorsArgs = {
-  filter?: Maybe<AirtableSponsorsFilterInput>;
-  sort?: Maybe<AirtableSponsorsSortInput>;
+export type QueryAllAirtableImagesTestArgs = {
+  filter?: Maybe<AirtableImagesTestFilterInput>;
+  sort?: Maybe<AirtableImagesTestSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -6190,7 +6544,6 @@ export enum SitePluginFieldsEnum {
   PluginOptionsTablesTableLinks = 'pluginOptions___tables___tableLinks',
   PluginOptionsTablesQueryName = 'pluginOptions___tables___queryName',
   PluginOptionsTablesSeparateNodeType = 'pluginOptions___tables___separateNodeType',
-  PluginOptionsTablesMappingImages = 'pluginOptions___tables___mapping___images',
   PluginOptionsTablesMappingCredits = 'pluginOptions___tables___mapping___credits',
   PluginOptionsTablesMappingVideoThumbnail = 'pluginOptions___tables___mapping___video_thumbnail',
   PluginOptionsTablesMappingAvatar = 'pluginOptions___tables___mapping___avatar',
@@ -6403,7 +6756,6 @@ export type SitePluginPluginOptionsTablesFilterListInput = {
 };
 
 export type SitePluginPluginOptionsTablesMapping = {
-  images?: Maybe<Scalars['String']>;
   credits?: Maybe<Scalars['String']>;
   video_thumbnail?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
@@ -6415,7 +6767,6 @@ export type SitePluginPluginOptionsTablesMapping = {
 };
 
 export type SitePluginPluginOptionsTablesMappingFilterInput = {
-  images?: Maybe<StringQueryOperatorInput>;
   credits?: Maybe<StringQueryOperatorInput>;
   video_thumbnail?: Maybe<StringQueryOperatorInput>;
   avatar?: Maybe<StringQueryOperatorInput>;
@@ -6453,6 +6804,22 @@ export type StringQueryOperatorInput = {
 export type CloudinaryAssetFluidFragment = Pick<CloudinaryAssetFluid, 'aspectRatio' | 'base64' | 'sizes' | 'src' | 'srcSet'>;
 
 export type CloudinaryAssetFixedFragment = Pick<CloudinaryAssetFixed, 'base64' | 'height' | 'src' | 'srcSet' | 'width'>;
+
+export type GatsbyImgixFixedFragment = Pick<ImgixImageFixedType, 'base64' | 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFixed_NoBase64Fragment = Pick<ImgixImageFixedType, 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFixed_WithWebpFragment = Pick<ImgixImageFixedType, 'base64' | 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFixed_WithWebp_NoBase64Fragment = Pick<ImgixImageFixedType, 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFluidFragment = Pick<ImgixImageFluidType, 'base64' | 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+export type GatsbyImgixFluid_NoBase64Fragment = Pick<ImgixImageFluidType, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+export type GatsbyImgixFluid_WithWebpFragment = Pick<ImgixImageFluidType, 'base64' | 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+export type GatsbyImgixFluid_WithWebp_NoBase64Fragment = Pick<ImgixImageFluidType, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
 
 export type LogoImageQueryVariables = {};
 
@@ -6507,7 +6874,7 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFie
     & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
         Pick<AirtableAgencyData, 'name'>
         & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-      )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+      )> }>>>, images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
   )> };
 
 export type AgencyTemplateQueryVariables = {
@@ -6557,7 +6924,7 @@ export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ ta
       & { video_thumbnail?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }>, category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
           Pick<AirtableAgencyData, 'name'>
           & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-        )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
     )> }>, nextAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, previousAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, winnerCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, winnerButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, winnerButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
 
 export type WinnersTemplateQueryVariables = {
