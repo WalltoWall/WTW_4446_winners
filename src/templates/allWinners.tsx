@@ -37,7 +37,7 @@ export const AllWinnersTemplate = ({
   const firstPageId = initialPage.id
   const isInitialPageSelected = firstPageId === initialPage.id
 
-  const years = data.years.distinct.reverse()
+  const years = data.years.distinct
 
   return (
     <Layout {...props}>

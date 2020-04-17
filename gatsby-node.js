@@ -78,8 +78,7 @@ exports.createPages = async gatsbyContext => {
       }
     }
   `)
-  // Using the sort: field in GraphQL doesn't seem to work for some reason.
-  const years = yearsResult.data.allAirtableWinner.distinct.reverse()
+  const years = yearsResult.data.allAirtableWinner.distinct
 
   /***
    * Create paginated collections for each category and year.
