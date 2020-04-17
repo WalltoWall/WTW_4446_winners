@@ -26,6 +26,8 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
   const initialCollection = firstPages.find(fp => fp.id === firstPageId)
     ?.collection
 
+  const years = data.years.distinct
+
   return (
     <Layout {...props}>
       <Helmet>
@@ -33,8 +35,8 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
       </Helmet>
 
       <WinnerFilters
-        years={['2020', '2019', '2018']}
-        initialYear="2020"
+        years={years}
+        initialYear={years[0]}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -86,6 +88,9 @@ export const query = graphql`
           name
         }
       }
+    }
+    years: allAirtableWinner(sort: { fields: data___year }) {
+      distinct(field: data___year)
     }
   }
 `
