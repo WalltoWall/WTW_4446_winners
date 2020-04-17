@@ -1,7 +1,5 @@
 import React from 'react'
-import GatsbyImage from 'gatsby-image'
-
-import { CloudinaryAssetFluidFragment } from '../graphqlTypes'
+import GatsbyImage, { FluidObject } from 'gatsby-image'
 
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
@@ -19,7 +17,7 @@ export type LargePersonCardProps = ViewProps & {
   agencyHref?: string
   award: string
   descriptionHTML?: string
-  imageFluid?: CloudinaryAssetFluidFragment
+  imageFluid?: FluidObject
 }
 
 export const LargePersonCard = ({

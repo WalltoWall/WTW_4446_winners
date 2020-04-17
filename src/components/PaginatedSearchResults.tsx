@@ -73,7 +73,7 @@ export const PaginatedSearchResults = ({
     containerRef,
   } = usePaginatedCollection({
     collection: searchResults,
-    perPage: 8,
+    perPage: RESULTS_PER_PAGE,
   })
 
   return (
