@@ -33,14 +33,7 @@ const normalizeWinnerNode = node => {
     agency: {
       name: dlv(agency, ['data', 'name']),
       url: dlv(agency, ['fields', 'url']),
-      avatarFluid: dlv(agency, [
-        'data',
-        'avatar',
-        'localFiles',
-        0,
-        'childCloudinaryAsset',
-        'fluid',
-      ]),
+      avatarFluid: dlv(agency, ['data', 'avatar', 0, 'fluid']),
     },
   }
 }
@@ -106,16 +99,12 @@ exports.createPages = async gatsbyContext => {
               data {
                 name
                 avatar {
-                  localFiles {
-                    childCloudinaryAsset {
-                      fluid(maxWidth: 80) {
-                        aspectRatio
-                        base64
-                        sizes
-                        src
-                        srcSet
-                      }
-                    }
+                  fluid(maxWidth: 80) {
+                    aspectRatio
+                    base64
+                    sizes
+                    src
+                    srcSet
                   }
                 }
               }
@@ -430,12 +419,22 @@ exports.createSchemaCustomization = gatsbyContext => {
 
   const types = `
     type AirtableWinnerDataImages {
-      fluid(
-        maxWidth: Int
-        maxHeight: Int
-        srcSetBreakpoints: [Int!]
-      ): ImgixImageFluidType
-      fixed(width: Int, height: Int): ImgixImageFixedType
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableWinnerDataVideo_thumbnail {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableAgencyDataAvatar {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableAdPersonDataPhoto {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableImageFieldDataImage {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableSponsorsDataLogo {
+      fluid(maxWidth: Int): ImgixImageFluidType
     }
   `
 
@@ -448,18 +447,32 @@ exports.createResolvers = gatsbyContext => {
   const resolveFluid = (parent, args) =>
     parent.url
       ? buildFluidGatsbyImage2(
-          `https://test-source.imgix.net/${encodeURIComponent(parent.url)}`,
+          `https://${process.env.IMGIX_DOMAIN}/${encodeURIComponent(
+            parent.url,
+          )}`,
           args,
           process.env.IMGIX_SECURE_URL_TOKEN,
         )
       : undefined
 
-  const resolveFixed = () => {}
-
   const resolvers = {
     AirtableWinnerDataImages: {
       fluid: { resolve: resolveFluid },
-      fixed: { resolve: resolveFixed },
+    },
+    AirtableWinnerDataVideo_thumbnail: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableAgencyDataAvatar: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableAdPersonDataPhoto: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableImageFieldDataImage: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableSponsorsDataLogo: {
+      fluid: { resolve: resolveFluid },
     },
   }
 

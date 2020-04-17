@@ -9,7 +9,6 @@ import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
-import { Subheading } from '../components/Subheading'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 
 export type TagTemplate = LayoutProps & {
