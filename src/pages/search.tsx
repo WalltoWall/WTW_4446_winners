@@ -24,8 +24,7 @@ export const SearchPage = ({
   data,
   ...props
 }: SearchPageProps) => {
-  // Using the sort: field in GraphQL doesn't seem to work.
-  const years = data.years.distinct.reverse()
+  const years = data.years.distinct
   const initialYear = years[0]
 
   const [query, setQuery] = useURLParamState('query', getURLParam())
