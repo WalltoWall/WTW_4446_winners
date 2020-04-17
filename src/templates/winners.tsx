@@ -12,9 +12,16 @@ import { WinnerFilters } from '../components/WinnerFilters'
 
 export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
+  pageContext: {
+    year: string
+  }
 }
 
-export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
+export const WinnersTemplate = ({
+  data,
+  pageContext,
+  ...props
+}: WinnersTemplateProps) => {
   const [query, setQuery] = useState(getURLParam)
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -36,7 +43,7 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
 
       <WinnerFilters
         years={years}
-        initialYear={years[0]}
+        initialYear={pageContext.year}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -60,9 +67,13 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
 export default WinnersTemplate
 
 export const query = graphql`
-  query WinnersTemplate($categoryId: String!) {
+  query WinnersTemplate(
+    $categoryId: String!
+    $collectionName: String!
+    $collectionRegex: String!
+  ) {
     paginatedCollectionPage(
-      collection: { id: { eq: $categoryId } }
+      collection: { id: { eq: $categoryId }, name: { eq: $collectionName } }
       index: { eq: 0 }
     ) {
       id
@@ -77,7 +88,7 @@ export const query = graphql`
     }
     allPaginatedCollectionPage(
       filter: {
-        collection: { name: { regex: "/^winners//" } }
+        collection: { name: { regex: $collectionRegex } }
         index: { eq: 0 }
       }
     ) {
