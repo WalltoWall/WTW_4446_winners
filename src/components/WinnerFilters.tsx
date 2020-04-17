@@ -29,7 +29,6 @@ export const WinnerFilters = ({
   onQueryChange,
 }: WinnerFiltersProps) => {
   const yearRef = useRef<HTMLSelectElement>(null)
-  const categoryRef = useRef<HTMLSelectElement>(null)
 
   const firstPageId = initialPage!.id
 
@@ -43,12 +42,7 @@ export const WinnerFilters = ({
   }
 
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const pageId = categoryRef.current?.value
-    if (!pageId) return
-
-    const categorySlug = getCategorySlugFromPageId(pageId)
-
-    navigate(`/winners/${e.target.value}/${categorySlug}`)
+    navigate(`/winners/${e.target.value}/`)
   }
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,6 +53,8 @@ export const WinnerFilters = ({
 
     navigate(`/winners/${year}/${categorySlug}/`)
   }
+
+  console.log(years)
 
   return (
     <BoundedBox
@@ -87,7 +83,7 @@ export const WinnerFilters = ({
           })}
         >
           <FormSelect
-            value={initialYear}
+            defaultValue={initialYear}
             onChange={handleYearChange}
             ref={yearRef}
           >
@@ -100,7 +96,6 @@ export const WinnerFilters = ({
           <FormSelect
             defaultValue={firstPageId}
             value={firstPageId}
-            ref={categoryRef}
             onChange={handleCategoryChange}
           >
             <option value="/">All categories</option>

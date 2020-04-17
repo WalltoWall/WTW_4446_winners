@@ -67,13 +67,9 @@ export const WinnersTemplate = ({
 export default WinnersTemplate
 
 export const query = graphql`
-  query WinnersTemplate(
-    $categoryId: String!
-    $collectionName: String!
-    $collectionRegex: String!
-  ) {
+  query WinnersTemplate($categoryId: String!, $collectionRegex: String!) {
     paginatedCollectionPage(
-      collection: { id: { eq: $categoryId }, name: { eq: $collectionName } }
+      collection: { id: { eq: $categoryId } }
       index: { eq: 0 }
     ) {
       id
@@ -100,7 +96,7 @@ export const query = graphql`
         }
       }
     }
-    years: allAirtableWinner(sort: { fields: data___year }) {
+    years: allAirtableWinner(sort: { fields: data___year, order: DESC }) {
       distinct(field: data___year)
     }
   }
