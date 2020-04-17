@@ -57,11 +57,13 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const category = winner?.data?.category?.[0]?.data
 
   const agency = winner?.data?.agency?.[0]
-  const agencyAvatarFluid = agency?.data?.avatar?.[0]?.fluid
+  const agencyAvatarFluid = agency?.fields?.avatar?.fluid
 
-  const images = compact(winner?.data?.images?.map(image => image?.fluid) ?? [])
+  const images = compact(
+    winner?.fields?.images?.map(image => image?.fluid) ?? [],
+  )
   const vimeoLink = winner?.data?.video
-  const vimeoThumbnail = winner?.data?.video_thumbnail?.[0]?.fluid
+  const vimeoThumbnail = winner?.fields?.video_thumbnail?.fluid
 
   const hasMedia = images.length > 0 || Boolean(vimeoLink)
 
@@ -168,6 +170,16 @@ export const query = graphql`
   ) {
     airtableWinner(recordId: { eq: $recordId }) {
       fields {
+        images {
+          fluid(maxWidth: 1000) {
+            ...GatsbyImgixFluid
+          }
+        }
+        video_thumbnail {
+          fluid(maxWidth: 200) {
+            ...GatsbyImgixFluid
+          }
+        }
         tags {
           tag
           url
@@ -180,11 +192,6 @@ export const query = graphql`
         award
         special_award
         video
-        video_thumbnail {
-          fluid(maxWidth: 200) {
-            ...GatsbyImgixFluid
-          }
-        }
         category {
           data {
             line_1
@@ -195,24 +202,19 @@ export const query = graphql`
         agency {
           fields {
             url
-          }
-          data {
-            name
             avatar {
               fluid(maxWidth: 80) {
                 ...GatsbyImgixFluid
               }
             }
           }
+          data {
+            name
+          }
         }
         credits {
           childMarkdownRemark {
             html
-          }
-        }
-        images {
-          fluid(maxWidth: 1000) {
-            ...GatsbyImgixFluid
           }
         }
       }
