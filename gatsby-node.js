@@ -52,12 +52,7 @@ exports.createPages = async gatsbyContext => {
   const { createNode, createPage } = actions
   const { program } = store.getState()
 
-  const processPaginatedCollection = ({
-    collection,
-    name,
-    pageSize = 12,
-    year,
-  }) => {
+  const processPaginatedCollection = ({ collection, name, pageSize = 12 }) => {
     const nodeInput = createPaginatedCollectionNodes({
       collection,
       name,
@@ -177,7 +172,6 @@ exports.createPages = async gatsbyContext => {
         createNodeId,
         createContentDigest,
         getNode,
-        year,
       })
 
       processPaginatedCollection({
@@ -187,7 +181,6 @@ exports.createPages = async gatsbyContext => {
         createNodeId,
         createContentDigest,
         getNode,
-        year,
       })
 
       processPaginatedCollection({
@@ -197,7 +190,6 @@ exports.createPages = async gatsbyContext => {
         createNodeId,
         createContentDigest,
         getNode,
-        year,
       })
       const winnerNodesByCategory = winnerNodes.reduce((acc, curr) => {
         const category = curr.data.category[0]
@@ -216,7 +208,6 @@ exports.createPages = async gatsbyContext => {
         processPaginatedCollection({
           collection,
           name: `winners/${category}`,
-          year,
         })
       }
 
@@ -231,7 +222,7 @@ exports.createPages = async gatsbyContext => {
         const collection = winnerNodesByTag[tag].map(normalizeWinnerNode)
         if (collection.length < 1) continue
 
-        processPaginatedCollection({ collection, name: `tags/${tag}`, year })
+        processPaginatedCollection({ collection, name: `tags/${tag}` })
       }
 
       const winnerNodesByAgency = allWinnerNodes.reduce((acc, curr) => {
@@ -248,7 +239,6 @@ exports.createPages = async gatsbyContext => {
         processPaginatedCollection({
           collection,
           name: `winners-agency/${agency}`,
-          year,
         })
       }
 
