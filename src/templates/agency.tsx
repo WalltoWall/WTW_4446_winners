@@ -20,7 +20,7 @@ export type AgencyTemplate = LayoutProps & {
 
 export const AgencyTemplate = ({ data, ...props }: AgencyTemplate) => {
   const agency = data.airtableAgency
-  const avatarFluid = agency?.data?.avatar?.[0]?.fluid
+  const avatarFluid = agency?.fields?.avatar?.fluid
   const hasSocialIcons = Boolean(
     agency?.data?.facebook_handle ||
       agency?.data?.instagram_handle ||
@@ -105,6 +105,13 @@ export default AgencyTemplate
 export const query = graphql`
   query AgencyTemplate($recordId: String!, $paginatedCollectionName: String!) {
     airtableAgency(recordId: { eq: $recordId }) {
+      fields {
+        avatar {
+          fluid(maxWidth: 80) {
+            ...GatsbyImgixFluid
+          }
+        }
+      }
       data {
         name
         website
@@ -112,11 +119,6 @@ export const query = graphql`
         twitter_handle
         instagram_handle
         linkedin_handle
-        avatar {
-          fluid(maxWidth: 80) {
-            ...GatsbyImgixFluid
-          }
-        }
       }
     }
     paginatedCollectionPage(

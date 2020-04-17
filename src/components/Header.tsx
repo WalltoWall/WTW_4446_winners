@@ -41,7 +41,7 @@ export const Header = (props: HeaderProps) => {
   const logoImageData: LogoImageQuery = useStaticQuery(graphql`
     query LogoImage {
       airtableImageField(data: { uid: { eq: "Header Logo" } }) {
-        data {
+        fields {
           image {
             fluid(maxWidth: 100) {
               ...GatsbyImgixFluid
@@ -51,8 +51,7 @@ export const Header = (props: HeaderProps) => {
       }
     }
   `)
-  const logoImageFluid =
-    logoImageData.airtableImageField?.data?.image?.[0]?.fluid
+  const logoImageFluid = logoImageData.airtableImageField?.fields?.image?.fluid
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

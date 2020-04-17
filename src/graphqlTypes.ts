@@ -77,7 +77,6 @@ export type AirtableAdPersonDataFilterInput = {
 };
 
 export type AirtableAdPersonDataPhoto = {
-  fluid?: Maybe<ImgixImageFluidType>;
   id?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
@@ -86,13 +85,7 @@ export type AirtableAdPersonDataPhoto = {
   thumbnails?: Maybe<AirtableAdPersonDataPhotoThumbnails>;
 };
 
-
-export type AirtableAdPersonDataPhotoFluidArgs = {
-  maxWidth?: Maybe<Scalars['Int']>;
-};
-
 export type AirtableAdPersonDataPhotoFilterInput = {
-  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
   filename?: Maybe<StringQueryOperatorInput>;
@@ -287,13 +280,6 @@ export enum AirtableAdPersonFieldsEnum {
   DataAward = 'data___award',
   DataTitle = 'data___title',
   DataPhoto = 'data___photo',
-  DataPhotoFluidBase64 = 'data___photo___fluid___base64',
-  DataPhotoFluidAspectRatio = 'data___photo___fluid___aspectRatio',
-  DataPhotoFluidSrc = 'data___photo___fluid___src',
-  DataPhotoFluidSrcSet = 'data___photo___fluid___srcSet',
-  DataPhotoFluidSrcWebp = 'data___photo___fluid___srcWebp',
-  DataPhotoFluidSrcSetWebp = 'data___photo___fluid___srcSetWebp',
-  DataPhotoFluidSizes = 'data___photo___fluid___sizes',
   DataPhotoId = 'data___photo___id',
   DataPhotoUrl = 'data___photo___url',
   DataPhotoFilename = 'data___photo___filename',
@@ -440,7 +426,6 @@ export type AirtableAgencyDataCreated_AtArgs = {
 };
 
 export type AirtableAgencyDataAvatar = {
-  fluid?: Maybe<ImgixImageFluidType>;
   id?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
@@ -449,13 +434,7 @@ export type AirtableAgencyDataAvatar = {
   thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnails>;
 };
 
-
-export type AirtableAgencyDataAvatarFluidArgs = {
-  maxWidth?: Maybe<Scalars['Int']>;
-};
-
 export type AirtableAgencyDataAvatarFilterInput = {
-  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
   filename?: Maybe<StringQueryOperatorInput>;
@@ -640,13 +619,6 @@ export enum AirtableAgencyFieldsEnum {
   DataFacebookHandle = 'data___facebook_handle',
   DataTwitterHandle = 'data___twitter_handle',
   DataAvatar = 'data___avatar',
-  DataAvatarFluidBase64 = 'data___avatar___fluid___base64',
-  DataAvatarFluidAspectRatio = 'data___avatar___fluid___aspectRatio',
-  DataAvatarFluidSrc = 'data___avatar___fluid___src',
-  DataAvatarFluidSrcSet = 'data___avatar___fluid___srcSet',
-  DataAvatarFluidSrcWebp = 'data___avatar___fluid___srcWebp',
-  DataAvatarFluidSrcSetWebp = 'data___avatar___fluid___srcSetWebp',
-  DataAvatarFluidSizes = 'data___avatar___fluid___sizes',
   DataAvatarId = 'data___avatar___id',
   DataAvatarUrl = 'data___avatar___url',
   DataAvatarFilename = 'data___avatar___filename',
@@ -1305,7 +1277,6 @@ export type AirtableImageFieldDataFilterInput = {
 };
 
 export type AirtableImageFieldDataImage = {
-  fluid?: Maybe<ImgixImageFluidType>;
   id?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
@@ -1314,13 +1285,7 @@ export type AirtableImageFieldDataImage = {
   thumbnails?: Maybe<AirtableImageFieldDataImageThumbnails>;
 };
 
-
-export type AirtableImageFieldDataImageFluidArgs = {
-  maxWidth?: Maybe<Scalars['Int']>;
-};
-
 export type AirtableImageFieldDataImageFilterInput = {
-  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
   filename?: Maybe<StringQueryOperatorInput>;
@@ -1483,13 +1448,6 @@ export enum AirtableImageFieldFieldsEnum {
   QueryName = 'queryName',
   DataUid = 'data___uid',
   DataImage = 'data___image',
-  DataImageFluidBase64 = 'data___image___fluid___base64',
-  DataImageFluidAspectRatio = 'data___image___fluid___aspectRatio',
-  DataImageFluidSrc = 'data___image___fluid___src',
-  DataImageFluidSrcSet = 'data___image___fluid___srcSet',
-  DataImageFluidSrcWebp = 'data___image___fluid___srcWebp',
-  DataImageFluidSrcSetWebp = 'data___image___fluid___srcSetWebp',
-  DataImageFluidSizes = 'data___image___fluid___sizes',
   DataImageId = 'data___image___id',
   DataImageUrl = 'data___image___url',
   DataImageFilename = 'data___image___filename',
@@ -1768,7 +1726,6 @@ export type AirtableSponsorsDataFilterInput = {
 };
 
 export type AirtableSponsorsDataLogo = {
-  fluid?: Maybe<ImgixImageFluidType>;
   id?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
@@ -1777,13 +1734,7 @@ export type AirtableSponsorsDataLogo = {
   thumbnails?: Maybe<AirtableSponsorsDataLogoThumbnails>;
 };
 
-
-export type AirtableSponsorsDataLogoFluidArgs = {
-  maxWidth?: Maybe<Scalars['Int']>;
-};
-
 export type AirtableSponsorsDataLogoFilterInput = {
-  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
   filename?: Maybe<StringQueryOperatorInput>;
@@ -1948,13 +1899,6 @@ export enum AirtableSponsorsFieldsEnum {
   DataUrl = 'data___url',
   DataYear = 'data___year',
   DataLogo = 'data___logo',
-  DataLogoFluidBase64 = 'data___logo___fluid___base64',
-  DataLogoFluidAspectRatio = 'data___logo___fluid___aspectRatio',
-  DataLogoFluidSrc = 'data___logo___fluid___src',
-  DataLogoFluidSrcSet = 'data___logo___fluid___srcSet',
-  DataLogoFluidSrcWebp = 'data___logo___fluid___srcWebp',
-  DataLogoFluidSrcSetWebp = 'data___logo___fluid___srcSetWebp',
-  DataLogoFluidSizes = 'data___logo___fluid___sizes',
   DataLogoId = 'data___logo___id',
   DataLogoUrl = 'data___logo___url',
   DataLogoFilename = 'data___logo___filename',
@@ -2301,7 +2245,6 @@ export type AirtableWinnerDataFilterInput = {
 };
 
 export type AirtableWinnerDataImages = {
-  fluid?: Maybe<ImgixImageFluidType>;
   id?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
@@ -2310,13 +2253,7 @@ export type AirtableWinnerDataImages = {
   thumbnails?: Maybe<AirtableWinnerDataImagesThumbnails>;
 };
 
-
-export type AirtableWinnerDataImagesFluidArgs = {
-  maxWidth?: Maybe<Scalars['Int']>;
-};
-
 export type AirtableWinnerDataImagesFilterInput = {
-  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
   filename?: Maybe<StringQueryOperatorInput>;
@@ -2378,7 +2315,6 @@ export type AirtableWinnerDataImagesThumbnailsSmallFilterInput = {
 };
 
 export type AirtableWinnerDataVideo_Thumbnail = {
-  fluid?: Maybe<ImgixImageFluidType>;
   id?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
@@ -2387,13 +2323,7 @@ export type AirtableWinnerDataVideo_Thumbnail = {
   thumbnails?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnails>;
 };
 
-
-export type AirtableWinnerDataVideo_ThumbnailFluidArgs = {
-  maxWidth?: Maybe<Scalars['Int']>;
-};
-
 export type AirtableWinnerDataVideo_ThumbnailFilterInput = {
-  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
   filename?: Maybe<StringQueryOperatorInput>;
@@ -2592,13 +2522,6 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
   DataImages = 'data___images',
-  DataImagesFluidBase64 = 'data___images___fluid___base64',
-  DataImagesFluidAspectRatio = 'data___images___fluid___aspectRatio',
-  DataImagesFluidSrc = 'data___images___fluid___src',
-  DataImagesFluidSrcSet = 'data___images___fluid___srcSet',
-  DataImagesFluidSrcWebp = 'data___images___fluid___srcWebp',
-  DataImagesFluidSrcSetWebp = 'data___images___fluid___srcSetWebp',
-  DataImagesFluidSizes = 'data___images___fluid___sizes',
   DataImagesId = 'data___images___id',
   DataImagesUrl = 'data___images___url',
   DataImagesFilename = 'data___images___filename',
@@ -2606,13 +2529,6 @@ export enum AirtableWinnerFieldsEnum {
   DataImagesType = 'data___images___type',
   DataClient = 'data___client',
   DataVideoThumbnail = 'data___video_thumbnail',
-  DataVideoThumbnailFluidBase64 = 'data___video_thumbnail___fluid___base64',
-  DataVideoThumbnailFluidAspectRatio = 'data___video_thumbnail___fluid___aspectRatio',
-  DataVideoThumbnailFluidSrc = 'data___video_thumbnail___fluid___src',
-  DataVideoThumbnailFluidSrcSet = 'data___video_thumbnail___fluid___srcSet',
-  DataVideoThumbnailFluidSrcWebp = 'data___video_thumbnail___fluid___srcWebp',
-  DataVideoThumbnailFluidSrcSetWebp = 'data___video_thumbnail___fluid___srcSetWebp',
-  DataVideoThumbnailFluidSizes = 'data___video_thumbnail___fluid___sizes',
   DataVideoThumbnailId = 'data___video_thumbnail___id',
   DataVideoThumbnailUrl = 'data___video_thumbnail___url',
   DataVideoThumbnailFilename = 'data___video_thumbnail___filename',
@@ -6225,12 +6141,12 @@ export type GatsbyImgixFluid_WithWebp_NoBase64Fragment = Pick<ImgixImageFluidTyp
 export type LogoImageQueryVariables = {};
 
 
-export type LogoImageQuery = { airtableImageField?: Maybe<{ data?: Maybe<{ image?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }> }> };
+export type LogoImageQuery = { airtableImageField?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }> };
 
 export type AboutPageQueryVariables = {};
 
 
-export type AboutPageQuery = { aboutHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutHeroImage?: Maybe<{ data?: Maybe<{ image?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }> }>, aboutWhiteColoredBox?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, aboutButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, aboutSponsors: { nodes: Array<{ data?: Maybe<(
+export type AboutPageQuery = { aboutHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutHeroImage?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, aboutWhiteColoredBox?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, aboutButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, aboutSponsors: { nodes: Array<{ data?: Maybe<(
         Pick<AirtableSponsorsData, 'url' | 'name' | 'type'>
         & { logo?: Maybe<Array<Maybe<Pick<AirtableSponsorsDataLogo, 'url'>>>> }
       )> }> } };
@@ -6238,9 +6154,9 @@ export type AboutPageQuery = { aboutHeroText?: Maybe<{ data?: Maybe<{ rich_text?
 export type AdPeoplePageQueryVariables = {};
 
 
-export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ data?: Maybe<(
+export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ fields?: Maybe<{ photo?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }>, data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
-        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, photo?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
+        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
       )> }> } };
 
 export type CollegePageQueryVariables = {};
@@ -6262,20 +6178,26 @@ export type HighSchoolPageQuery = { paginatedCollectionPage?: Maybe<(
 export type IndexPageQueryVariables = {};
 
 
-export type IndexPageQuery = { bestOfWinners: { nodes: Array<SpecialAwardWinnerFragment> }, adPeople: { nodes: Array<{ fields?: Maybe<Pick<AirtableAdPersonFields, 'url'>>, data?: Maybe<(
+export type IndexPageQuery = { bestOfWinners: { nodes: Array<SpecialAwardWinnerFragment> }, adPeople: { nodes: Array<{ fields?: Maybe<(
+        Pick<AirtableAdPersonFields, 'url'>
+        & { photo?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }
+      )>, data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
-        & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, photo?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
+        & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>> }
       )> }> }, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, homeNationalWinners?: Maybe<{ data?: Maybe<(
       Pick<AirtableTextFieldData, 'plain_text'>
       & { rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
-    )> }>, homeNationalWinnersHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeHeroImage?: Maybe<{ data?: Maybe<{ image?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }> }>, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> } };
+    )> }>, homeNationalWinnersHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeHeroImage?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> } };
 
-export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<(
+export type SpecialAwardWinnerFragment = { fields?: Maybe<(
+    Pick<AirtableWinnerFields, 'url'>
+    & { images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
+  )>, data?: Maybe<(
     Pick<AirtableWinnerData, 'name' | 'award' | 'national_winner' | 'special_award'>
-    & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
-        Pick<AirtableAgencyData, 'name'>
-        & { avatar?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
-      )> }>>>, images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
+    & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<(
+        Pick<AirtableAgencyFields, 'url'>
+        & { avatar?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }
+      )>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>> }
   )> };
 
 export type SearchPageQueryVariables = {};
@@ -6289,10 +6211,7 @@ export type AgencyTemplateQueryVariables = {
 };
 
 
-export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<(
-      Pick<AirtableAgencyData, 'name' | 'website' | 'facebook_handle' | 'twitter_handle' | 'instagram_handle' | 'linkedin_handle'>
-      & { avatar?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
-    )> }>, paginatedCollectionPage?: Maybe<(
+export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ fields?: Maybe<{ avatar?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }>, data?: Maybe<Pick<AirtableAgencyData, 'name' | 'website' | 'facebook_handle' | 'twitter_handle' | 'instagram_handle' | 'linkedin_handle'>> }>, paginatedCollectionPage?: Maybe<(
     Pick<PaginatedCollectionPage, 'id' | 'nodes'>
     & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
   )> };

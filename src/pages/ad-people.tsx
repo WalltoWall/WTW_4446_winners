@@ -51,7 +51,7 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePage) => {
                 descriptionHTML={
                   person.data?.description?.childMarkdownRemark?.html
                 }
-                imageFluid={person?.data?.photo?.[0]?.fluid}
+                imageFluid={person?.fields?.photo?.fluid}
               />
             </li>
           ))}
@@ -67,6 +67,13 @@ export const query = graphql`
   query AdPeoplePage {
     allAirtableAdPerson {
       nodes {
+        fields {
+          photo {
+            fluid(maxWidth: 800) {
+              ...GatsbyImgixFluid
+            }
+          }
+        }
         data {
           name
           title
@@ -82,11 +89,6 @@ export const query = graphql`
           description {
             childMarkdownRemark {
               html
-            }
-          }
-          photo {
-            fluid(maxWidth: 800) {
-              ...GatsbyImgixFluid
             }
           }
         }

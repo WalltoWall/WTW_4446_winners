@@ -145,6 +145,14 @@ module.exports = {
                 recordId
                 fields {
                   url
+                  images {
+                    fluid(maxWidth: 500) {
+                      aspectRatio
+                      sizes
+                      src
+                      srcSet
+                    }
+                  }
                 }
                 data {
                   name
@@ -159,9 +167,6 @@ module.exports = {
                   agency {
                     fields {
                       url
-                    }
-                    data {
-                      name
                       avatar {
                         fluid(maxWidth: 80) {
                           aspectRatio
@@ -171,13 +176,8 @@ module.exports = {
                         }
                       }
                     }
-                  }
-                  images {
-                    fluid(maxWidth: 500) {
-                      aspectRatio
-                      sizes
-                      src
-                      srcSet
+                    data {
+                      name
                     }
                   }
                 }
@@ -212,12 +212,11 @@ module.exports = {
               'data',
               'agency',
               0,
-              'data',
+              'fields',
               'avatar',
-              0,
               'fluid',
             ]),
-            imageFluid: dlv(node, ['data', 'images', 0, 'fluid']),
+            imageFluid: dlv(node, ['fields', 'images', 0, 'fluid']),
           })),
       },
     },

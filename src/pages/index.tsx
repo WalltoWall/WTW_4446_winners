@@ -36,7 +36,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
     <Layout {...props}>
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
-        imageFluid={data.homeHeroImage?.data?.image?.[0]?.fluid}
+        imageFluid={data.homeHeroImage?.fields?.image?.fluid}
       />
 
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
@@ -76,7 +76,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
                 title={person?.data?.title!}
                 agencyName={person?.data?.agency?.[0]?.data?.name}
                 award={person?.data?.award!}
-                imageFluid={person?.data?.photo?.[0]?.fluid}
+                imageFluid={person?.fields?.photo?.fluid}
               />
             ))}
           </CardList>
@@ -230,6 +230,11 @@ export const query = graphql`
       nodes {
         fields {
           url
+          photo {
+            fluid(maxWidth: 500) {
+              ...GatsbyImgixFluid
+            }
+          }
         }
         data {
           name
@@ -240,11 +245,6 @@ export const query = graphql`
             }
           }
           award
-          photo {
-            fluid(maxWidth: 500) {
-              ...GatsbyImgixFluid
-            }
-          }
         }
       }
     }
@@ -307,7 +307,7 @@ export const query = graphql`
     homeHeroImage: airtableImageField(
       data: { uid: { eq: "Home Hero Image" } }
     ) {
-      data {
+      fields {
         image {
           fluid(maxWidth: 500) {
             ...GatsbyImgixFluid
@@ -328,6 +328,11 @@ export const query = graphql`
   fragment SpecialAwardWinner on AirtableWinner {
     fields {
       url
+      images {
+        fluid(maxWidth: 600) {
+          ...GatsbyImgixFluid
+        }
+      }
     }
     data {
       name
@@ -337,19 +342,14 @@ export const query = graphql`
       agency {
         fields {
           url
-        }
-        data {
-          name
           avatar {
             fluid(maxWidth: 80) {
               ...GatsbyImgixFluid
             }
           }
         }
-      }
-      images {
-        fluid(maxWidth: 600) {
-          ...GatsbyImgixFluid
+        data {
+          name
         }
       }
     }
