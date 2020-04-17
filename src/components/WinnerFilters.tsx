@@ -21,7 +21,7 @@ export type WinnerFiltersProps = {
 }
 
 export const WinnerFilters = ({
-  years = ['2020', '2019', '2018'],
+  years,
   firstPages,
   initialPage,
   initialYear,
