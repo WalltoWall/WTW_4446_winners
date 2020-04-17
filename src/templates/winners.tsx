@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { graphql } from 'gatsby'
 
 import { WinnersTemplateQuery } from '../graphqlTypes'
-import { getSearchQuery, trimCollectionNamespace } from '../utils'
+import { getURLParam, trimCollectionNamespace } from '../utils'
 
 import { Layout, LayoutProps } from '../components/Layout'
 import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
@@ -15,7 +15,7 @@ export type WinnersTemplateProps = LayoutProps & {
 }
 
 export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
-  const [query, setQuery] = useState(getSearchQuery)
+  const [query, setQuery] = useState(getURLParam)
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)

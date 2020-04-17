@@ -17,6 +17,7 @@ export interface WinnerSearchResult {
   url: string
   name: string
   award: string
+  year: string
   categoryLine1: string
   agencyName?: string
   agencyUrl?: string

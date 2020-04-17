@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react'
 import { Helmet } from 'react-helmet-async'
 
-import { getSearchQuery } from '../utils'
+import { getURLParam } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { FormSearchInput } from '../components/FormSearchInput'
+import { FormSelect } from '../components/FormSelect'
 import { useURLParamState } from '../hooks/useURLParamState'
 import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 
@@ -15,11 +16,18 @@ export type SearchPageProps = LayoutProps & {
   initialQuery: string
 }
 
+const years = ['2020', '2019', '2018']
+const initialYear = '2020'
+
 export const SearchPage = ({
   initialQuery = '',
   ...props
 }: SearchPageProps) => {
-  const [query, setQuery] = useURLParamState('query', getSearchQuery())
+  const [query, setQuery] = useURLParamState('query', getURLParam())
+  const [year, setYear] = useURLParamState(
+    'year',
+    getURLParam('year') || initialYear,
+  )
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,6 +41,9 @@ export const SearchPage = ({
     },
     [setQuery],
   )
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setYear(e.target.value)
 
   return (
     <Layout {...props}>
@@ -62,8 +73,16 @@ export const SearchPage = ({
               gap: linearScale('0.625rem', '1.875rem', 'space'),
               justifyContent: 'center',
               justifyItems: 'center',
+              gridAutoFlow: 'column',
             })}
           >
+            <FormSelect value={year} onChange={handleYearChange}>
+              {years.map(y => (
+                <option value={y} key={y}>
+                  {y}
+                </option>
+              ))}
+            </FormSelect>
             <FormSearchInput
               name="search"
               defaultValue={query}
@@ -73,7 +92,7 @@ export const SearchPage = ({
         </div>
       </BoundedBox>
 
-      <PaginatedSearchResults query={query} />
+      <PaginatedSearchResults query={query} filterOptions={{ year }} />
     </Layout>
   )
 }

@@ -129,9 +129,9 @@ export const chunk = <T>(size: number, arr: T[]): T[][] =>
     [] as T[][],
   )
 
-export const getSearchQuery = () => {
+export const getURLParam = (key = 'query') => {
   if (typeof window === 'undefined') return ''
   const params = new URLSearchParams(location.search)
 
-  return params.get('query') ?? ''
+  return params.get(key) ?? ''
 }
