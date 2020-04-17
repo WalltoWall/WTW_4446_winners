@@ -2,13 +2,54 @@ const dlv = require('dlv')
 const slug = require('slug')
 
 require('dotenv').config()
+
 module.exports = {
   plugins: [
     'gatsby-plugin-typescript',
     'gatsby-plugin-svgr',
     'gatsby-plugin-react-helmet-async',
     'gatsby-plugin-paginated-collection',
-    'gatsby-plugin-imgix',
+    {
+      resolve: 'gatsby-plugin-imgix',
+      options: {
+        domain: process.env.IMGIX_DOMAIN,
+        token: process.env.IMGIX_SECURE_URL_TOKEN,
+        sourceType: 'webProxy',
+        fields: [
+          {
+            nodeType: 'AirtableWinner',
+            fieldName: 'images',
+            getUrls: node =>
+              dlv(node, ['data', 'images'], []).map(image => image.url),
+          },
+          {
+            nodeType: 'AirtableWinner',
+            fieldName: 'video_thumbnail',
+            urlPath: 'data.video_thumbnail.0.url',
+          },
+          {
+            nodeType: 'AirtableAgency',
+            fieldName: 'avatar',
+            urlPath: 'data.avatar.0.url',
+          },
+          {
+            nodeType: 'AirtableAdPerson',
+            fieldName: 'photo',
+            urlPath: 'data.photo.0.url',
+          },
+          {
+            nodeType: 'AirtableImageField',
+            fieldName: 'image',
+            urlPath: 'data.image.0.url',
+          },
+          {
+            nodeType: 'AirtableSponsors',
+            fieldName: 'logo',
+            urlPath: 'data.logo.0.url',
+          },
+        ],
+      },
+    },
     {
       resolve: 'gatsby-plugin-styled-components',
       options: {
