@@ -15,7 +15,6 @@ import { NextPrevious } from '../components/NextPrevious'
 import { MediaGallery } from '../components/MediaGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
-import { FluidObject } from 'gatsby-image'
 
 const breadcrumbVariants = {
   professional: {
@@ -58,17 +57,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const category = winner?.data?.category?.[0]?.data
 
   const agency = winner?.data?.agency?.[0]
-  const agencyAvatarFluid =
-    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
+  const agencyAvatarFluid = agency?.data?.avatar?.[0]?.fluid
 
-  const images = compact(
-    winner?.data?.images?.localFiles?.map(
-      localFile => localFile?.childCloudinaryAsset?.fluid,
-    ) ?? [],
-  )
+  const images = compact(winner?.data?.images?.map(image => image?.fluid) ?? [])
   const vimeoLink = winner?.data?.video
-  const vimeoThumbnail = winner?.data?.video_thumbnail?.localFiles?.[0]
-    ?.childCloudinaryAsset?.fluid as FluidObject
+  const vimeoThumbnail = winner?.data?.video_thumbnail?.[0]?.fluid
 
   const hasMedia = images.length > 0 || Boolean(vimeoLink)
 
@@ -188,12 +181,8 @@ export const query = graphql`
         special_award
         video
         video_thumbnail {
-          localFiles {
-            childCloudinaryAsset {
-              fluid(maxWidth: 200) {
-                ...CloudinaryAssetFluid
-              }
-            }
+          fluid(maxWidth: 200) {
+            ...GatsbyImgixFluid
           }
         }
         category {
@@ -210,12 +199,8 @@ export const query = graphql`
           data {
             name
             avatar {
-              localFiles {
-                childCloudinaryAsset {
-                  fluid(maxWidth: 50) {
-                    ...CloudinaryAssetFluid
-                  }
-                }
+              fluid(maxWidth: 80) {
+                ...GatsbyImgixFluid
               }
             }
           }
@@ -226,12 +211,8 @@ export const query = graphql`
           }
         }
         images {
-          localFiles {
-            childCloudinaryAsset {
-              fluid(maxWidth: 2000) {
-                ...CloudinaryAssetFluid
-              }
-            }
+          fluid(maxWidth: 1000) {
+            ...GatsbyImgixFluid
           }
         }
       }

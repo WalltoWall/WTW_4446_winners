@@ -51,10 +51,7 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePage) => {
                 descriptionHTML={
                   person.data?.description?.childMarkdownRemark?.html
                 }
-                imageFluid={
-                  person?.data?.photo?.localFiles?.[0]?.childCloudinaryAsset
-                    ?.fluid
-                }
+                imageFluid={person?.data?.photo?.[0]?.fluid}
               />
             </li>
           ))}
@@ -88,12 +85,8 @@ export const query = graphql`
             }
           }
           photo {
-            localFiles {
-              childCloudinaryAsset {
-                fluid(maxWidth: 800) {
-                  ...CloudinaryAssetFluid
-                }
-              }
+            fluid(maxWidth: 800) {
+              ...GatsbyImgixFluid
             }
           }
         }
