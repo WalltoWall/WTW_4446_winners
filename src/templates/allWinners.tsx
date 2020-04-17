@@ -10,6 +10,7 @@ import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 import { WinnerFilters } from '../components/WinnerFilters'
 import { LoadMoreWinners } from '../components/LoadMoreWinners'
 import { SpecialWinners } from '../components/SpecialWinners'
+import { useYears } from '../hooks/useYears'
 
 export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
@@ -24,7 +25,7 @@ export const AllWinnersTemplate = ({
   ...props
 }: AllWinnersProps) => {
   const [query, setQuery] = useState(getURLParam)
-  console.log(pageContext)
+  const years = useYears()
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -36,8 +37,6 @@ export const AllWinnersTemplate = ({
   const initialPage = data!.paginatedCollectionPage!
   const firstPageId = initialPage.id
   const isInitialPageSelected = firstPageId === initialPage.id
-
-  const years = data.years.distinct
 
   return (
     <Layout {...props}>
@@ -132,9 +131,6 @@ export const query = graphql`
       nodes {
         ...SpecialAwardWinner
       }
-    }
-    years: allAirtableWinner(sort: { fields: data___year, order: DESC }) {
-      distinct(field: data___year)
     }
   }
 `

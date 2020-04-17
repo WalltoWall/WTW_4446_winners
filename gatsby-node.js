@@ -78,7 +78,15 @@ exports.createPages = async gatsbyContext => {
       }
     }
   `)
-  const years = yearsResult.data.allAirtableWinner.distinct
+  const years = yearsResult.data.allAirtableWinner.distinct.sort((a, b) => {
+    const numA = Number.parseInt(a)
+    const numB = Number.parseInt(b)
+
+    if (numA === numB) return 0
+    if (numA < numB) return 1
+
+    return -1
+  })
 
   /***
    * Create paginated collections for each category and year.
