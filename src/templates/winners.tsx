@@ -9,13 +9,22 @@ import { Layout, LayoutProps } from '../components/Layout'
 import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 import { LoadMoreWinners } from '../components/LoadMoreWinners'
 import { WinnerFilters } from '../components/WinnerFilters'
+import { useYears } from '../hooks/useYears'
 
 export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
+  pageContext: {
+    year: string
+  }
 }
 
-export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
+export const WinnersTemplate = ({
+  data,
+  pageContext,
+  ...props
+}: WinnersTemplateProps) => {
   const [query, setQuery] = useState(getURLParam)
+  const years = useYears()
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -26,8 +35,6 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
   const initialCollection = firstPages.find(fp => fp.id === firstPageId)
     ?.collection
 
-  const years = data.years.distinct
-
   return (
     <Layout {...props}>
       <Helmet>
@@ -36,7 +43,7 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
 
       <WinnerFilters
         years={years}
-        initialYear={years[0]}
+        initialYear={pageContext.year}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -60,7 +67,7 @@ export const WinnersTemplate = ({ data, ...props }: WinnersTemplateProps) => {
 export default WinnersTemplate
 
 export const query = graphql`
-  query WinnersTemplate($categoryId: String!) {
+  query WinnersTemplate($categoryId: String!, $collectionRegex: String!) {
     paginatedCollectionPage(
       collection: { id: { eq: $categoryId } }
       index: { eq: 0 }
@@ -77,7 +84,7 @@ export const query = graphql`
     }
     allPaginatedCollectionPage(
       filter: {
-        collection: { name: { regex: "/^winners//" } }
+        collection: { name: { regex: $collectionRegex } }
         index: { eq: 0 }
       }
     ) {
@@ -88,9 +95,6 @@ export const query = graphql`
           name
         }
       }
-    }
-    years: allAirtableWinner(sort: { fields: data___year }) {
-      distinct(field: data___year)
     }
   }
 `

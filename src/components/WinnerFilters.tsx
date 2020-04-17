@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { navigate } from 'gatsby'
 import kebabCase from 'lodash.kebabcase'
 
@@ -21,7 +21,7 @@ export type WinnerFiltersProps = {
 }
 
 export const WinnerFilters = ({
-  years = ['2020', '2019', '2018'],
+  years,
   firstPages,
   initialPage,
   initialYear,
@@ -29,26 +29,20 @@ export const WinnerFilters = ({
   onQueryChange,
 }: WinnerFiltersProps) => {
   const yearRef = useRef<HTMLSelectElement>(null)
-  const categoryRef = useRef<HTMLSelectElement>(null)
 
   const firstPageId = initialPage!.id
 
   const getCategorySlugFromPageId = (pageId: string) => {
     const page = firstPages.find(fp => fp.id === pageId)
 
-    return kebabCase(page?.collection.name.split('/')[1]).replace(
+    return kebabCase(trimCollectionNamespace(page?.collection.name)).replace(
       'advertising',
       'ad',
     )
   }
 
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const pageId = categoryRef.current?.value
-    if (!pageId) return
-
-    const categorySlug = getCategorySlugFromPageId(pageId)
-
-    navigate(`/winners/${e.target.value}/${categorySlug}`)
+    navigate(`/winners/${e.target.value}/`)
   }
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,6 +53,8 @@ export const WinnerFilters = ({
 
     navigate(`/winners/${year}/${categorySlug}/`)
   }
+
+  console.log(years)
 
   return (
     <BoundedBox
@@ -87,7 +83,7 @@ export const WinnerFilters = ({
           })}
         >
           <FormSelect
-            value={initialYear}
+            defaultValue={initialYear}
             onChange={handleYearChange}
             ref={yearRef}
           >
@@ -100,7 +96,6 @@ export const WinnerFilters = ({
           <FormSelect
             defaultValue={firstPageId}
             value={firstPageId}
-            ref={categoryRef}
             onChange={handleCategoryChange}
           >
             <option value="/">All categories</option>
