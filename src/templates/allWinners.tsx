@@ -46,7 +46,7 @@ export const AllWinnersTemplate = ({
 
       <WinnerFilters
         years={years}
-        initialYear={years[0]}
+        initialYear={pageContext.year}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -81,9 +81,12 @@ export const AllWinnersTemplate = ({
 export default AllWinnersTemplate
 
 export const query = graphql`
-  query AllWinnersTemplate {
+  query AllWinnersTemplate(
+    $collectionName: String!
+    $collectionRegex: String!
+  ) {
     paginatedCollectionPage(
-      collection: { name: { eq: "winners" } }
+      collection: { name: { eq: $collectionName } }
       index: { eq: 0 }
     ) {
       id
@@ -98,7 +101,7 @@ export const query = graphql`
     }
     allPaginatedCollectionPage(
       filter: {
-        collection: { name: { regex: "/^winners//" } }
+        collection: { name: { regex: $collectionRegex } }
         index: { eq: 0 }
       }
     ) {

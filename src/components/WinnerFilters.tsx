@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { navigate } from 'gatsby'
 import kebabCase from 'lodash.kebabcase'
 
@@ -36,7 +36,7 @@ export const WinnerFilters = ({
   const getCategorySlugFromPageId = (pageId: string) => {
     const page = firstPages.find(fp => fp.id === pageId)
 
-    return kebabCase(page?.collection.name.split('/')[1]).replace(
+    return kebabCase(trimCollectionNamespace(page?.collection.name)).replace(
       'advertising',
       'ad',
     )

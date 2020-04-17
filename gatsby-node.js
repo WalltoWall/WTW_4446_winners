@@ -167,7 +167,7 @@ exports.createPages = async gatsbyContext => {
               !/^(Judge's Award|Best of Show) - /.test(node.data.special_award),
           )
           .map(normalizeWinnerNode),
-        name: 'winners',
+        name: `winners/${year}`,
         createNode,
         createNodeId,
         createContentDigest,
@@ -176,7 +176,7 @@ exports.createPages = async gatsbyContext => {
 
       processPaginatedCollection({
         collection: collegeWinnerNodes.map(normalizeWinnerNode),
-        name: 'collegeWinners',
+        name: `collegeWinners/${year}`,
         createNode,
         createNodeId,
         createContentDigest,
@@ -185,7 +185,7 @@ exports.createPages = async gatsbyContext => {
 
       processPaginatedCollection({
         collection: highSchoolWinnerNodes.map(normalizeWinnerNode),
-        name: 'highSchoolWinners',
+        name: `highSchoolWinners/${year}`,
         createNode,
         createNodeId,
         createContentDigest,
@@ -207,7 +207,7 @@ exports.createPages = async gatsbyContext => {
 
         processPaginatedCollection({
           collection,
-          name: `winners/${category}`,
+          name: `winners/${year}/${category}`,
         })
       }
 
@@ -314,67 +314,75 @@ exports.createPages = async gatsbyContext => {
           context: { paginatedCollectionName: `tags/${tag}` },
         })
       }
-    }),
-  )
 
-  /***
-   * Create winners pages.
-   */
-
-  const winnerPageResult = await graphql(`
-    query {
-      allPaginatedCollectionPage(
-        filter: { collection: { name: { regex: "/^winners//" } } }
-      ) {
-        nodes {
-          collection {
-            name
-            id
+      const collectionRegex = `/^winners\/${year}\//`
+      const winnerPageResult = await graphql(
+        `
+          query($collectionRegex: String!) {
+            allPaginatedCollectionPage(
+              filter: { collection: { name: { regex: $collectionRegex } } }
+            ) {
+              nodes {
+                collection {
+                  name
+                  id
+                }
+              }
+            }
           }
-        }
-      }
-    }
-  `)
-  const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
-
-  years.forEach(year => {
-    collections.forEach(c => {
-      const category = c.collection.name.split('/')[1]
-      const categoryId = c.collection.id
-      const categorySlug = kebabCase(category.toLowerCase()).replace(
-        'advertising',
-        'ad',
+        `,
+        { collectionRegex },
       )
+      const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
+
+      collections.forEach(c => {
+        const splitNames = c.collection.name.split('/')
+        const category = splitNames[splitNames.length - 1]
+        const categorySlug = kebabCase(category.toLowerCase()).replace(
+          'advertising',
+          'ad',
+        )
+
+        createPage({
+          path: `/winners/${year}/${categorySlug}/`,
+          component: path.resolve(__dirname, 'src/templates/winners.tsx'),
+          context: {
+            year,
+            category,
+            categoryId: c.collection.id,
+            collectionName: c.collection.name,
+            collectionRegex,
+          },
+        })
+      })
 
       createPage({
-        path: `/winners/${year}/${categorySlug}/`,
-        component: path.resolve(__dirname, 'src/templates/winners.tsx'),
+        path: `/winners/${year}/`,
+        component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
         context: {
-          category,
-          categoryId,
+          collectionName: `winners/${year}`,
+          collectionRegex,
           year,
         },
       })
-    })
+    }),
+  )
 
-    createPage({
-      path: `/winners/${year}/`,
-      component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
-      context: {
-        year,
-      },
-    })
-  })
+  /**
+   * Create root winners page.
+   */
 
   createPage({
     path: `/winners/`,
     component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
     context: {
+      collectionName: `winners/${years[0]}`,
+      collectionRegex: `/^winners\/${years[0]}/`,
       year: years[0],
     },
   })
 
-  /***
+  /**
    * Write search indexes.
    */
 
