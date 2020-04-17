@@ -52,7 +52,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         textHTML={
           data.aboutHeroText?.data?.rich_text?.childMarkdownRemark?.html
         }
-        imageFluid={data.aboutHeroImage?.data?.image?.[0]?.fluid}
+        imageFluid={data.aboutHeroImage?.fields?.image?.fluid}
       />
 
       <ColoredBoxesSlice
@@ -119,7 +119,7 @@ export const query = graphql`
     aboutHeroImage: airtableImageField(
       data: { uid: { eq: "About Hero Image" } }
     ) {
-      data {
+      fields {
         image {
           fluid(maxWidth: 500) {
             ...GatsbyImgixFluid
