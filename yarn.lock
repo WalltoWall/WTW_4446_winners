@@ -2825,7 +2825,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
-axios@^0.19.0, axios@^0.19.2:
+axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
@@ -3779,14 +3779,6 @@ clone-response@1.0.2, clone-response@^1.0.2:
   integrity sha1-0dyXOSAxTfZ/vrlCI7TuNQI56Ws=
   dependencies:
     mimic-response "^1.0.0"
-
-cloudinary@^1.15.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/cloudinary/-/cloudinary-1.21.0.tgz#9c30935190f49f2e9a0e26a16cd8ade580f675cc"
-  integrity sha512-am8wpHbHl8bcpy9oGSlWrpWLNQ9szkW/jmhcJdEpMjaL23BYt05V1frWyrXDlo8Jt7aCo5NE6EO0CM9Zaynd5g==
-  dependencies:
-    lodash "^4.17.11"
-    q "^1.5.1"
 
 co@^4.6.0:
   version "4.6.0"
@@ -6225,6 +6217,15 @@ gatsby-core-utils@^1.1.1:
     configstore "^5.0.1"
     node-object-hash "^2.0.0"
 
+gatsby-core-utils@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-1.1.2.tgz#635a0a20bca46dfb1c0dd99a4065aed0c3cf5431"
+  integrity sha512-a+nkA7JYlL5ROvI+Ysq2IzRO7EIwAiMEMQWRtmor2KgvGuiVbov4OCfoG3k77s52J0TR7ittrIm1k6xgpxNlCw==
+  dependencies:
+    ci-info "2.0.0"
+    configstore "^5.0.1"
+    node-object-hash "^2.0.0"
+
 gatsby-graphiql-explorer@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/gatsby-graphiql-explorer/-/gatsby-graphiql-explorer-0.3.1.tgz#ea38430e1b748c681be0e17e85b9ead8ad51fdeb"
@@ -6363,10 +6364,10 @@ gatsby-source-airtable@^2.1.0:
     airtable "^0.8.0"
     bluebird "^3.5.4"
 
-gatsby-source-filesystem@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.2.2.tgz#9ecbc9e64fedd1c30b4d21f7e148016353b2dc17"
-  integrity sha512-uHHCiTp8/q9JF0Yr14Q5aJZ07jUJSV6HJSnrSVnEIF4PfRQkVJG5FHQULmxJUXWQhIoy17EGuzqVjxMsFY69QA==
+gatsby-source-filesystem@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.2.3.tgz#69af8b5f221e9ed88f2e0fa40ec9f8328bf171be"
+  integrity sha512-r6YPwOSz8IBkVMLKmE8bkPSFCc2n0ebUsTha/t4RbWf0ux+L4eqzf1DQBTBVMYGiHiOYhIKkDKhF71coKAoS3w==
   dependencies:
     "@babel/runtime" "^7.8.7"
     better-queue "^3.8.10"
@@ -6374,7 +6375,7 @@ gatsby-source-filesystem@^2.2.2:
     chokidar "3.3.1"
     file-type "^12.4.2"
     fs-extra "^8.1.0"
-    gatsby-core-utils "^1.1.1"
+    gatsby-core-utils "^1.1.2"
     got "^9.6.0"
     md5-file "^3.2.3"
     mime "^2.4.4"
@@ -6406,15 +6407,6 @@ gatsby-telemetry@^1.2.3:
     stack-trace "^0.0.10"
     stack-utils "1.0.2"
     uuid "3.4.0"
-
-gatsby-transformer-cloudinary@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-cloudinary/-/gatsby-transformer-cloudinary-0.3.2.tgz#9a8472c59187426371ffef51a2e7976073acc571"
-  integrity sha512-rsXzERe8yQmImpfD8yBxJNEv9d2TPpi1+0AsSL4W0W9anIX+BQBwWxP3d2RV5O+9v2JmKyKvkrN+Me3LyrALjg==
-  dependencies:
-    axios "^0.19.0"
-    cloudinary "^1.15.0"
-    fs-extra "^8.1.0"
 
 gatsby-transformer-remark@^2.7.1:
   version "2.7.1"
