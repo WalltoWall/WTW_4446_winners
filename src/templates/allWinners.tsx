@@ -24,6 +24,7 @@ export const AllWinnersTemplate = ({
   ...props
 }: AllWinnersProps) => {
   const [query, setQuery] = useState(getURLParam)
+  console.log(pageContext)
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -36,7 +37,7 @@ export const AllWinnersTemplate = ({
   const firstPageId = initialPage.id
   const isInitialPageSelected = firstPageId === initialPage.id
 
-  const years = data.years.distinct
+  const years = data.years.distinct.reverse()
 
   return (
     <Layout {...props}>
@@ -132,7 +133,7 @@ export const query = graphql`
         ...SpecialAwardWinner
       }
     }
-    years: allAirtableWinner(sort: { fields: data___year }) {
+    years: allAirtableWinner(sort: { fields: data___year, order: DESC }) {
       distinct(field: data___year)
     }
   }

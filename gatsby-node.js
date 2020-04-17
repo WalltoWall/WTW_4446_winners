@@ -73,12 +73,13 @@ exports.createPages = async gatsbyContext => {
 
   const yearsResult = await graphql(`
     {
-      allAirtableWinner(sort: { fields: data___year }) {
+      allAirtableWinner(sort: { fields: data___year, order: DESC }) {
         distinct(field: data___year)
       }
     }
   `)
-  const years = yearsResult.data.allAirtableWinner.distinct
+  // Using the sort: field in GraphQL doesn't seem to work for some reason.
+  const years = yearsResult.data.allAirtableWinner.distinct.reverse()
 
   /***
    * Create paginated collections for each category and year.
@@ -348,9 +349,7 @@ exports.createPages = async gatsbyContext => {
           component: path.resolve(__dirname, 'src/templates/winners.tsx'),
           context: {
             year,
-            category,
             categoryId: c.collection.id,
-            collectionName: c.collection.name,
             collectionRegex,
           },
         })
@@ -360,9 +359,9 @@ exports.createPages = async gatsbyContext => {
         path: `/winners/${year}/`,
         component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
         context: {
+          year,
           collectionName: `winners/${year}`,
           collectionRegex,
-          year,
         },
       })
     }),
@@ -377,7 +376,7 @@ exports.createPages = async gatsbyContext => {
     component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
     context: {
       collectionName: `winners/${years[0]}`,
-      collectionRegex: `/^winners\/${years[0]}/`,
+      collectionRegex: `/^winners\/${years[0]}\//`,
       year: years[0],
     },
   })

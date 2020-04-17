@@ -24,7 +24,8 @@ export const SearchPage = ({
   data,
   ...props
 }: SearchPageProps) => {
-  const years = data.years.distinct
+  // Using the sort: field in GraphQL doesn't seem to work.
+  const years = data.years.distinct.reverse()
   const initialYear = years[0]
 
   const [query, setQuery] = useURLParamState('query', getURLParam())
@@ -105,7 +106,7 @@ export default SearchPage
 
 export const query = graphql`
   query SearchPage {
-    years: allAirtableWinner(sort: { fields: data___year }) {
+    years: allAirtableWinner(sort: { fields: data___year, order: DESC }) {
       distinct(field: data___year)
     }
   }
