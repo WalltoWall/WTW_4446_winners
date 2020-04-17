@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 
-import { getSearchQuery } from '../utils'
+import { getURLParam } from '../utils'
 import { AllWinnersTemplateQuery } from '../graphqlTypes'
 
 import { Layout, LayoutProps } from '../components/Layout'
@@ -23,7 +23,7 @@ export const AllWinnersTemplate = ({
   pageContext,
   ...props
 }: AllWinnersProps) => {
-  const [query, setQuery] = useState(getSearchQuery)
+  const [query, setQuery] = useState(getURLParam)
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)

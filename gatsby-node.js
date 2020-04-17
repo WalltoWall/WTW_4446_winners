@@ -26,6 +26,7 @@ const normalizeWinnerNode = node => {
     url: node.fields.url,
     name: node.data.name,
     award: node.data.award.toLowerCase(),
+    year: node.data.year,
     nationalWinner: Boolean(node.data.national_winner),
     category: dlv(node, ['data', 'category', 0, 'data']),
     imageFluid: dlv(node, [
@@ -101,6 +102,7 @@ exports.createPages = async gatsbyContext => {
             name
             type
             award
+            year
             special_award
             national_winner
             tags

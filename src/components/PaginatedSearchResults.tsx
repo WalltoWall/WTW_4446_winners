@@ -16,7 +16,7 @@ export type PaginatedSearchResultsProps = {
   query: string
   filterOptions?: {
     category?: string
-    year?: number
+    year?: string
   }
 }
 
@@ -57,6 +57,11 @@ export const PaginatedSearchResults = ({
   if (filterOptions?.category) {
     searchResults = searchResults.filter(
       result => result.categoryLine1 === filterOptions.category,
+    )
+  }
+  if (filterOptions?.year) {
+    searchResults = searchResults.filter(
+      result => result.year === filterOptions.year,
     )
   }
 
