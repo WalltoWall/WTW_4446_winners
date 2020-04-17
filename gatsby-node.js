@@ -253,7 +253,7 @@ exports.createPages = async gatsbyContext => {
           }
         }
       }
-      allAirtableWinner {
+      allAirtableWinner(sort: { fields: data___year }) {
         distinct(field: data___year)
       }
     }
@@ -294,7 +294,7 @@ exports.createPages = async gatsbyContext => {
     path: `/winners/`,
     component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
     context: {
-      year: '2020',
+      year: years[0],
     },
   })
 
