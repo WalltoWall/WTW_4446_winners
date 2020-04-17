@@ -10,6 +10,7 @@ import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 import { WinnerFilters } from '../components/WinnerFilters'
 import { LoadMoreWinners } from '../components/LoadMoreWinners'
 import { SpecialWinners } from '../components/SpecialWinners'
+import { useYears } from '../hooks/useYears'
 
 export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
@@ -24,6 +25,7 @@ export const AllWinnersTemplate = ({
   ...props
 }: AllWinnersProps) => {
   const [query, setQuery] = useState(getURLParam)
+  const years = useYears()
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -36,8 +38,6 @@ export const AllWinnersTemplate = ({
   const firstPageId = initialPage.id
   const isInitialPageSelected = firstPageId === initialPage.id
 
-  const years = data.years.distinct
-
   return (
     <Layout {...props}>
       <Helmet>
@@ -46,7 +46,7 @@ export const AllWinnersTemplate = ({
 
       <WinnerFilters
         years={years}
-        initialYear={years[0]}
+        initialYear={pageContext.year}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -81,9 +81,12 @@ export const AllWinnersTemplate = ({
 export default AllWinnersTemplate
 
 export const query = graphql`
-  query AllWinnersTemplate {
+  query AllWinnersTemplate(
+    $collectionName: String!
+    $collectionRegex: String!
+  ) {
     paginatedCollectionPage(
-      collection: { name: { eq: "winners" } }
+      collection: { name: { eq: $collectionName } }
       index: { eq: 0 }
     ) {
       id
@@ -98,7 +101,7 @@ export const query = graphql`
     }
     allPaginatedCollectionPage(
       filter: {
-        collection: { name: { regex: "/^winners//" } }
+        collection: { name: { regex: $collectionRegex } }
         index: { eq: 0 }
       }
     ) {
@@ -128,9 +131,6 @@ export const query = graphql`
       nodes {
         ...SpecialAwardWinner
       }
-    }
-    years: allAirtableWinner(sort: { fields: data___year }) {
-      distinct(field: data___year)
     }
   }
 `
