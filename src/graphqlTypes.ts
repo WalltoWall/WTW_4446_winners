@@ -54,8 +54,8 @@ export type AirtableAdPersonData = {
   year?: Maybe<Scalars['Date']>;
   title?: Maybe<Scalars['String']>;
   agency?: Maybe<Array<Maybe<AirtableAgency>>>;
+  photo?: Maybe<Array<Maybe<AirtableAdPersonDataPhoto>>>;
   description?: Maybe<AirtableFieldtextmarkdown>;
-  photo?: Maybe<AirtableFieldfileNode>;
 };
 
 
@@ -72,8 +72,85 @@ export type AirtableAdPersonDataFilterInput = {
   year?: Maybe<DateQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   agency?: Maybe<AirtableAgencyFilterListInput>;
+  photo?: Maybe<AirtableAdPersonDataPhotoFilterListInput>;
   description?: Maybe<AirtableFieldtextmarkdownFilterInput>;
-  photo?: Maybe<AirtableFieldfileNodeFilterInput>;
+};
+
+export type AirtableAdPersonDataPhoto = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableAdPersonDataPhotoThumbnails>;
+};
+
+
+export type AirtableAdPersonDataPhotoFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAdPersonDataPhotoFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableAdPersonDataPhotoThumbnailsFilterInput>;
+};
+
+export type AirtableAdPersonDataPhotoFilterListInput = {
+  elemMatch?: Maybe<AirtableAdPersonDataPhotoFilterInput>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnails = {
+  small?: Maybe<AirtableAdPersonDataPhotoThumbnailsSmall>;
+  large?: Maybe<AirtableAdPersonDataPhotoThumbnailsLarge>;
+  full?: Maybe<AirtableAdPersonDataPhotoThumbnailsFull>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsFilterInput = {
+  small?: Maybe<AirtableAdPersonDataPhotoThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableAdPersonDataPhotoThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableAdPersonDataPhotoThumbnailsFullFilterInput>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAdPersonDataPhotoThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
 };
 
 export type AirtableAdPersonEdge = {
@@ -202,13 +279,27 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
-  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
+  DataAgencyDataAvatar = 'data___agency___data___avatar',
   DataAgencyDataWebsite = 'data___agency___data___website',
   DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
+  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
+  DataPhoto = 'data___photo',
+  DataPhotoFluidBase64 = 'data___photo___fluid___base64',
+  DataPhotoFluidAspectRatio = 'data___photo___fluid___aspectRatio',
+  DataPhotoFluidSrc = 'data___photo___fluid___src',
+  DataPhotoFluidSrcSet = 'data___photo___fluid___srcSet',
+  DataPhotoFluidSrcWebp = 'data___photo___fluid___srcWebp',
+  DataPhotoFluidSrcSetWebp = 'data___photo___fluid___srcSetWebp',
+  DataPhotoFluidSizes = 'data___photo___fluid___sizes',
+  DataPhotoId = 'data___photo___id',
+  DataPhotoUrl = 'data___photo___url',
+  DataPhotoFilename = 'data___photo___filename',
+  DataPhotoSize = 'data___photo___size',
+  DataPhotoType = 'data___photo___type',
   DataDescriptionId = 'data___description___id',
   DataDescriptionParentId = 'data___description___parent___id',
   DataDescriptionParentChildren = 'data___description___parent___children',
@@ -234,63 +325,6 @@ export enum AirtableAdPersonFieldsEnum {
   DataDescriptionChildMarkdownRemarkTimeToRead = 'data___description___childMarkdownRemark___timeToRead',
   DataDescriptionChildMarkdownRemarkTableOfContents = 'data___description___childMarkdownRemark___tableOfContents',
   DataDescriptionChildMarkdownRemarkChildren = 'data___description___childMarkdownRemark___children',
-  DataPhotoId = 'data___photo___id',
-  DataPhotoParentId = 'data___photo___parent___id',
-  DataPhotoParentChildren = 'data___photo___parent___children',
-  DataPhotoChildren = 'data___photo___children',
-  DataPhotoChildrenId = 'data___photo___children___id',
-  DataPhotoChildrenChildren = 'data___photo___children___children',
-  DataPhotoInternalContent = 'data___photo___internal___content',
-  DataPhotoInternalContentDigest = 'data___photo___internal___contentDigest',
-  DataPhotoInternalDescription = 'data___photo___internal___description',
-  DataPhotoInternalFieldOwners = 'data___photo___internal___fieldOwners',
-  DataPhotoInternalIgnoreType = 'data___photo___internal___ignoreType',
-  DataPhotoInternalMediaType = 'data___photo___internal___mediaType',
-  DataPhotoInternalOwner = 'data___photo___internal___owner',
-  DataPhotoInternalType = 'data___photo___internal___type',
-  DataPhotoRaw = 'data___photo___raw',
-  DataPhotoRawId = 'data___photo___raw___id',
-  DataPhotoRawUrl = 'data___photo___raw___url',
-  DataPhotoRawFilename = 'data___photo___raw___filename',
-  DataPhotoRawSize = 'data___photo___raw___size',
-  DataPhotoRawType = 'data___photo___raw___type',
-  DataPhotoLocalFiles = 'data___photo___localFiles',
-  DataPhotoLocalFilesSourceInstanceName = 'data___photo___localFiles___sourceInstanceName',
-  DataPhotoLocalFilesAbsolutePath = 'data___photo___localFiles___absolutePath',
-  DataPhotoLocalFilesRelativePath = 'data___photo___localFiles___relativePath',
-  DataPhotoLocalFilesExtension = 'data___photo___localFiles___extension',
-  DataPhotoLocalFilesSize = 'data___photo___localFiles___size',
-  DataPhotoLocalFilesPrettySize = 'data___photo___localFiles___prettySize',
-  DataPhotoLocalFilesModifiedTime = 'data___photo___localFiles___modifiedTime',
-  DataPhotoLocalFilesAccessTime = 'data___photo___localFiles___accessTime',
-  DataPhotoLocalFilesChangeTime = 'data___photo___localFiles___changeTime',
-  DataPhotoLocalFilesBirthTime = 'data___photo___localFiles___birthTime',
-  DataPhotoLocalFilesRoot = 'data___photo___localFiles___root',
-  DataPhotoLocalFilesDir = 'data___photo___localFiles___dir',
-  DataPhotoLocalFilesBase = 'data___photo___localFiles___base',
-  DataPhotoLocalFilesExt = 'data___photo___localFiles___ext',
-  DataPhotoLocalFilesName = 'data___photo___localFiles___name',
-  DataPhotoLocalFilesRelativeDirectory = 'data___photo___localFiles___relativeDirectory',
-  DataPhotoLocalFilesDev = 'data___photo___localFiles___dev',
-  DataPhotoLocalFilesMode = 'data___photo___localFiles___mode',
-  DataPhotoLocalFilesNlink = 'data___photo___localFiles___nlink',
-  DataPhotoLocalFilesUid = 'data___photo___localFiles___uid',
-  DataPhotoLocalFilesGid = 'data___photo___localFiles___gid',
-  DataPhotoLocalFilesRdev = 'data___photo___localFiles___rdev',
-  DataPhotoLocalFilesIno = 'data___photo___localFiles___ino',
-  DataPhotoLocalFilesAtimeMs = 'data___photo___localFiles___atimeMs',
-  DataPhotoLocalFilesMtimeMs = 'data___photo___localFiles___mtimeMs',
-  DataPhotoLocalFilesCtimeMs = 'data___photo___localFiles___ctimeMs',
-  DataPhotoLocalFilesAtime = 'data___photo___localFiles___atime',
-  DataPhotoLocalFilesMtime = 'data___photo___localFiles___mtime',
-  DataPhotoLocalFilesCtime = 'data___photo___localFiles___ctime',
-  DataPhotoLocalFilesBirthtime = 'data___photo___localFiles___birthtime',
-  DataPhotoLocalFilesBirthtimeMs = 'data___photo___localFiles___birthtimeMs',
-  DataPhotoLocalFilesBlksize = 'data___photo___localFiles___blksize',
-  DataPhotoLocalFilesBlocks = 'data___photo___localFiles___blocks',
-  DataPhotoLocalFilesUrl = 'data___photo___localFiles___url',
-  DataPhotoLocalFilesId = 'data___photo___localFiles___id',
-  DataPhotoLocalFilesChildren = 'data___photo___localFiles___children',
   FieldsUrl = 'fields___url'
 }
 
@@ -362,13 +396,13 @@ export type AirtableAgencyData = {
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
-  Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
+  avatar?: Maybe<Array<Maybe<AirtableAgencyDataAvatar>>>;
   website?: Maybe<Scalars['String']>;
   facebook_handle?: Maybe<Scalars['String']>;
   instagram_handle?: Maybe<Scalars['String']>;
   linkedin_handle?: Maybe<Scalars['String']>;
   twitter_handle?: Maybe<Scalars['String']>;
-  avatar?: Maybe<AirtableFieldfileNode>;
+  Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -387,18 +421,95 @@ export type AirtableAgencyDataCreated_AtArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
+export type AirtableAgencyDataAvatar = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnails>;
+};
+
+
+export type AirtableAgencyDataAvatarFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableAgencyDataAvatarThumbnailsFilterInput>;
+};
+
+export type AirtableAgencyDataAvatarFilterListInput = {
+  elemMatch?: Maybe<AirtableAgencyDataAvatarFilterInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnails = {
+  small?: Maybe<AirtableAgencyDataAvatarThumbnailsSmall>;
+  large?: Maybe<AirtableAgencyDataAvatarThumbnailsLarge>;
+  full?: Maybe<AirtableAgencyDataAvatarThumbnailsFull>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsFilterInput = {
+  small?: Maybe<AirtableAgencyDataAvatarThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableAgencyDataAvatarThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableAgencyDataAvatarThumbnailsFullFilterInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableAgencyDataAvatarThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
 export type AirtableAgencyDataFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
   Entries?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
-  Ad_People?: Maybe<StringQueryOperatorInput>;
+  avatar?: Maybe<AirtableAgencyDataAvatarFilterListInput>;
   website?: Maybe<StringQueryOperatorInput>;
   facebook_handle?: Maybe<StringQueryOperatorInput>;
   instagram_handle?: Maybe<StringQueryOperatorInput>;
   linkedin_handle?: Maybe<StringQueryOperatorInput>;
   twitter_handle?: Maybe<StringQueryOperatorInput>;
-  avatar?: Maybe<AirtableFieldfileNodeFilterInput>;
+  Ad_People?: Maybe<StringQueryOperatorInput>;
 };
 
 export type AirtableAgencyEdge = {
@@ -505,69 +616,25 @@ export enum AirtableAgencyFieldsEnum {
   DataEntries = 'data___Entries',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
-  DataAdPeople = 'data___Ad_People',
+  DataAvatar = 'data___avatar',
+  DataAvatarFluidBase64 = 'data___avatar___fluid___base64',
+  DataAvatarFluidAspectRatio = 'data___avatar___fluid___aspectRatio',
+  DataAvatarFluidSrc = 'data___avatar___fluid___src',
+  DataAvatarFluidSrcSet = 'data___avatar___fluid___srcSet',
+  DataAvatarFluidSrcWebp = 'data___avatar___fluid___srcWebp',
+  DataAvatarFluidSrcSetWebp = 'data___avatar___fluid___srcSetWebp',
+  DataAvatarFluidSizes = 'data___avatar___fluid___sizes',
+  DataAvatarId = 'data___avatar___id',
+  DataAvatarUrl = 'data___avatar___url',
+  DataAvatarFilename = 'data___avatar___filename',
+  DataAvatarSize = 'data___avatar___size',
+  DataAvatarType = 'data___avatar___type',
   DataWebsite = 'data___website',
   DataFacebookHandle = 'data___facebook_handle',
   DataInstagramHandle = 'data___instagram_handle',
   DataLinkedinHandle = 'data___linkedin_handle',
   DataTwitterHandle = 'data___twitter_handle',
-  DataAvatarId = 'data___avatar___id',
-  DataAvatarParentId = 'data___avatar___parent___id',
-  DataAvatarParentChildren = 'data___avatar___parent___children',
-  DataAvatarChildren = 'data___avatar___children',
-  DataAvatarChildrenId = 'data___avatar___children___id',
-  DataAvatarChildrenChildren = 'data___avatar___children___children',
-  DataAvatarInternalContent = 'data___avatar___internal___content',
-  DataAvatarInternalContentDigest = 'data___avatar___internal___contentDigest',
-  DataAvatarInternalDescription = 'data___avatar___internal___description',
-  DataAvatarInternalFieldOwners = 'data___avatar___internal___fieldOwners',
-  DataAvatarInternalIgnoreType = 'data___avatar___internal___ignoreType',
-  DataAvatarInternalMediaType = 'data___avatar___internal___mediaType',
-  DataAvatarInternalOwner = 'data___avatar___internal___owner',
-  DataAvatarInternalType = 'data___avatar___internal___type',
-  DataAvatarRaw = 'data___avatar___raw',
-  DataAvatarRawId = 'data___avatar___raw___id',
-  DataAvatarRawUrl = 'data___avatar___raw___url',
-  DataAvatarRawFilename = 'data___avatar___raw___filename',
-  DataAvatarRawSize = 'data___avatar___raw___size',
-  DataAvatarRawType = 'data___avatar___raw___type',
-  DataAvatarLocalFiles = 'data___avatar___localFiles',
-  DataAvatarLocalFilesSourceInstanceName = 'data___avatar___localFiles___sourceInstanceName',
-  DataAvatarLocalFilesAbsolutePath = 'data___avatar___localFiles___absolutePath',
-  DataAvatarLocalFilesRelativePath = 'data___avatar___localFiles___relativePath',
-  DataAvatarLocalFilesExtension = 'data___avatar___localFiles___extension',
-  DataAvatarLocalFilesSize = 'data___avatar___localFiles___size',
-  DataAvatarLocalFilesPrettySize = 'data___avatar___localFiles___prettySize',
-  DataAvatarLocalFilesModifiedTime = 'data___avatar___localFiles___modifiedTime',
-  DataAvatarLocalFilesAccessTime = 'data___avatar___localFiles___accessTime',
-  DataAvatarLocalFilesChangeTime = 'data___avatar___localFiles___changeTime',
-  DataAvatarLocalFilesBirthTime = 'data___avatar___localFiles___birthTime',
-  DataAvatarLocalFilesRoot = 'data___avatar___localFiles___root',
-  DataAvatarLocalFilesDir = 'data___avatar___localFiles___dir',
-  DataAvatarLocalFilesBase = 'data___avatar___localFiles___base',
-  DataAvatarLocalFilesExt = 'data___avatar___localFiles___ext',
-  DataAvatarLocalFilesName = 'data___avatar___localFiles___name',
-  DataAvatarLocalFilesRelativeDirectory = 'data___avatar___localFiles___relativeDirectory',
-  DataAvatarLocalFilesDev = 'data___avatar___localFiles___dev',
-  DataAvatarLocalFilesMode = 'data___avatar___localFiles___mode',
-  DataAvatarLocalFilesNlink = 'data___avatar___localFiles___nlink',
-  DataAvatarLocalFilesUid = 'data___avatar___localFiles___uid',
-  DataAvatarLocalFilesGid = 'data___avatar___localFiles___gid',
-  DataAvatarLocalFilesRdev = 'data___avatar___localFiles___rdev',
-  DataAvatarLocalFilesIno = 'data___avatar___localFiles___ino',
-  DataAvatarLocalFilesAtimeMs = 'data___avatar___localFiles___atimeMs',
-  DataAvatarLocalFilesMtimeMs = 'data___avatar___localFiles___mtimeMs',
-  DataAvatarLocalFilesCtimeMs = 'data___avatar___localFiles___ctimeMs',
-  DataAvatarLocalFilesAtime = 'data___avatar___localFiles___atime',
-  DataAvatarLocalFilesMtime = 'data___avatar___localFiles___mtime',
-  DataAvatarLocalFilesCtime = 'data___avatar___localFiles___ctime',
-  DataAvatarLocalFilesBirthtime = 'data___avatar___localFiles___birthtime',
-  DataAvatarLocalFilesBirthtimeMs = 'data___avatar___localFiles___birthtimeMs',
-  DataAvatarLocalFilesBlksize = 'data___avatar___localFiles___blksize',
-  DataAvatarLocalFilesBlocks = 'data___avatar___localFiles___blocks',
-  DataAvatarLocalFilesUrl = 'data___avatar___localFiles___url',
-  DataAvatarLocalFilesId = 'data___avatar___localFiles___id',
-  DataAvatarLocalFilesChildren = 'data___avatar___localFiles___children',
+  DataAdPeople = 'data___Ad_People',
   FieldsUrl = 'fields___url'
 }
 
@@ -957,337 +1024,6 @@ export type AirtableCategorySortInput = {
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
-export type AirtableFieldfileNode = Node & {
-  id: Scalars['ID'];
-  parent?: Maybe<Node>;
-  children: Array<Node>;
-  internal: Internal;
-  raw?: Maybe<Array<Maybe<AirtableFieldfileNodeRaw>>>;
-  localFiles?: Maybe<Array<Maybe<File>>>;
-};
-
-export type AirtableFieldfileNodeConnection = {
-  totalCount: Scalars['Int'];
-  edges: Array<AirtableFieldfileNodeEdge>;
-  nodes: Array<AirtableFieldfileNode>;
-  pageInfo: PageInfo;
-  distinct: Array<Scalars['String']>;
-  group: Array<AirtableFieldfileNodeGroupConnection>;
-};
-
-
-export type AirtableFieldfileNodeConnectionDistinctArgs = {
-  field: AirtableFieldfileNodeFieldsEnum;
-};
-
-
-export type AirtableFieldfileNodeConnectionGroupArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  field: AirtableFieldfileNodeFieldsEnum;
-};
-
-export type AirtableFieldfileNodeEdge = {
-  next?: Maybe<AirtableFieldfileNode>;
-  node: AirtableFieldfileNode;
-  previous?: Maybe<AirtableFieldfileNode>;
-};
-
-export enum AirtableFieldfileNodeFieldsEnum {
-  Id = 'id',
-  ParentId = 'parent___id',
-  ParentParentId = 'parent___parent___id',
-  ParentParentParentId = 'parent___parent___parent___id',
-  ParentParentParentChildren = 'parent___parent___parent___children',
-  ParentParentChildren = 'parent___parent___children',
-  ParentParentChildrenId = 'parent___parent___children___id',
-  ParentParentChildrenChildren = 'parent___parent___children___children',
-  ParentParentInternalContent = 'parent___parent___internal___content',
-  ParentParentInternalContentDigest = 'parent___parent___internal___contentDigest',
-  ParentParentInternalDescription = 'parent___parent___internal___description',
-  ParentParentInternalFieldOwners = 'parent___parent___internal___fieldOwners',
-  ParentParentInternalIgnoreType = 'parent___parent___internal___ignoreType',
-  ParentParentInternalMediaType = 'parent___parent___internal___mediaType',
-  ParentParentInternalOwner = 'parent___parent___internal___owner',
-  ParentParentInternalType = 'parent___parent___internal___type',
-  ParentChildren = 'parent___children',
-  ParentChildrenId = 'parent___children___id',
-  ParentChildrenParentId = 'parent___children___parent___id',
-  ParentChildrenParentChildren = 'parent___children___parent___children',
-  ParentChildrenChildren = 'parent___children___children',
-  ParentChildrenChildrenId = 'parent___children___children___id',
-  ParentChildrenChildrenChildren = 'parent___children___children___children',
-  ParentChildrenInternalContent = 'parent___children___internal___content',
-  ParentChildrenInternalContentDigest = 'parent___children___internal___contentDigest',
-  ParentChildrenInternalDescription = 'parent___children___internal___description',
-  ParentChildrenInternalFieldOwners = 'parent___children___internal___fieldOwners',
-  ParentChildrenInternalIgnoreType = 'parent___children___internal___ignoreType',
-  ParentChildrenInternalMediaType = 'parent___children___internal___mediaType',
-  ParentChildrenInternalOwner = 'parent___children___internal___owner',
-  ParentChildrenInternalType = 'parent___children___internal___type',
-  ParentInternalContent = 'parent___internal___content',
-  ParentInternalContentDigest = 'parent___internal___contentDigest',
-  ParentInternalDescription = 'parent___internal___description',
-  ParentInternalFieldOwners = 'parent___internal___fieldOwners',
-  ParentInternalIgnoreType = 'parent___internal___ignoreType',
-  ParentInternalMediaType = 'parent___internal___mediaType',
-  ParentInternalOwner = 'parent___internal___owner',
-  ParentInternalType = 'parent___internal___type',
-  Children = 'children',
-  ChildrenId = 'children___id',
-  ChildrenParentId = 'children___parent___id',
-  ChildrenParentParentId = 'children___parent___parent___id',
-  ChildrenParentParentChildren = 'children___parent___parent___children',
-  ChildrenParentChildren = 'children___parent___children',
-  ChildrenParentChildrenId = 'children___parent___children___id',
-  ChildrenParentChildrenChildren = 'children___parent___children___children',
-  ChildrenParentInternalContent = 'children___parent___internal___content',
-  ChildrenParentInternalContentDigest = 'children___parent___internal___contentDigest',
-  ChildrenParentInternalDescription = 'children___parent___internal___description',
-  ChildrenParentInternalFieldOwners = 'children___parent___internal___fieldOwners',
-  ChildrenParentInternalIgnoreType = 'children___parent___internal___ignoreType',
-  ChildrenParentInternalMediaType = 'children___parent___internal___mediaType',
-  ChildrenParentInternalOwner = 'children___parent___internal___owner',
-  ChildrenParentInternalType = 'children___parent___internal___type',
-  ChildrenChildren = 'children___children',
-  ChildrenChildrenId = 'children___children___id',
-  ChildrenChildrenParentId = 'children___children___parent___id',
-  ChildrenChildrenParentChildren = 'children___children___parent___children',
-  ChildrenChildrenChildren = 'children___children___children',
-  ChildrenChildrenChildrenId = 'children___children___children___id',
-  ChildrenChildrenChildrenChildren = 'children___children___children___children',
-  ChildrenChildrenInternalContent = 'children___children___internal___content',
-  ChildrenChildrenInternalContentDigest = 'children___children___internal___contentDigest',
-  ChildrenChildrenInternalDescription = 'children___children___internal___description',
-  ChildrenChildrenInternalFieldOwners = 'children___children___internal___fieldOwners',
-  ChildrenChildrenInternalIgnoreType = 'children___children___internal___ignoreType',
-  ChildrenChildrenInternalMediaType = 'children___children___internal___mediaType',
-  ChildrenChildrenInternalOwner = 'children___children___internal___owner',
-  ChildrenChildrenInternalType = 'children___children___internal___type',
-  ChildrenInternalContent = 'children___internal___content',
-  ChildrenInternalContentDigest = 'children___internal___contentDigest',
-  ChildrenInternalDescription = 'children___internal___description',
-  ChildrenInternalFieldOwners = 'children___internal___fieldOwners',
-  ChildrenInternalIgnoreType = 'children___internal___ignoreType',
-  ChildrenInternalMediaType = 'children___internal___mediaType',
-  ChildrenInternalOwner = 'children___internal___owner',
-  ChildrenInternalType = 'children___internal___type',
-  InternalContent = 'internal___content',
-  InternalContentDigest = 'internal___contentDigest',
-  InternalDescription = 'internal___description',
-  InternalFieldOwners = 'internal___fieldOwners',
-  InternalIgnoreType = 'internal___ignoreType',
-  InternalMediaType = 'internal___mediaType',
-  InternalOwner = 'internal___owner',
-  InternalType = 'internal___type',
-  Raw = 'raw',
-  RawId = 'raw___id',
-  RawUrl = 'raw___url',
-  RawFilename = 'raw___filename',
-  RawSize = 'raw___size',
-  RawType = 'raw___type',
-  RawThumbnailsSmallUrl = 'raw___thumbnails___small___url',
-  RawThumbnailsSmallWidth = 'raw___thumbnails___small___width',
-  RawThumbnailsSmallHeight = 'raw___thumbnails___small___height',
-  RawThumbnailsLargeUrl = 'raw___thumbnails___large___url',
-  RawThumbnailsLargeWidth = 'raw___thumbnails___large___width',
-  RawThumbnailsLargeHeight = 'raw___thumbnails___large___height',
-  RawThumbnailsFullUrl = 'raw___thumbnails___full___url',
-  RawThumbnailsFullWidth = 'raw___thumbnails___full___width',
-  RawThumbnailsFullHeight = 'raw___thumbnails___full___height',
-  LocalFiles = 'localFiles',
-  LocalFilesSourceInstanceName = 'localFiles___sourceInstanceName',
-  LocalFilesAbsolutePath = 'localFiles___absolutePath',
-  LocalFilesRelativePath = 'localFiles___relativePath',
-  LocalFilesExtension = 'localFiles___extension',
-  LocalFilesSize = 'localFiles___size',
-  LocalFilesPrettySize = 'localFiles___prettySize',
-  LocalFilesModifiedTime = 'localFiles___modifiedTime',
-  LocalFilesAccessTime = 'localFiles___accessTime',
-  LocalFilesChangeTime = 'localFiles___changeTime',
-  LocalFilesBirthTime = 'localFiles___birthTime',
-  LocalFilesRoot = 'localFiles___root',
-  LocalFilesDir = 'localFiles___dir',
-  LocalFilesBase = 'localFiles___base',
-  LocalFilesExt = 'localFiles___ext',
-  LocalFilesName = 'localFiles___name',
-  LocalFilesRelativeDirectory = 'localFiles___relativeDirectory',
-  LocalFilesDev = 'localFiles___dev',
-  LocalFilesMode = 'localFiles___mode',
-  LocalFilesNlink = 'localFiles___nlink',
-  LocalFilesUid = 'localFiles___uid',
-  LocalFilesGid = 'localFiles___gid',
-  LocalFilesRdev = 'localFiles___rdev',
-  LocalFilesIno = 'localFiles___ino',
-  LocalFilesAtimeMs = 'localFiles___atimeMs',
-  LocalFilesMtimeMs = 'localFiles___mtimeMs',
-  LocalFilesCtimeMs = 'localFiles___ctimeMs',
-  LocalFilesAtime = 'localFiles___atime',
-  LocalFilesMtime = 'localFiles___mtime',
-  LocalFilesCtime = 'localFiles___ctime',
-  LocalFilesBirthtime = 'localFiles___birthtime',
-  LocalFilesBirthtimeMs = 'localFiles___birthtimeMs',
-  LocalFilesBlksize = 'localFiles___blksize',
-  LocalFilesBlocks = 'localFiles___blocks',
-  LocalFilesUrl = 'localFiles___url',
-  LocalFilesId = 'localFiles___id',
-  LocalFilesParentId = 'localFiles___parent___id',
-  LocalFilesParentParentId = 'localFiles___parent___parent___id',
-  LocalFilesParentParentChildren = 'localFiles___parent___parent___children',
-  LocalFilesParentChildren = 'localFiles___parent___children',
-  LocalFilesParentChildrenId = 'localFiles___parent___children___id',
-  LocalFilesParentChildrenChildren = 'localFiles___parent___children___children',
-  LocalFilesParentInternalContent = 'localFiles___parent___internal___content',
-  LocalFilesParentInternalContentDigest = 'localFiles___parent___internal___contentDigest',
-  LocalFilesParentInternalDescription = 'localFiles___parent___internal___description',
-  LocalFilesParentInternalFieldOwners = 'localFiles___parent___internal___fieldOwners',
-  LocalFilesParentInternalIgnoreType = 'localFiles___parent___internal___ignoreType',
-  LocalFilesParentInternalMediaType = 'localFiles___parent___internal___mediaType',
-  LocalFilesParentInternalOwner = 'localFiles___parent___internal___owner',
-  LocalFilesParentInternalType = 'localFiles___parent___internal___type',
-  LocalFilesChildren = 'localFiles___children',
-  LocalFilesChildrenId = 'localFiles___children___id',
-  LocalFilesChildrenParentId = 'localFiles___children___parent___id',
-  LocalFilesChildrenParentChildren = 'localFiles___children___parent___children',
-  LocalFilesChildrenChildren = 'localFiles___children___children',
-  LocalFilesChildrenChildrenId = 'localFiles___children___children___id',
-  LocalFilesChildrenChildrenChildren = 'localFiles___children___children___children',
-  LocalFilesChildrenInternalContent = 'localFiles___children___internal___content',
-  LocalFilesChildrenInternalContentDigest = 'localFiles___children___internal___contentDigest',
-  LocalFilesChildrenInternalDescription = 'localFiles___children___internal___description',
-  LocalFilesChildrenInternalFieldOwners = 'localFiles___children___internal___fieldOwners',
-  LocalFilesChildrenInternalIgnoreType = 'localFiles___children___internal___ignoreType',
-  LocalFilesChildrenInternalMediaType = 'localFiles___children___internal___mediaType',
-  LocalFilesChildrenInternalOwner = 'localFiles___children___internal___owner',
-  LocalFilesChildrenInternalType = 'localFiles___children___internal___type',
-  LocalFilesInternalContent = 'localFiles___internal___content',
-  LocalFilesInternalContentDigest = 'localFiles___internal___contentDigest',
-  LocalFilesInternalDescription = 'localFiles___internal___description',
-  LocalFilesInternalFieldOwners = 'localFiles___internal___fieldOwners',
-  LocalFilesInternalIgnoreType = 'localFiles___internal___ignoreType',
-  LocalFilesInternalMediaType = 'localFiles___internal___mediaType',
-  LocalFilesInternalOwner = 'localFiles___internal___owner',
-  LocalFilesInternalType = 'localFiles___internal___type',
-  LocalFilesChildCloudinaryAssetFixedAspectRatio = 'localFiles___childCloudinaryAsset___fixed___aspectRatio',
-  LocalFilesChildCloudinaryAssetFixedBase64 = 'localFiles___childCloudinaryAsset___fixed___base64',
-  LocalFilesChildCloudinaryAssetFixedHeight = 'localFiles___childCloudinaryAsset___fixed___height',
-  LocalFilesChildCloudinaryAssetFixedSrc = 'localFiles___childCloudinaryAsset___fixed___src',
-  LocalFilesChildCloudinaryAssetFixedSrcSet = 'localFiles___childCloudinaryAsset___fixed___srcSet',
-  LocalFilesChildCloudinaryAssetFixedWidth = 'localFiles___childCloudinaryAsset___fixed___width',
-  LocalFilesChildCloudinaryAssetFluidAspectRatio = 'localFiles___childCloudinaryAsset___fluid___aspectRatio',
-  LocalFilesChildCloudinaryAssetFluidBase64 = 'localFiles___childCloudinaryAsset___fluid___base64',
-  LocalFilesChildCloudinaryAssetFluidSizes = 'localFiles___childCloudinaryAsset___fluid___sizes',
-  LocalFilesChildCloudinaryAssetFluidSrc = 'localFiles___childCloudinaryAsset___fluid___src',
-  LocalFilesChildCloudinaryAssetFluidSrcSet = 'localFiles___childCloudinaryAsset___fluid___srcSet',
-  LocalFilesChildCloudinaryAssetId = 'localFiles___childCloudinaryAsset___id',
-  LocalFilesChildCloudinaryAssetParentId = 'localFiles___childCloudinaryAsset___parent___id',
-  LocalFilesChildCloudinaryAssetParentChildren = 'localFiles___childCloudinaryAsset___parent___children',
-  LocalFilesChildCloudinaryAssetChildren = 'localFiles___childCloudinaryAsset___children',
-  LocalFilesChildCloudinaryAssetChildrenId = 'localFiles___childCloudinaryAsset___children___id',
-  LocalFilesChildCloudinaryAssetChildrenChildren = 'localFiles___childCloudinaryAsset___children___children',
-  LocalFilesChildCloudinaryAssetInternalContent = 'localFiles___childCloudinaryAsset___internal___content',
-  LocalFilesChildCloudinaryAssetInternalContentDigest = 'localFiles___childCloudinaryAsset___internal___contentDigest',
-  LocalFilesChildCloudinaryAssetInternalDescription = 'localFiles___childCloudinaryAsset___internal___description',
-  LocalFilesChildCloudinaryAssetInternalFieldOwners = 'localFiles___childCloudinaryAsset___internal___fieldOwners',
-  LocalFilesChildCloudinaryAssetInternalIgnoreType = 'localFiles___childCloudinaryAsset___internal___ignoreType',
-  LocalFilesChildCloudinaryAssetInternalMediaType = 'localFiles___childCloudinaryAsset___internal___mediaType',
-  LocalFilesChildCloudinaryAssetInternalOwner = 'localFiles___childCloudinaryAsset___internal___owner',
-  LocalFilesChildCloudinaryAssetInternalType = 'localFiles___childCloudinaryAsset___internal___type'
-}
-
-export type AirtableFieldfileNodeFilterInput = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  raw?: Maybe<AirtableFieldfileNodeRawFilterListInput>;
-  localFiles?: Maybe<FileFilterListInput>;
-};
-
-export type AirtableFieldfileNodeGroupConnection = {
-  totalCount: Scalars['Int'];
-  edges: Array<AirtableFieldfileNodeEdge>;
-  nodes: Array<AirtableFieldfileNode>;
-  pageInfo: PageInfo;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
-};
-
-export type AirtableFieldfileNodeRaw = {
-  id?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  filename?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
-  type?: Maybe<Scalars['String']>;
-  thumbnails?: Maybe<AirtableFieldfileNodeRawThumbnails>;
-};
-
-export type AirtableFieldfileNodeRawFilterInput = {
-  id?: Maybe<StringQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
-  filename?: Maybe<StringQueryOperatorInput>;
-  size?: Maybe<IntQueryOperatorInput>;
-  type?: Maybe<StringQueryOperatorInput>;
-  thumbnails?: Maybe<AirtableFieldfileNodeRawThumbnailsFilterInput>;
-};
-
-export type AirtableFieldfileNodeRawFilterListInput = {
-  elemMatch?: Maybe<AirtableFieldfileNodeRawFilterInput>;
-};
-
-export type AirtableFieldfileNodeRawThumbnails = {
-  small?: Maybe<AirtableFieldfileNodeRawThumbnailsSmall>;
-  large?: Maybe<AirtableFieldfileNodeRawThumbnailsLarge>;
-  full?: Maybe<AirtableFieldfileNodeRawThumbnailsFull>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsFilterInput = {
-  small?: Maybe<AirtableFieldfileNodeRawThumbnailsSmallFilterInput>;
-  large?: Maybe<AirtableFieldfileNodeRawThumbnailsLargeFilterInput>;
-  full?: Maybe<AirtableFieldfileNodeRawThumbnailsFullFilterInput>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsFull = {
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsFullFilterInput = {
-  url?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<IntQueryOperatorInput>;
-  height?: Maybe<IntQueryOperatorInput>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsLarge = {
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsLargeFilterInput = {
-  url?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<IntQueryOperatorInput>;
-  height?: Maybe<IntQueryOperatorInput>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsSmall = {
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-export type AirtableFieldfileNodeRawThumbnailsSmallFilterInput = {
-  url?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<IntQueryOperatorInput>;
-  height?: Maybe<IntQueryOperatorInput>;
-};
-
-export type AirtableFieldfileNodeSortInput = {
-  fields?: Maybe<Array<Maybe<AirtableFieldfileNodeFieldsEnum>>>;
-  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
-};
-
 export type AirtableFieldtextmarkdown = Node & {
   id: Scalars['ID'];
   parent?: Maybe<Node>;
@@ -1523,12 +1259,89 @@ export type AirtableImageFieldConnectionGroupArgs = {
 
 export type AirtableImageFieldData = {
   uid?: Maybe<Scalars['String']>;
-  image?: Maybe<AirtableFieldfileNode>;
+  image?: Maybe<Array<Maybe<AirtableImageFieldDataImage>>>;
 };
 
 export type AirtableImageFieldDataFilterInput = {
   uid?: Maybe<StringQueryOperatorInput>;
-  image?: Maybe<AirtableFieldfileNodeFilterInput>;
+  image?: Maybe<AirtableImageFieldDataImageFilterListInput>;
+};
+
+export type AirtableImageFieldDataImage = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableImageFieldDataImageThumbnails>;
+};
+
+
+export type AirtableImageFieldDataImageFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImageFieldDataImageFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableImageFieldDataImageThumbnailsFilterInput>;
+};
+
+export type AirtableImageFieldDataImageFilterListInput = {
+  elemMatch?: Maybe<AirtableImageFieldDataImageFilterInput>;
+};
+
+export type AirtableImageFieldDataImageThumbnails = {
+  small?: Maybe<AirtableImageFieldDataImageThumbnailsSmall>;
+  large?: Maybe<AirtableImageFieldDataImageThumbnailsLarge>;
+  full?: Maybe<AirtableImageFieldDataImageThumbnailsFull>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsFilterInput = {
+  small?: Maybe<AirtableImageFieldDataImageThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableImageFieldDataImageThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableImageFieldDataImageThumbnailsFullFilterInput>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableImageFieldDataImageThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
 };
 
 export type AirtableImageFieldEdge = {
@@ -1628,63 +1441,19 @@ export enum AirtableImageFieldFieldsEnum {
   RecordId = 'recordId',
   QueryName = 'queryName',
   DataUid = 'data___uid',
+  DataImage = 'data___image',
+  DataImageFluidBase64 = 'data___image___fluid___base64',
+  DataImageFluidAspectRatio = 'data___image___fluid___aspectRatio',
+  DataImageFluidSrc = 'data___image___fluid___src',
+  DataImageFluidSrcSet = 'data___image___fluid___srcSet',
+  DataImageFluidSrcWebp = 'data___image___fluid___srcWebp',
+  DataImageFluidSrcSetWebp = 'data___image___fluid___srcSetWebp',
+  DataImageFluidSizes = 'data___image___fluid___sizes',
   DataImageId = 'data___image___id',
-  DataImageParentId = 'data___image___parent___id',
-  DataImageParentChildren = 'data___image___parent___children',
-  DataImageChildren = 'data___image___children',
-  DataImageChildrenId = 'data___image___children___id',
-  DataImageChildrenChildren = 'data___image___children___children',
-  DataImageInternalContent = 'data___image___internal___content',
-  DataImageInternalContentDigest = 'data___image___internal___contentDigest',
-  DataImageInternalDescription = 'data___image___internal___description',
-  DataImageInternalFieldOwners = 'data___image___internal___fieldOwners',
-  DataImageInternalIgnoreType = 'data___image___internal___ignoreType',
-  DataImageInternalMediaType = 'data___image___internal___mediaType',
-  DataImageInternalOwner = 'data___image___internal___owner',
-  DataImageInternalType = 'data___image___internal___type',
-  DataImageRaw = 'data___image___raw',
-  DataImageRawId = 'data___image___raw___id',
-  DataImageRawUrl = 'data___image___raw___url',
-  DataImageRawFilename = 'data___image___raw___filename',
-  DataImageRawSize = 'data___image___raw___size',
-  DataImageRawType = 'data___image___raw___type',
-  DataImageLocalFiles = 'data___image___localFiles',
-  DataImageLocalFilesSourceInstanceName = 'data___image___localFiles___sourceInstanceName',
-  DataImageLocalFilesAbsolutePath = 'data___image___localFiles___absolutePath',
-  DataImageLocalFilesRelativePath = 'data___image___localFiles___relativePath',
-  DataImageLocalFilesExtension = 'data___image___localFiles___extension',
-  DataImageLocalFilesSize = 'data___image___localFiles___size',
-  DataImageLocalFilesPrettySize = 'data___image___localFiles___prettySize',
-  DataImageLocalFilesModifiedTime = 'data___image___localFiles___modifiedTime',
-  DataImageLocalFilesAccessTime = 'data___image___localFiles___accessTime',
-  DataImageLocalFilesChangeTime = 'data___image___localFiles___changeTime',
-  DataImageLocalFilesBirthTime = 'data___image___localFiles___birthTime',
-  DataImageLocalFilesRoot = 'data___image___localFiles___root',
-  DataImageLocalFilesDir = 'data___image___localFiles___dir',
-  DataImageLocalFilesBase = 'data___image___localFiles___base',
-  DataImageLocalFilesExt = 'data___image___localFiles___ext',
-  DataImageLocalFilesName = 'data___image___localFiles___name',
-  DataImageLocalFilesRelativeDirectory = 'data___image___localFiles___relativeDirectory',
-  DataImageLocalFilesDev = 'data___image___localFiles___dev',
-  DataImageLocalFilesMode = 'data___image___localFiles___mode',
-  DataImageLocalFilesNlink = 'data___image___localFiles___nlink',
-  DataImageLocalFilesUid = 'data___image___localFiles___uid',
-  DataImageLocalFilesGid = 'data___image___localFiles___gid',
-  DataImageLocalFilesRdev = 'data___image___localFiles___rdev',
-  DataImageLocalFilesIno = 'data___image___localFiles___ino',
-  DataImageLocalFilesAtimeMs = 'data___image___localFiles___atimeMs',
-  DataImageLocalFilesMtimeMs = 'data___image___localFiles___mtimeMs',
-  DataImageLocalFilesCtimeMs = 'data___image___localFiles___ctimeMs',
-  DataImageLocalFilesAtime = 'data___image___localFiles___atime',
-  DataImageLocalFilesMtime = 'data___image___localFiles___mtime',
-  DataImageLocalFilesCtime = 'data___image___localFiles___ctime',
-  DataImageLocalFilesBirthtime = 'data___image___localFiles___birthtime',
-  DataImageLocalFilesBirthtimeMs = 'data___image___localFiles___birthtimeMs',
-  DataImageLocalFilesBlksize = 'data___image___localFiles___blksize',
-  DataImageLocalFilesBlocks = 'data___image___localFiles___blocks',
-  DataImageLocalFilesUrl = 'data___image___localFiles___url',
-  DataImageLocalFilesId = 'data___image___localFiles___id',
-  DataImageLocalFilesChildren = 'data___image___localFiles___children'
+  DataImageUrl = 'data___image___url',
+  DataImageFilename = 'data___image___filename',
+  DataImageSize = 'data___image___size',
+  DataImageType = 'data___image___type'
 }
 
 export type AirtableImageFieldFilterInput = {
@@ -1913,10 +1682,10 @@ export type AirtableSponsorsConnectionGroupArgs = {
 
 export type AirtableSponsorsData = {
   name?: Maybe<Scalars['String']>;
+  logo?: Maybe<Array<Maybe<AirtableSponsorsDataLogo>>>;
   type?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Date']>;
   url?: Maybe<Scalars['String']>;
-  logo?: Maybe<AirtableFieldfileNode>;
 };
 
 
@@ -1929,10 +1698,87 @@ export type AirtableSponsorsDataYearArgs = {
 
 export type AirtableSponsorsDataFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
+  logo?: Maybe<AirtableSponsorsDataLogoFilterListInput>;
   type?: Maybe<StringQueryOperatorInput>;
   year?: Maybe<DateQueryOperatorInput>;
   url?: Maybe<StringQueryOperatorInput>;
-  logo?: Maybe<AirtableFieldfileNodeFilterInput>;
+};
+
+export type AirtableSponsorsDataLogo = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableSponsorsDataLogoThumbnails>;
+};
+
+
+export type AirtableSponsorsDataLogoFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableSponsorsDataLogoFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableSponsorsDataLogoThumbnailsFilterInput>;
+};
+
+export type AirtableSponsorsDataLogoFilterListInput = {
+  elemMatch?: Maybe<AirtableSponsorsDataLogoFilterInput>;
+};
+
+export type AirtableSponsorsDataLogoThumbnails = {
+  small?: Maybe<AirtableSponsorsDataLogoThumbnailsSmall>;
+  large?: Maybe<AirtableSponsorsDataLogoThumbnailsLarge>;
+  full?: Maybe<AirtableSponsorsDataLogoThumbnailsFull>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsFilterInput = {
+  small?: Maybe<AirtableSponsorsDataLogoThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableSponsorsDataLogoThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableSponsorsDataLogoThumbnailsFullFilterInput>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableSponsorsDataLogoThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
 };
 
 export type AirtableSponsorsEdge = {
@@ -2032,66 +1878,22 @@ export enum AirtableSponsorsFieldsEnum {
   RecordId = 'recordId',
   QueryName = 'queryName',
   DataName = 'data___name',
+  DataLogo = 'data___logo',
+  DataLogoFluidBase64 = 'data___logo___fluid___base64',
+  DataLogoFluidAspectRatio = 'data___logo___fluid___aspectRatio',
+  DataLogoFluidSrc = 'data___logo___fluid___src',
+  DataLogoFluidSrcSet = 'data___logo___fluid___srcSet',
+  DataLogoFluidSrcWebp = 'data___logo___fluid___srcWebp',
+  DataLogoFluidSrcSetWebp = 'data___logo___fluid___srcSetWebp',
+  DataLogoFluidSizes = 'data___logo___fluid___sizes',
+  DataLogoId = 'data___logo___id',
+  DataLogoUrl = 'data___logo___url',
+  DataLogoFilename = 'data___logo___filename',
+  DataLogoSize = 'data___logo___size',
+  DataLogoType = 'data___logo___type',
   DataType = 'data___type',
   DataYear = 'data___year',
-  DataUrl = 'data___url',
-  DataLogoId = 'data___logo___id',
-  DataLogoParentId = 'data___logo___parent___id',
-  DataLogoParentChildren = 'data___logo___parent___children',
-  DataLogoChildren = 'data___logo___children',
-  DataLogoChildrenId = 'data___logo___children___id',
-  DataLogoChildrenChildren = 'data___logo___children___children',
-  DataLogoInternalContent = 'data___logo___internal___content',
-  DataLogoInternalContentDigest = 'data___logo___internal___contentDigest',
-  DataLogoInternalDescription = 'data___logo___internal___description',
-  DataLogoInternalFieldOwners = 'data___logo___internal___fieldOwners',
-  DataLogoInternalIgnoreType = 'data___logo___internal___ignoreType',
-  DataLogoInternalMediaType = 'data___logo___internal___mediaType',
-  DataLogoInternalOwner = 'data___logo___internal___owner',
-  DataLogoInternalType = 'data___logo___internal___type',
-  DataLogoRaw = 'data___logo___raw',
-  DataLogoRawId = 'data___logo___raw___id',
-  DataLogoRawUrl = 'data___logo___raw___url',
-  DataLogoRawFilename = 'data___logo___raw___filename',
-  DataLogoRawSize = 'data___logo___raw___size',
-  DataLogoRawType = 'data___logo___raw___type',
-  DataLogoLocalFiles = 'data___logo___localFiles',
-  DataLogoLocalFilesSourceInstanceName = 'data___logo___localFiles___sourceInstanceName',
-  DataLogoLocalFilesAbsolutePath = 'data___logo___localFiles___absolutePath',
-  DataLogoLocalFilesRelativePath = 'data___logo___localFiles___relativePath',
-  DataLogoLocalFilesExtension = 'data___logo___localFiles___extension',
-  DataLogoLocalFilesSize = 'data___logo___localFiles___size',
-  DataLogoLocalFilesPrettySize = 'data___logo___localFiles___prettySize',
-  DataLogoLocalFilesModifiedTime = 'data___logo___localFiles___modifiedTime',
-  DataLogoLocalFilesAccessTime = 'data___logo___localFiles___accessTime',
-  DataLogoLocalFilesChangeTime = 'data___logo___localFiles___changeTime',
-  DataLogoLocalFilesBirthTime = 'data___logo___localFiles___birthTime',
-  DataLogoLocalFilesRoot = 'data___logo___localFiles___root',
-  DataLogoLocalFilesDir = 'data___logo___localFiles___dir',
-  DataLogoLocalFilesBase = 'data___logo___localFiles___base',
-  DataLogoLocalFilesExt = 'data___logo___localFiles___ext',
-  DataLogoLocalFilesName = 'data___logo___localFiles___name',
-  DataLogoLocalFilesRelativeDirectory = 'data___logo___localFiles___relativeDirectory',
-  DataLogoLocalFilesDev = 'data___logo___localFiles___dev',
-  DataLogoLocalFilesMode = 'data___logo___localFiles___mode',
-  DataLogoLocalFilesNlink = 'data___logo___localFiles___nlink',
-  DataLogoLocalFilesUid = 'data___logo___localFiles___uid',
-  DataLogoLocalFilesGid = 'data___logo___localFiles___gid',
-  DataLogoLocalFilesRdev = 'data___logo___localFiles___rdev',
-  DataLogoLocalFilesIno = 'data___logo___localFiles___ino',
-  DataLogoLocalFilesAtimeMs = 'data___logo___localFiles___atimeMs',
-  DataLogoLocalFilesMtimeMs = 'data___logo___localFiles___mtimeMs',
-  DataLogoLocalFilesCtimeMs = 'data___logo___localFiles___ctimeMs',
-  DataLogoLocalFilesAtime = 'data___logo___localFiles___atime',
-  DataLogoLocalFilesMtime = 'data___logo___localFiles___mtime',
-  DataLogoLocalFilesCtime = 'data___logo___localFiles___ctime',
-  DataLogoLocalFilesBirthtime = 'data___logo___localFiles___birthtime',
-  DataLogoLocalFilesBirthtimeMs = 'data___logo___localFiles___birthtimeMs',
-  DataLogoLocalFilesBlksize = 'data___logo___localFiles___blksize',
-  DataLogoLocalFilesBlocks = 'data___logo___localFiles___blocks',
-  DataLogoLocalFilesUrl = 'data___logo___localFiles___url',
-  DataLogoLocalFilesId = 'data___logo___localFiles___id',
-  DataLogoLocalFilesChildren = 'data___logo___localFiles___children'
+  DataUrl = 'data___url'
 }
 
 export type AirtableSponsorsFilterInput = {
@@ -2350,19 +2152,19 @@ export type AirtableWinnerData = {
   name?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
   agency?: Maybe<Array<Maybe<AirtableAgency>>>;
+  images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
+  video?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Date']>;
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   type?: Maybe<Scalars['String']>;
+  video_thumbnail?: Maybe<Array<Maybe<AirtableWinnerDataVideo_Thumbnail>>>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
-  credits?: Maybe<AirtableFieldtextmarkdown>;
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
-  images?: Maybe<AirtableFieldfileNode>;
   description?: Maybe<Scalars['String']>;
   special_award?: Maybe<Scalars['String']>;
-  video?: Maybe<Scalars['String']>;
-  video_thumbnail?: Maybe<AirtableFieldfileNode>;
+  credits?: Maybe<AirtableFieldtextmarkdown>;
   national_winner?: Maybe<Scalars['Boolean']>;
 };
 
@@ -2394,20 +2196,174 @@ export type AirtableWinnerDataFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
   agency?: Maybe<AirtableAgencyFilterListInput>;
+  images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
+  video?: Maybe<StringQueryOperatorInput>;
   year?: Maybe<DateQueryOperatorInput>;
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
+  tags?: Maybe<StringQueryOperatorInput>;
   type?: Maybe<StringQueryOperatorInput>;
+  video_thumbnail?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterListInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
-  credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
-  tags?: Maybe<StringQueryOperatorInput>;
-  images?: Maybe<AirtableFieldfileNodeFilterInput>;
   description?: Maybe<StringQueryOperatorInput>;
   special_award?: Maybe<StringQueryOperatorInput>;
-  video?: Maybe<StringQueryOperatorInput>;
-  video_thumbnail?: Maybe<AirtableFieldfileNodeFilterInput>;
+  credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   national_winner?: Maybe<BooleanQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataImages = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableWinnerDataImagesThumbnails>;
+};
+
+
+export type AirtableWinnerDataImagesFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableWinnerDataImagesThumbnailsFilterInput>;
+};
+
+export type AirtableWinnerDataImagesFilterListInput = {
+  elemMatch?: Maybe<AirtableWinnerDataImagesFilterInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnails = {
+  small?: Maybe<AirtableWinnerDataImagesThumbnailsSmall>;
+  large?: Maybe<AirtableWinnerDataImagesThumbnailsLarge>;
+  full?: Maybe<AirtableWinnerDataImagesThumbnailsFull>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsFilterInput = {
+  small?: Maybe<AirtableWinnerDataImagesThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableWinnerDataImagesThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableWinnerDataImagesThumbnailsFullFilterInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataImagesThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataVideo_Thumbnail = {
+  fluid?: Maybe<ImgixImageFluidType>;
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  filename?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  type?: Maybe<Scalars['String']>;
+  thumbnails?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnails>;
+};
+
+
+export type AirtableWinnerDataVideo_ThumbnailFluidArgs = {
+  maxWidth?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailFilterInput = {
+  fluid?: Maybe<ImgixImageFluidTypeFilterInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  url?: Maybe<StringQueryOperatorInput>;
+  filename?: Maybe<StringQueryOperatorInput>;
+  size?: Maybe<IntQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
+  thumbnails?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsFilterInput>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailFilterListInput = {
+  elemMatch?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterInput>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnails = {
+  small?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsSmall>;
+  large?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsLarge>;
+  full?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsFull>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsFilterInput = {
+  small?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsSmallFilterInput>;
+  large?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsLargeFilterInput>;
+  full?: Maybe<AirtableWinnerDataVideo_ThumbnailThumbnailsFullFilterInput>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsFull = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsFullFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsLarge = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsLargeFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsSmall = {
+  url?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+};
+
+export type AirtableWinnerDataVideo_ThumbnailThumbnailsSmallFilterInput = {
+  url?: Maybe<StringQueryOperatorInput>;
+  width?: Maybe<IntQueryOperatorInput>;
+  height?: Maybe<IntQueryOperatorInput>;
 };
 
 export type AirtableWinnerEdge = {
@@ -2535,13 +2491,28 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
-  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
+  DataAgencyDataAvatar = 'data___agency___data___avatar',
   DataAgencyDataWebsite = 'data___agency___data___website',
   DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
+  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
+  DataImages = 'data___images',
+  DataImagesFluidBase64 = 'data___images___fluid___base64',
+  DataImagesFluidAspectRatio = 'data___images___fluid___aspectRatio',
+  DataImagesFluidSrc = 'data___images___fluid___src',
+  DataImagesFluidSrcSet = 'data___images___fluid___srcSet',
+  DataImagesFluidSrcWebp = 'data___images___fluid___srcWebp',
+  DataImagesFluidSrcSetWebp = 'data___images___fluid___srcSetWebp',
+  DataImagesFluidSizes = 'data___images___fluid___sizes',
+  DataImagesId = 'data___images___id',
+  DataImagesUrl = 'data___images___url',
+  DataImagesFilename = 'data___images___filename',
+  DataImagesSize = 'data___images___size',
+  DataImagesType = 'data___images___type',
+  DataVideo = 'data___video',
   DataYear = 'data___year',
   DataClient = 'data___client',
   DataCategory = 'data___category',
@@ -2566,9 +2537,25 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
   DataCategoryDataEntries = 'data___category___data___Entries',
+  DataTags = 'data___tags',
   DataType = 'data___type',
+  DataVideoThumbnail = 'data___video_thumbnail',
+  DataVideoThumbnailFluidBase64 = 'data___video_thumbnail___fluid___base64',
+  DataVideoThumbnailFluidAspectRatio = 'data___video_thumbnail___fluid___aspectRatio',
+  DataVideoThumbnailFluidSrc = 'data___video_thumbnail___fluid___src',
+  DataVideoThumbnailFluidSrcSet = 'data___video_thumbnail___fluid___srcSet',
+  DataVideoThumbnailFluidSrcWebp = 'data___video_thumbnail___fluid___srcWebp',
+  DataVideoThumbnailFluidSrcSetWebp = 'data___video_thumbnail___fluid___srcSetWebp',
+  DataVideoThumbnailFluidSizes = 'data___video_thumbnail___fluid___sizes',
+  DataVideoThumbnailId = 'data___video_thumbnail___id',
+  DataVideoThumbnailUrl = 'data___video_thumbnail___url',
+  DataVideoThumbnailFilename = 'data___video_thumbnail___filename',
+  DataVideoThumbnailSize = 'data___video_thumbnail___size',
+  DataVideoThumbnailType = 'data___video_thumbnail___type',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
+  DataDescription = 'data___description',
+  DataSpecialAward = 'data___special_award',
   DataCreditsId = 'data___credits___id',
   DataCreditsParentId = 'data___credits___parent___id',
   DataCreditsParentChildren = 'data___credits___parent___children',
@@ -2594,124 +2581,6 @@ export enum AirtableWinnerFieldsEnum {
   DataCreditsChildMarkdownRemarkTimeToRead = 'data___credits___childMarkdownRemark___timeToRead',
   DataCreditsChildMarkdownRemarkTableOfContents = 'data___credits___childMarkdownRemark___tableOfContents',
   DataCreditsChildMarkdownRemarkChildren = 'data___credits___childMarkdownRemark___children',
-  DataTags = 'data___tags',
-  DataImagesId = 'data___images___id',
-  DataImagesParentId = 'data___images___parent___id',
-  DataImagesParentChildren = 'data___images___parent___children',
-  DataImagesChildren = 'data___images___children',
-  DataImagesChildrenId = 'data___images___children___id',
-  DataImagesChildrenChildren = 'data___images___children___children',
-  DataImagesInternalContent = 'data___images___internal___content',
-  DataImagesInternalContentDigest = 'data___images___internal___contentDigest',
-  DataImagesInternalDescription = 'data___images___internal___description',
-  DataImagesInternalFieldOwners = 'data___images___internal___fieldOwners',
-  DataImagesInternalIgnoreType = 'data___images___internal___ignoreType',
-  DataImagesInternalMediaType = 'data___images___internal___mediaType',
-  DataImagesInternalOwner = 'data___images___internal___owner',
-  DataImagesInternalType = 'data___images___internal___type',
-  DataImagesRaw = 'data___images___raw',
-  DataImagesRawId = 'data___images___raw___id',
-  DataImagesRawUrl = 'data___images___raw___url',
-  DataImagesRawFilename = 'data___images___raw___filename',
-  DataImagesRawSize = 'data___images___raw___size',
-  DataImagesRawType = 'data___images___raw___type',
-  DataImagesLocalFiles = 'data___images___localFiles',
-  DataImagesLocalFilesSourceInstanceName = 'data___images___localFiles___sourceInstanceName',
-  DataImagesLocalFilesAbsolutePath = 'data___images___localFiles___absolutePath',
-  DataImagesLocalFilesRelativePath = 'data___images___localFiles___relativePath',
-  DataImagesLocalFilesExtension = 'data___images___localFiles___extension',
-  DataImagesLocalFilesSize = 'data___images___localFiles___size',
-  DataImagesLocalFilesPrettySize = 'data___images___localFiles___prettySize',
-  DataImagesLocalFilesModifiedTime = 'data___images___localFiles___modifiedTime',
-  DataImagesLocalFilesAccessTime = 'data___images___localFiles___accessTime',
-  DataImagesLocalFilesChangeTime = 'data___images___localFiles___changeTime',
-  DataImagesLocalFilesBirthTime = 'data___images___localFiles___birthTime',
-  DataImagesLocalFilesRoot = 'data___images___localFiles___root',
-  DataImagesLocalFilesDir = 'data___images___localFiles___dir',
-  DataImagesLocalFilesBase = 'data___images___localFiles___base',
-  DataImagesLocalFilesExt = 'data___images___localFiles___ext',
-  DataImagesLocalFilesName = 'data___images___localFiles___name',
-  DataImagesLocalFilesRelativeDirectory = 'data___images___localFiles___relativeDirectory',
-  DataImagesLocalFilesDev = 'data___images___localFiles___dev',
-  DataImagesLocalFilesMode = 'data___images___localFiles___mode',
-  DataImagesLocalFilesNlink = 'data___images___localFiles___nlink',
-  DataImagesLocalFilesUid = 'data___images___localFiles___uid',
-  DataImagesLocalFilesGid = 'data___images___localFiles___gid',
-  DataImagesLocalFilesRdev = 'data___images___localFiles___rdev',
-  DataImagesLocalFilesIno = 'data___images___localFiles___ino',
-  DataImagesLocalFilesAtimeMs = 'data___images___localFiles___atimeMs',
-  DataImagesLocalFilesMtimeMs = 'data___images___localFiles___mtimeMs',
-  DataImagesLocalFilesCtimeMs = 'data___images___localFiles___ctimeMs',
-  DataImagesLocalFilesAtime = 'data___images___localFiles___atime',
-  DataImagesLocalFilesMtime = 'data___images___localFiles___mtime',
-  DataImagesLocalFilesCtime = 'data___images___localFiles___ctime',
-  DataImagesLocalFilesBirthtime = 'data___images___localFiles___birthtime',
-  DataImagesLocalFilesBirthtimeMs = 'data___images___localFiles___birthtimeMs',
-  DataImagesLocalFilesBlksize = 'data___images___localFiles___blksize',
-  DataImagesLocalFilesBlocks = 'data___images___localFiles___blocks',
-  DataImagesLocalFilesUrl = 'data___images___localFiles___url',
-  DataImagesLocalFilesId = 'data___images___localFiles___id',
-  DataImagesLocalFilesChildren = 'data___images___localFiles___children',
-  DataDescription = 'data___description',
-  DataSpecialAward = 'data___special_award',
-  DataVideo = 'data___video',
-  DataVideoThumbnailId = 'data___video_thumbnail___id',
-  DataVideoThumbnailParentId = 'data___video_thumbnail___parent___id',
-  DataVideoThumbnailParentChildren = 'data___video_thumbnail___parent___children',
-  DataVideoThumbnailChildren = 'data___video_thumbnail___children',
-  DataVideoThumbnailChildrenId = 'data___video_thumbnail___children___id',
-  DataVideoThumbnailChildrenChildren = 'data___video_thumbnail___children___children',
-  DataVideoThumbnailInternalContent = 'data___video_thumbnail___internal___content',
-  DataVideoThumbnailInternalContentDigest = 'data___video_thumbnail___internal___contentDigest',
-  DataVideoThumbnailInternalDescription = 'data___video_thumbnail___internal___description',
-  DataVideoThumbnailInternalFieldOwners = 'data___video_thumbnail___internal___fieldOwners',
-  DataVideoThumbnailInternalIgnoreType = 'data___video_thumbnail___internal___ignoreType',
-  DataVideoThumbnailInternalMediaType = 'data___video_thumbnail___internal___mediaType',
-  DataVideoThumbnailInternalOwner = 'data___video_thumbnail___internal___owner',
-  DataVideoThumbnailInternalType = 'data___video_thumbnail___internal___type',
-  DataVideoThumbnailRaw = 'data___video_thumbnail___raw',
-  DataVideoThumbnailRawId = 'data___video_thumbnail___raw___id',
-  DataVideoThumbnailRawUrl = 'data___video_thumbnail___raw___url',
-  DataVideoThumbnailRawFilename = 'data___video_thumbnail___raw___filename',
-  DataVideoThumbnailRawSize = 'data___video_thumbnail___raw___size',
-  DataVideoThumbnailRawType = 'data___video_thumbnail___raw___type',
-  DataVideoThumbnailLocalFiles = 'data___video_thumbnail___localFiles',
-  DataVideoThumbnailLocalFilesSourceInstanceName = 'data___video_thumbnail___localFiles___sourceInstanceName',
-  DataVideoThumbnailLocalFilesAbsolutePath = 'data___video_thumbnail___localFiles___absolutePath',
-  DataVideoThumbnailLocalFilesRelativePath = 'data___video_thumbnail___localFiles___relativePath',
-  DataVideoThumbnailLocalFilesExtension = 'data___video_thumbnail___localFiles___extension',
-  DataVideoThumbnailLocalFilesSize = 'data___video_thumbnail___localFiles___size',
-  DataVideoThumbnailLocalFilesPrettySize = 'data___video_thumbnail___localFiles___prettySize',
-  DataVideoThumbnailLocalFilesModifiedTime = 'data___video_thumbnail___localFiles___modifiedTime',
-  DataVideoThumbnailLocalFilesAccessTime = 'data___video_thumbnail___localFiles___accessTime',
-  DataVideoThumbnailLocalFilesChangeTime = 'data___video_thumbnail___localFiles___changeTime',
-  DataVideoThumbnailLocalFilesBirthTime = 'data___video_thumbnail___localFiles___birthTime',
-  DataVideoThumbnailLocalFilesRoot = 'data___video_thumbnail___localFiles___root',
-  DataVideoThumbnailLocalFilesDir = 'data___video_thumbnail___localFiles___dir',
-  DataVideoThumbnailLocalFilesBase = 'data___video_thumbnail___localFiles___base',
-  DataVideoThumbnailLocalFilesExt = 'data___video_thumbnail___localFiles___ext',
-  DataVideoThumbnailLocalFilesName = 'data___video_thumbnail___localFiles___name',
-  DataVideoThumbnailLocalFilesRelativeDirectory = 'data___video_thumbnail___localFiles___relativeDirectory',
-  DataVideoThumbnailLocalFilesDev = 'data___video_thumbnail___localFiles___dev',
-  DataVideoThumbnailLocalFilesMode = 'data___video_thumbnail___localFiles___mode',
-  DataVideoThumbnailLocalFilesNlink = 'data___video_thumbnail___localFiles___nlink',
-  DataVideoThumbnailLocalFilesUid = 'data___video_thumbnail___localFiles___uid',
-  DataVideoThumbnailLocalFilesGid = 'data___video_thumbnail___localFiles___gid',
-  DataVideoThumbnailLocalFilesRdev = 'data___video_thumbnail___localFiles___rdev',
-  DataVideoThumbnailLocalFilesIno = 'data___video_thumbnail___localFiles___ino',
-  DataVideoThumbnailLocalFilesAtimeMs = 'data___video_thumbnail___localFiles___atimeMs',
-  DataVideoThumbnailLocalFilesMtimeMs = 'data___video_thumbnail___localFiles___mtimeMs',
-  DataVideoThumbnailLocalFilesCtimeMs = 'data___video_thumbnail___localFiles___ctimeMs',
-  DataVideoThumbnailLocalFilesAtime = 'data___video_thumbnail___localFiles___atime',
-  DataVideoThumbnailLocalFilesMtime = 'data___video_thumbnail___localFiles___mtime',
-  DataVideoThumbnailLocalFilesCtime = 'data___video_thumbnail___localFiles___ctime',
-  DataVideoThumbnailLocalFilesBirthtime = 'data___video_thumbnail___localFiles___birthtime',
-  DataVideoThumbnailLocalFilesBirthtimeMs = 'data___video_thumbnail___localFiles___birthtimeMs',
-  DataVideoThumbnailLocalFilesBlksize = 'data___video_thumbnail___localFiles___blksize',
-  DataVideoThumbnailLocalFilesBlocks = 'data___video_thumbnail___localFiles___blocks',
-  DataVideoThumbnailLocalFilesUrl = 'data___video_thumbnail___localFiles___url',
-  DataVideoThumbnailLocalFilesId = 'data___video_thumbnail___localFiles___id',
-  DataVideoThumbnailLocalFilesChildren = 'data___video_thumbnail___localFiles___children',
   DataNationalWinner = 'data___national_winner',
   FieldsUrl = 'fields___url',
   FieldsTags = 'fields___tags',
@@ -2769,217 +2638,6 @@ export type BooleanQueryOperatorInput = {
   ne?: Maybe<Scalars['Boolean']>;
   in?: Maybe<Array<Maybe<Scalars['Boolean']>>>;
   nin?: Maybe<Array<Maybe<Scalars['Boolean']>>>;
-};
-
-export type CloudinaryAsset = Node & {
-  fixed: CloudinaryAssetFixed;
-  fluid: CloudinaryAssetFluid;
-  id: Scalars['ID'];
-  parent?: Maybe<Node>;
-  children: Array<Node>;
-  internal: Internal;
-};
-
-
-export type CloudinaryAssetFixedArgs = {
-  base64Width?: Maybe<Scalars['Int']>;
-  base64Transformations?: Maybe<Array<Scalars['String']>>;
-  chained?: Maybe<Array<Scalars['String']>>;
-  transformations?: Maybe<Array<Scalars['String']>>;
-  width?: Maybe<Scalars['Int']>;
-};
-
-
-export type CloudinaryAssetFluidArgs = {
-  base64Width?: Maybe<Scalars['Int']>;
-  base64Transformations?: Maybe<Array<Scalars['String']>>;
-  chained?: Maybe<Array<Scalars['String']>>;
-  maxWidth?: Maybe<Scalars['Int']>;
-  transformations?: Maybe<Array<Scalars['String']>>;
-};
-
-export type CloudinaryAssetConnection = {
-  totalCount: Scalars['Int'];
-  edges: Array<CloudinaryAssetEdge>;
-  nodes: Array<CloudinaryAsset>;
-  pageInfo: PageInfo;
-  distinct: Array<Scalars['String']>;
-  group: Array<CloudinaryAssetGroupConnection>;
-};
-
-
-export type CloudinaryAssetConnectionDistinctArgs = {
-  field: CloudinaryAssetFieldsEnum;
-};
-
-
-export type CloudinaryAssetConnectionGroupArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  field: CloudinaryAssetFieldsEnum;
-};
-
-export type CloudinaryAssetEdge = {
-  next?: Maybe<CloudinaryAsset>;
-  node: CloudinaryAsset;
-  previous?: Maybe<CloudinaryAsset>;
-};
-
-export enum CloudinaryAssetFieldsEnum {
-  FixedAspectRatio = 'fixed___aspectRatio',
-  FixedBase64 = 'fixed___base64',
-  FixedHeight = 'fixed___height',
-  FixedSrc = 'fixed___src',
-  FixedSrcSet = 'fixed___srcSet',
-  FixedWidth = 'fixed___width',
-  FluidAspectRatio = 'fluid___aspectRatio',
-  FluidBase64 = 'fluid___base64',
-  FluidSizes = 'fluid___sizes',
-  FluidSrc = 'fluid___src',
-  FluidSrcSet = 'fluid___srcSet',
-  Id = 'id',
-  ParentId = 'parent___id',
-  ParentParentId = 'parent___parent___id',
-  ParentParentParentId = 'parent___parent___parent___id',
-  ParentParentParentChildren = 'parent___parent___parent___children',
-  ParentParentChildren = 'parent___parent___children',
-  ParentParentChildrenId = 'parent___parent___children___id',
-  ParentParentChildrenChildren = 'parent___parent___children___children',
-  ParentParentInternalContent = 'parent___parent___internal___content',
-  ParentParentInternalContentDigest = 'parent___parent___internal___contentDigest',
-  ParentParentInternalDescription = 'parent___parent___internal___description',
-  ParentParentInternalFieldOwners = 'parent___parent___internal___fieldOwners',
-  ParentParentInternalIgnoreType = 'parent___parent___internal___ignoreType',
-  ParentParentInternalMediaType = 'parent___parent___internal___mediaType',
-  ParentParentInternalOwner = 'parent___parent___internal___owner',
-  ParentParentInternalType = 'parent___parent___internal___type',
-  ParentChildren = 'parent___children',
-  ParentChildrenId = 'parent___children___id',
-  ParentChildrenParentId = 'parent___children___parent___id',
-  ParentChildrenParentChildren = 'parent___children___parent___children',
-  ParentChildrenChildren = 'parent___children___children',
-  ParentChildrenChildrenId = 'parent___children___children___id',
-  ParentChildrenChildrenChildren = 'parent___children___children___children',
-  ParentChildrenInternalContent = 'parent___children___internal___content',
-  ParentChildrenInternalContentDigest = 'parent___children___internal___contentDigest',
-  ParentChildrenInternalDescription = 'parent___children___internal___description',
-  ParentChildrenInternalFieldOwners = 'parent___children___internal___fieldOwners',
-  ParentChildrenInternalIgnoreType = 'parent___children___internal___ignoreType',
-  ParentChildrenInternalMediaType = 'parent___children___internal___mediaType',
-  ParentChildrenInternalOwner = 'parent___children___internal___owner',
-  ParentChildrenInternalType = 'parent___children___internal___type',
-  ParentInternalContent = 'parent___internal___content',
-  ParentInternalContentDigest = 'parent___internal___contentDigest',
-  ParentInternalDescription = 'parent___internal___description',
-  ParentInternalFieldOwners = 'parent___internal___fieldOwners',
-  ParentInternalIgnoreType = 'parent___internal___ignoreType',
-  ParentInternalMediaType = 'parent___internal___mediaType',
-  ParentInternalOwner = 'parent___internal___owner',
-  ParentInternalType = 'parent___internal___type',
-  Children = 'children',
-  ChildrenId = 'children___id',
-  ChildrenParentId = 'children___parent___id',
-  ChildrenParentParentId = 'children___parent___parent___id',
-  ChildrenParentParentChildren = 'children___parent___parent___children',
-  ChildrenParentChildren = 'children___parent___children',
-  ChildrenParentChildrenId = 'children___parent___children___id',
-  ChildrenParentChildrenChildren = 'children___parent___children___children',
-  ChildrenParentInternalContent = 'children___parent___internal___content',
-  ChildrenParentInternalContentDigest = 'children___parent___internal___contentDigest',
-  ChildrenParentInternalDescription = 'children___parent___internal___description',
-  ChildrenParentInternalFieldOwners = 'children___parent___internal___fieldOwners',
-  ChildrenParentInternalIgnoreType = 'children___parent___internal___ignoreType',
-  ChildrenParentInternalMediaType = 'children___parent___internal___mediaType',
-  ChildrenParentInternalOwner = 'children___parent___internal___owner',
-  ChildrenParentInternalType = 'children___parent___internal___type',
-  ChildrenChildren = 'children___children',
-  ChildrenChildrenId = 'children___children___id',
-  ChildrenChildrenParentId = 'children___children___parent___id',
-  ChildrenChildrenParentChildren = 'children___children___parent___children',
-  ChildrenChildrenChildren = 'children___children___children',
-  ChildrenChildrenChildrenId = 'children___children___children___id',
-  ChildrenChildrenChildrenChildren = 'children___children___children___children',
-  ChildrenChildrenInternalContent = 'children___children___internal___content',
-  ChildrenChildrenInternalContentDigest = 'children___children___internal___contentDigest',
-  ChildrenChildrenInternalDescription = 'children___children___internal___description',
-  ChildrenChildrenInternalFieldOwners = 'children___children___internal___fieldOwners',
-  ChildrenChildrenInternalIgnoreType = 'children___children___internal___ignoreType',
-  ChildrenChildrenInternalMediaType = 'children___children___internal___mediaType',
-  ChildrenChildrenInternalOwner = 'children___children___internal___owner',
-  ChildrenChildrenInternalType = 'children___children___internal___type',
-  ChildrenInternalContent = 'children___internal___content',
-  ChildrenInternalContentDigest = 'children___internal___contentDigest',
-  ChildrenInternalDescription = 'children___internal___description',
-  ChildrenInternalFieldOwners = 'children___internal___fieldOwners',
-  ChildrenInternalIgnoreType = 'children___internal___ignoreType',
-  ChildrenInternalMediaType = 'children___internal___mediaType',
-  ChildrenInternalOwner = 'children___internal___owner',
-  ChildrenInternalType = 'children___internal___type',
-  InternalContent = 'internal___content',
-  InternalContentDigest = 'internal___contentDigest',
-  InternalDescription = 'internal___description',
-  InternalFieldOwners = 'internal___fieldOwners',
-  InternalIgnoreType = 'internal___ignoreType',
-  InternalMediaType = 'internal___mediaType',
-  InternalOwner = 'internal___owner',
-  InternalType = 'internal___type'
-}
-
-export type CloudinaryAssetFilterInput = {
-  fixed?: Maybe<CloudinaryAssetFixedFilterInput>;
-  fluid?: Maybe<CloudinaryAssetFluidFilterInput>;
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-};
-
-export type CloudinaryAssetFixed = {
-  aspectRatio?: Maybe<Scalars['Float']>;
-  base64: Scalars['String'];
-  height?: Maybe<Scalars['Float']>;
-  src?: Maybe<Scalars['String']>;
-  srcSet?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Float']>;
-};
-
-export type CloudinaryAssetFixedFilterInput = {
-  aspectRatio?: Maybe<FloatQueryOperatorInput>;
-  base64?: Maybe<StringQueryOperatorInput>;
-  height?: Maybe<FloatQueryOperatorInput>;
-  src?: Maybe<StringQueryOperatorInput>;
-  srcSet?: Maybe<StringQueryOperatorInput>;
-  width?: Maybe<FloatQueryOperatorInput>;
-};
-
-export type CloudinaryAssetFluid = {
-  aspectRatio: Scalars['Float'];
-  base64: Scalars['String'];
-  sizes: Scalars['String'];
-  src: Scalars['String'];
-  srcSet: Scalars['String'];
-};
-
-export type CloudinaryAssetFluidFilterInput = {
-  aspectRatio?: Maybe<FloatQueryOperatorInput>;
-  base64?: Maybe<StringQueryOperatorInput>;
-  sizes?: Maybe<StringQueryOperatorInput>;
-  src?: Maybe<StringQueryOperatorInput>;
-  srcSet?: Maybe<StringQueryOperatorInput>;
-};
-
-export type CloudinaryAssetGroupConnection = {
-  totalCount: Scalars['Int'];
-  edges: Array<CloudinaryAssetEdge>;
-  nodes: Array<CloudinaryAsset>;
-  pageInfo: PageInfo;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
-};
-
-export type CloudinaryAssetSortInput = {
-  fields?: Maybe<Array<Maybe<CloudinaryAssetFieldsEnum>>>;
-  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
 
@@ -3323,14 +2981,10 @@ export type File = Node & {
   birthtime?: Maybe<Scalars['Date']>;
   /** @deprecated Use `birthTime` instead */
   birthtimeMs?: Maybe<Scalars['Float']>;
-  blksize?: Maybe<Scalars['Int']>;
-  blocks?: Maybe<Scalars['Int']>;
-  url?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
   internal: Internal;
-  childCloudinaryAsset?: Maybe<CloudinaryAsset>;
 };
 
 
@@ -3448,9 +3102,6 @@ export enum FileFieldsEnum {
   Ctime = 'ctime',
   Birthtime = 'birthtime',
   BirthtimeMs = 'birthtimeMs',
-  Blksize = 'blksize',
-  Blocks = 'blocks',
-  Url = 'url',
   Id = 'id',
   ParentId = 'parent___id',
   ParentParentId = 'parent___parent___id',
@@ -3536,56 +3187,7 @@ export enum FileFieldsEnum {
   InternalIgnoreType = 'internal___ignoreType',
   InternalMediaType = 'internal___mediaType',
   InternalOwner = 'internal___owner',
-  InternalType = 'internal___type',
-  ChildCloudinaryAssetFixedAspectRatio = 'childCloudinaryAsset___fixed___aspectRatio',
-  ChildCloudinaryAssetFixedBase64 = 'childCloudinaryAsset___fixed___base64',
-  ChildCloudinaryAssetFixedHeight = 'childCloudinaryAsset___fixed___height',
-  ChildCloudinaryAssetFixedSrc = 'childCloudinaryAsset___fixed___src',
-  ChildCloudinaryAssetFixedSrcSet = 'childCloudinaryAsset___fixed___srcSet',
-  ChildCloudinaryAssetFixedWidth = 'childCloudinaryAsset___fixed___width',
-  ChildCloudinaryAssetFluidAspectRatio = 'childCloudinaryAsset___fluid___aspectRatio',
-  ChildCloudinaryAssetFluidBase64 = 'childCloudinaryAsset___fluid___base64',
-  ChildCloudinaryAssetFluidSizes = 'childCloudinaryAsset___fluid___sizes',
-  ChildCloudinaryAssetFluidSrc = 'childCloudinaryAsset___fluid___src',
-  ChildCloudinaryAssetFluidSrcSet = 'childCloudinaryAsset___fluid___srcSet',
-  ChildCloudinaryAssetId = 'childCloudinaryAsset___id',
-  ChildCloudinaryAssetParentId = 'childCloudinaryAsset___parent___id',
-  ChildCloudinaryAssetParentParentId = 'childCloudinaryAsset___parent___parent___id',
-  ChildCloudinaryAssetParentParentChildren = 'childCloudinaryAsset___parent___parent___children',
-  ChildCloudinaryAssetParentChildren = 'childCloudinaryAsset___parent___children',
-  ChildCloudinaryAssetParentChildrenId = 'childCloudinaryAsset___parent___children___id',
-  ChildCloudinaryAssetParentChildrenChildren = 'childCloudinaryAsset___parent___children___children',
-  ChildCloudinaryAssetParentInternalContent = 'childCloudinaryAsset___parent___internal___content',
-  ChildCloudinaryAssetParentInternalContentDigest = 'childCloudinaryAsset___parent___internal___contentDigest',
-  ChildCloudinaryAssetParentInternalDescription = 'childCloudinaryAsset___parent___internal___description',
-  ChildCloudinaryAssetParentInternalFieldOwners = 'childCloudinaryAsset___parent___internal___fieldOwners',
-  ChildCloudinaryAssetParentInternalIgnoreType = 'childCloudinaryAsset___parent___internal___ignoreType',
-  ChildCloudinaryAssetParentInternalMediaType = 'childCloudinaryAsset___parent___internal___mediaType',
-  ChildCloudinaryAssetParentInternalOwner = 'childCloudinaryAsset___parent___internal___owner',
-  ChildCloudinaryAssetParentInternalType = 'childCloudinaryAsset___parent___internal___type',
-  ChildCloudinaryAssetChildren = 'childCloudinaryAsset___children',
-  ChildCloudinaryAssetChildrenId = 'childCloudinaryAsset___children___id',
-  ChildCloudinaryAssetChildrenParentId = 'childCloudinaryAsset___children___parent___id',
-  ChildCloudinaryAssetChildrenParentChildren = 'childCloudinaryAsset___children___parent___children',
-  ChildCloudinaryAssetChildrenChildren = 'childCloudinaryAsset___children___children',
-  ChildCloudinaryAssetChildrenChildrenId = 'childCloudinaryAsset___children___children___id',
-  ChildCloudinaryAssetChildrenChildrenChildren = 'childCloudinaryAsset___children___children___children',
-  ChildCloudinaryAssetChildrenInternalContent = 'childCloudinaryAsset___children___internal___content',
-  ChildCloudinaryAssetChildrenInternalContentDigest = 'childCloudinaryAsset___children___internal___contentDigest',
-  ChildCloudinaryAssetChildrenInternalDescription = 'childCloudinaryAsset___children___internal___description',
-  ChildCloudinaryAssetChildrenInternalFieldOwners = 'childCloudinaryAsset___children___internal___fieldOwners',
-  ChildCloudinaryAssetChildrenInternalIgnoreType = 'childCloudinaryAsset___children___internal___ignoreType',
-  ChildCloudinaryAssetChildrenInternalMediaType = 'childCloudinaryAsset___children___internal___mediaType',
-  ChildCloudinaryAssetChildrenInternalOwner = 'childCloudinaryAsset___children___internal___owner',
-  ChildCloudinaryAssetChildrenInternalType = 'childCloudinaryAsset___children___internal___type',
-  ChildCloudinaryAssetInternalContent = 'childCloudinaryAsset___internal___content',
-  ChildCloudinaryAssetInternalContentDigest = 'childCloudinaryAsset___internal___contentDigest',
-  ChildCloudinaryAssetInternalDescription = 'childCloudinaryAsset___internal___description',
-  ChildCloudinaryAssetInternalFieldOwners = 'childCloudinaryAsset___internal___fieldOwners',
-  ChildCloudinaryAssetInternalIgnoreType = 'childCloudinaryAsset___internal___ignoreType',
-  ChildCloudinaryAssetInternalMediaType = 'childCloudinaryAsset___internal___mediaType',
-  ChildCloudinaryAssetInternalOwner = 'childCloudinaryAsset___internal___owner',
-  ChildCloudinaryAssetInternalType = 'childCloudinaryAsset___internal___type'
+  InternalType = 'internal___type'
 }
 
 export type FileFilterInput = {
@@ -3620,18 +3222,10 @@ export type FileFilterInput = {
   ctime?: Maybe<DateQueryOperatorInput>;
   birthtime?: Maybe<DateQueryOperatorInput>;
   birthtimeMs?: Maybe<FloatQueryOperatorInput>;
-  blksize?: Maybe<IntQueryOperatorInput>;
-  blocks?: Maybe<IntQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
-  childCloudinaryAsset?: Maybe<CloudinaryAssetFilterInput>;
-};
-
-export type FileFilterListInput = {
-  elemMatch?: Maybe<FileFilterInput>;
 };
 
 export type FileGroupConnection = {
@@ -3657,6 +3251,37 @@ export type FloatQueryOperatorInput = {
   lte?: Maybe<Scalars['Float']>;
   in?: Maybe<Array<Maybe<Scalars['Float']>>>;
   nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
+};
+
+export type ImgixImageFixedType = {
+  base64: Scalars['String'];
+  aspectRatio: Scalars['Float'];
+  width: Scalars['Float'];
+  height: Scalars['Float'];
+  src: Scalars['String'];
+  srcSet: Scalars['String'];
+  srcWebp: Scalars['String'];
+  srcSetWebp: Scalars['String'];
+};
+
+export type ImgixImageFluidType = {
+  base64: Scalars['String'];
+  aspectRatio: Scalars['Float'];
+  src: Scalars['String'];
+  srcSet: Scalars['String'];
+  srcWebp: Scalars['String'];
+  srcSetWebp: Scalars['String'];
+  sizes: Scalars['String'];
+};
+
+export type ImgixImageFluidTypeFilterInput = {
+  base64?: Maybe<StringQueryOperatorInput>;
+  aspectRatio?: Maybe<FloatQueryOperatorInput>;
+  src?: Maybe<StringQueryOperatorInput>;
+  srcSet?: Maybe<StringQueryOperatorInput>;
+  srcWebp?: Maybe<StringQueryOperatorInput>;
+  srcSetWebp?: Maybe<StringQueryOperatorInput>;
+  sizes?: Maybe<StringQueryOperatorInput>;
 };
 
 export type Internal = {
@@ -4912,24 +4537,20 @@ export type Query = {
   allPaginatedCollectionPage: PaginatedCollectionPageConnection;
   markdownRemark?: Maybe<MarkdownRemark>;
   allMarkdownRemark: MarkdownRemarkConnection;
-  cloudinaryAsset?: Maybe<CloudinaryAsset>;
-  allCloudinaryAsset: CloudinaryAssetConnection;
   airtableAgency?: Maybe<AirtableAgency>;
   allAirtableAgency: AirtableAgencyConnection;
   airtableAdPerson?: Maybe<AirtableAdPerson>;
   allAirtableAdPerson: AirtableAdPersonConnection;
-  airtableImageField?: Maybe<AirtableImageField>;
-  allAirtableImageField: AirtableImageFieldConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableTextField?: Maybe<AirtableTextField>;
   allAirtableTextField: AirtableTextFieldConnection;
+  airtableImageField?: Maybe<AirtableImageField>;
+  allAirtableImageField: AirtableImageFieldConnection;
   airtableLink?: Maybe<AirtableLink>;
   allAirtableLink: AirtableLinkConnection;
   airtableArchive?: Maybe<AirtableArchive>;
   allAirtableArchive: AirtableArchiveConnection;
-  airtableFieldfileNode?: Maybe<AirtableFieldfileNode>;
-  allAirtableFieldfileNode: AirtableFieldfileNodeConnection;
   airtableSponsors?: Maybe<AirtableSponsors>;
   allAirtableSponsors: AirtableSponsorsConnection;
   airtableFieldtextmarkdown?: Maybe<AirtableFieldtextmarkdown>;
@@ -4976,14 +4597,10 @@ export type QueryFileArgs = {
   ctime?: Maybe<DateQueryOperatorInput>;
   birthtime?: Maybe<DateQueryOperatorInput>;
   birthtimeMs?: Maybe<FloatQueryOperatorInput>;
-  blksize?: Maybe<IntQueryOperatorInput>;
-  blocks?: Maybe<IntQueryOperatorInput>;
-  url?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
-  childCloudinaryAsset?: Maybe<CloudinaryAssetFilterInput>;
 };
 
 
@@ -5162,24 +4779,6 @@ export type QueryAllMarkdownRemarkArgs = {
 };
 
 
-export type QueryCloudinaryAssetArgs = {
-  fixed?: Maybe<CloudinaryAssetFixedFilterInput>;
-  fluid?: Maybe<CloudinaryAssetFluidFilterInput>;
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-};
-
-
-export type QueryAllCloudinaryAssetArgs = {
-  filter?: Maybe<CloudinaryAssetFilterInput>;
-  sort?: Maybe<CloudinaryAssetSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAgencyArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -5217,26 +4816,6 @@ export type QueryAirtableAdPersonArgs = {
 export type QueryAllAirtableAdPersonArgs = {
   filter?: Maybe<AirtableAdPersonFilterInput>;
   sort?: Maybe<AirtableAdPersonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryAirtableImageFieldArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableImageFieldDataFilterInput>;
-};
-
-
-export type QueryAllAirtableImageFieldArgs = {
-  filter?: Maybe<AirtableImageFieldFilterInput>;
-  sort?: Maybe<AirtableImageFieldSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5282,6 +4861,26 @@ export type QueryAllAirtableTextFieldArgs = {
 };
 
 
+export type QueryAirtableImageFieldArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableImageFieldDataFilterInput>;
+};
+
+
+export type QueryAllAirtableImageFieldArgs = {
+  filter?: Maybe<AirtableImageFieldFilterInput>;
+  sort?: Maybe<AirtableImageFieldSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryAirtableLinkArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -5317,24 +4916,6 @@ export type QueryAirtableArchiveArgs = {
 export type QueryAllAirtableArchiveArgs = {
   filter?: Maybe<AirtableArchiveFilterInput>;
   sort?: Maybe<AirtableArchiveSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryAirtableFieldfileNodeArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  raw?: Maybe<AirtableFieldfileNodeRawFilterListInput>;
-  localFiles?: Maybe<FileFilterListInput>;
-};
-
-
-export type QueryAllAirtableFieldfileNodeArgs = {
-  filter?: Maybe<AirtableFieldfileNodeFilterInput>;
-  sort?: Maybe<AirtableFieldfileNodeSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5978,9 +5559,6 @@ export enum SitePageFieldsEnum {
   PluginCreatorPluginOptionsTablesQueryName = 'pluginCreator___pluginOptions___tables___queryName',
   PluginCreatorPluginOptionsTablesSeparateNodeType = 'pluginCreator___pluginOptions___tables___separateNodeType',
   PluginCreatorPluginOptionsTablesSeparateMapType = 'pluginCreator___pluginOptions___tables___separateMapType',
-  PluginCreatorPluginOptionsCloudName = 'pluginCreator___pluginOptions___cloudName',
-  PluginCreatorPluginOptionsApiSecret = 'pluginCreator___pluginOptions___apiSecret',
-  PluginCreatorPluginOptionsUploadFolder = 'pluginCreator___pluginOptions___uploadFolder',
   PluginCreatorPluginOptionsName = 'pluginCreator___pluginOptions___name',
   PluginCreatorPluginOptionsEngine = 'pluginCreator___pluginOptions___engine',
   PluginCreatorPluginOptionsQuery = 'pluginCreator___pluginOptions___query',
@@ -6190,19 +5768,10 @@ export enum SitePluginFieldsEnum {
   PluginOptionsTablesTableLinks = 'pluginOptions___tables___tableLinks',
   PluginOptionsTablesQueryName = 'pluginOptions___tables___queryName',
   PluginOptionsTablesSeparateNodeType = 'pluginOptions___tables___separateNodeType',
-  PluginOptionsTablesMappingImages = 'pluginOptions___tables___mapping___images',
   PluginOptionsTablesMappingCredits = 'pluginOptions___tables___mapping___credits',
-  PluginOptionsTablesMappingVideoThumbnail = 'pluginOptions___tables___mapping___video_thumbnail',
-  PluginOptionsTablesMappingAvatar = 'pluginOptions___tables___mapping___avatar',
-  PluginOptionsTablesMappingPhoto = 'pluginOptions___tables___mapping___photo',
   PluginOptionsTablesMappingDescription = 'pluginOptions___tables___mapping___description',
   PluginOptionsTablesMappingRichText = 'pluginOptions___tables___mapping___rich_text',
-  PluginOptionsTablesMappingImage = 'pluginOptions___tables___mapping___image',
-  PluginOptionsTablesMappingLogo = 'pluginOptions___tables___mapping___logo',
   PluginOptionsTablesSeparateMapType = 'pluginOptions___tables___separateMapType',
-  PluginOptionsCloudName = 'pluginOptions___cloudName',
-  PluginOptionsApiSecret = 'pluginOptions___apiSecret',
-  PluginOptionsUploadFolder = 'pluginOptions___uploadFolder',
   PluginOptionsName = 'pluginOptions___name',
   PluginOptionsEngine = 'pluginOptions___engine',
   PluginOptionsQuery = 'pluginOptions___query',
@@ -6328,9 +5897,6 @@ export type SitePluginPluginOptions = {
   apiKey?: Maybe<Scalars['String']>;
   concurrency?: Maybe<Scalars['Int']>;
   tables?: Maybe<Array<Maybe<SitePluginPluginOptionsTables>>>;
-  cloudName?: Maybe<Scalars['String']>;
-  apiSecret?: Maybe<Scalars['String']>;
-  uploadFolder?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   engine?: Maybe<Scalars['String']>;
   query?: Maybe<Scalars['String']>;
@@ -6346,9 +5912,6 @@ export type SitePluginPluginOptionsFilterInput = {
   apiKey?: Maybe<StringQueryOperatorInput>;
   concurrency?: Maybe<IntQueryOperatorInput>;
   tables?: Maybe<SitePluginPluginOptionsTablesFilterListInput>;
-  cloudName?: Maybe<StringQueryOperatorInput>;
-  apiSecret?: Maybe<StringQueryOperatorInput>;
-  uploadFolder?: Maybe<StringQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
   engine?: Maybe<StringQueryOperatorInput>;
   query?: Maybe<StringQueryOperatorInput>;
@@ -6403,27 +5966,15 @@ export type SitePluginPluginOptionsTablesFilterListInput = {
 };
 
 export type SitePluginPluginOptionsTablesMapping = {
-  images?: Maybe<Scalars['String']>;
   credits?: Maybe<Scalars['String']>;
-  video_thumbnail?: Maybe<Scalars['String']>;
-  avatar?: Maybe<Scalars['String']>;
-  photo?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   rich_text?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
-  logo?: Maybe<Scalars['String']>;
 };
 
 export type SitePluginPluginOptionsTablesMappingFilterInput = {
-  images?: Maybe<StringQueryOperatorInput>;
   credits?: Maybe<StringQueryOperatorInput>;
-  video_thumbnail?: Maybe<StringQueryOperatorInput>;
-  avatar?: Maybe<StringQueryOperatorInput>;
-  photo?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
   rich_text?: Maybe<StringQueryOperatorInput>;
-  image?: Maybe<StringQueryOperatorInput>;
-  logo?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePluginSortInput = {
@@ -6450,21 +6001,33 @@ export type StringQueryOperatorInput = {
   glob?: Maybe<Scalars['String']>;
 };
 
-export type CloudinaryAssetFluidFragment = Pick<CloudinaryAssetFluid, 'aspectRatio' | 'base64' | 'sizes' | 'src' | 'srcSet'>;
+export type GatsbyImgixFixedFragment = Pick<ImgixImageFixedType, 'base64' | 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
 
-export type CloudinaryAssetFixedFragment = Pick<CloudinaryAssetFixed, 'base64' | 'height' | 'src' | 'srcSet' | 'width'>;
+export type GatsbyImgixFixed_NoBase64Fragment = Pick<ImgixImageFixedType, 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFixed_WithWebpFragment = Pick<ImgixImageFixedType, 'base64' | 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFixed_WithWebp_NoBase64Fragment = Pick<ImgixImageFixedType, 'width' | 'height' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp'>;
+
+export type GatsbyImgixFluidFragment = Pick<ImgixImageFluidType, 'base64' | 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+export type GatsbyImgixFluid_NoBase64Fragment = Pick<ImgixImageFluidType, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+export type GatsbyImgixFluid_WithWebpFragment = Pick<ImgixImageFluidType, 'base64' | 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
+
+export type GatsbyImgixFluid_WithWebp_NoBase64Fragment = Pick<ImgixImageFluidType, 'aspectRatio' | 'src' | 'srcSet' | 'srcWebp' | 'srcSetWebp' | 'sizes'>;
 
 export type LogoImageQueryVariables = {};
 
 
-export type LogoImageQuery = { airtableImageField?: Maybe<{ data?: Maybe<{ image?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }> }> };
+export type LogoImageQuery = { airtableImageField?: Maybe<{ data?: Maybe<{ image?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }> }> };
 
 export type AboutPageQueryVariables = {};
 
 
-export type AboutPageQuery = { aboutHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutHeroImage?: Maybe<{ data?: Maybe<{ image?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }> }>, aboutWhiteColoredBox?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, aboutButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, aboutSponsors: { nodes: Array<{ data?: Maybe<(
+export type AboutPageQuery = { aboutHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutHeroImage?: Maybe<{ data?: Maybe<{ image?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }> }>, aboutWhiteColoredBox?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, aboutButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, aboutButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, aboutSponsors: { nodes: Array<{ data?: Maybe<(
         Pick<AirtableSponsorsData, 'url' | 'name' | 'type'>
-        & { logo?: Maybe<{ localFiles?: Maybe<Array<Maybe<Pick<File, 'url'>>>> }> }
+        & { logo?: Maybe<Array<Maybe<Pick<AirtableSponsorsDataLogo, 'url'>>>> }
       )> }> } };
 
 export type AdPeoplePageQueryVariables = {};
@@ -6472,7 +6035,7 @@ export type AdPeoplePageQueryVariables = {};
 
 export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
-        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, photo?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, photo?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
       )> }> } };
 
 export type CollegePageQueryVariables = {};
@@ -6496,18 +6059,18 @@ export type IndexPageQueryVariables = {};
 
 export type IndexPageQuery = { bestOfWinners: { nodes: Array<SpecialAwardWinnerFragment> }, adPeople: { nodes: Array<{ fields?: Maybe<Pick<AirtableAdPersonFields, 'url'>>, data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
-        & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, photo?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, photo?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
       )> }> }, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, homeNationalWinners?: Maybe<{ data?: Maybe<(
       Pick<AirtableTextFieldData, 'plain_text'>
       & { rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
-    )> }>, homeNationalWinnersHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeHeroImage?: Maybe<{ data?: Maybe<{ image?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }> }>, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> } };
+    )> }>, homeNationalWinnersHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeHeroImage?: Maybe<{ data?: Maybe<{ image?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }> }>, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> } };
 
 export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<(
     Pick<AirtableWinnerData, 'name' | 'award' | 'national_winner' | 'special_award'>
     & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
         Pick<AirtableAgencyData, 'name'>
-        & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-      )> }>>>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+        & { avatar?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
+      )> }>>>, images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
   )> };
 
 export type AgencyTemplateQueryVariables = {
@@ -6518,7 +6081,7 @@ export type AgencyTemplateQueryVariables = {
 
 export type AgencyTemplateQuery = { airtableAgency?: Maybe<{ data?: Maybe<(
       Pick<AirtableAgencyData, 'name' | 'website' | 'facebook_handle' | 'twitter_handle' | 'instagram_handle' | 'linkedin_handle'>
-      & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+      & { avatar?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
     )> }>, paginatedCollectionPage?: Maybe<(
     Pick<PaginatedCollectionPage, 'id' | 'nodes'>
     & { nextPage?: Maybe<Pick<PaginatedCollectionPage, 'id'>>, collection: Pick<PaginatedCollection, 'nodeCount'> }
@@ -6554,10 +6117,10 @@ export type WinnerTemplateQueryVariables = {
 
 export type WinnerTemplateQuery = { airtableWinner?: Maybe<{ fields?: Maybe<{ tags?: Maybe<Array<Maybe<Pick<AirtableWinnerFieldsTags, 'tag' | 'url'>>>> }>, data?: Maybe<(
       Pick<AirtableWinnerData, 'name' | 'type' | 'year' | 'award' | 'special_award' | 'video' | 'client'>
-      & { video_thumbnail?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }>, category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
+      & { video_thumbnail?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>>, category?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableCategoryData, 'line_1' | 'line_2'>> }>>>, agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<(
           Pick<AirtableAgencyData, 'name'>
-          & { avatar?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
-        )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<{ localFiles?: Maybe<Array<Maybe<{ childCloudinaryAsset?: Maybe<{ fluid: CloudinaryAssetFluidFragment }> }>>> }> }
+          & { avatar?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
+        )> }>>>, credits?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }>, images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
     )> }>, nextAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, previousAirtableWinner?: Maybe<{ fields?: Maybe<Pick<AirtableWinnerFields, 'url'>>, data?: Maybe<Pick<AirtableWinnerData, 'name'>> }>, winnerCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, winnerButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, winnerButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
 
 export type WinnersTemplateQueryVariables = {

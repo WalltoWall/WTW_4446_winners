@@ -3,6 +3,7 @@ const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
 const kebabCase = require('lodash.kebabcase')
+const { buildFluidGatsbyImage2 } = require('gatsby-plugin-imgix')
 
 const {
   createPaginatedCollectionNodes,
@@ -29,25 +30,11 @@ const normalizeWinnerNode = node => {
     year: node.data.year,
     nationalWinner: Boolean(node.data.national_winner),
     category: dlv(node, ['data', 'category', 0, 'data']),
-    imageFluid: dlv(node, [
-      'data',
-      'images',
-      'localFiles',
-      0,
-      'childCloudinaryAsset',
-      'fluid',
-    ]),
+    imageFluid: dlv(node, ['data', 'images', 0, 'fluid']),
     agency: {
       name: dlv(agency, ['data', 'name']),
       url: dlv(agency, ['fields', 'url']),
-      avatarFluid: dlv(agency, [
-        'data',
-        'avatar',
-        'localFiles',
-        0,
-        'childCloudinaryAsset',
-        'fluid',
-      ]),
+      avatarFluid: dlv(agency, ['data', 'avatar', 0, 'fluid']),
     },
   }
 }
@@ -114,16 +101,12 @@ exports.createPages = async gatsbyContext => {
               data {
                 name
                 avatar {
-                  localFiles {
-                    childCloudinaryAsset {
-                      fluid(maxWidth: 80) {
-                        aspectRatio
-                        base64
-                        sizes
-                        src
-                        srcSet
-                      }
-                    }
+                  fluid(maxWidth: 80) {
+                    aspectRatio
+                    base64
+                    sizes
+                    src
+                    srcSet
                   }
                 }
               }
@@ -136,16 +119,12 @@ exports.createPages = async gatsbyContext => {
               }
             }
             images {
-              localFiles {
-                childCloudinaryAsset {
-                  fluid(maxWidth: 800) {
-                    aspectRatio
-                    base64
-                    sizes
-                    src
-                    srcSet
-                  }
-                }
+              fluid(maxWidth: 500) {
+                aspectRatio
+                base64
+                sizes
+                src
+                srcSet
               }
             }
           }
@@ -434,4 +413,70 @@ exports.onCreateNode = ({ node, actions }) => {
       break
     }
   }
+}
+
+exports.createSchemaCustomization = gatsbyContext => {
+  const { actions } = gatsbyContext
+  const { createTypes } = actions
+
+  const types = `
+    type AirtableWinnerDataImages {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableWinnerDataVideo_thumbnail {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableAgencyDataAvatar {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableAdPersonDataPhoto {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableImageFieldDataImage {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+    type AirtableSponsorsDataLogo {
+      fluid(maxWidth: Int): ImgixImageFluidType
+    }
+  `
+
+  createTypes(types)
+}
+
+exports.createResolvers = gatsbyContext => {
+  const { createResolvers } = gatsbyContext
+
+  const resolveFluid = (parent, args) =>
+    parent.url
+      ? buildFluidGatsbyImage2(
+          `https://${process.env.IMGIX_DOMAIN}/${encodeURIComponent(
+            parent.url,
+          )}`,
+          args,
+          process.env.IMGIX_SECURE_URL_TOKEN,
+        )
+      : undefined
+
+  const resolvers = {
+    AirtableWinnerDataImages: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableWinnerDataVideo_thumbnail: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableAgencyDataAvatar: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableAdPersonDataPhoto: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableImageFieldDataImage: {
+      fluid: { resolve: resolveFluid },
+    },
+    AirtableSponsorsDataLogo: {
+      fluid: { resolve: resolveFluid },
+    },
+  }
+
+  createResolvers(resolvers)
 }
