@@ -27,10 +27,7 @@ module.exports = {
             tableLinks: ['agency', 'category'],
             queryName: 'Winner',
             separateNodeType: true,
-            mapping: {
-              credits: 'text/markdown',
-              video_thumbnail: 'fileNode',
-            },
+            mapping: { credits: 'text/markdown' },
             separateMapType: true,
           },
           {
@@ -38,8 +35,6 @@ module.exports = {
             tableName: 'Agencies',
             queryName: 'Agency',
             separateNodeType: true,
-            mapping: { avatar: 'fileNode' },
-            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
@@ -47,7 +42,7 @@ module.exports = {
             tableLinks: ['agency'],
             queryName: 'AdPerson',
             separateNodeType: true,
-            mapping: { photo: 'fileNode', description: 'text/markdown' },
+            mapping: { description: 'text/markdown' },
             separateMapType: true,
           },
           {
@@ -68,9 +63,7 @@ module.exports = {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Image Fields',
             queryName: 'ImageField',
-            mapping: { image: 'fileNode' },
             separateNodeType: true,
-            separateMapType: true,
           },
           {
             baseId: process.env.AIRTABLE_BASE_ID,
@@ -88,16 +81,7 @@ module.exports = {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Sponsors',
             queryName: 'Sponsors',
-            mapping: { logo: 'fileNode' },
             separateNodeType: true,
-            separateMapType: true,
-          },
-          {
-            baseId: process.env.AIRTABLE_BASE_ID,
-            tableName: 'Images Test',
-            queryName: 'ImagesTest',
-            separateNodeType: true,
-            separateMapType: true,
           },
         ],
       },
@@ -146,15 +130,11 @@ module.exports = {
                     data {
                       name
                       avatar {
-                        localFiles {
-                          childCloudinaryAsset {
-                            fluid(maxWidth: 80) {
-                              aspectRatio
-                              sizes
-                              src
-                              srcSet
-                            }
-                          }
+                        fluid(maxWidth: 80) {
+                          aspectRatio
+                          sizes
+                          src
+                          srcSet
                         }
                       }
                     }
@@ -199,9 +179,7 @@ module.exports = {
               0,
               'data',
               'avatar',
-              'localFiles',
               0,
-              'childCloudinaryAsset',
               'fluid',
             ]),
             imageFluid: dlv(node, ['data', 'images', 0, 'fluid']),

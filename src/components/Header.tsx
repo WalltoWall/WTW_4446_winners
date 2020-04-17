@@ -43,12 +43,8 @@ export const Header = (props: HeaderProps) => {
       airtableImageField(data: { uid: { eq: "Header Logo" } }) {
         data {
           image {
-            localFiles {
-              childCloudinaryAsset {
-                fluid(maxWidth: 144) {
-                  ...CloudinaryAssetFluid
-                }
-              }
+            fluid(maxWidth: 100) {
+              ...GatsbyImgixFluid
             }
           }
         }
@@ -56,8 +52,7 @@ export const Header = (props: HeaderProps) => {
     }
   `)
   const logoImageFluid =
-    logoImageData.airtableImageField?.data?.image?.localFiles?.[0]
-      ?.childCloudinaryAsset?.fluid
+    logoImageData.airtableImageField?.data?.image?.[0]?.fluid
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

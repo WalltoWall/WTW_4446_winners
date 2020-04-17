@@ -49,10 +49,7 @@ export const SpecialWinners = ({
               isNationalWinner={winner?.data?.national_winner}
               agencyName={agency?.data?.name!}
               agencyHref={agency?.fields?.url!}
-              agencyAvatarFluid={
-                agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset
-                  ?.fluid
-              }
+              agencyAvatarFluid={agency?.data?.avatar?.[0]?.fluid}
             />
           )
         })}

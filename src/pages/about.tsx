@@ -26,7 +26,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
 
   data.aboutSponsors.nodes.forEach(node => {
     const sponsor: Sponsor = {
-      src: node.data?.logo?.localFiles?.[0]?.url,
+      src: node.data?.logo?.[0]?.url,
       type: node.data?.type as Sponsor['type'],
       name: node.data?.name,
       url: node.data?.url,
@@ -52,10 +52,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         textHTML={
           data.aboutHeroText?.data?.rich_text?.childMarkdownRemark?.html
         }
-        imageFluid={
-          data.aboutHeroImage?.data?.image?.localFiles?.[0]
-            ?.childCloudinaryAsset?.fluid
-        }
+        imageFluid={data.aboutHeroImage?.data?.image?.[0]?.fluid}
       />
 
       <ColoredBoxesSlice
@@ -124,12 +121,8 @@ export const query = graphql`
     ) {
       data {
         image {
-          localFiles {
-            childCloudinaryAsset {
-              fluid(maxWidth: 800) {
-                ...CloudinaryAssetFluid
-              }
-            }
+          fluid(maxWidth: 500) {
+            ...GatsbyImgixFluid
           }
         }
       }
@@ -173,9 +166,7 @@ export const query = graphql`
           url
           name
           logo {
-            localFiles {
-              url
-            }
+            url
           }
           type
         }

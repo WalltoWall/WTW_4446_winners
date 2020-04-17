@@ -20,8 +20,7 @@ export type AgencyTemplate = LayoutProps & {
 
 export const AgencyTemplate = ({ data, ...props }: AgencyTemplate) => {
   const agency = data.airtableAgency
-  const avatarFluid =
-    agency?.data?.avatar?.localFiles?.[0]?.childCloudinaryAsset?.fluid
+  const avatarFluid = agency?.data?.avatar?.[0]?.fluid
   const hasSocialIcons = Boolean(
     agency?.data?.facebook_handle ||
       agency?.data?.instagram_handle ||
@@ -114,12 +113,8 @@ export const query = graphql`
         instagram_handle
         linkedin_handle
         avatar {
-          localFiles {
-            childCloudinaryAsset {
-              fluid(maxWidth: 100) {
-                ...CloudinaryAssetFluid
-              }
-            }
+          fluid(maxWidth: 80) {
+            ...GatsbyImgixFluid
           }
         }
       }

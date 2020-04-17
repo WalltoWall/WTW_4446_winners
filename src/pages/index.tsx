@@ -36,10 +36,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
     <Layout {...props}>
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
-        imageFluid={
-          data.homeHeroImage?.data?.image?.localFiles?.[0]?.childCloudinaryAsset
-            ?.fluid
-        }
+        imageFluid={data.homeHeroImage?.data?.image?.[0]?.fluid}
       />
 
       <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
@@ -79,10 +76,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
                 title={person?.data?.title!}
                 agencyName={person?.data?.agency?.[0]?.data?.name}
                 award={person?.data?.award!}
-                imageFluid={
-                  person?.data?.photo?.localFiles?.[0]?.childCloudinaryAsset
-                    ?.fluid
-                }
+                imageFluid={person?.data?.photo?.[0]?.fluid}
               />
             ))}
           </CardList>
@@ -247,12 +241,8 @@ export const query = graphql`
           }
           award
           photo {
-            localFiles {
-              childCloudinaryAsset {
-                fluid(maxWidth: 800) {
-                  ...CloudinaryAssetFluid
-                }
-              }
+            fluid(maxWidth: 500) {
+              ...GatsbyImgixFluid
             }
           }
         }
@@ -319,12 +309,8 @@ export const query = graphql`
     ) {
       data {
         image {
-          localFiles {
-            childCloudinaryAsset {
-              fluid(maxWidth: 800) {
-                ...CloudinaryAssetFluid
-              }
-            }
+          fluid(maxWidth: 500) {
+            ...GatsbyImgixFluid
           }
         }
       }
@@ -355,18 +341,14 @@ export const query = graphql`
         data {
           name
           avatar {
-            localFiles {
-              childCloudinaryAsset {
-                fluid(maxWidth: 1000) {
-                  ...CloudinaryAssetFluid
-                }
-              }
+            fluid(maxWidth: 80) {
+              ...GatsbyImgixFluid
             }
           }
         }
       }
       images {
-        fluid(maxWidth: 1000) {
+        fluid(maxWidth: 600) {
           ...GatsbyImgixFluid
         }
       }
