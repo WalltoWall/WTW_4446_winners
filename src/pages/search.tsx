@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react'
+import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 
 import { getURLParam } from '../utils'
+import { SearchPageQuery } from '../graphqlTypes'
 
 import { t, mq, linearScale } from '../theme'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -14,15 +16,17 @@ import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 
 export type SearchPageProps = LayoutProps & {
   initialQuery: string
+  data: SearchPageQuery
 }
-
-const years = ['2020', '2019', '2018']
-const initialYear = '2020'
 
 export const SearchPage = ({
   initialQuery = '',
+  data,
   ...props
 }: SearchPageProps) => {
+  const years = data.years.distinct
+  const initialYear = years[0]
+
   const [query, setQuery] = useURLParamState('query', getURLParam())
   const [year, setYear] = useURLParamState(
     'year',
@@ -98,3 +102,11 @@ export const SearchPage = ({
 }
 
 export default SearchPage
+
+export const query = graphql`
+  query SearchPage {
+    years: allAirtableWinner(sort: { fields: data___year }) {
+      distinct(field: data___year)
+    }
+  }
+`

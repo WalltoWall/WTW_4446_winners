@@ -6073,6 +6073,11 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<Pick<AirtableWinnerFie
       )> }>>>, images?: Maybe<Array<Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }>>> }
   )> };
 
+export type SearchPageQueryVariables = {};
+
+
+export type SearchPageQuery = { years: Pick<AirtableWinnerConnection, 'distinct'> };
+
 export type AgencyTemplateQueryVariables = {
   recordId: Scalars['String'];
   paginatedCollectionName: Scalars['String'];
