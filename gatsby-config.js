@@ -13,7 +13,7 @@ module.exports = {
       resolve: 'gatsby-plugin-imgix',
       options: {
         domain: process.env.IMGIX_DOMAIN,
-        token: process.env.IMGIX_SECURE_URL_TOKEN,
+        secureURLToken: process.env.IMGIX_SECURE_URL_TOKEN,
         sourceType: 'webProxy',
         fields: [
           {
