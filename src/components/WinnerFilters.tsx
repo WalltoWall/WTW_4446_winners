@@ -54,8 +54,6 @@ export const WinnerFilters = ({
     navigate(`/winners/${year}/${categorySlug}/`)
   }
 
-  console.log(years)
-
   return (
     <BoundedBox
       css={mq({
