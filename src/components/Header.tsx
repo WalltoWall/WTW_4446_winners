@@ -66,7 +66,7 @@ export const Header = (props: HeaderProps) => {
 
   return (
     <>
-      <div css={mq({ height: linearScale('3rem', '4rem') })} />
+      <div css={mq({ height: linearScale('3rem', '4.5rem') })} />
       <View
         as="header"
         {...props}
