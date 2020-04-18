@@ -11,6 +11,7 @@ export interface Winner {
   category?: { line_1: string; line_2: string }
   imageFluid?: FluidObject
   agency: { name: string; url: string; avatarFluid?: FluidObject }
+  nationalWinner: boolean
 }
 
 export interface WinnerSearchResult {
