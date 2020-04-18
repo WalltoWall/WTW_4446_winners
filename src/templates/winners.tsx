@@ -67,11 +67,8 @@ export const WinnersTemplate = ({
 export default WinnersTemplate
 
 export const query = graphql`
-  query WinnersTemplate($categoryId: String!, $collectionRegex: String!) {
-    paginatedCollectionPage(
-      collection: { id: { eq: $categoryId } }
-      index: { eq: 0 }
-    ) {
+  query WinnersTemplate($firstPageId: String, $collectionRegex: String!) {
+    paginatedCollectionPage(id: { eq: $firstPageId }) {
       id
       nodes
       nextPage {
