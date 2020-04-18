@@ -59,17 +59,21 @@ export const AllWinnersTemplate = ({
         <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage}>
           {isInitialPageSelected && (
             <>
-              <SpecialWinners
-                columns={[1, 2]}
-                winners={bestOfWinners}
-                variant="featuredWide"
-              />
+              {bestOfWinners.length > 0 && (
+                <SpecialWinners
+                  columns={[1, 2]}
+                  winners={bestOfWinners}
+                  variant="featuredWide"
+                />
+              )}
 
-              <SpecialWinners
-                columns={[1, 3]}
-                winners={judgesWinners}
-                variant="featured"
-              />
+              {judgesWinners.length > 0 && (
+                <SpecialWinners
+                  columns={[1, 3]}
+                  winners={judgesWinners}
+                  variant="featured"
+                />
+              )}
             </>
           )}
         </LoadMoreWinners>
@@ -84,6 +88,7 @@ export const query = graphql`
   query AllWinnersTemplate(
     $collectionName: String!
     $collectionRegex: String!
+    $year: String!
   ) {
     paginatedCollectionPage(
       collection: { name: { eq: $collectionName } }
@@ -118,6 +123,7 @@ export const query = graphql`
         data: {
           special_award: { regex: "/^Best of Show - /" }
           type: { eq: "Professional" }
+          year: { eq: $year }
         }
       }
     ) {
@@ -126,7 +132,12 @@ export const query = graphql`
       }
     }
     judgesWinners: allAirtableWinner(
-      filter: { data: { special_award: { regex: "/^Judge's Award - /" } } }
+      filter: {
+        data: {
+          special_award: { regex: "/^Judge's Award - /" }
+          year: { eq: $year }
+        }
+      }
     ) {
       nodes {
         ...SpecialAwardWinner

@@ -54,6 +54,7 @@ export const PaginatedWinners = ({
                 agencyName={winner.agency?.name}
                 agencyHref={winner.agency?.url}
                 agencyAvatarFluid={winner.agency?.avatarFluid}
+                isNationalWinner={winner.nationalWinner}
               />
             ))}
           </CardList>
