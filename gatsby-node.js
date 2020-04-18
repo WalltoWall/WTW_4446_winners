@@ -323,41 +323,27 @@ exports.createPages = async gatsbyContext => {
         })
       }
 
-      const collectionRegex = `/^winners\/${year}\//`
-      const winnerPageResult = await graphql(
-        `
-          query($collectionRegex: String!) {
-            allPaginatedCollectionPage(
-              filter: { collection: { name: { regex: $collectionRegex } } }
-            ) {
-              nodes {
-                collection {
-                  name
-                  id
-                }
-              }
-            }
-          }
-        `,
-        { collectionRegex },
+      const collectionRegex = new RegExp(`^winners/${year}/`)
+      const collections = getNodesByType('PaginatedCollection').filter(node =>
+        collectionRegex.test(node.name),
       )
-      const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
 
       collections.forEach(c => {
-        const splitNames = c.collection.name.split('/')
+        const splitNames = c.name.split('/')
         const category = splitNames[splitNames.length - 1]
         const categorySlug = kebabCase(category.toLowerCase()).replace(
           'advertising',
           'ad',
         )
+        const firstPageId = c.pages[0]
 
         createPage({
           path: `/winners/${year}/${categorySlug}/`,
           component: path.resolve(__dirname, 'src/templates/winners.tsx'),
           context: {
             year,
-            categoryId: c.collection.id,
-            collectionRegex,
+            firstPageId,
+            collectionRegex: collectionRegex.toString(),
           },
         })
       })
@@ -368,7 +354,7 @@ exports.createPages = async gatsbyContext => {
         context: {
           year,
           collectionName: `winners/${year}`,
-          collectionRegex,
+          collectionRegex: collectionRegex.toString(),
         },
       })
     }),
