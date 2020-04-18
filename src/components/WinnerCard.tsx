@@ -129,7 +129,7 @@ export const WinnerCard = ({
               css={mq({
                 position: 'absolute',
                 right: 0,
-                top: t.space[4],
+                top: linearScale('1rem', '1.5rem'),
               })}
             >
               2020 National Winner
