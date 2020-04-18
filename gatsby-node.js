@@ -159,12 +159,16 @@ exports.createPages = async gatsbyContext => {
       const winnerNodes = allWinnerNodes.filter(
         node => node.data.type === 'Professional',
       )
+      const nationalWinnerNodes = winnerNodes.filter(
+        node => node.data.national_winner,
+      )
       const collegeWinnerNodes = allWinnerNodes.filter(
         node => node.data.type === 'College',
       )
       const highSchoolWinnerNodes = allWinnerNodes.filter(
         node => node.data.type === 'High School',
       )
+
       // Remove Judge's and Best of Show awards since they are statically
       // displayed.
       processPaginatedCollection({
@@ -175,6 +179,15 @@ exports.createPages = async gatsbyContext => {
           )
           .map(normalizeWinnerNode),
         name: `winners/${year}`,
+        createNode,
+        createNodeId,
+        createContentDigest,
+        getNode,
+      })
+
+      processPaginatedCollection({
+        collection: nationalWinnerNodes.map(normalizeWinnerNode),
+        name: `winners/${year}/National ADDY Winners`,
         createNode,
         createNodeId,
         createContentDigest,
@@ -198,6 +211,7 @@ exports.createPages = async gatsbyContext => {
         createContentDigest,
         getNode,
       })
+
       const winnerNodesByCategory = winnerNodes.reduce((acc, curr) => {
         const category = curr.data.category[0]
         const line1 = category.data.line_1
@@ -322,41 +336,28 @@ exports.createPages = async gatsbyContext => {
         })
       }
 
-      const collectionRegex = `/^winners\/${year}\//`
-      const winnerPageResult = await graphql(
-        `
-          query($collectionRegex: String!) {
-            allPaginatedCollectionPage(
-              filter: { collection: { name: { regex: $collectionRegex } } }
-            ) {
-              nodes {
-                collection {
-                  name
-                  id
-                }
-              }
-            }
-          }
-        `,
-        { collectionRegex },
+      const collectionRegex = new RegExp(`^winners/${year}/`)
+      const collections = getNodesByType('PaginatedCollection').filter(node =>
+        collectionRegex.test(node.name),
       )
-      const collections = winnerPageResult.data.allPaginatedCollectionPage.nodes
 
       collections.forEach(c => {
-        const splitNames = c.collection.name.split('/')
+        const splitNames = c.name.split('/')
         const category = splitNames[splitNames.length - 1]
         const categorySlug = kebabCase(category.toLowerCase()).replace(
           'advertising',
           'ad',
         )
+        const firstPageId = c.pages[0]
+        if (!firstPageId) return
 
         createPage({
           path: `/winners/${year}/${categorySlug}/`,
           component: path.resolve(__dirname, 'src/templates/winners.tsx'),
           context: {
             year,
-            categoryId: c.collection.id,
-            collectionRegex,
+            firstPageId,
+            collectionRegex: collectionRegex.toString(),
           },
         })
       })
@@ -367,7 +368,7 @@ exports.createPages = async gatsbyContext => {
         context: {
           year,
           collectionName: `winners/${year}`,
-          collectionRegex,
+          collectionRegex: collectionRegex.toString(),
         },
       })
     }),
