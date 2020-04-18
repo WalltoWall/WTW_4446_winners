@@ -3,7 +3,6 @@ const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
 const kebabCase = require('lodash.kebabcase')
-const { buildFluidGatsbyImage2 } = require('gatsby-plugin-imgix')
 
 const {
   createPaginatedCollectionNodes,
