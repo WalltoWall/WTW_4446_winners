@@ -73,6 +73,7 @@ export type WinnerCardProps = ViewProps & {
   agencyHref: string
   agencyAvatarFluid?: FluidObject
   isNationalWinner?: boolean
+  videoUrl?: string
 }
 
 export const WinnerCard = ({
@@ -87,6 +88,7 @@ export const WinnerCard = ({
   agencyHref,
   agencyAvatarFluid,
   isNationalWinner,
+  videoUrl,
   ...props
 }: WinnerCardProps) => {
   const variant = variants[variantName]
