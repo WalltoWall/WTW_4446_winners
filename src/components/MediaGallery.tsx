@@ -4,10 +4,13 @@ import { negateScale } from 'styled-system-scale'
 import VisuallyHidden from '@reach/visually-hidden'
 
 import { t, mq, linearScale } from '../theme'
+import { convertVimeoLinkToIframeSrc } from '../utils'
+
 import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { ImageContainer } from './ImageContainer'
 import { Icon } from './Icon'
+import { VimeoVideo } from './VimeoVideo'
 
 const variants = {
   previous: {
@@ -123,15 +126,8 @@ export const MediaGallery = ({
           background: t.colors.Black,
         }}
       >
-        {/* TODO: When plan is upgraded, add iframe query options for customization and privacy */}
         {isShowingVideo ? (
-          <iframe
-            src={`${vimeoLink?.replace('vimeo.com', 'player.vimeo.com/video')}`}
-            frameBorder="0"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            css={{ height: '100%', width: '100%' }}
-          />
+          <VimeoVideo src={vimeoLink!} />
         ) : (
           <ImageContainer>
             <GatsbyImage
