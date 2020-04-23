@@ -213,7 +213,9 @@ exports.createPages = async gatsbyContext => {
       })
 
       const winnerNodesByCategory = winnerNodes.reduce((acc, curr) => {
-        const category = curr.data.category[0]
+        const category = dlv(curr, ['data', 'category', 0])
+        if (!category) return acc
+
         const line1 = category.data.line_1
         acc[line1] = [...(acc[line1] || []), curr]
 
