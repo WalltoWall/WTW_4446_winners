@@ -2,6 +2,8 @@ import React from 'react'
 import VisuallyHidden from '@reach/visually-hidden'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
+import { Agency } from '../types'
+
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
 import { Heading } from './Heading'
@@ -69,9 +71,7 @@ export type WinnerCardProps = ViewProps & {
   award?: AwardIconProps['type'] | null
   isSpecialAward?: boolean
   imageFluid?: FluidObject
-  agencyName: string
-  agencyHref: string
-  agencyAvatarFluid?: FluidObject
+  agencies?: Agency[]
   isNationalWinner?: boolean
 }
 
@@ -83,9 +83,7 @@ export const WinnerCard = ({
   award,
   isSpecialAward = false,
   imageFluid,
-  agencyName,
-  agencyHref,
-  agencyAvatarFluid,
+  agencies = [],
   isNationalWinner,
   ...props
 }: WinnerCardProps) => {
@@ -187,16 +185,26 @@ export const WinnerCard = ({
               </Anchor>
             </Heading>
           )}
-          <AgencyIdentifier
-            variant={variant.agencyIdentifierVariant}
-            name={agencyName}
-            href={agencyHref}
-            avatarFluid={agencyAvatarFluid}
+          <ul
             css={mq({
+              display: 'grid',
+              gap: linearScale('0.25rem', '0.375rem', 'space'),
               alignSelf: ['center', 'end'],
+              justifyItems: ['center', 'start'],
               justifySelf: variant.agentJustifySelf,
             })}
-          />
+          >
+            {agencies.map(agency => (
+              <li key={agency.name}>
+                <AgencyIdentifier
+                  variant={variant.agencyIdentifierVariant}
+                  name={agency.name}
+                  href={agency.url}
+                  avatarFluid={agency.avatarFluid}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
         {award && (
           <AwardIcon

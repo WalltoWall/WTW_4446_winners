@@ -94,9 +94,7 @@ export const PaginatedSearchResults = ({
                 award={result.award?.toLowerCase() as Award}
                 href={result.url}
                 imageFluid={result.imageFluid}
-                agencyName={result.agencyName!}
-                agencyHref={result.agencyUrl!}
-                agencyAvatarFluid={result.agencyAvatarFluid}
+                agencies={result.agencies}
               />
             ))}
           </CardList>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { SpecialAwardWinnerFragment } from '../graphqlTypes'
-import { Award } from '../types'
+import { Award, Agency } from '../types'
 import { t, mq } from '../theme'
 
 import { CardList } from '../components/CardList'
@@ -34,7 +34,11 @@ export const SpecialWinners = ({
 
       <CardList columns={columns}>
         {winners.map(winner => {
-          const agency = winner?.data?.agency?.[0]
+          const agencies = winner?.data?.agency?.map?.(agency => ({
+            name: agency?.data?.name,
+            url: agency?.fields?.url,
+            avatarFluid: agency?.fields?.avatar?.fluid,
+          })) as Agency[]
 
           return (
             <WinnerCard
@@ -47,9 +51,7 @@ export const SpecialWinners = ({
               imageFluid={winner?.fields?.images?.[0]?.fluid}
               isSpecialAward={true}
               isNationalWinner={winner?.data?.national_winner}
-              agencyName={agency?.data?.name!}
-              agencyHref={agency?.fields?.url!}
-              agencyAvatarFluid={agency?.fields?.avatar?.fluid}
+              agencies={agencies}
             />
           )
         })}
