@@ -53,6 +53,7 @@ export enum LineHeight {
 
 export enum ZIndex {
   Base = 0,
+  Lightbox = 3,
   Header = 2,
   HeaderBar = 2,
   HeaderOverlay = 1,
@@ -104,6 +105,7 @@ const baseTheme = {
     s: linearScale('12px', '24px', { count }),
     m: linearScale('18px', '32px', { count }),
     l: linearScale('32px', '48px', { count }),
+    xl: linearScale('50px', '75px', { count }),
   },
 
   // Z-Indicies

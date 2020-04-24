@@ -50,6 +50,7 @@ export const SpecialWinners = ({
               agencyName={agency?.data?.name!}
               agencyHref={agency?.fields?.url!}
               agencyAvatarFluid={agency?.fields?.avatar?.fluid}
+              videoUrl="https://vimeo.com/407818140"
             />
           )
         })}

@@ -12,6 +12,7 @@ import { Anchor } from './Anchor'
 import { Link } from './Link'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { Ribbon } from './Ribbon'
+import { VideoPlayButton } from './VideoPlayButton'
 
 const variants = {
   base: {
@@ -136,6 +137,17 @@ export const WinnerCard = ({
             >
               2020 National Winner
             </Ribbon>
+          )}
+          {videoUrl && (
+            <VideoPlayButton
+              src={videoUrl}
+              css={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
           )}
         </AspectRatio>
       </Link>
