@@ -1,7 +1,7 @@
 import React from 'react'
 import { negateScale } from 'styled-system-scale'
 
-import { Tag as TagType } from '../types'
+import { Tag as TagType, Agency } from '../types'
 
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
@@ -9,16 +9,18 @@ import { AwardIcon, AwardIconProps } from './AwardIcon'
 import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
 import { Tag } from './Tag'
-import { AgencyIdentifier, AgencyIdentifierProps } from './AgencyIdentifier'
+import { AgencyIdentifier } from './AgencyIdentifier'
 
 const variants = {
   professional: {
     clientLabel: 'Client',
     agencyLabel: 'Creative Agency',
+    agencyLabelPlural: 'Creative Agencies',
   },
   student: {
     clientLabel: 'School',
     agencyLabel: 'Student',
+    agencyLabelPlural: 'Students',
   },
 }
 
@@ -31,9 +33,7 @@ type WinnerInfoProps = ViewProps & {
   categoryLine2?: string
   tags?: TagType[]
   creditsHTML?: string
-  agencyAvatarFluid?: AgencyIdentifierProps['avatarFluid']
-  agencyName?: string
-  agencyHref?: string
+  agencies?: Agency[]
   client?: string
 }
 
@@ -46,14 +46,13 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
   categoryLine2,
   tags = [],
   creditsHTML,
-  agencyAvatarFluid,
-  agencyName,
-  agencyHref,
+  agencies = [],
   client,
   ...props
 }) => {
   const variant = variants[variantName]
   const hasTags = tags.length > 0
+  const hasMultipleAgencies = agencies.length > 1
 
   return (
     <View
@@ -144,26 +143,47 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
             lineHeight: t.lh.Copy,
           })}
         >
-          <dl>
-            <dt css={{ fontWeight: t.fw.Semibold }}>{variant.clientLabel}</dt>
-            <dd>{client}</dd>
-          </dl>
-          <dl>
-            <dt css={{ fontWeight: t.fw.Semibold }}>{variant.agencyLabel}</dt>
-            <dd
-              css={mq({
-                display: 'flex',
-                justifyContent: ['center', 'flex-start'],
-              })}
-            >
-              <AgencyIdentifier
-                href={agencyHref!}
-                name={agencyName!}
-                avatarFluid={agencyAvatarFluid}
-              />
-            </dd>
-          </dl>
-          <HTMLContent html={creditsHTML} />
+          {client && (
+            <dl>
+              <dt css={{ fontWeight: t.fw.Semibold }}>{variant.clientLabel}</dt>
+              <dd>{client}</dd>
+            </dl>
+          )}
+          {agencies.length > 0 && (
+            <dl>
+              <dt css={{ fontWeight: t.fw.Semibold }}>
+                {hasMultipleAgencies
+                  ? variant.agencyLabelPlural
+                  : variant.agencyLabel}
+              </dt>
+              <dd
+                css={mq({
+                  display: 'flex',
+                  justifyContent: ['center', 'flex-start'],
+                })}
+              >
+                <ul
+                  css={mq({
+                    display: 'grid',
+                    gap: linearScale('0.25rem', '0.375rem', 'space'),
+                    alignSelf: ['center', 'end'],
+                    justifyItems: ['center', 'start'],
+                  })}
+                >
+                  {agencies.map(agency => (
+                    <li key={agency.name}>
+                      <AgencyIdentifier
+                        name={agency.name}
+                        href={agency.url}
+                        avatarFluid={agency.avatarFluid}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </dl>
+          )}
+          {creditsHTML && <HTMLContent html={creditsHTML} />}
         </div>
       </div>
     </View>
