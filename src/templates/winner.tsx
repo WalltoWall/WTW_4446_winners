@@ -57,8 +57,8 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const category = winner?.data?.category?.[0]?.data
 
   const agencies = winner?.data?.agency?.map?.(agency => ({
-    name: agency?.data?.name,
-    url: agency?.fields?.url,
+    name: agency?.data?.name!,
+    url: agency?.fields?.url!,
     avatarFluid: agency?.fields?.avatar?.fluid,
   }))
 
