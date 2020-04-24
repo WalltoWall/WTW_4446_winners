@@ -11,6 +11,7 @@ import { WinnerFilters } from '../components/WinnerFilters'
 import { LoadMoreWinners } from '../components/LoadMoreWinners'
 import { SpecialWinners } from '../components/SpecialWinners'
 import { useYears } from '../hooks/useYears'
+import { withLightbox } from '../components/Lightbox'
 
 export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
@@ -82,7 +83,7 @@ export const AllWinnersTemplate = ({
   )
 }
 
-export default AllWinnersTemplate
+export default withLightbox(AllWinnersTemplate)
 
 export const query = graphql`
   query AllWinnersTemplate(
