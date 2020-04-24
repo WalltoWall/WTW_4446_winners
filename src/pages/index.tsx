@@ -328,7 +328,7 @@ export const query = graphql`
   fragment SpecialAwardWinner on AirtableWinner {
     fields {
       url
-      images {
+      featured_image {
         fluid(maxWidth: 600) {
           ...GatsbyImgixFluid
         }

@@ -32,6 +32,13 @@ module.exports = {
             getUrl: node => dlv(node, 'data.video_thumbnail.0.url'),
           },
           {
+            nodeType: 'AirtableWinner',
+            fieldName: 'featured_image',
+            getUrl: node =>
+              dlv(node, 'data.images.0.url') ||
+              dlv(node, 'data.video_thumbnail.0.url'),
+          },
+          {
             nodeType: 'AirtableAgency',
             fieldName: 'avatar',
             getUrl: node => dlv(node, 'data.avatar.0.url'),
@@ -69,7 +76,7 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_ID,
             tableName: 'Winners',
-            tableLinks: ['agency', 'category'],
+            tableLinks: ['agency', 'category', 'show_with'],
             queryName: 'Winner',
             separateNodeType: true,
             mapping: { credits: 'text/markdown' },
@@ -149,7 +156,7 @@ module.exports = {
                 recordId
                 fields {
                   url
-                  images {
+                  featured_image {
                     fluid(maxWidth: 500) {
                       aspectRatio
                       sizes
@@ -202,26 +209,34 @@ module.exports = {
           'imageFluid',
         ],
         normalizer: ({ data }) =>
-          data.allAirtableWinner.nodes.map(node => ({
-            id: node.recordId,
-            url: dlv(node, ['fields', 'url']),
-            name: dlv(node, ['data', 'name']),
-            year: dlv(node, ['data', 'year']),
-            award: dlv(node, ['data', 'award']),
-            tags: (dlv(node, ['data', 'tags']) || []).join(' '),
-            categoryLine1: dlv(node, ['data', 'category', 0, 'data', 'line_1']),
-            agencyName: dlv(node, ['data', 'agency', 0, 'data', 'name']),
-            agencyUrl: dlv(node, ['data', 'agency', 0, 'fields', 'url']),
-            agencyAvatarFluid: dlv(node, [
-              'data',
-              'agency',
-              0,
-              'fields',
-              'avatar',
-              'fluid',
-            ]),
-            imageFluid: dlv(node, ['fields', 'images', 0, 'fluid']),
-          })),
+          data.allAirtableWinner.nodes
+            .filter(node => !node.data.show_with)
+            .map(node => ({
+              id: node.recordId,
+              url: dlv(node, ['fields', 'url']),
+              name: dlv(node, ['data', 'name']),
+              year: dlv(node, ['data', 'year']),
+              award: dlv(node, ['data', 'award']),
+              tags: (dlv(node, ['data', 'tags']) || []).join(' '),
+              categoryLine1: dlv(node, [
+                'data',
+                'category',
+                0,
+                'data',
+                'line_1',
+              ]),
+              agencyName: dlv(node, ['data', 'agency', 0, 'data', 'name']),
+              agencyUrl: dlv(node, ['data', 'agency', 0, 'fields', 'url']),
+              agencyAvatarFluid: dlv(node, [
+                'data',
+                'agency',
+                0,
+                'fields',
+                'avatar',
+                'fluid',
+              ]),
+              imageFluid: dlv(node, ['fields', 'featured_image', 'fluid']),
+            })),
       },
     },
   ],
