@@ -121,7 +121,6 @@ export const WinnerCard = ({
           css={mq({
             backgroundColor: t.c.White,
             height: ['100%', 'inherit'],
-            position: 'relative',
           })}
         >
           {imageFluid && (
@@ -138,17 +137,7 @@ export const WinnerCard = ({
               2020 National Winner
             </Ribbon>
           )}
-          {videoUrl && (
-            <VideoPlayButton
-              src={videoUrl}
-              css={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-              }}
-            />
-          )}
+          {videoUrl && <VideoPlayButton src={videoUrl} />}
         </AspectRatio>
       </Link>
       <div
