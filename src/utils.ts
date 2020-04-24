@@ -7,6 +7,10 @@ export const trimCollectionNamespace = (collectionName: string | undefined) => {
 }
 
 export const convertVimeoLinkToIframeSrc = (vimeoLink: string) => {
+  if (vimeoLink.includes('showcase')) {
+    return vimeoLink + '/embed'
+  }
+
   return vimeoLink.replace('vimeo.com', 'player.vimeo.com/video')
 }
 
