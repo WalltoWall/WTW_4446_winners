@@ -6350,7 +6350,7 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<(
     Pick<AirtableWinnerFields, 'url'>
     & { featured_image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }
   )>, data?: Maybe<(
-    Pick<AirtableWinnerData, 'name' | 'award' | 'national_winner' | 'special_award'>
+    Pick<AirtableWinnerData, 'name' | 'award' | 'national_winner' | 'special_award' | 'special_award_video'>
     & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<(
         Pick<AirtableAgencyFields, 'url'>
         & { avatar?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }

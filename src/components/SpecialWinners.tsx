@@ -51,6 +51,7 @@ export const SpecialWinners = ({
               imageFluid={winner?.fields?.featured_image?.fluid}
               isSpecialAward={true}
               isNationalWinner={winner?.data?.national_winner}
+              videoUrl={winner?.data?.special_award_video}
               agencies={agencies}
             />
           )
