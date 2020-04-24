@@ -17,6 +17,7 @@ type State = {
   type: LIGHTBOX_TYPE
 }
 type ContextValue = State & {
+  isLightboxVisible: boolean
   setLightbox: (src: string | null | FluidObject, type: LIGHTBOX_TYPE) => void
 }
 
@@ -97,7 +98,7 @@ const Media = () => {
           fluid={src as FluidObject}
           css={mq({
             width: '100%',
-            height: '100%',
+            maxHeight: '100%',
             cursor: 'zoom-out',
           })}
           imgStyle={{ objectFit: 'contain' }}
@@ -128,9 +129,10 @@ export const Lightbox = ({ children }: Props) => {
   const value = useMemo(
     () => ({
       ...state,
+      isLightboxVisible,
       setLightbox,
     }),
-    [state, setLightbox],
+    [state, setLightbox, isLightboxVisible],
   )
 
   useEffect(() => {
