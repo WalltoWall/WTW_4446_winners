@@ -339,6 +339,7 @@ export const query = graphql`
       award
       national_winner
       special_award
+      special_award_video
       agency {
         fields {
           url

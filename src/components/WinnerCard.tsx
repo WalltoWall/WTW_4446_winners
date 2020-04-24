@@ -14,6 +14,7 @@ import { Anchor } from './Anchor'
 import { Link } from './Link'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { Ribbon } from './Ribbon'
+import { VideoPlayButton } from './VideoPlayButton'
 
 const variants = {
   base: {
@@ -73,6 +74,7 @@ export type WinnerCardProps = ViewProps & {
   imageFluid?: FluidObject
   agencies?: Agency[]
   isNationalWinner?: boolean
+  videoUrl?: string
 }
 
 export const WinnerCard = ({
@@ -85,6 +87,7 @@ export const WinnerCard = ({
   imageFluid,
   agencies = [],
   isNationalWinner,
+  videoUrl,
   ...props
 }: WinnerCardProps) => {
   const variant = variants[variantName]
@@ -116,7 +119,6 @@ export const WinnerCard = ({
           css={mq({
             backgroundColor: t.c.White,
             height: ['100%', 'inherit'],
-            position: 'relative',
           })}
         >
           {imageFluid && (
@@ -133,6 +135,7 @@ export const WinnerCard = ({
               2020 National Winner
             </Ribbon>
           )}
+          {videoUrl && <VideoPlayButton src={videoUrl} />}
         </AspectRatio>
       </Link>
       <div

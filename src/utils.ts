@@ -6,6 +6,10 @@ export const trimCollectionNamespace = (collectionName: string | undefined) => {
   return splitNames?.[splitNames?.length - 1]
 }
 
+export const convertVimeoLinkToIframeSrc = (vimeoLink: string) => {
+  return vimeoLink.replace('vimeo.com', 'player.vimeo.com/video')
+}
+
 /**
  * Finds the first non-nullish value in an array starting from `idx` and
  * searching left.

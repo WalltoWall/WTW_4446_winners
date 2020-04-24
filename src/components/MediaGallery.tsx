@@ -4,10 +4,13 @@ import { negateScale } from 'styled-system-scale'
 import VisuallyHidden from '@reach/visually-hidden'
 
 import { t, mq, linearScale } from '../theme'
+
 import { View, ViewProps } from './View'
 import { AspectRatio } from './AspectRatio'
 import { ImageContainer } from './ImageContainer'
 import { Icon } from './Icon'
+import { VimeoVideo } from './VimeoVideo'
+import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
 const variants = {
   previous: {
@@ -88,6 +91,7 @@ export const MediaGallery = ({
   vimeoThumbnail,
   ...props
 }: MediaGalleryProps) => {
+  const { setLightbox } = useLightbox()
   const [activeIndex, setActiveIndex] = useState(0)
 
   const media = [vimeoThumbnail, ...images].filter(Boolean)
@@ -123,17 +127,16 @@ export const MediaGallery = ({
           background: t.colors.Black,
         }}
       >
-        {/* TODO: When plan is upgraded, add iframe query options for customization and privacy */}
         {isShowingVideo ? (
-          <iframe
-            src={`${vimeoLink?.replace('vimeo.com', 'player.vimeo.com/video')}`}
-            frameBorder="0"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            css={{ height: '100%', width: '100%' }}
-          />
+          <VimeoVideo src={vimeoLink!} />
         ) : (
-          <ImageContainer>
+          <ImageContainer
+            as="button"
+            onClick={() =>
+              setLightbox(activeMedia as FluidObject, LIGHTBOX_TYPE.IMAGE)
+            }
+            css={{ width: '100%', height: '100%', cursor: 'zoom-in' }}
+          >
             <GatsbyImage
               fluid={activeMedia as FluidObject}
               css={{ height: '100%' }}
@@ -159,7 +162,7 @@ export const MediaGallery = ({
         >
           {media.map((media, i) => (
             <li
-              key={media.src}
+              key={i}
               css={mq({
                 marginRight: linearScale('0.5rem', '1.625rem'),
                 marginBottom: linearScale('0.5rem', '1.625rem'),
