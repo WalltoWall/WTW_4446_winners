@@ -4,13 +4,19 @@ export type Award = 'gold' | 'silver' | 'bronze'
 
 export type Tag = { tag: string; url: string }
 
+export interface Agency {
+  name: string
+  url: string
+  avatarFluid?: FluidObject
+}
+
 export interface Winner {
   url: string
   name?: string
   award?: Award
   category?: { line_1: string; line_2: string }
   imageFluid?: FluidObject
-  agency: { name: string; url: string; avatarFluid?: FluidObject }
+  agencies: Agency[]
   nationalWinner: boolean
 }
 
@@ -20,9 +26,7 @@ export interface WinnerSearchResult {
   award: string
   year: string
   categoryLine1: string
-  agencyName?: string
-  agencyUrl?: string
-  agencyAvatarFluid?: FluidObject
+  agencies: Agency[]
   imageFluid?: FluidObject
 }
 

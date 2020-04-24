@@ -19,24 +19,20 @@ const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
 
 const SEARCH_DIRECTORY = path.resolve(__dirname, 'public', '___local-search')
 
-const normalizeWinnerNode = node => {
-  const agency = dlv(node, ['data', 'agency', 0])
-
-  return {
-    url: node.fields.url,
-    name: node.data.name,
-    award: node.data.award.toLowerCase(),
-    year: node.data.year,
-    nationalWinner: Boolean(node.data.national_winner),
-    category: dlv(node, ['data', 'category', 0, 'data']),
-    imageFluid: dlv(node, ['fields', 'images', 0, 'fluid']),
-    agency: {
-      name: dlv(agency, ['data', 'name']),
-      url: dlv(agency, ['fields', 'url']),
-      avatarFluid: dlv(agency, ['fields', 'avatar', 'fluid']),
-    },
-  }
-}
+const normalizeWinnerNode = node => ({
+  url: node.fields.url,
+  name: node.data.name,
+  award: node.data.award.toLowerCase(),
+  year: node.data.year,
+  nationalWinner: Boolean(node.data.national_winner),
+  category: dlv(node, ['data', 'category', 0, 'data']),
+  imageFluid: dlv(node, ['fields', 'images', 0, 'fluid']),
+  agencies: dlv(node, ['data', 'agency'], []).map(agency => ({
+    name: dlv(agency, ['data', 'name']),
+    url: dlv(agency, ['fields', 'url']),
+    avatarFluid: dlv(agency, ['fields', 'avatar', 'fluid']),
+  })),
+})
 
 exports.createPages = async gatsbyContext => {
   const {
