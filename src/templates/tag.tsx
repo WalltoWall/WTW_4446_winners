@@ -10,6 +10,7 @@ import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { PaginatedWinners } from '../components/PaginatedWinners'
+import { withLightbox } from '../components/Lightbox'
 
 export type TagTemplate = LayoutProps & {
   data: TagTemplateQuery
@@ -58,7 +59,7 @@ export const TagTemplate = ({ data, ...props }: TagTemplate) => {
   )
 }
 
-export default TagTemplate
+export default withLightbox(TagTemplate)
 
 export const query = graphql`
   query TagTemplate($paginatedCollectionName: String!) {

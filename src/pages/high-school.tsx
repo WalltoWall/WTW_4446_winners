@@ -12,6 +12,7 @@ import { Heading } from '../components/Heading'
 import { FormSelect } from '../components/FormSelect'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { PaginatedWinners } from '../components/PaginatedWinners'
+import { withLightbox } from '../components/Lightbox'
 
 export type HighSchoolPage = LayoutProps & {
   data: HighSchoolPageQuery
@@ -69,7 +70,7 @@ export const HighSchoolPage = ({ data, ...props }: HighSchoolPage) => {
   )
 }
 
-export default HighSchoolPage
+export default withLightbox(HighSchoolPage)
 
 export const query = graphql`
   query HighSchoolPage {

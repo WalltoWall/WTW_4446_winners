@@ -16,6 +16,7 @@ import { SpecialWinners } from '../components/SpecialWinners'
 import { SVG } from '../components/SVG'
 import { Button } from '../components/Button'
 import { Link } from '../components/Link'
+import { withLightbox } from '../components/Lightbox'
 
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
@@ -210,7 +211,7 @@ export const IndexPage = ({ data, ...props }: IndexPage) => {
   )
 }
 
-export default IndexPage
+export default withLightbox(IndexPage)
 
 export const query = graphql`
   query IndexPage {

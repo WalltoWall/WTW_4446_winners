@@ -28,7 +28,7 @@ type WinnerInfoProps = ViewProps & {
   variant: keyof typeof variants
   award: AwardIconProps['type']
   specialAward?: string
-  year: string
+  year?: string
   categoryLine1?: string
   categoryLine2?: string
   tags?: TagType[]

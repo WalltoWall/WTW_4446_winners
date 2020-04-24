@@ -10,6 +10,7 @@ import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 import { LoadMoreWinners } from '../components/LoadMoreWinners'
 import { WinnerFilters } from '../components/WinnerFilters'
 import { useYears } from '../hooks/useYears'
+import { withLightbox } from '../components/Lightbox'
 
 export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
@@ -64,7 +65,7 @@ export const WinnersTemplate = ({
   )
 }
 
-export default WinnersTemplate
+export default withLightbox(WinnersTemplate)
 
 export const query = graphql`
   query WinnersTemplate($firstPageId: String, $collectionRegex: String!) {

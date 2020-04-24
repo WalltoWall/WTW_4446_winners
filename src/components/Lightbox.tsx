@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
-import { t, mq } from '../theme'
+import { t, mq, linearScale } from '../theme'
 import { VimeoVideo } from './VimeoVideo'
 import { AspectRatio } from './AspectRatio'
 import { useKeyPress } from '../hooks/useKeyPress'
@@ -54,8 +54,7 @@ const Overlay = ({ isVisible, children }: OverlayProps) => {
     <div
       onClick={closeLightbox}
       css={mq({
-        paddingLeft: t.spaceScales.xl,
-        paddingRight: t.spaceScales.xl,
+        padding: linearScale('1rem', '4rem'),
         position: 'fixed',
         display: 'grid',
         placeItems: 'center',
@@ -68,7 +67,6 @@ const Overlay = ({ isVisible, children }: OverlayProps) => {
         backgroundColor: 'rgba(0, 0, 0, .5)',
         zIndex: t.zIndices.Lightbox,
         transition: 'opacity .2s linear',
-        overflowY: 'auto',
       })}
     >
       {children}
@@ -95,22 +93,15 @@ const Media = () => {
       )
     case LIGHTBOX_TYPE.IMAGE:
       return (
-        <div
+        <GatsbyImage
+          fluid={src as FluidObject}
           css={mq({
             width: '100%',
-            marginTop: t.spaceScales.xl,
-            marginBottom: t.spaceScales.xl,
+            height: '100%',
+            cursor: 'zoom-out',
           })}
-          onClick={e => e.stopPropagation()}
-        >
-          <GatsbyImage
-            fluid={src as FluidObject}
-            css={mq({
-              width: '100%',
-              height: 'min-content',
-            })}
-          />
-        </div>
+          imgStyle={{ objectFit: 'contain' }}
+        />
       )
     default:
       return null
@@ -158,6 +149,21 @@ export const Lightbox = ({ children }: Props) => {
       </Overlay>
     </LightboxProvider>
   )
+}
+
+export const withLightbox = <T extends any>(
+  Component: React.ComponentType<T>,
+) => {
+  const WithLightbox = (props: any) => {
+    return (
+      <Lightbox>
+        <Component {...(props as T)} />
+      </Lightbox>
+    )
+  }
+  WithLightbox.displayName = `withLightbox(${Component.displayName})`
+
+  return WithLightbox
 }
 
 export { useLightbox }

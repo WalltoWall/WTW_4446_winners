@@ -15,6 +15,7 @@ import { NextPrevious } from '../components/NextPrevious'
 import { MediaGallery } from '../components/MediaGallery'
 import { WinnerInfo } from '../components/WinnerInfo'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
+import { withLightbox } from '../components/Lightbox'
 
 const breadcrumbVariants = {
   professional: {
@@ -161,7 +162,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   )
 }
 
-export default WinnerTemplate
+export default withLightbox(WinnerTemplate)
 
 export const query = graphql`
   query WinnerTemplate(

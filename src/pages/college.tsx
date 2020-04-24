@@ -12,6 +12,7 @@ import { Heading } from '../components/Heading'
 import { FormSelect } from '../components/FormSelect'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { PaginatedWinners } from '../components/PaginatedWinners'
+import { withLightbox } from '../components/Lightbox'
 
 export type CollegePage = LayoutProps & {
   data: CollegePageQuery
@@ -69,7 +70,7 @@ export const CollegePage = ({ data, ...props }: CollegePage) => {
   )
 }
 
-export default CollegePage
+export default withLightbox(CollegePage)
 
 export const query = graphql`
   query CollegePage {
