@@ -4,6 +4,7 @@ import GatsbyImage, { FluidObject } from 'gatsby-image'
 import { t, mq } from '../theme'
 import { VimeoVideo } from './VimeoVideo'
 import { AspectRatio } from './AspectRatio'
+import { useKeyPress } from '../hooks/useKeyPress'
 
 export enum LIGHTBOX_TYPE {
   IMAGE,
@@ -45,11 +46,13 @@ type OverlayProps = {
 const Overlay = ({ isVisible, children }: OverlayProps) => {
   const { setLightbox } = useLightbox()
 
-  const onClick = () => setLightbox(null, LIGHTBOX_TYPE.NONE)
+  const closeLightbox = () => setLightbox(null, LIGHTBOX_TYPE.NONE)
+
+  useKeyPress('Escape', closeLightbox)
 
   return (
     <div
-      onClick={onClick}
+      onClick={closeLightbox}
       css={mq({
         paddingLeft: t.spaceScales.xl,
         paddingRight: t.spaceScales.xl,
