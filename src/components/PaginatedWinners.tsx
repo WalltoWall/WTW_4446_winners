@@ -51,9 +51,7 @@ export const PaginatedWinners = ({
                 subtitle={winner?.category?.line_1}
                 award={winner?.award}
                 imageFluid={winner.imageFluid}
-                agencyName={winner.agency?.name}
-                agencyHref={winner.agency?.url}
-                agencyAvatarFluid={winner.agency?.avatarFluid}
+                agencies={winner.agencies}
                 isNationalWinner={winner.nationalWinner}
               />
             ))}

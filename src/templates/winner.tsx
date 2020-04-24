@@ -56,8 +56,11 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
   const winner = data.airtableWinner
   const category = winner?.data?.category?.[0]?.data
 
-  const agency = winner?.data?.agency?.[0]
-  const agencyAvatarFluid = agency?.fields?.avatar?.fluid
+  const agencies = winner?.data?.agency?.map?.(agency => ({
+    name: agency?.data?.name,
+    url: agency?.fields?.url,
+    avatarFluid: agency?.fields?.avatar?.fluid,
+  }))
 
   const images = compact(
     winner?.fields?.images?.map(image => image?.fluid) ?? [],
@@ -134,9 +137,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
             categoryLine2={category?.line_2}
             tags={winner?.fields?.tags as Tag[]}
             creditsHTML={winner?.data?.credits?.childMarkdownRemark?.html}
-            agencyName={agency?.data?.name}
-            agencyHref={agency?.fields?.url}
-            agencyAvatarFluid={agencyAvatarFluid}
+            agencies={agencies}
             client={winner?.data?.client}
             css={mq({
               maxWidth: t.sz.Large,
