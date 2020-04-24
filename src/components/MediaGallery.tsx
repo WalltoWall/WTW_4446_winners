@@ -91,7 +91,7 @@ export const MediaGallery = ({
   vimeoThumbnail,
   ...props
 }: MediaGalleryProps) => {
-  const { setLightbox } = useLightbox()
+  const { setLightbox, isLightboxVisible } = useLightbox()
   const [activeIndex, setActiveIndex] = useState(0)
 
   const media = [vimeoThumbnail, ...images].filter(Boolean)
@@ -125,7 +125,10 @@ export const MediaGallery = ({
         css={{
           position: 'relative',
           background: t.colors.Black,
+          opacity: isLightboxVisible ? 0 : 1,
+          transition: 'opacity .2s linear',
         }}
+        aria-hidden={!isLightboxVisible}
       >
         {isShowingVideo ? (
           <VimeoVideo src={vimeoLink!} />
@@ -135,7 +138,11 @@ export const MediaGallery = ({
             onClick={() =>
               setLightbox(activeMedia as FluidObject, LIGHTBOX_TYPE.IMAGE)
             }
-            css={{ width: '100%', height: '100%', cursor: 'zoom-in' }}
+            css={{
+              width: '100%',
+              height: '100%',
+              cursor: 'zoom-in',
+            }}
           >
             <GatsbyImage
               fluid={activeMedia as FluidObject}
