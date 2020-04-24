@@ -26,7 +26,7 @@ const normalizeWinnerNode = node => ({
   year: node.data.year,
   nationalWinner: Boolean(node.data.national_winner),
   category: dlv(node, ['data', 'category', 0, 'data']),
-  imageFluid: dlv(node, ['fields', 'images', 0, 'fluid']),
+  imageFluid: dlv(node, ['fields', 'featured_image', 'fluid']),
   agencies: dlv(node, ['data', 'agency'], []).map(agency => ({
     name: dlv(agency, ['data', 'name']),
     url: dlv(agency, ['fields', 'url']),
@@ -100,7 +100,7 @@ exports.createPages = async gatsbyContext => {
                 recordId
                 fields {
                   url
-                  images {
+                  featured_image {
                     fluid(maxWidth: 500) {
                       aspectRatio
                       base64
@@ -113,6 +113,9 @@ exports.createPages = async gatsbyContext => {
                 data {
                   name
                   type
+                  show_with {
+                    id
+                  }
                   award
                   year
                   special_award
@@ -150,7 +153,9 @@ exports.createPages = async gatsbyContext => {
         `,
         { year },
       )
-      const allWinnerNodes = queryResult.data.allAirtableWinner.nodes
+      const allWinnerNodes = queryResult.data.allAirtableWinner.nodes.filter(
+        node => !node.data.show_with,
+      )
 
       const winnerNodes = allWinnerNodes.filter(
         node => node.data.type === 'Professional',
@@ -413,8 +418,12 @@ exports.createPages = async gatsbyContext => {
   )
 }
 
-exports.onCreateNode = ({ node, actions }) => {
+const showWithQueues = new Map()
+
+exports.onCreateNode = gatsbyContext => {
+  const { node, actions, getNode } = gatsbyContext
   const { createNodeField } = actions
+
   const airtableNodeToSlug = (node, withRecordIdSuffix = true) =>
     node.data.name
       ? [
@@ -446,6 +455,35 @@ exports.onCreateNode = ({ node, actions }) => {
         })),
       })
 
+      if (showWithQueues.has(node.id)) {
+        createNodeField({
+          node,
+          name: 'children___NODE',
+          value: showWithQueues.get(node.id),
+        })
+        showWithQueues.delete(node.id)
+      }
+
+      const showWithNodeId = dlv(node, ['data', 'show_with___NODE'], [])[0]
+      if (showWithNodeId && showWithNodeId !== node.id) {
+        const showWithNode = getNode(showWithNodeId)
+
+        if (showWithNode) {
+          createNodeField({
+            node: showWithNode,
+            name: 'children___NODE',
+            value: [...(showWithNode.fields.children || []), node.id],
+          })
+
+          showWithQueues.delete(showWithNodeId)
+        } else {
+          showWithQueues.set(showWithNodeId, [
+            ...(showWithQueues.get(showWithNodeId) || []),
+            node.id,
+          ])
+        }
+      }
+
       break
     }
 
@@ -468,4 +506,15 @@ exports.createSchemaCustomization = gatsbyContext => {
   `
 
   createTypes(types)
+}
+
+exports.onPostBootstrap = gatsbyContext => {
+  const { reporter } = gatsbyContext
+
+  if (showWithQueues.size > 0) {
+    reporter.warn(
+      `The show_with queue is not empty. This means one or more winners with a show_with value was not assigned to a winner.`,
+    )
+    console.log(showWithQueues.entries())
+  }
 }
