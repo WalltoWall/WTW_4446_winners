@@ -153,7 +153,7 @@ export const Lightbox = ({ children }: Props) => {
   )
 }
 
-export const withLightbox = <T extends any>(
+export const withLightbox = <T extends object>(
   Component: React.ComponentType<T>,
 ) => {
   const WithLightbox = (props: any) => {

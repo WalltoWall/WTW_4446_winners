@@ -23,11 +23,11 @@ import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
 
-export type IndexPage = LayoutProps & {
+export type IndexPageProps = LayoutProps & {
   data: IndexPageQuery
 }
 
-export const IndexPage = ({ data, ...props }: IndexPage) => {
+export const IndexPage = ({ data, ...props }: IndexPageProps) => {
   const bestOfWinners = data.bestOfWinners.nodes
   const judgesWinners = data.judgesWinners.nodes
   const adPeople = data.adPeople.nodes

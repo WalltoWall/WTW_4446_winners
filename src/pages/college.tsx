@@ -14,11 +14,11 @@ import { FormSearchInput } from '../components/FormSearchInput'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 import { withLightbox } from '../components/Lightbox'
 
-export type CollegePage = LayoutProps & {
+export type CollegePageProps = LayoutProps & {
   data: CollegePageQuery
 }
 
-export const CollegePage = ({ data, ...props }: CollegePage) => {
+export const CollegePage = ({ data, ...props }: CollegePageProps) => {
   const initialPage = data?.paginatedCollectionPage
 
   return (

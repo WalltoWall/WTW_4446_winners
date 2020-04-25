@@ -14,11 +14,11 @@ import { FormSearchInput } from '../components/FormSearchInput'
 import { PaginatedWinners } from '../components/PaginatedWinners'
 import { withLightbox } from '../components/Lightbox'
 
-export type HighSchoolPage = LayoutProps & {
+export type HighSchoolPageProps = LayoutProps & {
   data: HighSchoolPageQuery
 }
 
-export const HighSchoolPage = ({ data, ...props }: HighSchoolPage) => {
+export const HighSchoolPage = ({ data, ...props }: HighSchoolPageProps) => {
   const initialPage = data?.paginatedCollectionPage
 
   return (
