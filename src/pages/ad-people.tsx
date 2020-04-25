@@ -10,11 +10,11 @@ import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
 import { LargePersonCard } from '../components/LargePersonCard'
 
-export type AdPeoplePage = LayoutProps & {
+export type AdPeoplePageProps = LayoutProps & {
   data: AdPeoplePageQuery
 }
 
-export const AdPeoplePage = ({ data, ...props }: AdPeoplePage) => {
+export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
   const people = data.allAirtableAdPerson.nodes
 
   return (
@@ -61,7 +61,7 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePage) => {
   )
 }
 
-export default AdPeoplePage
+export default AdPeoplePageProps
 
 export const query = graphql`
   query AdPeoplePage {
