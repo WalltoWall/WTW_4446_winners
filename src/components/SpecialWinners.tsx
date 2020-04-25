@@ -5,24 +5,26 @@ import { Award, Agency } from '../types'
 import { t, mq } from '../theme'
 
 import { CardList } from '../components/CardList'
-import { WinnerCard, WinnerCardProps } from '../components/WinnerCard'
+import { WinnerCard } from '../components/WinnerCard'
 import { Heading } from '../components/Heading'
 import { Anchor } from '../components/Anchor'
 
 type SpecialWinnersProps = {
+  overallWinner?: SpecialAwardWinnerFragment
   winners: SpecialAwardWinnerFragment[]
-  variant?: WinnerCardProps['variant']
   columns: number[]
   heading?: string
   headingHref?: string
+  variant?: WinnerCardProps['variant']
 }
 
 export const SpecialWinners = ({
+  overallWinner,
   winners,
-  variant,
   columns,
   heading,
   headingHref,
+  variant,
 }: SpecialWinnersProps) => {
   return (
     <>
@@ -30,6 +32,28 @@ export const SpecialWinners = ({
         <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
           <Anchor href={headingHref}>{heading}</Anchor>
         </Heading>
+      )}
+
+      {overallWinner && (
+        <WinnerCard
+          key={overallWinner?.fields?.url}
+          variant="featuredWide"
+          href={overallWinner?.fields?.url!}
+          title={overallWinner?.data?.name}
+          subtitle={overallWinner?.data?.special_award}
+          award={overallWinner?.data?.award?.toLowerCase?.() as Award}
+          imageFluid={overallWinner?.fields?.featured_image?.fluid}
+          isSpecialAward={true}
+          isNationalWinner={overallWinner?.data?.national_winner}
+          videoUrl={overallWinner?.data?.special_award_video}
+          agencies={
+            overallWinner?.data?.agency?.map?.(agency => ({
+              name: agency?.data?.name,
+              url: agency?.fields?.url,
+              avatarFluid: agency?.fields?.avatar?.fluid,
+            })) as Agency[]
+          }
+        />
       )}
 
       <CardList columns={columns}>

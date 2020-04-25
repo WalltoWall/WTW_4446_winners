@@ -2190,8 +2190,8 @@ export type AirtableWinnerData = {
   assignee?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
-  category?: Maybe<Array<Maybe<AirtableCategory>>>;
   images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
+  category?: Maybe<Array<Maybe<AirtableCategory>>>;
   description?: Maybe<Scalars['String']>;
   special_award?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -2230,8 +2230,8 @@ export type AirtableWinnerDataFilterInput = {
   assignee?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
-  category?: Maybe<AirtableCategoryFilterListInput>;
   images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
+  category?: Maybe<AirtableCategoryFilterListInput>;
   description?: Maybe<StringQueryOperatorInput>;
   special_award?: Maybe<StringQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
@@ -2527,6 +2527,12 @@ export enum AirtableWinnerFieldsEnum {
   DataAssignee = 'data___assignee',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
+  DataImages = 'data___images',
+  DataImagesId = 'data___images___id',
+  DataImagesUrl = 'data___images___url',
+  DataImagesFilename = 'data___images___filename',
+  DataImagesSize = 'data___images___size',
+  DataImagesType = 'data___images___type',
   DataCategory = 'data___category',
   DataCategoryId = 'data___category___id',
   DataCategoryParentId = 'data___category___parent___id',
@@ -2549,12 +2555,6 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
   DataCategoryDataEntries = 'data___category___data___Entries',
-  DataImages = 'data___images',
-  DataImagesId = 'data___images___id',
-  DataImagesUrl = 'data___images___url',
-  DataImagesFilename = 'data___images___filename',
-  DataImagesSize = 'data___images___size',
-  DataImagesType = 'data___images___type',
   DataDescription = 'data___description',
   DataSpecialAward = 'data___special_award',
   DataTags = 'data___tags',
@@ -2620,8 +2620,8 @@ export enum AirtableWinnerFieldsEnum {
   DataShowWithDataAssignee = 'data___show_with___data___assignee',
   DataShowWithDataUpdatedAt = 'data___show_with___data___updated_at',
   DataShowWithDataCreatedAt = 'data___show_with___data___created_at',
-  DataShowWithDataCategory = 'data___show_with___data___category',
   DataShowWithDataImages = 'data___show_with___data___images',
+  DataShowWithDataCategory = 'data___show_with___data___category',
   DataShowWithDataDescription = 'data___show_with___data___description',
   DataShowWithDataSpecialAward = 'data___show_with___data___special_award',
   DataShowWithDataTags = 'data___show_with___data___tags',
@@ -2715,8 +2715,8 @@ export enum AirtableWinnerFieldsEnum {
   FieldsChildrenDataAssignee = 'fields___children___data___assignee',
   FieldsChildrenDataUpdatedAt = 'fields___children___data___updated_at',
   FieldsChildrenDataCreatedAt = 'fields___children___data___created_at',
-  FieldsChildrenDataCategory = 'fields___children___data___category',
   FieldsChildrenDataImages = 'fields___children___data___images',
+  FieldsChildrenDataCategory = 'fields___children___data___category',
   FieldsChildrenDataDescription = 'fields___children___data___description',
   FieldsChildrenDataSpecialAward = 'fields___children___data___special_award',
   FieldsChildrenDataTags = 'fields___children___data___tags',
@@ -6341,7 +6341,7 @@ export type IndexPageQuery = { bestOfWinners: { nodes: Array<SpecialAwardWinnerF
       )>, data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
         & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>> }
-      )> }> }, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, homeNationalWinners?: Maybe<{ data?: Maybe<(
+      )> }> }, overallJudgesWinner?: Maybe<SpecialAwardWinnerFragment>, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, homeNationalWinners?: Maybe<{ data?: Maybe<(
       Pick<AirtableTextFieldData, 'plain_text'>
       & { rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
     )> }>, homeNationalWinnersHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeCtaText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeHeroImage?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> } };
