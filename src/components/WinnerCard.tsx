@@ -29,7 +29,8 @@ const variants = {
     awardGridRow: ['1', 'auto'],
     awardJustifySelf: ['center', 'end'],
     awardAlignSelf: ['center', 'end'],
-    agentJustifySelf: ['center', 'start'],
+    agencyJustifySelf: ['center', 'start'],
+    agencyJustifyItems: ['center', 'start'],
     agencyIdentifierVariant: 'smallNoAvatarOnMobile',
   },
   featured: {
@@ -44,7 +45,8 @@ const variants = {
     awardGridRow: 'auto',
     awardJustifySelf: 'end',
     awardAlignSelf: 'end',
-    agentJustifySelf: 'start',
+    agencyJustifySelf: 'start',
+    agencyJustifyItems: 'start',
     agencyIdentifierVariant: 'small',
   },
   featuredWide: {
@@ -59,7 +61,8 @@ const variants = {
     awardGridRow: 'auto',
     awardJustifySelf: 'end',
     awardAlignSelf: 'end',
-    agentJustifySelf: 'start',
+    agencyJustifySelf: 'start',
+    agencyJustifyItems: 'start',
     agencyIdentifierVariant: 'small',
   },
 } as const
@@ -193,8 +196,8 @@ export const WinnerCard = ({
               display: 'grid',
               gap: linearScale('0.25rem', '0.375rem', 'space'),
               alignSelf: ['center', 'end'],
-              justifyItems: ['center', 'start'],
-              justifySelf: variant.agentJustifySelf,
+              justifyItems: variant.agencyJustifyItems,
+              justifySelf: variant.agencyJustifySelf,
             })}
           >
             {agencies.map(agency => (
