@@ -147,7 +147,7 @@ export const WinnerCard = ({
           backgroundColor: t.c.White,
           display: 'grid',
           width: variant.flexItemWidth,
-          alignContent: 'center',
+          alignContent: ['center', 'stretch'],
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: variant.gridTemplateColumns,
@@ -165,25 +165,26 @@ export const WinnerCard = ({
             textAlign: variant.textAlign,
           })}
         >
-          {subtitle && isSpecialAward ? (
-            <Subheading
-              forwardedAs="h4"
-              css={mq({
-                fontSize: variant.subtitleFontSize,
-              })}
-            >
-              {subtitle}
-            </Subheading>
-          ) : (
-            <p
-              css={mq({
-                color: t.c.Gray60,
-                fontSize: variant.subtitleFontSize,
-              })}
-            >
-              {subtitle}
-            </p>
-          )}
+          {subtitle &&
+            (isSpecialAward ? (
+              <Subheading
+                forwardedAs="h4"
+                css={mq({
+                  fontSize: variant.subtitleFontSize,
+                })}
+              >
+                {subtitle}
+              </Subheading>
+            ) : (
+              <p
+                css={mq({
+                  color: t.c.Gray60,
+                  fontSize: variant.subtitleFontSize,
+                })}
+              >
+                {subtitle}
+              </p>
+            ))}
           {title && (
             <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
               <Anchor className="title-link" href={href}>
