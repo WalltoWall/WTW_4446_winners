@@ -57,8 +57,9 @@ const Overlay = ({ isVisible, children }: OverlayProps) => {
       css={mq({
         padding: linearScale('1rem', '4rem'),
         position: 'fixed',
-        display: 'grid',
-        placeItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         top: 0,
         bottom: 0,
         left: 0,
