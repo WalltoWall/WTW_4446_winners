@@ -61,7 +61,7 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
   )
 }
 
-export default AdPeoplePageProps
+export default AdPeoplePage
 
 export const query = graphql`
   query AdPeoplePage {
