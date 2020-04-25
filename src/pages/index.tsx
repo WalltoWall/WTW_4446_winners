@@ -29,6 +29,7 @@ export type IndexPageProps = LayoutProps & {
 
 export const IndexPage = ({ data, ...props }: IndexPageProps) => {
   const bestOfWinners = data.bestOfWinners.nodes
+  const overallJudgesWinner = data.overallJudgesWinner
   const judgesWinners = data.judgesWinners.nodes
   const adPeople = data.adPeople.nodes
   const archives = data.archives.nodes
@@ -40,7 +41,10 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         imageFluid={data.homeHeroImage?.fields?.image?.fluid}
       />
 
-      <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
+      <BoundedBox
+        maxWidth="Xlarge"
+        css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
+      >
         <div
           css={mq({
             display: 'grid',
@@ -57,7 +61,10 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         </div>
       </BoundedBox>
 
-      <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
+      <BoundedBox
+        maxWidth="Xlarge"
+        css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
+      >
         <div
           css={mq({
             display: 'grid',
@@ -84,7 +91,10 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         </div>
       </BoundedBox>
 
-      <BoundedBox css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}>
+      <BoundedBox
+        maxWidth="Xlarge"
+        css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
+      >
         <div
           css={mq({
             display: 'grid',
@@ -95,8 +105,9 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
             heading="Judge's Choice Awards"
             headingHref="/winners/"
             columns={[1, 3]}
-            winners={judgesWinners}
             variant="featured"
+            overallWinner={overallJudgesWinner}
+            winners={judgesWinners}
           />
         </div>
       </BoundedBox>
@@ -249,13 +260,21 @@ export const query = graphql`
         }
       }
     }
+    overallJudgesWinner: airtableWinner(
+      data: { special_award: { eq: "Judge's Award - Overall" } }
+    ) {
+      ...SpecialAwardWinner
+    }
     judgesWinners: allAirtableWinner(
-      filter: { data: { special_award: { regex: "/^Judge's Award - /" } } }
+      filter: {
+        data: { special_award: { regex: "/^Judge's Award - (?!Overall)/" } }
+      }
     ) {
       nodes {
         ...SpecialAwardWinner
       }
     }
+
     homeNationalWinners: airtableTextField(
       data: { uid: { eq: "Home National Winners" } }
     ) {
