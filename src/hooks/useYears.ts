@@ -12,7 +12,11 @@ export const useYears = () => {
     }
   `)
 
-  return useMemo(() => data.allAirtableWinner.distinct.sort(), [
-    data.allAirtableWinner.distinct,
-  ])
+  return useMemo(
+    () =>
+      data.allAirtableWinner.distinct
+        .slice()
+        .sort((a, b) => Number.parseInt(b) - Number.parseInt(a)),
+    [data.allAirtableWinner.distinct],
+  )
 }
