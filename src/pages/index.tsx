@@ -223,6 +223,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         buttonHref={data.homeButtonHref?.data?.href}
         buttonText={data.homeButtonText?.data?.plain_text}
         textHTML={data.homeCtaText?.data?.rich_text?.childMarkdownRemark?.html}
+        isVisible={data.homeCtaText?.data?.visible}
       />
     </Layout>
   )
@@ -312,6 +313,7 @@ export const query = graphql`
     }
     homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
       data {
+        visible
         rich_text {
           childMarkdownRemark {
             html
