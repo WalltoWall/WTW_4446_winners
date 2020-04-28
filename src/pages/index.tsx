@@ -21,6 +21,7 @@ import { withLightbox } from '../components/Lightbox'
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
+import { MessageSlice } from '../slices/MessageSlice'
 import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
 
 export type IndexPageProps = LayoutProps & {
@@ -39,6 +40,11 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
         imageFluid={data.homeHeroImage?.fields?.image?.fluid}
+      />
+
+      <MessageSlice
+        textHTML={data.homeMessage?.data?.rich_text?.childMarkdownRemark?.html}
+        quotee={data.homeMessage?.data?.plain_text}
       />
 
       <BoundedBox
@@ -292,6 +298,16 @@ export const query = graphql`
     ) {
       data {
         href
+      }
+    }
+    homeMessage: airtableTextField(data: { uid: { eq: "Home Message" } }) {
+      data {
+        plain_text
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
       }
     }
     homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
