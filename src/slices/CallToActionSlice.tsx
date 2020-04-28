@@ -14,6 +14,8 @@ export const CallToActionSlice = ({
   buttonText,
   textHTML,
 }: CallToActionSliceProps) => {
+  if (!textHTML) return null
+
   return (
     <CallToAction buttonHref={buttonHref} buttonText={buttonText}>
       <HTMLContent
