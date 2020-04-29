@@ -35,8 +35,8 @@ module.exports = {
             nodeType: 'AirtableWinner',
             fieldName: 'featured_image',
             getUrl: node =>
-              dlv(node, 'data.images.0.url') ||
-              dlv(node, 'data.video_thumbnail.0.url'),
+              dlv(node, 'data.video_thumbnail.0.url') ||
+              dlv(node, 'data.images.0.url'),
           },
           {
             nodeType: 'AirtableAgency',
