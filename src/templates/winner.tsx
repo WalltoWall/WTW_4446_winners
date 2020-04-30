@@ -157,6 +157,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
         buttonHref={winnerButtonHref}
         buttonText={winnerButtonText}
         textHTML={winnerCtaText}
+        isVisible={data.winnerCtaText?.data?.visible}
       />
     </Layout>
   )
@@ -241,6 +242,7 @@ export const query = graphql`
     }
     winnerCtaText: airtableTextField(data: { uid: { eq: "Winner CTA" } }) {
       data {
+        visible
         rich_text {
           childMarkdownRemark {
             html

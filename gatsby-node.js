@@ -294,6 +294,7 @@ exports.createPages = async gatsbyContext => {
             recordId: node.recordId,
             previousRecordId: previousNode ? previousNode.recordId : undefined,
             nextRecordId: nextNode ? nextNode.recordId : undefined,
+            collectionName: `collegeWinners/${year}`,
           },
         })
       }
@@ -339,12 +340,41 @@ exports.createPages = async gatsbyContext => {
         })
       }
 
-      const collectionRegex = new RegExp(`^winners/${year}/`)
-      const collections = getNodesByType('PaginatedCollection').filter(node =>
-        collectionRegex.test(node.name),
+      const professionalCollectionRegex = new RegExp(`^winners/${year}/`)
+      const collegeCollectionRegex = new RegExp(`^collegeWinners/${year}/`)
+      const highSchoolCollectionRegex = new RegExp(
+        `^highSchoolWinners/${year}/`,
       )
 
+      const collectionMap = {
+        professional: {
+          regex: professionalCollectionRegex,
+          path: `/winners/${year}`,
+        },
+        college: {
+          regex: collegeCollectionRegex,
+          path: `/college/${year}`,
+        },
+        highSchool: {
+          regex: highSchoolCollectionRegex,
+          path: `/high-school/${year}`,
+        },
+      }
+      const getCollectionInfo = node => {
+        if (professionalCollectionRegex.test(node.name))
+          return collectionMap.professional
+        if (collegeCollectionRegex.test(node.name)) return collectionMap.college
+        if (highSchoolCollectionRegex.test(node.name))
+          return collectionMap.highSchool
+
+        return null
+      }
+
+      const collections = getNodesByType('PaginatedCollection')
       collections.forEach(c => {
+        const collectionInfo = getCollectionInfo(c)
+        if (!collectionInfo) return
+
         const splitNames = c.name.split('/')
         const category = splitNames[splitNames.length - 1]
         const categorySlug = kebabCase(category.toLowerCase()).replace(
@@ -355,12 +385,12 @@ exports.createPages = async gatsbyContext => {
         if (!firstPageId) return
 
         createPage({
-          path: `/winners/${year}/${categorySlug}/`,
+          path: `${collectionInfo.path}/${categorySlug}/`,
           component: path.resolve(__dirname, 'src/templates/winners.tsx'),
           context: {
             year,
             firstPageId,
-            collectionRegex: collectionRegex.toString(),
+            collectionRegex: collectionInfo.regex.toString(),
           },
         })
       })
@@ -371,7 +401,27 @@ exports.createPages = async gatsbyContext => {
         context: {
           year,
           collectionName: `winners/${year}`,
-          collectionRegex: collectionRegex.toString(),
+          collectionRegex: professionalCollectionRegex.toString(),
+        },
+      })
+      createPage({
+        path: `/college/${year}/`,
+        component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+        context: {
+          year,
+          collectionName: `collegeWinners/${year}`,
+          collectionRegex: collegeCollectionRegex.toString(),
+          hideSpecialAwards: false,
+        },
+      })
+      createPage({
+        path: `/high-school/${year}/`,
+        component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+        context: {
+          year,
+          collectionName: `highSchoolWinners/${year}`,
+          collectionRegex: highSchoolCollectionRegex.toString(),
+          hideSpecialAwards: false,
         },
       })
     }),
@@ -380,14 +430,41 @@ exports.createPages = async gatsbyContext => {
   /**
    * Create root winners page.
    */
-
   createPage({
     path: `/winners/`,
     component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
     context: {
       collectionName: `winners/${years[0]}`,
-      collectionRegex: `/^winners\/${years[0]}\//`,
+      collectionRegex: new RegExp(`^winners/${years[0]}/`).toString(),
       year: years[0],
+    },
+  })
+
+  /**
+   * Create root college winners.
+   */
+  createPage({
+    path: '/college/',
+    component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+    context: {
+      collectionName: `collegeWinners/${years[0]}`,
+      collectionRegex: new RegExp(`^collegeWinners/${years[0]}/`).toString(),
+      year: years[0],
+      hideSpecialAwards: true,
+    },
+  })
+
+  /**
+   * Create root high school winners.
+   */
+  createPage({
+    path: '/high-school/',
+    component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+    context: {
+      collectionName: `highSchoolWinners/${years[0]}`,
+      collectionRegex: new RegExp(`^highSchool/${years[0]}/`).toString(),
+      year: years[0],
+      hideSpecialAwards: true,
     },
   })
 
