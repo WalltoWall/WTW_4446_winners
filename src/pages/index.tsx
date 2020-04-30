@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import { IndexPageQuery } from '../graphqlTypes'
 import { t, mq, linearScale } from '../theme'
 
+import { withLightbox } from '../components/Lightbox'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -16,13 +17,13 @@ import { SpecialWinners } from '../components/SpecialWinners'
 import { SVG } from '../components/SVG'
 import { Button } from '../components/Button'
 import { Link } from '../components/Link'
-import { withLightbox } from '../components/Lightbox'
-import { HeroVideo } from '../components/HeroVideo'
+import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
+
+import { HeroVideoSlice } from '../slices/HeroVideoSlice'
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { MessageSlice } from '../slices/MessageSlice'
-import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
 
 export type IndexPageProps = LayoutProps & {
   data: IndexPageQuery
@@ -38,7 +39,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
   return (
     <Layout {...props}>
       {data.heroVideoHref?.data?.href && (
-        <HeroVideo src={data.heroVideoHref?.data?.href} />
+        <HeroVideoSlice src={data.heroVideoHref?.data?.href} />
       )}
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
