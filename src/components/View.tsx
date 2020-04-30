@@ -6,8 +6,4 @@ export type ViewProps = React.AllHTMLAttributes<HTMLElement> & {
   children?: React.ComponentProps<typeof View>['children']
 }
 
-export const View = styled.div({
-  transitionDuration: '200ms',
-  transitionProperty: 'none',
-  transitionTimingFunction: 'ease-out',
-})
+export const View = styled.div({})

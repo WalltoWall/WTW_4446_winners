@@ -1739,6 +1739,11 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
+"@types/vimeo__player@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@types/vimeo__player/-/vimeo__player-2.9.0.tgz#47f70c2e9788670e64c6e2186b0f9c9e2e96f34f"
+  integrity sha512-KLcx6GR+iXfLKnP2ecnK808rX6uf+y/aPOzOw4+lQBc8SqlMn4xv6cX6eXgKBaZgau8qNbNLzbS4RyW5ojrJhg==
+
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
@@ -5470,9 +5475,10 @@ gatsby-paginated-collection-json-files@^0.2.0-next.2:
   version "0.2.0-next.2"
   resolved "https://registry.yarnpkg.com/gatsby-paginated-collection-json-files/-/gatsby-paginated-collection-json-files-0.2.0-next.2.tgz#5a5a6de08ce095db8742d67c3aa20bbdcf38f37e"
 
-gatsby-plugin-imgix@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-imgix/-/gatsby-plugin-imgix-0.4.0.tgz#e9449941b01a92c09e28048e199f7d096bbbb619"
+gatsby-plugin-imgix@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-imgix/-/gatsby-plugin-imgix-0.4.2.tgz#f8ee277f35ec89cd755192ea68cabf391bb1d76a"
+  integrity sha512-7MTl0sKKt3aXe83ps4ygJ9MW5y9ALKTNiKwjW0y88KBjxhJ3/ilPClkhszV2+lPotXrSc8I+H6CmYXmeT7Zb8Q==
   dependencies:
     node-fetch "^2.6.0"
     ts-imgix "^0.0.11"
