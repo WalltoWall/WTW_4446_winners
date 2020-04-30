@@ -16,6 +16,7 @@ export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
   pageContext: {
     year: string
+    type: 'professional' | 'college' | 'high school'
   }
 }
 
@@ -31,18 +32,19 @@ export const WinnersTemplate = ({
     setQuery(e.target.value)
 
   const firstPages = data.allPaginatedCollectionPage.nodes
-  const initialPage = data!.paginatedCollectionPage
-  const firstPageId = initialPage!.id
+  const initialPage = data.paginatedCollectionPage
+  const firstPageId = initialPage?.id
   const initialCollection = firstPages.find(fp => fp.id === firstPageId)
     ?.collection
 
   return (
     <Layout {...props}>
       <Helmet>
-        <title>Winners</title>
+        <title>{pageContext.year} Winners</title>
       </Helmet>
 
       <WinnerFilters
+        variant={pageContext.type}
         years={years}
         initialYear={pageContext.year}
         firstPages={firstPages}

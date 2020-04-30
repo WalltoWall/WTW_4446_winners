@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
-const kebabCase = require('lodash.kebabcase')
 
 const {
   createPaginatedCollectionNodes,
@@ -19,6 +18,67 @@ const PAGINATED_COLLECTION_DIRECTORY = path.resolve(
 
 const SEARCH_DIRECTORY = path.resolve(__dirname, 'public', '___local-search')
 
+const WINNERS_QUERY = `
+  query {
+    allAirtableWinner(
+      sort: { fields: [data___category___data___line_1, data___name] }
+    ) {
+      nodes {
+        recordId
+        fields {
+          url
+          featured_image {
+            fluid(maxWidth: 500) {
+              aspectRatio
+              base64
+              sizes
+              src
+              srcSet
+            }
+          }
+        }
+        data {
+          name
+          type
+          show_with {
+            id
+          }
+          award
+          year
+          special_award
+          national_winner
+          tags
+          agency {
+            id
+            fields {
+              url
+              avatar {
+                fluid(maxWidth: 80) {
+                  aspectRatio
+                  base64
+                  sizes
+                  src
+                  srcSet
+                }
+              }
+            }
+            data {
+              name
+            }
+          }
+          category {
+            id
+            data {
+              line_1
+              line_2
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 const normalizeWinnerNode = node => ({
   url: node.fields.url,
   name: node.data.name,
@@ -34,6 +94,168 @@ const normalizeWinnerNode = node => ({
   })),
 })
 
+const createPaginatedCollection = ({
+  collection,
+  name,
+  pageSize = 12,
+  createNode,
+  createNodeId,
+  createContentDigest,
+  getNode,
+}) => {
+  const nodeInput = createPaginatedCollectionNodes({
+    collection,
+    name,
+    pageSize,
+    createNode,
+    createNodeId,
+    createContentDigest,
+  })
+  const node = getNode(nodeInput.id)
+
+  writePaginatedCollectionJSONFiles({
+    node,
+    directory: PAGINATED_COLLECTION_DIRECTORY,
+    expand: ['collection', 'nextPage'],
+    getNode,
+  })
+
+  return node
+}
+
+const createCollectionsAndPagesForWinners = ({
+  winners,
+  name,
+  year,
+  type,
+  pathPrefix,
+  pageSize = 12,
+  createNode,
+  createNodeId,
+  createContentDigest,
+  createPage,
+  getNode,
+}) => {
+  /**
+   * Create all winners collection. Filter out judges awards since they are
+   * shown statically.
+   */
+  createPaginatedCollection({
+    collection: winners
+      .filter(
+        node =>
+          !/^(Judge's Award|Best of Show) - /.test(node.data.special_award),
+      )
+      .map(normalizeWinnerNode),
+    name: `${name}/${year}`,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    getNode,
+  })
+
+  createPage({
+    path: `/${pathPrefix}/${year}/`,
+    component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+    context: {
+      year,
+      collectionName: `${name}/${year}`,
+      collectionRegex: `/^${name}/${year}//`,
+      pathPrefix,
+      type,
+    },
+  })
+
+  /**
+   * Create pages for each winner.
+   */
+  for (let i = 0; i < winners.length; i++) {
+    const node = winners[i]
+    const previousNode = winners[i - 1]
+    const nextNode = winners[i + 1]
+
+    createPage({
+      path: node.fields.url,
+      component: path.resolve(__dirname, 'src/templates/winner.tsx'),
+      context: {
+        recordId: node.recordId,
+        previousRecordId: previousNode ? previousNode.recordId : undefined,
+        nextRecordId: nextNode ? nextNode.recordId : undefined,
+      },
+    })
+  }
+
+  /**
+   * Create national winners collection and page.
+   */
+  const nationalCollectionNode = createPaginatedCollection({
+    collection: winners
+      .filter(node => node.data.national_winner)
+      .map(normalizeWinnerNode),
+    name: `${name}/${year}/National ADDY Winners`,
+    createNode,
+    createNodeId,
+    createContentDigest,
+    getNode,
+  })
+
+  createPage({
+    path: `${pathPrefix}/${year}/national-addy-winners/`,
+    component: path.resolve(__dirname, 'src/templates/winners.tsx'),
+    context: {
+      year,
+      firstPageId: nationalCollectionNode.pages[0],
+      collectionRegex: `/^${name}/${year}//`,
+      pathPrefix,
+      type,
+    },
+  })
+
+  /**
+   * Create collections and pages for each category.
+   */
+  const winnersByCategory = winners.reduce((acc, curr) => {
+    const category = dlv(curr, ['data', 'category', 0])
+    if (!category) return acc
+
+    const line1 = category.data.line_1
+    acc[line1] = [...(acc[line1] || []), curr]
+
+    return acc
+  }, {})
+
+  for (const category in winnersByCategory) {
+    const collection = winnersByCategory[category].map(normalizeWinnerNode)
+    if (collection.length < 1) continue
+
+    const node = createPaginatedCollection({
+      collection,
+      name: `${name}/${year}/${category}`,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      getNode,
+    })
+
+    const categorySlug = slug(category.toLowerCase()).replace(
+      'advertising',
+      'ad',
+    )
+
+    createPage({
+      path: `${pathPrefix}/${year}/${categorySlug}/`,
+      component: path.resolve(__dirname, 'src/templates/winners.tsx'),
+      context: {
+        year,
+        firstPageId: node.pages[0],
+        collectionRegex: `/^${name}/${year}//`,
+        pathPrefix,
+        type,
+      },
+    })
+  }
+}
+
 exports.createPages = async gatsbyContext => {
   const {
     actions,
@@ -47,25 +269,6 @@ exports.createPages = async gatsbyContext => {
   const { createNode, createPage } = actions
   const { program } = store.getState()
 
-  const processPaginatedCollection = ({ collection, name, pageSize = 12 }) => {
-    const nodeInput = createPaginatedCollectionNodes({
-      collection,
-      name,
-      pageSize,
-      createNode,
-      createNodeId,
-      createContentDigest,
-    })
-    const node = getNode(nodeInput.id)
-
-    writePaginatedCollectionJSONFiles({
-      node,
-      directory: PAGINATED_COLLECTION_DIRECTORY,
-      expand: ['collection', 'nextPage'],
-      getNode,
-    })
-  }
-
   const yearsResult = await graphql(`
     {
       allAirtableWinner(sort: { fields: data___year, order: DESC }) {
@@ -73,359 +276,68 @@ exports.createPages = async gatsbyContext => {
       }
     }
   `)
-  const years = yearsResult.data.allAirtableWinner.distinct.sort((a, b) => {
-    const numA = Number.parseInt(a)
-    const numB = Number.parseInt(b)
-
-    if (numA === numB) return 0
-    if (numA < numB) return 1
-
-    return -1
-  })
+  const years = yearsResult.data.allAirtableWinner.distinct.sort(
+    (a, b) => Number.parseInt(b) - Number.parseInt(a),
+  )
+  const queryResult = await graphql(WINNERS_QUERY)
+  const winnersAllYears = queryResult.data.allAirtableWinner.nodes.filter(
+    node => !node.data.show_with,
+  )
 
   /***
    * Create paginated collections for each category and year.
    */
+  for (const year of years) {
+    // Remove winners that have been grouped with `show_with`.
+    const winners = winnersAllYears.filter(winner => winner.data.year === year)
 
-  await Promise.all(
-    years.map(async year => {
-      const queryResult = await graphql(
-        `
-          query($year: String!) {
-            allAirtableWinner(
-              filter: { data: { year: { eq: $year } } }
-              sort: { fields: [data___category___data___line_1, data___name] }
-            ) {
-              nodes {
-                recordId
-                fields {
-                  url
-                  featured_image {
-                    fluid(maxWidth: 500) {
-                      aspectRatio
-                      base64
-                      sizes
-                      src
-                      srcSet
-                    }
-                  }
-                }
-                data {
-                  name
-                  type
-                  show_with {
-                    id
-                  }
-                  award
-                  year
-                  special_award
-                  national_winner
-                  tags
-                  agency {
-                    id
-                    fields {
-                      url
-                      avatar {
-                        fluid(maxWidth: 80) {
-                          aspectRatio
-                          base64
-                          sizes
-                          src
-                          srcSet
-                        }
-                      }
-                    }
-                    data {
-                      name
-                    }
-                  }
-                  category {
-                    id
-                    data {
-                      line_1
-                      line_2
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `,
-        { year },
-      )
-      const allWinnerNodes = queryResult.data.allAirtableWinner.nodes.filter(
-        node => !node.data.show_with,
-      )
+    const professionalWinners = winners.filter(
+      node => node.data.type === 'Professional',
+    )
+    const collegeWinners = winners.filter(node => node.data.type === 'College')
+    const highSchoolWinners = winners.filter(
+      node => node.data.type === 'High School',
+    )
 
-      const winnerNodes = allWinnerNodes.filter(
-        node => node.data.type === 'Professional',
-      )
-      const nationalWinnerNodes = winnerNodes.filter(
-        node => node.data.national_winner,
-      )
-      const collegeWinnerNodes = allWinnerNodes.filter(
-        node => node.data.type === 'College',
-      )
-      const highSchoolWinnerNodes = allWinnerNodes.filter(
-        node => node.data.type === 'High School',
-      )
+    createCollectionsAndPagesForWinners({
+      winners: professionalWinners,
+      name: 'winners',
+      pathPrefix: 'winners',
+      type: 'professional',
+      year,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      createPage,
+      getNode,
+    })
 
-      // Remove Judge's and Best of Show awards since they are statically
-      // displayed.
-      processPaginatedCollection({
-        collection: winnerNodes
-          .filter(
-            node =>
-              !/^(Judge's Award|Best of Show) - /.test(node.data.special_award),
-          )
-          .map(normalizeWinnerNode),
-        name: `winners/${year}`,
-        createNode,
-        createNodeId,
-        createContentDigest,
-        getNode,
-      })
+    createCollectionsAndPagesForWinners({
+      winners: collegeWinners,
+      name: 'collegeWinners',
+      pathPrefix: 'college',
+      type: 'college',
+      year,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      createPage,
+      getNode,
+    })
 
-      processPaginatedCollection({
-        collection: nationalWinnerNodes.map(normalizeWinnerNode),
-        name: `winners/${year}/National ADDY Winners`,
-        createNode,
-        createNodeId,
-        createContentDigest,
-        getNode,
-      })
-
-      processPaginatedCollection({
-        collection: collegeWinnerNodes.map(normalizeWinnerNode),
-        name: `collegeWinners/${year}`,
-        createNode,
-        createNodeId,
-        createContentDigest,
-        getNode,
-      })
-
-      processPaginatedCollection({
-        collection: highSchoolWinnerNodes.map(normalizeWinnerNode),
-        name: `highSchoolWinners/${year}`,
-        createNode,
-        createNodeId,
-        createContentDigest,
-        getNode,
-      })
-
-      const winnerNodesByCategory = winnerNodes.reduce((acc, curr) => {
-        const category = dlv(curr, ['data', 'category', 0])
-        if (!category) return acc
-
-        const line1 = category.data.line_1
-        acc[line1] = [...(acc[line1] || []), curr]
-
-        return acc
-      }, {})
-
-      for (const category in winnerNodesByCategory) {
-        const collection = winnerNodesByCategory[category].map(
-          normalizeWinnerNode,
-        )
-        if (collection.length < 1) continue
-
-        processPaginatedCollection({
-          collection,
-          name: `winners/${year}/${category}`,
-        })
-      }
-
-      const winnerNodesByTag = allWinnerNodes.reduce((acc, curr) => {
-        for (const tag of curr.data.tags || [])
-          acc[tag] = [...(acc[tag] || []), curr]
-
-        return acc
-      }, {})
-
-      for (const tag in winnerNodesByTag) {
-        const collection = winnerNodesByTag[tag].map(normalizeWinnerNode)
-        if (collection.length < 1) continue
-
-        processPaginatedCollection({ collection, name: `tags/${tag}` })
-      }
-
-      const winnerNodesByAgency = allWinnerNodes.reduce((acc, curr) => {
-        for (const agency of curr.data.agency)
-          acc[agency.id] = [...(acc[agency.id] || []), curr]
-
-        return acc
-      }, {})
-
-      for (const agency in winnerNodesByAgency) {
-        const collection = winnerNodesByAgency[agency].map(normalizeWinnerNode)
-        if (collection.length < 1) continue
-
-        processPaginatedCollection({
-          collection,
-          name: `winners-agency/${agency}`,
-        })
-      }
-
-      for (let i = 0; i < winnerNodes.length; i++) {
-        const node = winnerNodes[i]
-        const previousNode = winnerNodes[i - 1]
-        const nextNode = winnerNodes[i + 1]
-
-        createPage({
-          path: node.fields.url,
-          component: path.resolve(__dirname, 'src/templates/winner.tsx'),
-          context: {
-            recordId: node.recordId,
-            previousRecordId: previousNode ? previousNode.recordId : undefined,
-            nextRecordId: nextNode ? nextNode.recordId : undefined,
-          },
-        })
-      }
-
-      for (let i = 0; i < collegeWinnerNodes.length; i++) {
-        const node = collegeWinnerNodes[i]
-        const previousNode = collegeWinnerNodes[i - 1]
-        const nextNode = collegeWinnerNodes[i + 1]
-
-        createPage({
-          path: node.fields.url,
-          component: path.resolve(__dirname, 'src/templates/winner.tsx'),
-          context: {
-            recordId: node.recordId,
-            previousRecordId: previousNode ? previousNode.recordId : undefined,
-            nextRecordId: nextNode ? nextNode.recordId : undefined,
-            collectionName: `collegeWinners/${year}`,
-          },
-        })
-      }
-
-      for (let i = 0; i < highSchoolWinnerNodes.length; i++) {
-        const node = highSchoolWinnerNodes[i]
-        const previousNode = highSchoolWinnerNodes[i - 1]
-        const nextNode = highSchoolWinnerNodes[i + 1]
-
-        createPage({
-          path: node.fields.url,
-          component: path.resolve(__dirname, 'src/templates/winner.tsx'),
-          context: {
-            recordId: node.recordId,
-            previousRecordId: previousNode ? previousNode.recordId : undefined,
-            nextRecordId: nextNode ? nextNode.recordId : undefined,
-          },
-        })
-      }
-
-      const agencyNodes = getNodesByType('AirtableAgency')
-      for (const node of agencyNodes) {
-        createPage({
-          path: node.fields.url,
-          component: path.resolve(__dirname, 'src/templates/agency.tsx'),
-          context: {
-            recordId: node.recordId,
-            paginatedCollectionName: `winners-agency/${node.id}`,
-          },
-        })
-      }
-
-      const tags = allWinnerNodes.reduce((acc, curr) => {
-        for (const tag of curr.data.tags || []) acc.add(tag)
-
-        return acc
-      }, new Set())
-      for (const tag of tags) {
-        createPage({
-          path: `/tags/${slug(tag.toLowerCase())}/`,
-          component: path.resolve(__dirname, 'src/templates/tag.tsx'),
-          context: { paginatedCollectionName: `tags/${tag}` },
-        })
-      }
-
-      const professionalCollectionRegex = new RegExp(`^winners/${year}/`)
-      const collegeCollectionRegex = new RegExp(`^collegeWinners/${year}/`)
-      const highSchoolCollectionRegex = new RegExp(
-        `^highSchoolWinners/${year}/`,
-      )
-
-      const collectionMap = {
-        professional: {
-          regex: professionalCollectionRegex,
-          path: `/winners/${year}`,
-        },
-        college: {
-          regex: collegeCollectionRegex,
-          path: `/college/${year}`,
-        },
-        highSchool: {
-          regex: highSchoolCollectionRegex,
-          path: `/high-school/${year}`,
-        },
-      }
-      const getCollectionInfo = node => {
-        if (professionalCollectionRegex.test(node.name))
-          return collectionMap.professional
-        if (collegeCollectionRegex.test(node.name)) return collectionMap.college
-        if (highSchoolCollectionRegex.test(node.name))
-          return collectionMap.highSchool
-
-        return null
-      }
-
-      const collections = getNodesByType('PaginatedCollection')
-      collections.forEach(c => {
-        const collectionInfo = getCollectionInfo(c)
-        if (!collectionInfo) return
-
-        const splitNames = c.name.split('/')
-        const category = splitNames[splitNames.length - 1]
-        const categorySlug = kebabCase(category.toLowerCase()).replace(
-          'advertising',
-          'ad',
-        )
-        const firstPageId = c.pages[0]
-        if (!firstPageId) return
-
-        createPage({
-          path: `${collectionInfo.path}/${categorySlug}/`,
-          component: path.resolve(__dirname, 'src/templates/winners.tsx'),
-          context: {
-            year,
-            firstPageId,
-            collectionRegex: collectionInfo.regex.toString(),
-          },
-        })
-      })
-
-      createPage({
-        path: `/winners/${year}/`,
-        component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
-        context: {
-          year,
-          collectionName: `winners/${year}`,
-          collectionRegex: professionalCollectionRegex.toString(),
-        },
-      })
-      createPage({
-        path: `/college/${year}/`,
-        component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
-        context: {
-          year,
-          collectionName: `collegeWinners/${year}`,
-          collectionRegex: collegeCollectionRegex.toString(),
-          hideSpecialAwards: false,
-        },
-      })
-      createPage({
-        path: `/high-school/${year}/`,
-        component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
-        context: {
-          year,
-          collectionName: `highSchoolWinners/${year}`,
-          collectionRegex: highSchoolCollectionRegex.toString(),
-          hideSpecialAwards: false,
-        },
-      })
-    }),
-  )
+    createCollectionsAndPagesForWinners({
+      winners: highSchoolWinners,
+      name: 'highSchoolWinners',
+      pathPrefix: 'high-school',
+      type: 'high school',
+      year,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      createPage,
+      getNode,
+    })
+  }
 
   /**
    * Create root winners page.
@@ -437,6 +349,8 @@ exports.createPages = async gatsbyContext => {
       collectionName: `winners/${years[0]}`,
       collectionRegex: new RegExp(`^winners/${years[0]}/`).toString(),
       year: years[0],
+      pathPrefix: 'winners',
+      type: 'professional',
     },
   })
 
@@ -451,6 +365,8 @@ exports.createPages = async gatsbyContext => {
       collectionRegex: new RegExp(`^collegeWinners/${years[0]}/`).toString(),
       year: years[0],
       hideSpecialAwards: true,
+      pathPrefix: 'college',
+      type: 'college',
     },
   })
 
@@ -462,11 +378,86 @@ exports.createPages = async gatsbyContext => {
     component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
     context: {
       collectionName: `highSchoolWinners/${years[0]}`,
-      collectionRegex: new RegExp(`^highSchool/${years[0]}/`).toString(),
+      collectionRegex: new RegExp(`^highSchoolWinners/${years[0]}/`).toString(),
       year: years[0],
       hideSpecialAwards: true,
+      pathPrefix: 'high-school',
+      type: 'high school',
     },
   })
+
+  /**
+   * Create pages for each tag.
+   */
+  const winnerNodesByTag = winnersAllYears.reduce((acc, curr) => {
+    for (const tag of curr.data.tags || [])
+      acc[tag] = [...(acc[tag] || []), curr]
+
+    return acc
+  }, {})
+
+  for (const tag in winnerNodesByTag) {
+    const collection = winnerNodesByTag[tag].map(normalizeWinnerNode)
+    if (collection.length < 1) continue
+
+    createPaginatedCollection({
+      collection,
+      name: `tags/${tag}`,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      getNode,
+    })
+  }
+
+  const tags = winnersAllYears.reduce((acc, curr) => {
+    for (const tag of curr.data.tags || []) acc.add(tag)
+
+    return acc
+  }, new Set())
+  for (const tag of tags) {
+    createPage({
+      path: `/tags/${slug(tag.toLowerCase())}/`,
+      component: path.resolve(__dirname, 'src/templates/tag.tsx'),
+      context: { paginatedCollectionName: `tags/${tag}` },
+    })
+  }
+
+  /**
+   * Create pages for each agency.
+   */
+  const winnerNodesByAgency = winnersAllYears.reduce((acc, curr) => {
+    for (const agency of curr.data.agency || [])
+      acc[agency.id] = [...(acc[agency.id] || []), curr]
+
+    return acc
+  }, {})
+
+  for (const agency in winnerNodesByAgency) {
+    const collection = winnerNodesByAgency[agency].map(normalizeWinnerNode)
+    if (collection.length < 1) continue
+
+    createPaginatedCollection({
+      collection,
+      name: `winners-agency/${agency}`,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      getNode,
+    })
+  }
+
+  const agencyNodes = getNodesByType('AirtableAgency')
+  for (const node of agencyNodes) {
+    createPage({
+      path: node.fields.url,
+      component: path.resolve(__dirname, 'src/templates/agency.tsx'),
+      context: {
+        recordId: node.recordId,
+        paginatedCollectionName: `winners-agency/${node.id}`,
+      },
+    })
+  }
 
   /**
    * Write search indexes.

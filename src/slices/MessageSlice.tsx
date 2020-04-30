@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { t, mq } from '../theme'
+import { t, mq, linearScale } from '../theme'
 import { HTMLContent } from '../components/HTMLContent'
 import { View } from '../components/View'
 import { BoundedBox } from '../components/BoundedBox'
@@ -21,33 +21,34 @@ export const MessageSlice = ({ textHTML, quotee }: MessageSliceProps) => {
         textAlign: 'center',
       }}
     >
-      <HTMLContent
-        html={textHTML}
-        css={mq({ color: t.colors.White, marginBottom: t.spaceScales.m })}
-        componentOverrides={{
-          h1: Comp => props => (
-            <View
-              as={Comp}
-              {...props}
-              css={mq({
-                fontSize: t.f.xl,
-                marginBottom: t.spaceScales.m,
-                color: t.colors.White,
-              })}
-            />
-          ),
-          p: () => props => (
-            <p
-              {...props}
-              css={{
-                maxWidth: '70ch',
-                margin: '0 auto',
-              }}
-            />
-          ),
-        }}
-      />
-      {quotee && <p css={{ fontWeight: 'bold' }}>- {quotee}</p>}
+      <div css={mq({ display: 'grid', gap: linearScale('1rem', '1.5rem') })}>
+        <HTMLContent
+          html={textHTML}
+          componentOverrides={{
+            h1: Comp => props => (
+              <View
+                as={Comp}
+                {...props}
+                css={mq({
+                  fontSize: t.f.xl,
+                  marginBottom: t.spaceScales.m,
+                  color: t.colors.White,
+                })}
+              />
+            ),
+            p: () => props => (
+              <p
+                {...props}
+                css={{
+                  maxWidth: '70ch',
+                  margin: '0 auto',
+                }}
+              />
+            ),
+          }}
+        />
+        {quotee && <p css={{ fontWeight: 'bold' }}>- {quotee}</p>}
+      </div>
     </BoundedBox>
   )
 }

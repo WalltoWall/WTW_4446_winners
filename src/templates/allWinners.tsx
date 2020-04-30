@@ -17,7 +17,7 @@ export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
   pageContext: {
     year: string
-    hideSpecialAwards: boolean
+    type: 'professional' | 'college' | 'high school'
   }
 }
 
@@ -28,7 +28,6 @@ export const AllWinnersTemplate = ({
 }: AllWinnersProps) => {
   const [query, setQuery] = useState(getURLParam)
   const years = useYears()
-  const { year, hideSpecialAwards } = pageContext
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -37,19 +36,20 @@ export const AllWinnersTemplate = ({
   const judgesWinners = data.judgesWinners.nodes
 
   const firstPages = data.allPaginatedCollectionPage.nodes
-  const initialPage = data!.paginatedCollectionPage!
-  const firstPageId = initialPage.id
-  const isInitialPageSelected = firstPageId === initialPage.id
+  const initialPage = data.paginatedCollectionPage
+  const firstPageId = initialPage?.id
+  const isInitialPageSelected = firstPageId === initialPage?.id
 
   return (
     <Layout {...props}>
       <Helmet>
-        <title>{year} Winners</title>
+        <title>{pageContext.year} Winners</title>
       </Helmet>
 
       <WinnerFilters
+        variant={pageContext.type}
         years={years}
-        initialYear={year}
+        initialYear={pageContext.year}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -60,7 +60,7 @@ export const AllWinnersTemplate = ({
         <PaginatedSearchResults query={query} />
       ) : (
         <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage}>
-          {isInitialPageSelected && !hideSpecialAwards && (
+          {isInitialPageSelected && (
             <>
               {bestOfWinners.length > 0 && (
                 <SpecialWinners
@@ -91,6 +91,7 @@ export const query = graphql`
   query AllWinnersTemplate(
     $collectionName: String!
     $collectionRegex: String!
+    $type: String!
     $year: String!
   ) {
     paginatedCollectionPage(
@@ -125,7 +126,7 @@ export const query = graphql`
       filter: {
         data: {
           special_award: { regex: "/^Best of Show - /" }
-          type: { eq: "Professional" }
+          type: { eq: $type }
           year: { eq: $year }
         }
       }
@@ -138,6 +139,7 @@ export const query = graphql`
       filter: {
         data: {
           special_award: { regex: "/^Judge's Award - /" }
+          type: { eq: $type }
           year: { eq: $year }
         }
       }

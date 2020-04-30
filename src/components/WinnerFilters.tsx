@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { navigate } from 'gatsby'
-import kebabCase from 'lodash.kebabcase'
+import slug from 'slug'
 
 import { t, mq, linearScale } from '../theme'
 import { WinnersTemplateQuery } from '../graphqlTypes'
@@ -11,7 +11,23 @@ import { FormSelect } from '../components/FormSelect'
 import { FormSearchInput } from '../components/FormSearchInput'
 import { BoundedBox } from '../components/BoundedBox'
 
+const variants = {
+  professional: {
+    heading: 'Winners',
+    pathPrefix: 'winners/',
+  },
+  college: {
+    heading: 'College Winners',
+    pathPrefix: 'college',
+  },
+  'high school': {
+    heading: 'High School Winners',
+    pathPrefix: 'high-school',
+  },
+}
+
 export type WinnerFiltersProps = {
+  variant: keyof typeof variants
   years: string[]
   firstPages: WinnersTemplateQuery['allPaginatedCollectionPage']['nodes']
   initialPage: WinnersTemplateQuery['paginatedCollectionPage']
@@ -21,6 +37,7 @@ export type WinnerFiltersProps = {
 }
 
 export const WinnerFilters = ({
+  variant: variantName,
   years,
   firstPages,
   initialPage,
@@ -30,19 +47,20 @@ export const WinnerFilters = ({
 }: WinnerFiltersProps) => {
   const yearRef = useRef<HTMLSelectElement>(null)
 
-  const firstPageId = initialPage!.id
+  const variant = variants[variantName]
+
+  const firstPageId = initialPage?.id
 
   const getCategorySlugFromPageId = (pageId: string) => {
     const page = firstPages.find(fp => fp.id === pageId)
 
-    return kebabCase(trimCollectionNamespace(page?.collection.name)).replace(
-      'advertising',
-      'ad',
-    )
+    return slug(
+      trimCollectionNamespace(page?.collection.name).toLowerCase()!,
+    ).replace('advertising', 'ad')
   }
 
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    navigate(`/winners/${e.target.value}/`)
+    navigate(`/${variant.pathPrefix}/${e.target.value}/`)
   }
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -51,7 +69,7 @@ export const WinnerFilters = ({
 
     if (!year) return
 
-    navigate(`/winners/${year}/${categorySlug}/`)
+    navigate(`/${variant.pathPrefix}/${year}/${categorySlug}/`)
   }
 
   return (
@@ -69,7 +87,7 @@ export const WinnerFilters = ({
         })}
       >
         <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-          Winners
+          {variant.heading}
         </Heading>
         <div
           css={mq({
@@ -84,6 +102,7 @@ export const WinnerFilters = ({
             defaultValue={initialYear}
             onChange={handleYearChange}
             ref={yearRef}
+            css={{ display: years.length > 1 ? 'auto' : 'none' }}
           >
             {years.map(y => (
               <option value={y} key={y}>
@@ -91,18 +110,20 @@ export const WinnerFilters = ({
               </option>
             ))}
           </FormSelect>
-          <FormSelect
-            defaultValue={firstPageId}
-            value={firstPageId}
-            onChange={handleCategoryChange}
-          >
-            <option value="/">All categories</option>
-            {firstPages.map(firstPage => (
-              <option key={firstPage.id} value={firstPage.id}>
-                {trimCollectionNamespace(firstPage.collection.name)}
-              </option>
-            ))}
-          </FormSelect>
+          {firstPages.length > 0 && (
+            <FormSelect
+              defaultValue={firstPageId}
+              value={firstPageId}
+              onChange={handleCategoryChange}
+            >
+              <option value="/">All categories</option>
+              {firstPages.map(firstPage => (
+                <option key={firstPage.id} value={firstPage.id}>
+                  {trimCollectionNamespace(firstPage.collection.name)}
+                </option>
+              ))}
+            </FormSelect>
+          )}
           <FormSearchInput
             value={query}
             onChange={onQueryChange}

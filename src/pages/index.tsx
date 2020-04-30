@@ -4,6 +4,7 @@ import { graphql } from 'gatsby'
 import { IndexPageQuery } from '../graphqlTypes'
 import { t, mq, linearScale } from '../theme'
 
+import { withLightbox } from '../components/Lightbox'
 import { PersonCard } from '../components/PersonCard'
 import { Heading } from '../components/Heading'
 import { Layout, LayoutProps } from '../components/Layout'
@@ -16,13 +17,13 @@ import { SpecialWinners } from '../components/SpecialWinners'
 import { SVG } from '../components/SVG'
 import { Button } from '../components/Button'
 import { Link } from '../components/Link'
-import { withLightbox } from '../components/Lightbox'
-import { HeroVideo } from '../components/HeroVideo'
+import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
+
+import { HeroVideoSlice } from '../slices/HeroVideoSlice'
 import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { MessageSlice } from '../slices/MessageSlice'
-import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
 
 export type IndexPageProps = LayoutProps & {
   data: IndexPageQuery
@@ -37,7 +38,9 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
 
   return (
     <Layout {...props}>
-      <HeroVideo src={data.heroVideoHref?.data?.href} />
+      {data.heroVideoHref?.data?.href && (
+        <HeroVideoSlice src={data.heroVideoHref?.data?.href} />
+      )}
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
         imageFluid={data.homeHeroImage?.fields?.image?.fluid}
@@ -69,6 +72,39 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
       </BoundedBox>
 
       <BoundedBox
+        maxWidth="Medium"
+        css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
+      >
+        {/* temporary message start */}
+        <div
+          css={mq({
+            display: 'grid',
+            gap: linearScale('0.625rem', '1.75rem', 'space'),
+          })}
+        >
+          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
+            <Anchor href="/ad-people/">People of the Year</Anchor>
+          </Heading>
+          <MessageSlice
+            textHTML={`
+              <p>
+                Due to the current world health situation, the Pele Awards
+                planning committee has made the decision to postpone the
+                selection of the 2020 AAF Person of the Year, Ad 2 Hawaii Young
+                Person of the Year, and Silver Medal Award winners until a later
+                time when we can select, honor and celebrate them together. More
+                details will be sent out about upcoming plans as they are made.
+                Until then, take care of yourselves and each other. 
+              </p>
+            `}
+          />
+        </div>
+        {/* temporary message end*/}
+      </BoundedBox>
+
+      {/* Disabled due to postponed ad people awards announcement */}
+      {/*
+      <BoundedBox
         maxWidth="Xlarge"
         css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
       >
@@ -97,6 +133,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
           </CardList>
         </div>
       </BoundedBox>
+      */}
 
       <BoundedBox
         maxWidth="Xlarge"
@@ -220,12 +257,14 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         }
       />
 
+      {/*
       <CallToActionSlice
         buttonHref={data.homeButtonHref?.data?.href}
         buttonText={data.homeButtonText?.data?.plain_text}
         textHTML={data.homeCtaText?.data?.rich_text?.childMarkdownRemark?.html}
         isVisible={data.homeCtaText?.data?.visible}
       />
+     */}
     </Layout>
   )
 }
@@ -269,13 +308,21 @@ export const query = graphql`
       }
     }
     overallJudgesWinner: airtableWinner(
-      data: { special_award: { eq: "Judge's Award - Overall" } }
+      data: {
+        special_award: { eq: "Judge's Award - Overall" }
+        year: { eq: "2020" }
+        type: { eq: "Professional" }
+      }
     ) {
       ...SpecialAwardWinner
     }
     judgesWinners: allAirtableWinner(
       filter: {
-        data: { special_award: { regex: "/^Judge's Award - (?!Overall)/" } }
+        data: {
+          special_award: { regex: "/^Judge's Award - (?!Overall)/" }
+          year: { eq: "2020" }
+          type: { eq: "Professional" }
+        }
       }
     ) {
       nodes {
@@ -312,16 +359,16 @@ export const query = graphql`
         }
       }
     }
-    homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
-      data {
-        visible
-        rich_text {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-    }
+    # homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
+    #   data {
+    #     visible
+    #     rich_text {
+    #       childMarkdownRemark {
+    #         html
+    #       }
+    #     }
+    #   }
+    # }
     homeButtonText: airtableTextField(
       data: { uid: { eq: "Home CTA Button" } }
     ) {

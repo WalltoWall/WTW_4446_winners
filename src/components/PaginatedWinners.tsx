@@ -11,8 +11,8 @@ import { Button } from './Button'
 import { EmptyMessage } from './EmptyMessage'
 
 export type PaginatedWinnersProps = ViewProps & {
-  firstPageId: UseLoadMoreArgs['firstPageId']
-  initialPage: UseLoadMoreArgs['initialPage']
+  firstPageId?: UseLoadMoreArgs['firstPageId']
+  initialPage?: UseLoadMoreArgs['initialPage']
   totalCountAddend?: number
   showingCountAddend?: number
 }

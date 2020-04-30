@@ -35,11 +35,13 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
         <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
           Ad People of the Year
         </Heading>
+      </BoundedBox>
+
+      <BoundedBox maxWidth="Medium" css={{ backgroundColor: t.c.Gray95 }}>
         {/* temporary message start */}
-        <div css={mq({ marginTop: linearScale('1.5rem', '3.5rem') })}>
-          <MessageSlice
-            css={{ marginBottom: 0 }}
-            textHTML="<p>
+
+        <MessageSlice
+          textHTML="<p>
               Due to COVID19, judging for the 2020 Pele Awards has been
               postponed and will now be conducted virtually, and completed by the
               middle of this month. We plan to make an announcement of the finalists
@@ -48,9 +50,9 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
               completed mid-May. Any physical work that was entered with a
               submission will be returned to teachers.
               </p>"
-            quotee="Pele Awards Team"
-          />
-        </div>
+          quotee="Pele Awards Team"
+        />
+
         {/* temporary message end*/}
       </BoundedBox>
 
