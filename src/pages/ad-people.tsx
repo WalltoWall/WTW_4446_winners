@@ -37,7 +37,17 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
         </Heading>
         {/* temporary message start */}
         <div css={mq({ marginTop: linearScale('1.5rem', '3.5rem') })}>
-          <MessageSlice textHTML="<p>Ad People is delayed</p>" />
+          <MessageSlice
+            textHTML="<p>
+              Due to COVID19, judging for the 2020 Pele Awards has been
+              postponed and will now be conducted virtually, and completed by the
+              middle of this month. We plan to make an announcement of the finalists
+              to teachers and through our communication channels by early-May. An
+              announcement of winners and the distribution of the awards will be
+              completed mid-May. Any physical work that was entered with a
+              submission will be returned to teachers.
+              </p>"
+          />
         </div>
         {/* temporary message end*/}
       </BoundedBox>
