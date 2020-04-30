@@ -10,18 +10,18 @@ export type VideoPlayButtonProps = {
 }
 
 /**
- * This component breaks some good styling conventions like having `position` on by default,
- * but doing it this way was the only way I could think of to have access to the
- * Lightbox context without putting it in <WinnerCard>.
+ * This component breaks some good styling conventions like having `position`
+ * on by default, but doing it this way was the only way I could think of to
+ * have access to the Lightbox context without putting it in <WinnerCard>.
  *
- * I want to have access to Lightbox context outside of <WinnerCard> since using
- * context in <WinnerCard> will cause **all** <WinnerCard>'s to re-render whenever
- * the Lightbox Context's value changes. This could potentially be over 15+
- * components in some views.
+ * I want to have access to Lightbox context outside of <WinnerCard> since
+ * using context in <WinnerCard> will cause **all** <WinnerCard>'s to re-render
+ * whenever the Lightbox Context's value changes. This could potentially be
+ * over 15+ components in some views.
  *
- * Accessing context here instead will only force instances of this component to re-render when
- * the Lightbox context value changes. This is much less on average since this component is
- * conditionally rendered.
+ * Accessing context here instead will only force instances of this component
+ * to re-render when the Lightbox context value changes. This is much less on
+ * average since this component is conditionally rendered.
  */
 export const VideoPlayButton = ({ src, ...props }: VideoPlayButtonProps) => {
   const { setLightbox } = useLightbox()

@@ -2,13 +2,15 @@ import React from 'react'
 
 import { mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
-import { SocialAnchor, SocialAnchorProps } from './SocialAnchor'
+import { Anchor, AnchorProps } from './Anchor'
 import { Icon } from './Icon'
 
-export type SocialIconProps = SocialAnchorProps
+export type SocialIconProps = {
+  platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin'
+} & AnchorProps
 
-const SocialIconAnchor = ({ platform, ...props }: SocialIconProps) => (
-  <SocialAnchor platform={platform} {...props}>
+const SocialIconAnchor = ({ href, platform }: SocialIconProps) => (
+  <Anchor href={href}>
     <Icon
       name={platform}
       css={mq({
@@ -16,7 +18,7 @@ const SocialIconAnchor = ({ platform, ...props }: SocialIconProps) => (
         height: linearScale('0.75rem', '1.125rem'),
       })}
     />
-  </SocialAnchor>
+  </Anchor>
 )
 
 export type SocialIconsProps = ViewProps & {
@@ -41,16 +43,16 @@ export const SocialIcons = ({
     })}
   >
     {facebookHandle && (
-      <SocialIconAnchor platform="facebook" handle={facebookHandle} />
+      <SocialIconAnchor platform="facebook" href={facebookHandle} />
     )}
     {instagramHandle && (
-      <SocialIconAnchor platform="instagram" handle={instagramHandle} />
+      <SocialIconAnchor platform="instagram" href={instagramHandle} />
     )}
     {twitterHandle && (
-      <SocialIconAnchor platform="twitter" handle={twitterHandle} />
+      <SocialIconAnchor platform="twitter" href={twitterHandle} />
     )}
     {linkedinHandle && (
-      <SocialIconAnchor platform="linkedin" handle={linkedinHandle} />
+      <SocialIconAnchor platform="linkedin" href={linkedinHandle} />
     )}
   </View>
 )

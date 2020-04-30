@@ -1,10 +1,7 @@
 export const IS_BROWSER = typeof window !== 'undefined'
 
-export const trimCollectionNamespace = (collectionName: string | undefined) => {
-  const splitNames = collectionName?.split('/')
-
-  return splitNames?.[splitNames?.length - 1]
-}
+export const trimCollectionNamespace = (collectionName: string = '') =>
+  collectionName.split('/').slice(2).join('/')
 
 export const convertVimeoLinkToIframeSrc = (vimeoLink: string) => {
   if (vimeoLink.includes('showcase')) {
@@ -146,3 +143,10 @@ export const getURLParam = (key = 'query') => {
 
   return params.get(key) ?? ''
 }
+
+/**
+ * Returns a unique ID on each call. This naively increments an integer and
+ * should not be treated as a UUID.
+ */
+export const uniqueId = () => uniqueId._state++
+uniqueId._state = 0

@@ -18,7 +18,7 @@ export const Layout = ({
   <>
     <Helmet
       defaultTitle="Pele Awards Winners"
-      titleTemplate="%s | Pele Awards Winners"
+      titleTemplate="%s – Pele Awards Winners"
     >
       <html lang="en" />
       <meta
