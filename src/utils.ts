@@ -1,10 +1,7 @@
 export const IS_BROWSER = typeof window !== 'undefined'
 
-export const trimCollectionNamespace = (collectionName: string | undefined) => {
-  const splitNames = collectionName?.split('/')
-
-  return splitNames?.[splitNames?.length - 1]
-}
+export const trimCollectionNamespace = (collectionName: string = '') =>
+  collectionName.split('/').slice(2).join('/')
 
 export const convertVimeoLinkToIframeSrc = (vimeoLink: string) => {
   if (vimeoLink.includes('showcase')) {
