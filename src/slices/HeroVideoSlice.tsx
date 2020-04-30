@@ -5,16 +5,16 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { convertVimeoLinkToIframeSrc, uniqueId } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
-import { View, ViewProps } from './View'
-import { AspectRatio } from './AspectRatio'
+import { View, ViewProps } from '../components/View'
+import { AspectRatio } from '../components/AspectRatio'
 import { ReactComponent as AssetIconSoundOffSVG } from '../assets/icon-sound-off.svg'
 import { ReactComponent as AssetIconSoundOnSVG } from '../assets/icon-sound-on.svg'
 
-export type HeroVideoProps = ViewProps & {
+export type HeroVideoSliceProps = ViewProps & {
   src: string
 }
 
-export const HeroVideo = ({ src, ...props }: HeroVideoProps) => {
+export const HeroVideoSlice = ({ src, ...props }: HeroVideoSliceProps) => {
   const [elementId] = useState(() => `hero-video-${uniqueId()}`)
   const player = useRef<Player>()
 
