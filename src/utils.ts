@@ -143,3 +143,10 @@ export const getURLParam = (key = 'query') => {
 
   return params.get(key) ?? ''
 }
+
+/**
+ * Returns a unique ID on each call. This naively increments an integer and
+ * should not be treated as a UUID.
+ */
+export const uniqueId = () => uniqueId._state++
+uniqueId._state = 0

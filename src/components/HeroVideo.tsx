@@ -1,55 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Player from '@vimeo/player'
+import VisuallyHidden from '@reach/visually-hidden'
 
-import { convertVimeoLinkToIframeSrc } from '../utils'
+import { convertVimeoLinkToIframeSrc, uniqueId } from '../utils'
+
+import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
-import { t, mq } from '../theme'
 import { AspectRatio } from './AspectRatio'
-import { ReactComponent as AssetIconMuteSVG } from '../assets/icon-sound-off.svg'
-import { ReactComponent as AssetIconUnmuteSVG } from '../assets/icon-sound-on.svg'
+import { ReactComponent as AssetIconSoundOffSVG } from '../assets/icon-sound-off.svg'
+import { ReactComponent as AssetIconSoundOnSVG } from '../assets/icon-sound-on.svg'
 
 export type HeroVideoProps = ViewProps & {
   src: string
 }
 
-const VolumeController = ({ children }) => {
-  return (
-    <View
-      css={{
-        display: 'flex',
-        position: 'absolute',
-        bottom: '2rem',
-        left: '1.75rem',
-      }}
-      alignItems="center"
-      justifyContent="center"
-    >
-      {children}
-    </View>
-  )
-}
-
 export const HeroVideo = ({ src, ...props }: HeroVideoProps) => {
-  let player: any
+  const [elementId] = useState(() => `hero-video-${uniqueId()}`)
+  const player = useRef<Player>()
 
   const [mute, setMute] = useState(true)
+  const toggleMute = () => setMute(state => !state)
 
   useEffect(() => {
-    player = new Player('home-hero-pele-video')
-
-    if (mute) {
-      player.setVolume(0)
-      return
-    }
-    player.setVolume(1)
-  }, [mute, setMute])
-
-  const handleClick = () => {
-    setMute(prevMute => !prevMute)
-  }
+    if (!player.current) player.current = new Player(elementId)
+    player.current.setVolume(mute ? 0 : 1)
+  }, [mute, elementId])
 
   return (
     <View
+      {...props}
       css={mq({
         margin: '0 auto',
         position: 'relative',
@@ -61,42 +40,44 @@ export const HeroVideo = ({ src, ...props }: HeroVideoProps) => {
         css={{ backgroundColor: t.c.Black, height: '100%' }}
       >
         <iframe
-          id="home-hero-pele-video"
+          id={elementId}
           src={
             convertVimeoLinkToIframeSrc(src) +
             '?autoplay=1&loop=1&autopause=0&muted=1&background=1'
           }
           frameBorder="0"
           allow="autoplay; fullscreen; muted"
-          allowFullScreen
-          {...props}
+          allowFullScreen={true}
           css={{ height: '100%', width: '100%' }}
         />
       </AspectRatio>
-      {mute && (
-        <VolumeController>
-          <AssetIconMuteSVG
-            css={{
-              width: '2.25rem',
-              cursor: 'pointer',
-              opacity: 0.7,
-            }}
-            onClick={handleClick}
+      <button
+        onClick={toggleMute}
+        css={mq({
+          display: 'flex',
+          position: 'absolute',
+          bottom: linearScale('0.5rem', '1.25rem'),
+          left: linearScale('0.75rem', '1.5rem'),
+          alignItems: 'center',
+          justifyContent: 'center',
+          opacity: 0.5,
+          transitionProperty: 'opacity',
+          '&:hover, &:focus': {
+            opacity: 1,
+          },
+        })}
+      >
+        <VisuallyHidden>{mute ? 'Unmute video' : 'Mute video'}</VisuallyHidden>
+        {mute ? (
+          <AssetIconSoundOffSVG
+            css={mq({ width: linearScale('1.5rem', '2rem'), color: t.c.White })}
           />
-        </VolumeController>
-      )}
-      {!mute && (
-        <VolumeController>
-          <AssetIconUnmuteSVG
-            css={{
-              width: '2.25rem',
-              cursor: 'pointer',
-              opacity: 0.7,
-            }}
-            onClick={handleClick}
+        ) : (
+          <AssetIconSoundOnSVG
+            css={mq({ width: linearScale('1.5rem', '2rem'), color: t.c.White })}
           />
-        </VolumeController>
-      )}
+        )}
+      </button>
     </View>
   )
 }
