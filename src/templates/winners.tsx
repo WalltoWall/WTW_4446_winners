@@ -40,7 +40,7 @@ export const WinnersTemplate = ({
   return (
     <Layout {...props}>
       <Helmet>
-        <title>Winners</title>
+        <title>{pageContext.year} Winners</title>
       </Helmet>
 
       <WinnerFilters

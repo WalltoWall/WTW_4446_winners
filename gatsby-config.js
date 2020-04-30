@@ -1,14 +1,40 @@
+const path = require('path')
 const dlv = require('dlv')
 const slug = require('slug')
 
 require('dotenv').config()
 
 module.exports = {
+  siteMetadata: {
+    title: 'Pele Awards',
+    description:
+      'Every year, the Pele Awards has recognized excellence in advertising and design in Hawaii.',
+    siteUrl: 'https://winners.peleawards.com',
+  },
   plugins: [
     'gatsby-plugin-typescript',
     'gatsby-plugin-svgr',
     'gatsby-plugin-react-helmet-async',
     'gatsby-plugin-paginated-collection',
+    'gatsby-plugin-sitemap',
+    process.env.GOOGLE_TAGMANAGER_ID && {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        id: process.env.GOOGLE_TAGMANAGER_ID,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'Pele Awards',
+        short_name: 'Peles',
+        start_url: '/',
+        background_color: '#ffffff',
+        theme_color: '#ffffff',
+        display: 'minimal-ui',
+        icon: path.resolve(__dirname, 'src/assets/manifest-icon.png'),
+      },
+    },
     {
       resolve: 'gatsby-plugin-imgix',
       options: {
@@ -239,5 +265,7 @@ module.exports = {
             })),
       },
     },
-  ],
+    'gatsby-plugin-remove-fingerprints',
+    'gatsby-plugin-netlify',
+  ].filter(Boolean),
 }

@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const slug = require('slug')
 const dlv = require('dlv')
-const kebabCase = require('lodash.kebabcase')
 
 const {
   createPaginatedCollectionNodes,
