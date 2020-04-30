@@ -142,7 +142,7 @@ export const Header = (props: HeaderProps) => {
                 alignItems: 'center',
               })}
             >
-              <ul
+              {/* <ul
                 css={mq({
                   display: 'grid',
                   gridAutoFlow: 'column',
@@ -152,7 +152,7 @@ export const Header = (props: HeaderProps) => {
                 })}
               >
                 <NavItem href="/">How to enter</NavItem>
-              </ul>
+              </ul> */}
               <form onSubmit={handleSearchSubmit}>
                 <FormSearchInput
                   ref={searchInputRef}
@@ -223,7 +223,7 @@ export const Header = (props: HeaderProps) => {
             <NavItem href="/high-school/">High School</NavItem>
             <NavItem href="/college/">College</NavItem>
             <NavItem href="/about/">About</NavItem>
-            <NavItem href="/">How to enter</NavItem>
+            {/* <NavItem href="/">How to enter</NavItem> */}
           </ul>
         </div>
 

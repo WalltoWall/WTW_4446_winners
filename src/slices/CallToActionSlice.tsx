@@ -7,13 +7,17 @@ import { View } from '../components/View'
 
 type CallToActionSliceProps = CallToActionProps & {
   textHTML?: string
+  isVisible?: boolean
 }
 
 export const CallToActionSlice = ({
   buttonHref,
   buttonText,
   textHTML,
+  isVisible,
 }: CallToActionSliceProps) => {
+  if (!isVisible) return null
+
   return (
     <CallToAction buttonHref={buttonHref} buttonText={buttonText}>
       <HTMLContent

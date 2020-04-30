@@ -17,6 +17,7 @@ export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
   pageContext: {
     year: string
+    hideSpecialAwards: boolean
   }
 }
 
@@ -27,6 +28,7 @@ export const AllWinnersTemplate = ({
 }: AllWinnersProps) => {
   const [query, setQuery] = useState(getURLParam)
   const years = useYears()
+  const { year, hideSpecialAwards } = pageContext
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value)
@@ -42,12 +44,12 @@ export const AllWinnersTemplate = ({
   return (
     <Layout {...props}>
       <Helmet>
-        <title>{pageContext.year} Winners</title>
+        <title>{year} Winners</title>
       </Helmet>
 
       <WinnerFilters
         years={years}
-        initialYear={pageContext.year}
+        initialYear={year}
         firstPages={firstPages}
         initialPage={initialPage}
         query={query}
@@ -58,7 +60,7 @@ export const AllWinnersTemplate = ({
         <PaginatedSearchResults query={query} />
       ) : (
         <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage}>
-          {isInitialPageSelected && (
+          {isInitialPageSelected && !hideSpecialAwards && (
             <>
               {bestOfWinners.length > 0 && (
                 <SpecialWinners
