@@ -65,7 +65,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 export interface UseLoadMoreArgs {
-  firstPageId: string
+  firstPageId?: string
   initialPage?: Partial<ExpandedPageNode>
   directory?: string
 }
@@ -80,7 +80,9 @@ export const useLoadMore = (args: UseLoadMoreArgs) => {
   const [state, dispatch] = useReducer(reducer, initialPage, createInitialState)
 
   const loadPage = useCallback(
-    async (id: string, successAction: ActionType = ActionType.Completed) => {
+    async (id?: string, successAction: ActionType = ActionType.Completed) => {
+      if (!id) return
+
       const path = withPrefix(`/${directory}/${id}.json`)
 
       try {

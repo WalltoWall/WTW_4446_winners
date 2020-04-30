@@ -9,8 +9,8 @@ import { PaginatedWinners } from '../components/PaginatedWinners'
 
 type LoadMoreWinnersProps = {
   children?: React.ReactNode
-  firstPageId: string
-  initialPage: WinnersTemplateQuery['paginatedCollectionPage']
+  firstPageId?: string
+  initialPage?: WinnersTemplateQuery['paginatedCollectionPage']
 }
 
 export const LoadMoreWinners = ({

@@ -16,6 +16,7 @@ export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
   pageContext: {
     year: string
+    type: 'professional' | 'college' | 'high school'
   }
 }
 
@@ -43,6 +44,7 @@ export const WinnersTemplate = ({
       </Helmet>
 
       <WinnerFilters
+        variant={pageContext.type}
         years={years}
         initialYear={pageContext.year}
         firstPages={firstPages}

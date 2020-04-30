@@ -13,7 +13,6 @@ import { PaginatedWinners } from '../components/PaginatedWinners'
 import { Anchor } from '../components/Anchor'
 import { Avatar } from '../components/Avatar'
 import { SocialIcons } from '../components/SocialIcons'
-import { withLightbox } from '../components/Lightbox'
 
 export type AgencyTemplate = LayoutProps & {
   data: AgencyTemplateQuery
