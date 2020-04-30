@@ -40,15 +40,17 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
       <BoundedBox maxWidth="Medium" css={{ backgroundColor: t.c.Gray95 }}>
         {/* temporary message start */}
         <MessageSlice
-          textHTML="<p>
-              Due to COVID19, judging for the 2020 Pele Awards has been
-              postponed and will now be conducted virtually, and completed by the
-              middle of this month. We plan to make an announcement of the finalists
-              to teachers and through our communication channels by early-May. An
-              announcement of winners and the distribution of the awards will be
-              completed mid-May. Any physical work that was entered with a
-              submission will be returned to teachers.
-              </p>"
+          textHTML={`
+            <p>
+              Due to the current world health situation, the Pele Awards
+              planning committee has made the decision to postpone the
+              selection of the 2020 AAF Person of the Year, Ad 2 Hawaii Young
+              Person of the Year, and Silver Medal Award winners until a later
+              time when we can select, honor and celebrate them together. More
+              details will be sent out about upcoming plans as they are made.
+              Until then, take care of yourselves and each other. 
+            </p>
+          `}
         />
         {/* temporary message end*/}
       </BoundedBox>
