@@ -32,8 +32,8 @@ export const WinnersTemplate = ({
     setQuery(e.target.value)
 
   const firstPages = data.allPaginatedCollectionPage.nodes
-  const initialPage = data!.paginatedCollectionPage
-  const firstPageId = initialPage!.id
+  const initialPage = data.paginatedCollectionPage
+  const firstPageId = initialPage?.id
   const initialCollection = firstPages.find(fp => fp.id === firstPageId)
     ?.collection
 
