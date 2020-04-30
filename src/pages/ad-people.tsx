@@ -5,17 +5,20 @@ import { Helmet } from 'react-helmet-async'
 import { AdPeoplePageQuery } from '../graphqlTypes'
 
 import { t, mq, linearScale } from '../theme'
+import { MessageSlice } from '../slices/MessageSlice'
+
 import { Layout, LayoutProps } from '../components/Layout'
 import { Heading } from '../components/Heading'
 import { BoundedBox } from '../components/BoundedBox'
-import { LargePersonCard } from '../components/LargePersonCard'
+
+// import { LargePersonCard } from '../components/LargePersonCard'
 
 export type AdPeoplePageProps = LayoutProps & {
   data: AdPeoplePageQuery
 }
 
 export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
-  const people = data.allAirtableAdPerson.nodes
+  // const people = data.allAirtableAdPerson.nodes
 
   return (
     <Layout {...props}>
@@ -32,7 +35,15 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
         <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
           Ad People of the Year
         </Heading>
+        {/* temporary message start */}
+        <div css={mq({ marginTop: linearScale('1.5rem', '3.5rem') })}>
+          <MessageSlice textHTML="<p>Ad People is delayed</p>" />
+        </div>
+        {/* temporary message end*/}
       </BoundedBox>
+
+      {/* Disabled due to postponed ad people awards announcement */}
+      {/* 
       <BoundedBox maxWidth="Large" css={{ backgroundColor: t.c.Gray95 }}>
         <ul
           css={mq({
@@ -55,8 +66,9 @@ export const AdPeoplePage = ({ data, ...props }: AdPeoplePageProps) => {
               />
             </li>
           ))}
-        </ul>
+        </ul> 
       </BoundedBox>
+      */}
     </Layout>
   )
 }
