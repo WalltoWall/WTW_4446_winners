@@ -17,7 +17,7 @@ export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
   pageContext: {
     year: string
-    type: 'professional' | 'college' | 'high school'
+    type: 'Professional' | 'College' | 'High School'
     hideSpecialAwards: boolean
   }
 }
@@ -40,8 +40,6 @@ export const AllWinnersTemplate = ({
   const initialPage = data.paginatedCollectionPage
   const firstPageId = initialPage?.id
   const isInitialPageSelected = firstPageId === initialPage?.id
-
-  console.log({ pageContext, bestOfWinners, judgesWinners })
 
   return (
     <Layout {...props}>
