@@ -303,7 +303,7 @@ exports.createPages = async gatsbyContext => {
       winners: professionalWinners,
       name: 'winners',
       pathPrefix: 'winners',
-      type: 'professional',
+      type: 'Professional',
       year,
       createNode,
       createNodeId,
@@ -316,7 +316,7 @@ exports.createPages = async gatsbyContext => {
       winners: collegeWinners,
       name: 'collegeWinners',
       pathPrefix: 'college',
-      type: 'college',
+      type: 'College',
       year,
       createNode,
       createNodeId,
@@ -329,7 +329,7 @@ exports.createPages = async gatsbyContext => {
       winners: highSchoolWinners,
       name: 'highSchoolWinners',
       pathPrefix: 'high-school',
-      type: 'high school',
+      type: 'High School',
       year,
       createNode,
       createNodeId,
@@ -350,7 +350,7 @@ exports.createPages = async gatsbyContext => {
       collectionRegex: new RegExp(`^winners/${years[0]}/`).toString(),
       year: years[0],
       pathPrefix: 'winners',
-      type: 'professional',
+      type: 'Professional',
     },
   })
 
@@ -366,7 +366,7 @@ exports.createPages = async gatsbyContext => {
       year: years[0],
       hideSpecialAwards: true,
       pathPrefix: 'college',
-      type: 'college',
+      type: 'College',
     },
   })
 
@@ -382,7 +382,7 @@ exports.createPages = async gatsbyContext => {
       year: years[0],
       hideSpecialAwards: true,
       pathPrefix: 'high-school',
-      type: 'high school',
+      type: 'High School',
     },
   })
 
