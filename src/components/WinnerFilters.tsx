@@ -12,15 +12,15 @@ import { FormSearchInput } from '../components/FormSearchInput'
 import { BoundedBox } from '../components/BoundedBox'
 
 const variants = {
-  professional: {
+  Professional: {
     heading: 'Winners',
     pathPrefix: 'winners/',
   },
-  college: {
+  College: {
     heading: 'College Winners',
     pathPrefix: 'college',
   },
-  'high school': {
+  'High School': {
     heading: 'High School Winners',
     pathPrefix: 'high-school',
   },
@@ -71,6 +71,8 @@ export const WinnerFilters = ({
 
     navigate(`/${variant.pathPrefix}/${year}/${categorySlug}/`)
   }
+
+  console.log(variant)
 
   return (
     <BoundedBox
