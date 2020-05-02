@@ -5,7 +5,7 @@ import { Award, Agency } from '../types'
 import { t, mq } from '../theme'
 
 import { CardList } from '../components/CardList'
-import { WinnerCard } from '../components/WinnerCard'
+import { WinnerCard, WinnerCardProps } from '../components/WinnerCard'
 import { Heading } from '../components/Heading'
 import { Anchor } from '../components/Anchor'
 
@@ -43,7 +43,6 @@ export const SpecialWinners = ({
           subtitle={overallWinner?.data?.special_award}
           award={overallWinner?.data?.award?.toLowerCase?.() as Award}
           imageFluid={overallWinner?.fields?.featured_image?.fluid}
-          isSpecialAward={true}
           isNationalWinner={overallWinner?.data?.national_winner}
           videoUrl={overallWinner?.data?.special_award_video}
           agencies={
@@ -73,7 +72,6 @@ export const SpecialWinners = ({
               subtitle={winner?.data?.special_award}
               award={winner?.data?.award?.toLowerCase?.() as Award}
               imageFluid={winner?.fields?.featured_image?.fluid}
-              isSpecialAward={true}
               isNationalWinner={winner?.data?.national_winner}
               videoUrl={winner?.data?.special_award_video}
               agencies={agencies}
