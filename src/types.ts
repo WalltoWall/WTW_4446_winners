@@ -19,6 +19,7 @@ export interface Winner {
   agencies: Agency[]
   nationalWinner: boolean
   nmgScholarshipWinner: boolean
+  year?: number
 }
 
 export interface WinnerSearchResult {
