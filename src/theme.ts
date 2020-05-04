@@ -27,6 +27,7 @@ export enum Color {
   Gray95 = '#f5f5f5',
   Red30 = '#9b1229',
   Red40 = '#cf1837',
+  Teal40 = '#6EA89B',
 }
 
 export enum Font {

@@ -77,6 +77,7 @@ export type WinnerCardProps = ViewProps & {
   imageFluid?: FluidObject
   agencies?: Agency[]
   isNationalWinner?: boolean
+  isNmgScholarshipWinner?: boolean
   videoUrl?: string
 }
 
@@ -90,9 +91,13 @@ export const WinnerCard = ({
   imageFluid,
   agencies = [],
   isNationalWinner,
+  isNmgScholarshipWinner,
   videoUrl,
   ...props
 }: WinnerCardProps) => {
+  console.log('fooo ', isNationalWinner)
+  console.log('booo ', isNmgScholarshipWinner)
+
   const variant = variants[variantName]
 
   return (
@@ -136,6 +141,18 @@ export const WinnerCard = ({
               })}
             >
               2020 National Winner
+            </Ribbon>
+          )}
+          {isNmgScholarshipWinner && (
+            <Ribbon
+              variant="teal"
+              css={mq({
+                position: 'absolute',
+                right: 0,
+                top: linearScale('1rem', '1.5rem'),
+              })}
+            >
+              NMG Scholarship Winner
             </Ribbon>
           )}
           {videoUrl && <VideoPlayButton src={videoUrl} />}

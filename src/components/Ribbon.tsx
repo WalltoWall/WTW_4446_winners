@@ -4,9 +4,27 @@ import { t, mq, linearScale } from '../theme'
 
 export type RibbonProps = {
   children: string
+  variant?: keyof typeof variants
 }
 
-export const Ribbon = ({ children, ...props }: RibbonProps) => {
+const variants = {
+  red: {
+    borderColor: t.colors.Red40,
+    backgroundColor: t.colors.Red40,
+  },
+  teal: {
+    borderColor: t.colors.Teal40,
+    backgroundColor: t.colors.Teal40,
+  },
+}
+
+export const Ribbon = ({
+  children,
+  variant: variantName = 'red',
+  ...props
+}: RibbonProps) => {
+  const variant = variants[variantName]
+
   return (
     <span
       {...props}
@@ -21,8 +39,8 @@ export const Ribbon = ({ children, ...props }: RibbonProps) => {
         css={mq({
           backgroundColor: 'transparent',
           width: '10px',
-          borderTop: `1.5em solid ${t.colors.Red40}`,
-          borderBottom: `1.5em solid ${t.colors.Red40}`,
+          borderTop: `1.5em solid ${variant.borderColor}`,
+          borderBottom: `1.5em solid ${variant.borderColor}`,
           borderLeft: '1em solid transparent',
         })}
       />
@@ -30,7 +48,7 @@ export const Ribbon = ({ children, ...props }: RibbonProps) => {
         css={mq({
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: t.colors.Red40,
+          backgroundColor: variant.backgroundColor,
           padding: linearScale('0.5rem', '0.75rem'),
         })}
       >

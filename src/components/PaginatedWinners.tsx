@@ -33,6 +33,8 @@ export const PaginatedWinners = ({
     (latestPage?.index === 0 || latestPage?.index === undefined) && !hasNextPage
   const hasWinners = winners.length > 0
 
+  console.log({ winners })
+
   return (
     <View
       css={mq({
@@ -53,6 +55,7 @@ export const PaginatedWinners = ({
                 imageFluid={winner.imageFluid}
                 agencies={winner.agencies}
                 isNationalWinner={winner.nationalWinner}
+                isNmgScholarshipWinner={winner.nmgScholarshipWinner}
               />
             ))}
           </CardList>
