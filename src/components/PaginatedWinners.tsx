@@ -56,6 +56,7 @@ export const PaginatedWinners = ({
                 agencies={winner.agencies}
                 isNationalWinner={winner.nationalWinner}
                 isNmgScholarshipWinner={winner.nmgScholarshipWinner}
+                year={winner.year}
               />
             ))}
           </CardList>

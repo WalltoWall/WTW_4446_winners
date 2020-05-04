@@ -3,8 +3,8 @@ import React from 'react'
 import { t, mq, linearScale } from '../theme'
 
 export type RibbonProps = {
-  children: string
   variant?: keyof typeof variants
+  children: React.ReactNode
 }
 
 const variants = {
