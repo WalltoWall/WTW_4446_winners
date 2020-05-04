@@ -177,7 +177,9 @@ module.exports = {
         engine: 'lunr',
         query: `
           query {
-            allAirtableWinner {
+            allAirtableWinner(
+              filter: { data: { type: { in: ["Professional", "College"] } } }
+            ) {
               nodes {
                 recordId
                 fields {
@@ -196,6 +198,7 @@ module.exports = {
                   award
                   year
                   tags
+                  type
                   category {
                     data {
                       line_1
@@ -228,6 +231,7 @@ module.exports = {
           'name',
           'award',
           'year',
+          'type',
           'categoryLine1',
           'agencyName',
           'agencyUrl',
@@ -244,6 +248,7 @@ module.exports = {
               year: dlv(node, ['data', 'year']),
               award: dlv(node, ['data', 'award']),
               tags: (dlv(node, ['data', 'tags']) || []).join(' '),
+              type: dlv(node, ['data', 'type']),
               categoryLine1: dlv(node, [
                 'data',
                 'category',
