@@ -3,7 +3,7 @@ import React from 'react'
 import { t, mq, linearScale } from '../theme'
 
 export type RibbonProps = {
-  children: string
+  children: React.ReactNode
 }
 
 export const Ribbon = ({ children, ...props }: RibbonProps) => {

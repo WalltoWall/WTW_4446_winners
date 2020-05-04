@@ -18,6 +18,7 @@ export interface Winner {
   imageFluid?: FluidObject
   agencies: Agency[]
   nationalWinner: boolean
+  year?: number
 }
 
 export interface WinnerSearchResult {
