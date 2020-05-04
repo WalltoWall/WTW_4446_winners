@@ -34,6 +34,7 @@ export const WinnerCardFeatured = ({
   imageFluid,
   agencies = [],
   isNationalWinner,
+  year,
   ...props
 }: WinnerCardFeaturedProps) => {
   const variant = variants[variantName]
@@ -55,6 +56,7 @@ export const WinnerCardFeatured = ({
         y={variant.imageAspectRatioY}
         imageFluid={imageFluid}
         isNationalWinner={isNationalWinner}
+        year={year}
         variant="wide"
       />
 
