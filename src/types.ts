@@ -29,6 +29,7 @@ export interface WinnerSearchResult {
   categoryLine1: string
   agencies: Agency[]
   imageFluid?: FluidObject
+  type: 'Professional' | 'College' | 'High School'
 }
 
 export interface AdPersonSearchResult {

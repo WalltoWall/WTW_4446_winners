@@ -16,7 +16,7 @@ export type WinnersTemplateProps = LayoutProps & {
   data: WinnersTemplateQuery
   pageContext: {
     year: string
-    type: 'professional' | 'college' | 'high school'
+    type: 'Professional' | 'College' | 'High School'
   }
 }
 
@@ -58,6 +58,8 @@ export const WinnersTemplate = ({
           query={query}
           filterOptions={{
             category: trimCollectionNamespace(initialCollection?.name),
+            year: pageContext.year,
+            type: pageContext.type,
           }}
         />
       ) : (
