@@ -77,7 +77,8 @@ const reducer = (state: State, action: Action): State => {
       const latestPage = action.payload as Partial<ExpandedPageNode>
       const items = [...state.items, ...(latestPage?.nodes ?? [])]
 
-      // doc this
+      // We assert here since latestPage's types are possibly undefined
+      // because of codegen. In reality, these fields should be available.
       cache.set(latestPage!.collection!.id, {
         items,
         latestPage,
