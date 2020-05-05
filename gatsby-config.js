@@ -177,7 +177,9 @@ module.exports = {
         engine: 'lunr',
         query: `
           query {
-            allAirtableWinner {
+            allAirtableWinner(
+              filter: { data: { type: { in: ["Professional", "College"] } } }
+            ) {
               nodes {
                 recordId
                 fields {
@@ -197,6 +199,7 @@ module.exports = {
                   year
                   tags
                   special_award
+                  type
                   category {
                     data {
                       line_1
@@ -230,6 +233,7 @@ module.exports = {
           'award',
           'specialAward',
           'year',
+          'type',
           'categoryLine1',
           'agencyName',
           'agencyUrl',
@@ -247,6 +251,7 @@ module.exports = {
               award: dlv(node, ['data', 'award']),
               specialAward: dlv(node, ['data', 'special_award']),
               tags: (dlv(node, ['data', 'tags']) || []).join(' '),
+              type: dlv(node, ['data', 'type']),
               categoryLine1: dlv(node, [
                 'data',
                 'category',
@@ -269,6 +274,6 @@ module.exports = {
       },
     },
     'gatsby-plugin-remove-fingerprints',
-    'gatsby-plugin-netlify',
+    'gatsby-plugin-netlify-cache',
   ].filter(Boolean),
 }

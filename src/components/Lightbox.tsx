@@ -90,7 +90,7 @@ const Media = () => {
             background: t.colors.Black,
           })}
         >
-          <VimeoVideo src={src! as string} />
+          <VimeoVideo src={src! as string} autoplay={true} />
         </AspectRatio>
       )
     case LIGHTBOX_TYPE.IMAGE:

@@ -31,6 +31,7 @@ export interface WinnerSearchResult {
   specialAward: string[]
   agencies: Agency[]
   imageFluid?: FluidObject
+  type: 'Professional' | 'College' | 'High School'
 }
 
 export interface AdPersonSearchResult {

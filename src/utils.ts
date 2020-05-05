@@ -3,12 +3,28 @@ export const IS_BROWSER = typeof window !== 'undefined'
 export const trimCollectionNamespace = (collectionName: string = '') =>
   collectionName.split('/').slice(2).join('/')
 
-export const convertVimeoLinkToIframeSrc = (vimeoLink: string) => {
-  if (vimeoLink.includes('showcase')) {
-    return vimeoLink + '/embed'
-  }
+type VimeoOptions = {
+  autoplay: boolean
+}
+/**
+ * Converts the provided vimeo video URL into a valid embed string
+ * to be used in an `<iframe>`.
+ *
+ * @param vimeoLik - The link to convert.
+ *
+ * @returns A string for use in an `<iframe>` to embed the video.
+ */
+export const convertVimeoLinkToIframeSrc = (
+  vimeoLink: string,
+  options?: VimeoOptions,
+) => {
+  if (vimeoLink.includes('showcase')) return vimeoLink + '/embed'
 
-  return vimeoLink.replace('vimeo.com', 'player.vimeo.com/video')
+  let embedLink = vimeoLink.replace('vimeo.com', 'player.vimeo.com/video')
+
+  if (options?.autoplay) embedLink += '?autoplay=1'
+
+  return embedLink
 }
 
 /**

@@ -58,7 +58,13 @@ export const AllWinnersTemplate = ({
       />
 
       {query.length >= 1 ? (
-        <PaginatedSearchResults query={query} />
+        <PaginatedSearchResults
+          query={query}
+          filterOptions={{
+            year: pageContext.year,
+            type: pageContext.type,
+          }}
+        />
       ) : (
         <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage}>
           {isInitialPageSelected && (
