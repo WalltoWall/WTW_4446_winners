@@ -112,7 +112,7 @@ export const WinnerCardFeatured = ({
             css={mq({
               width: linearScale('.6rem', '.7rem', 'space'),
               color: 'inherit',
-              transform: 'translateX(1px)',
+              transform: 'translateX(15%)',
             })}
           />
         </div>
