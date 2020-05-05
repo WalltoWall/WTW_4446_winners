@@ -18,6 +18,7 @@ export const WinnerCardBasic = ({
   imageFluid,
   agencies = [],
   isNationalWinner,
+  isNmgScholarshipWinner,
   year,
   ...props
 }: WinnerCardBasicProps) => {
@@ -38,6 +39,7 @@ export const WinnerCardBasic = ({
         y={3}
         imageFluid={imageFluid}
         isNationalWinner={isNationalWinner}
+        isNmgScholarshipWinner={isNmgScholarshipWinner}
         year={year}
       />
 

@@ -54,11 +54,13 @@ export const PaginatedSearchResults = ({
   }, [setIndex])
 
   let searchResults = useLunr(query, index, store) as WinnerSearchResult[]
+
   if (filterOptions?.category) {
     searchResults = searchResults.filter(
       result => result.categoryLine1 === filterOptions.category,
     )
   }
+
   if (filterOptions?.year) {
     searchResults = searchResults.filter(
       result => result.year === filterOptions.year,
@@ -92,6 +94,9 @@ export const PaginatedSearchResults = ({
                 title={result.name}
                 subtitle={result.categoryLine1}
                 award={result.award?.toLowerCase() as Award}
+                isNmgScholarshipWinner={result.specialAward?.includes(
+                  'NMG Scholarship',
+                )}
                 href={result.url}
                 imageFluid={result.imageFluid}
                 agencies={result.agencies}

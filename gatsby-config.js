@@ -193,9 +193,10 @@ module.exports = {
                 }
                 data {
                   name
-                  award
+                  award                  
                   year
                   tags
+                  special_award
                   category {
                     data {
                       line_1
@@ -227,6 +228,7 @@ module.exports = {
           'url',
           'name',
           'award',
+          'specialAward',
           'year',
           'categoryLine1',
           'agencyName',
@@ -243,6 +245,7 @@ module.exports = {
               name: dlv(node, ['data', 'name']),
               year: dlv(node, ['data', 'year']),
               award: dlv(node, ['data', 'award']),
+              specialAward: dlv(node, ['data', 'special_award']),
               tags: (dlv(node, ['data', 'tags']) || []).join(' '),
               categoryLine1: dlv(node, [
                 'data',

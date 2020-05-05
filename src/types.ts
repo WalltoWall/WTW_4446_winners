@@ -28,6 +28,7 @@ export interface WinnerSearchResult {
   award: string
   year: string
   categoryLine1: string
+  specialAward: string[]
   agencies: Agency[]
   imageFluid?: FluidObject
 }
