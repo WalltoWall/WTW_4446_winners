@@ -170,8 +170,8 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
           <>
             <HTMLContent
               html={
-                data.homeNationalWinners?.data?.rich_text?.childMarkdownRemark
-                  ?.html
+                data.homeNationalWinnersText?.data?.rich_text
+                  ?.childMarkdownRemark?.html
               }
               css={mq({ color: t.colors.Black, marginBottom: t.spaceScales.s })}
               componentOverrides={{
@@ -192,10 +192,10 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
               }}
             />
 
-            {data.homeButtonHref?.data?.href && (
+            {data.homeNationalWinnersLink?.data?.href && (
               // @ts-ignore
-              <Button as={Link} href={data.homeButtonHref.data.href}>
-                {data.homeButtonText?.data?.plain_text}
+              <Button as={Link} href={data.homeNationalWinnersLink.data.href}>
+                {data.homeNationalWinnersButtonText?.data?.plain_text}
               </Button>
             )}
           </>
@@ -330,62 +330,30 @@ export const query = graphql`
       }
     }
 
-    homeNationalWinners: airtableTextField(
-      data: { uid: { eq: "Home National Winners" } }
-    ) {
-      data {
-        plain_text
-        rich_text {
-          childMarkdownRemark {
-            html
-          }
+    ###
+    # Archives
+    ###
+    archives: allAirtableArchive {
+      nodes {
+        data {
+          link
+          year
         }
       }
     }
-    homeNationalWinnersHref: airtableLink(
-      data: { uid: { eq: "Home National Winners" } }
-    ) {
-      data {
-        href
-      }
-    }
-    homeMessage: airtableTextField(data: { uid: { eq: "Home Message" } }) {
-      data {
-        plain_text
-        rich_text {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-    }
-    # homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
-    #   data {
-    #     visible
-    #     rich_text {
-    #       childMarkdownRemark {
-    #         html
-    #       }
-    #     }
-    #   }
-    # }
-    homeButtonText: airtableTextField(
-      data: { uid: { eq: "Home CTA Button" } }
-    ) {
-      data {
-        plain_text
-      }
-    }
-    homeButtonHref: airtableLink(data: { uid: { eq: "Home CTA Button" } }) {
-      data {
-        href
-      }
-    }
+
+    ###
+    # Home Video
+    ###
     heroVideoHref: airtableLink(data: { uid: { eq: "Hero Video" } }) {
       data {
         href
       }
     }
+
+    ###
+    # Home Hero
+    ###
     homeHeroText: airtableTextField(data: { uid: { eq: "Home Hero Text" } }) {
       data {
         rich_text {
@@ -406,43 +374,73 @@ export const query = graphql`
         }
       }
     }
-    archives: allAirtableArchive {
-      nodes {
-        data {
-          link
-          year
-        }
-      }
-    }
-  }
 
-  fragment SpecialAwardWinner on AirtableWinner {
-    fields {
-      url
-      featured_image {
-        fluid(maxWidth: 600) {
-          ...GatsbyImgixFluid
-        }
-      }
-    }
-    data {
-      name
-      award
-      national_winner
-      special_award
-      special_award_video
-      agency {
-        fields {
-          url
-          avatar {
-            fluid(maxWidth: 80) {
-              ...GatsbyImgixFluid
-            }
+    ###
+    # Home Message
+    ###
+    homeMessage: airtableTextField(data: { uid: { eq: "Home Message" } }) {
+      data {
+        plain_text
+        rich_text {
+          childMarkdownRemark {
+            html
           }
         }
-        data {
-          name
+      }
+    }
+
+    ###
+    # National Winners
+    ###
+    homeNationalWinnersLink: airtableLink(
+      data: { uid: { eq: "Home National Winners" } }
+    ) {
+      data {
+        href
+      }
+    }
+    homeNationalWinnersText: airtableTextField(
+      data: { uid: { eq: "Home National Winners" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
         }
+      }
+    }
+    homeNationalWinnersButtonText: airtableTextField(
+      data: { uid: { eq: "Home National Winners Button" } }
+    ) {
+      data {
+        plain_text
+      }
+    }
+
+    ###
+    # Home CTA
+    ###
+    # homeCtaText: airtableTextField(data: { uid: { eq: "Home CTA" } }) {
+    #   data {
+    #     visible
+    #     rich_text {
+    #       childMarkdownRemark {
+    #         html
+    #       }
+    #     }
+    #   }
+    # }
+    homeButtonText: airtableTextField(
+      data: { uid: { eq: "Home CTA Button" } }
+    ) {
+      data {
+        plain_text
+      }
+    }
+    homeButtonHref: airtableLink(data: { uid: { eq: "Home CTA Button" } }) {
+      data {
+        href
       }
     }
   }

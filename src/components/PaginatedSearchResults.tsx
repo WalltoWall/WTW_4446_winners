@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { withPrefix } from 'gatsby'
 import { useLunr } from 'react-lunr'
 
@@ -17,6 +17,7 @@ export type PaginatedSearchResultsProps = {
   filterOptions?: {
     category?: string
     year?: string
+    type?: 'Professional' | 'College' | 'High School'
   }
 }
 
@@ -53,19 +54,28 @@ export const PaginatedSearchResults = ({
     asyncEffect()
   }, [setIndex])
 
-  let searchResults = useLunr(query, index, store) as WinnerSearchResult[]
+  const searchResults = useLunr(query, index, store) as WinnerSearchResult[]
 
-  if (filterOptions?.category) {
-    searchResults = searchResults.filter(
-      result => result.categoryLine1 === filterOptions.category,
-    )
-  }
+  const filteredSearchResults = useMemo(() => {
+    let _filteredSearchResults = searchResults
 
-  if (filterOptions?.year) {
-    searchResults = searchResults.filter(
-      result => result.year === filterOptions.year,
-    )
-  }
+    if (filterOptions?.category)
+      _filteredSearchResults = _filteredSearchResults.filter(
+        result => result.categoryLine1 === filterOptions.category,
+      )
+
+    if (filterOptions?.year)
+      _filteredSearchResults = _filteredSearchResults.filter(
+        result => result.year === filterOptions.year,
+      )
+
+    if (filterOptions?.type)
+      _filteredSearchResults = _filteredSearchResults.filter(
+        result => result.type === filterOptions.type,
+      )
+
+    return _filteredSearchResults
+  }, [filterOptions, searchResults])
 
   const {
     paginatedCollection,
@@ -74,13 +84,13 @@ export const PaginatedSearchResults = ({
     setPage,
     containerRef,
   } = usePaginatedCollection({
-    collection: searchResults,
+    collection: filteredSearchResults,
     perPage: RESULTS_PER_PAGE,
   })
 
   return (
     <BoundedBox ref={containerRef} css={{ backgroundColor: t.c.Gray95 }}>
-      {searchResults.length > 0 ? (
+      {filteredSearchResults.length > 0 ? (
         <div
           css={mq({
             display: 'grid',
@@ -112,8 +122,8 @@ export const PaginatedSearchResults = ({
           >
             <span css={mq({ fontSize: t.f['b-'] })}>
               Showing {(page - 1) * RESULTS_PER_PAGE + 1}–
-              {Math.min(page * RESULTS_PER_PAGE, searchResults.length)} of{' '}
-              {searchResults.length} results
+              {Math.min(page * RESULTS_PER_PAGE, filteredSearchResults.length)}{' '}
+              of {filteredSearchResults.length} results
             </span>
             <PaginationControls
               totalPages={totalPages}
