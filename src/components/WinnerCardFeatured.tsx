@@ -8,6 +8,7 @@ import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
+import { VideoPlayButton } from './VideoPlayButton'
 
 const variants = {
   featured: {
@@ -24,6 +25,8 @@ type WinnerCardFeaturedProps = WinnerCardProps & {
   variant?: 'featured' | 'featuredWide'
 }
 
+const padding = linearScale('1rem', '1.5rem', 'space')
+
 export const WinnerCardFeatured = ({
   variant: variantName = 'featured',
   videoUrl,
@@ -38,6 +41,7 @@ export const WinnerCardFeatured = ({
   ...props
 }: WinnerCardFeaturedProps) => {
   const variant = variants[variantName]
+  console.log(videoUrl, title)
 
   return (
     <View
@@ -59,6 +63,52 @@ export const WinnerCardFeatured = ({
         year={year}
         variant="wide"
       />
+      <div
+        css={mq({
+          display: 'flex',
+          alignItems: 'center',
+          borderBottom: '1px solid',
+          borderColor: t.colors.Gray90,
+          paddingLeft: padding,
+          paddingRight: padding,
+          paddingTop: linearScale('.75rem', '.75rem', 'space'),
+          paddingBottom: linearScale('.75rem', '.75rem', 'space'),
+        })}
+      >
+        {videoUrl && (
+          <VideoPlayButton
+            src={videoUrl}
+            css={mq({
+              flexShrink: 0,
+              marginRight: t.spaceScales.t,
+            })}
+          />
+        )}
+
+        {subtitle && (
+          <div>
+            <Subheading
+              forwardedAs="h4"
+              css={mq({
+                fontSize: t.fontSizeScales.b,
+                marginBottom: videoUrl && '.125rem',
+              })}
+            >
+              {subtitle}
+            </Subheading>
+            {videoUrl && (
+              <p
+                css={mq({
+                  color: t.colors.Gray50,
+                  fontSize: t.fontSizeScales.b,
+                })}
+              >
+                Watch the presentation
+              </p>
+            )}
+          </div>
+        )}
+      </div>
 
       <div
         className="metadata"
@@ -70,7 +120,7 @@ export const WinnerCardFeatured = ({
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
-          padding: linearScale('1rem', '1.5rem', 'space'),
+          padding,
           boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}
@@ -79,21 +129,11 @@ export const WinnerCardFeatured = ({
           css={mq({
             display: 'grid',
             gap: linearScale('0.375rem', '0.5rem', 'space'),
-            gridTemplateRows: ['auto', 'auto auto 1fr'],
+            gridTemplateRows: ['auto', 'auto auto'],
             alignItems: ['center', 'start'],
             textAlign: 'inherit',
           })}
         >
-          {subtitle && (
-            <Subheading
-              forwardedAs="h4"
-              css={mq({
-                fontSize: t.fontSizeScales.b,
-              })}
-            >
-              {subtitle}
-            </Subheading>
-          )}
           {title && (
             <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
               <Anchor className="title-link" href={href}>
