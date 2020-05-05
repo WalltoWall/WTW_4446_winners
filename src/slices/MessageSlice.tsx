@@ -18,7 +18,6 @@ export const MessageSlice = ({ textHTML, quotee }: MessageSliceProps) => {
       css={{
         backgroundColor: t.colors.Red40,
         color: t.colors.White,
-        textAlign: 'center',
       }}
     >
       <div css={mq({ display: 'grid', gap: linearScale('1rem', '1.5rem') })}>
@@ -36,15 +35,11 @@ export const MessageSlice = ({ textHTML, quotee }: MessageSliceProps) => {
                 })}
               />
             ),
-            p: () => props => (
-              <p
-                {...props}
-                css={{
-                  maxWidth: '70ch',
-                  margin: '0 auto',
-                }}
-              />
-            ),
+          }}
+          css={{
+            margin: '0 auto',
+            maxWidth: '70ch',
+            textAlign: 'center',
           }}
         />
         {quotee && <p css={{ fontWeight: 'bold' }}>- {quotee}</p>}
