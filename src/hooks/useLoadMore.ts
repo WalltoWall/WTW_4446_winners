@@ -2,6 +2,11 @@ import { useReducer, useCallback, useEffect, useState } from 'react'
 import { withPrefix } from 'gatsby'
 import { ExpandedPageNode } from 'gatsby-paginated-collection-json-files'
 
+interface CacheValue {
+  items: State['items']
+  latestPage: Partial<ExpandedPageNode>
+}
+
 enum ActionType {
   RestartWithInitialPage,
   Begin,
@@ -27,13 +32,31 @@ interface State {
   error?: Error
 }
 
-const createInitialState = (
-  initialPage?: Partial<ExpandedPageNode>,
-): State => ({
-  type: StateType.Rest,
-  items: initialPage?.nodes ?? [],
-  latestPage: initialPage,
-})
+const cache = new Map<string, CacheValue>()
+
+const createInitialState = (initialPage?: Partial<ExpandedPageNode>): State => {
+  if (!initialPage)
+    return {
+      type: StateType.Rest,
+      items: [],
+      latestPage: initialPage,
+    }
+
+  const cachedData = cache.get(initialPage!.collection!.id!)
+
+  if (!cachedData)
+    return {
+      type: StateType.Rest,
+      items: initialPage?.nodes ?? [],
+      latestPage: initialPage,
+    }
+
+  return {
+    type: StateType.Rest,
+    items: cachedData.items,
+    latestPage: cachedData.latestPage,
+  }
+}
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -51,14 +74,20 @@ const reducer = (state: State, action: Action): State => {
       }
 
     case ActionType.Completed:
+      const latestPage = action.payload as Partial<ExpandedPageNode>
+      const items = [...state.items, ...(latestPage?.nodes ?? [])]
+
+      // doc this
+      cache.set(latestPage!.collection!.id, {
+        items,
+        latestPage,
+      })
+
       return {
         ...state,
         type: StateType.Rest,
-        items: [
-          ...state.items,
-          ...((action.payload as Partial<ExpandedPageNode>)?.nodes ?? []),
-        ],
-        latestPage: action.payload as Partial<ExpandedPageNode>,
+        items,
+        latestPage,
         error: undefined,
       }
   }
@@ -89,7 +118,10 @@ export const useLoadMore = (args: UseLoadMoreArgs) => {
         dispatch({ type: ActionType.Begin })
         const res = await fetch(path)
         const json = await res.json()
-        dispatch({ type: successAction, payload: json })
+        dispatch({
+          type: successAction,
+          payload: json,
+        })
       } catch (error) {
         console.error(error)
         dispatch({ type: ActionType.Failed, payload: error })
