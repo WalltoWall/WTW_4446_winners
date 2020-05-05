@@ -8,7 +8,8 @@ import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
-import { VideoPlayButton } from './VideoPlayButton'
+import { ReactComponent as AssetIconPlaySVG } from '../assets/icon-play.svg'
+import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
 const variants = {
   featured: {
@@ -40,8 +41,14 @@ export const WinnerCardFeatured = ({
   year,
   ...props
 }: WinnerCardFeaturedProps) => {
+  const { setLightbox } = useLightbox()
   const variant = variants[variantName]
-  console.log(videoUrl, title)
+
+  const onClick = () => {
+    if (!videoUrl) return
+
+    setLightbox(videoUrl, LIGHTBOX_TYPE.VIDEO)
+  }
 
   return (
     <View
@@ -76,13 +83,36 @@ export const WinnerCardFeatured = ({
         })}
       >
         {videoUrl && (
-          <VideoPlayButton
-            src={videoUrl}
+          <button
+            onClick={onClick}
             css={mq({
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: linearScale('2rem', '2.25rem', 'space'),
+              height: linearScale('2rem', '2.25rem', 'space'),
+              backgroundColor: t.colors.Gray10,
+              borderRadius: '50%',
+              outline: 'none',
+              transition: 'color .2s ease, background .2s ease',
+              color: t.colors.White,
+
               flexShrink: 0,
               marginRight: t.spaceScales.t,
+              '&:hover, &:focus': {
+                color: t.colors.Red40,
+              },
             })}
-          />
+          >
+            <AssetIconPlaySVG
+              css={mq({
+                width: linearScale('.6rem', '.7rem', 'space'),
+                color: 'inherit',
+
+                transform: 'translateX(2px)',
+              })}
+            />
+          </button>
         )}
 
         {subtitle && (
