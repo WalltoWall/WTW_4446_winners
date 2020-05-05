@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { t } from '../theme'
+import { t, linearScale, mq } from '../theme'
 
 import { ReactComponent as AssetIconPlaySVG } from '../assets/icon-play.svg'
 import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
@@ -8,6 +8,8 @@ import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 export type VideoPlayButtonProps = {
   src: string
 }
+
+const SIZE = linearScale('2rem', '2.25rem', 'space')
 
 /**
  * This component breaks some good styling conventions like having `position`
@@ -35,47 +37,32 @@ export const VideoPlayButton = ({ src, ...props }: VideoPlayButtonProps) => {
   return (
     <button
       onClick={onClick}
-      css={{
-        position: 'absolute',
+      {...props}
+      css={mq({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        width: SIZE,
+        height: SIZE,
+        backgroundColor: t.colors.Gray10,
+        borderRadius: '50%',
+        outline: 'none',
+        transition: 'color .2s ease, background .2s ease',
+        color: t.colors.White,
 
         '&:hover, &:focus': {
-          '.play-button': {
-            backgroundColor: t.colors.Gray85,
-          },
+          color: t.colors.Red40,
         },
-      }}
+      })}
     >
-      <div
-        {...props}
-        className="play-button"
-        css={{
-          display: 'flex',
-          width: '3rem',
-          height: '3rem',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: t.colors.White,
-          borderRadius: '50%',
-          outline: 'none',
-          transition: 'background .2s ease',
-        }}
-      >
-        <AssetIconPlaySVG
-          css={{
-            width: '.75rem',
-            color: t.colors.Black,
-            transform: 'translateX(2px)',
-          }}
-        />
-      </div>
+      <AssetIconPlaySVG
+        css={mq({
+          width: linearScale('.6rem', '.7rem', 'space'),
+          color: 'inherit',
+
+          transform: 'translateX(2px)',
+        })}
+      />
     </button>
   )
 }
