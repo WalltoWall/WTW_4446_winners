@@ -70,7 +70,8 @@ export const WinnerCardFeatured = ({
         year={year}
         variant="wide"
       />
-      <div
+      <button
+        onClick={onClick}
         css={mq({
           display: 'flex',
           alignItems: 'center',
@@ -80,40 +81,41 @@ export const WinnerCardFeatured = ({
           paddingRight: padding,
           paddingTop: linearScale('.75rem', '.75rem', 'space'),
           paddingBottom: linearScale('.75rem', '.75rem', 'space'),
+          cursor: videoUrl ? 'pointer' : 'not-allowed',
+
+          '&:hover, &:focus': {
+            '.play-button': {
+              backgroundColor: videoUrl ? t.colors.Red40 : t.colors.Gray70,
+            },
+          },
         })}
       >
-        {videoUrl && (
-          <button
-            onClick={onClick}
+        <div
+          className="play-button"
+          css={mq({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: linearScale('2rem', '2.25rem', 'space'),
+            height: linearScale('2rem', '2.25rem', 'space'),
+            backgroundColor: videoUrl ? t.colors.Gray10 : t.colors.Gray70,
+            borderRadius: '50%',
+            outline: 'none',
+            transition: 'background .2s ease',
+            color: t.colors.White,
+            flexShrink: 0,
+            marginRight: linearScale('10px', '10px', 'space'),
+            marginLeft: '-.125rem',
+          })}
+        >
+          <AssetIconPlaySVG
             css={mq({
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: linearScale('2rem', '2.25rem', 'space'),
-              height: linearScale('2rem', '2.25rem', 'space'),
-              backgroundColor: t.colors.Gray10,
-              borderRadius: '50%',
-              outline: 'none',
-              transition: 'color .2s ease, background .2s ease',
-              color: t.colors.White,
-
-              flexShrink: 0,
-              marginRight: t.spaceScales.t,
-              '&:hover, &:focus': {
-                color: t.colors.Red40,
-              },
+              width: linearScale('.6rem', '.7rem', 'space'),
+              color: 'inherit',
+              transform: 'translateX(1px)',
             })}
-          >
-            <AssetIconPlaySVG
-              css={mq({
-                width: linearScale('.6rem', '.7rem', 'space'),
-                color: 'inherit',
-
-                transform: 'translateX(2px)',
-              })}
-            />
-          </button>
-        )}
+          />
+        </div>
 
         {subtitle && (
           <div>
@@ -126,19 +128,17 @@ export const WinnerCardFeatured = ({
             >
               {subtitle}
             </Subheading>
-            {videoUrl && (
-              <p
-                css={mq({
-                  color: t.colors.Gray50,
-                  fontSize: t.fontSizeScales.b,
-                })}
-              >
-                Watch the presentation
-              </p>
-            )}
+            <p
+              css={mq({
+                color: t.colors.Gray50,
+                fontSize: t.fontSizeScales['b-'],
+              })}
+            >
+              {videoUrl ? 'Watch the presentation' : 'Video unavailable'}
+            </p>
           </div>
         )}
-      </div>
+      </button>
 
       <div
         className="metadata"
