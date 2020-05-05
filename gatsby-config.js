@@ -271,6 +271,6 @@ module.exports = {
       },
     },
     'gatsby-plugin-remove-fingerprints',
-    'gatsby-plugin-netlify',
+    'gatsby-plugin-netlify-cache',
   ].filter(Boolean),
 }
