@@ -1,7 +1,7 @@
 import React from 'react'
 import { negateScale } from 'styled-system-scale'
 
-import { Tag as TagType, Agency } from '../types'
+import { Tag as TagType, Agency, Award } from '../types'
 
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from './View'
@@ -10,6 +10,12 @@ import { Heading } from './Heading'
 import { HTMLContent } from './HTMLContent'
 import { Tag } from './Tag'
 import { AgencyIdentifier } from './AgencyIdentifier'
+
+const awardTexts: Record<Award, string> = {
+  bronze: 'Bronze',
+  silver: 'Silver',
+  gold: 'Pele Gold',
+}
 
 const variants = {
   professional: {
@@ -27,7 +33,7 @@ const variants = {
 type WinnerInfoProps = ViewProps & {
   variant: keyof typeof variants
   award: AwardIconProps['type']
-  specialAward?: string
+  specialAward?: string[]
   year?: string
   categoryLine1?: string
   categoryLine2?: string
@@ -53,6 +59,7 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
   const variant = variants[variantName]
   const hasTags = tags.length > 0
   const hasMultipleAgencies = agencies.length > 1
+  const awardText = awardTexts[award]
 
   return (
     <View
@@ -91,14 +98,14 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
             type={award}
             css={mq({ width: linearScale('0.8125rem', '1.25rem') })}
           />
-          {specialAward && (
+          {(specialAward || awardText) && (
             <Heading
               css={{
-                color: t.c.Red40,
+                color: specialAward ? t.c.Red40 : t.c.Black,
                 lineHeight: t.lh.Solid,
               }}
             >
-              {specialAward}
+              {specialAward ?? awardText}
             </Heading>
           )}
         </div>

@@ -132,7 +132,7 @@ export const WinnerTemplate = ({ data, ...props }: WinnerTemplate) => {
               winner?.data?.type === 'Professional' ? 'professional' : 'student'
             }
             award={winner?.data?.award?.toLowerCase?.() as Award}
-            specialAward={winner?.data?.special_award}
+            specialAward={winner?.data?.special_award as string[]}
             year={winner?.data?.year}
             categoryLine1={category?.line_1}
             categoryLine2={category?.line_2}

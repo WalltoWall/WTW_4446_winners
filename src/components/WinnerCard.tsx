@@ -51,7 +51,7 @@ export const WinnerCardImageLink = ({
       href={href}
       tabIndex={-1}
       css={mq({
-        '&:hover + .metadata .title-link, &:focus + .metadata .title-link': {
+        '&:hover ~ .metadata .title-link, &:focus ~ .metadata .title-link': {
           color: t.c.Red40,
         },
         width: variant.width,
