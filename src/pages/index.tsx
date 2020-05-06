@@ -216,8 +216,11 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
             />
 
             {data.homeNationalWinnersLink?.data?.href && (
-              // @ts-ignore
-              <Button as={Link} href={data.homeNationalWinnersLink.data.href}>
+              <Button
+                forwardedAs={Link}
+                href={data.homeNationalWinnersLink.data.href}
+                css={{ display: 'inline-block' }}
+              >
                 {data.homeNationalWinnersButtonText?.data?.plain_text}
               </Button>
             )}
