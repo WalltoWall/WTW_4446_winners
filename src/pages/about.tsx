@@ -59,11 +59,6 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         css={{ paddingBottom: 0 }}
         leftBoxChildren={
           <HTMLContent
-            css={{
-              maxWidth: '42ch',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
             html={
               data.aboutWhiteColoredBox?.data?.rich_text?.childMarkdownRemark
                 ?.html
