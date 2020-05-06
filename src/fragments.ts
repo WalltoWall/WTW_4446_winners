@@ -20,7 +20,7 @@ export const fragments = graphql`
         fields {
           url
           avatar {
-            fluid(maxWidth: 80) {
+            fluid(maxWidth: 40) {
               ...GatsbyImgixFluid
             }
           }

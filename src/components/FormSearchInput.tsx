@@ -41,6 +41,7 @@ export const FormSearchInput = React.forwardRef(
         value={value}
         onChange={onChange}
         defaultValue={defaultValue}
+        aria-label={props['aria-label']}
         css={mq({
           paddingLeft: linearScale('2rem', '2.5rem', 'space'),
           fontSize: 'inherit',
