@@ -8,7 +8,6 @@ import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
-import { ReactComponent as AssetIconPlaySVG } from '../assets/icon-play.svg'
 import { PlayButton } from '../components/PlayButton'
 import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
@@ -137,7 +136,10 @@ export const WinnerCardFeatured = ({
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
-          padding,
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
+          paddingLeft: padding,
+          paddingRight: padding,
           boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}
