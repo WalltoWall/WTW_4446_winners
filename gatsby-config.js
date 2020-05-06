@@ -273,7 +273,6 @@ module.exports = {
             })),
       },
     },
-    'gatsby-plugin-remove-fingerprints',
     'gatsby-plugin-netlify-cache',
   ].filter(Boolean),
 }

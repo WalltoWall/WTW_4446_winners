@@ -2195,8 +2195,8 @@ export type AirtableWinnerData = {
   images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
-  national_winner?: Maybe<Scalars['Boolean']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  national_winner?: Maybe<Scalars['Boolean']>;
   video?: Maybe<Scalars['String']>;
   video_thumbnail?: Maybe<Array<Maybe<AirtableWinnerDataVideo_Thumbnail>>>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
@@ -2234,8 +2234,8 @@ export type AirtableWinnerDataFilterInput = {
   images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
-  national_winner?: Maybe<BooleanQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  national_winner?: Maybe<BooleanQueryOperatorInput>;
   video?: Maybe<StringQueryOperatorInput>;
   video_thumbnail?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterListInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
@@ -2556,8 +2556,8 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataEntries = 'data___category___data___Entries',
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
-  DataNationalWinner = 'data___national_winner',
   DataTags = 'data___tags',
+  DataNationalWinner = 'data___national_winner',
   DataVideo = 'data___video',
   DataVideoThumbnail = 'data___video_thumbnail',
   DataVideoThumbnailId = 'data___video_thumbnail___id',
@@ -2619,8 +2619,8 @@ export enum AirtableWinnerFieldsEnum {
   DataShowWithDataImages = 'data___show_with___data___images',
   DataShowWithDataClient = 'data___show_with___data___client',
   DataShowWithDataCategory = 'data___show_with___data___category',
-  DataShowWithDataNationalWinner = 'data___show_with___data___national_winner',
   DataShowWithDataTags = 'data___show_with___data___tags',
+  DataShowWithDataNationalWinner = 'data___show_with___data___national_winner',
   DataShowWithDataVideo = 'data___show_with___data___video',
   DataShowWithDataVideoThumbnail = 'data___show_with___data___video_thumbnail',
   DataShowWithDataShowWith = 'data___show_with___data___show_with',
@@ -2716,8 +2716,8 @@ export enum AirtableWinnerFieldsEnum {
   FieldsChildrenDataImages = 'fields___children___data___images',
   FieldsChildrenDataClient = 'fields___children___data___client',
   FieldsChildrenDataCategory = 'fields___children___data___category',
-  FieldsChildrenDataNationalWinner = 'fields___children___data___national_winner',
   FieldsChildrenDataTags = 'fields___children___data___tags',
+  FieldsChildrenDataNationalWinner = 'fields___children___data___national_winner',
   FieldsChildrenDataVideo = 'fields___children___data___video',
   FieldsChildrenDataVideoThumbnail = 'fields___children___data___video_thumbnail',
   FieldsChildrenDataShowWith = 'fields___children___data___show_with',
@@ -6379,6 +6379,11 @@ export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ fields?:
         & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
       )> }> } };
 
+export type OrganizerMessagesPageQueryVariables = {};
+
+
+export type OrganizerMessagesPageQuery = { organizer1Letter?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer1Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, organizer2Letter?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer2Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }> };
+
 export type IndexPageQueryVariables = {};
 
 
@@ -6388,10 +6393,7 @@ export type IndexPageQuery = { bestOfWinners: { nodes: Array<SpecialAwardWinnerF
       )>, data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
         & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>> }
-      )> }> }, overallJudgesWinner?: Maybe<SpecialAwardWinnerFragment>, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> }, heroVideoHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeHeroImage?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, homeMessage?: Maybe<{ data?: Maybe<(
-      Pick<AirtableTextFieldData, 'plain_text'>
-      & { rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
-    )> }>, meetTheJudgesText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, meetTheJudgesVideoLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, meetTheJudgesThumbnail?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, homeNationalWinnersLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeNationalWinnersText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeNationalWinnersButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
+      )> }> }, overallJudgesWinner?: Maybe<SpecialAwardWinnerFragment>, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> }, heroVideoHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1LetterExcerpt?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer1Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, organizer2LetterExcerpt?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer2Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, meetTheJudgesText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, meetTheJudgesVideoLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, meetTheJudgesThumbnail?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, homeNationalWinnersLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeNationalWinnersText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeNationalWinnersButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
 
 export type AgencyTemplateQueryVariables = {
   recordId: Scalars['String'];
