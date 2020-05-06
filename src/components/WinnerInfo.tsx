@@ -12,8 +12,8 @@ import { Tag } from './Tag'
 import { AgencyIdentifier } from './AgencyIdentifier'
 
 const awardTexts: Record<Award, string> = {
-  bronze: 'Pele Bronze',
-  silver: 'Pele Silver',
+  bronze: 'Bronze',
+  silver: 'Silver',
   gold: 'Pele Gold',
 }
 
@@ -101,11 +101,11 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
           {(specialAward || awardText) && (
             <Heading
               css={{
-                color: t.c.Red40,
+                color: specialAward ? t.c.Red40 : t.c.Black,
                 lineHeight: t.lh.Solid,
               }}
             >
-              {specialAward ? specialAward : awardText}
+              {specialAward ?? awardText}
             </Heading>
           )}
         </div>
