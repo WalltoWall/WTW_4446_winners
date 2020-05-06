@@ -27,9 +27,10 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
       <Icon
         name="chevronDown"
         css={mq({
+          pointerEvents: 'none',
           position: 'absolute',
-          top: '50%',
           right: linearScale('0.6875rem', '1.125rem', 'space'),
+          top: '50%',
           transform: 'translateY(-50%)',
           width: linearScale('0.5rem', '0.75rem'),
         })}
