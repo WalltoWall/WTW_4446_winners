@@ -17,6 +17,7 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
         name={name}
         forwardedAs="select"
         defaultValue={defaultValue}
+        aria-label={props['aria-label']}
         css={mq({
           paddingRight: linearScale('1.75rem', '2.5rem', 'space'),
         })}
