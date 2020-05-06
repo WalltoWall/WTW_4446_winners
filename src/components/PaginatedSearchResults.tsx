@@ -104,6 +104,9 @@ export const PaginatedSearchResults = ({
                 title={result.name}
                 subtitle={result.categoryLine1}
                 award={result.award?.toLowerCase() as Award}
+                isNmgScholarshipWinner={result.specialAward?.includes(
+                  'NMG Scholarship',
+                )}
                 href={result.url}
                 imageFluid={result.imageFluid}
                 agencies={result.agencies}
