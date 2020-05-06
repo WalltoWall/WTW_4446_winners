@@ -1,10 +1,12 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import GatsbyImage, { FluidObject } from 'gatsby-image'
 
-import { t, mq, linearScale } from '../theme'
+import { useKeyPress } from '../hooks/useKeyPress'
+
+import { t, mq } from '../theme'
 import { VimeoVideo } from './VimeoVideo'
 import { AspectRatio } from './AspectRatio'
-import { useKeyPress } from '../hooks/useKeyPress'
+import { BoundedBox } from './BoundedBox'
 
 export enum LIGHTBOX_TYPE {
   IMAGE,
@@ -52,14 +54,12 @@ const Overlay = ({ isVisible, children }: OverlayProps) => {
   useKeyPress('Escape', closeLightbox)
 
   return (
-    <div
+    <BoundedBox
       onClick={closeLightbox}
-      css={mq({
-        padding: linearScale('1rem', '4rem'),
+      maxWidth="Xlarge"
+      css={{
         position: 'fixed',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        zIndex: t.zIndices.Lightbox,
         top: 0,
         bottom: 0,
         left: 0,
@@ -67,12 +67,20 @@ const Overlay = ({ isVisible, children }: OverlayProps) => {
         opacity: isVisible ? 1 : 0,
         pointerEvents: isVisible ? 'auto' : 'none',
         backgroundColor: 'rgba(0, 0, 0, .5)',
-        zIndex: t.zIndices.Lightbox,
         transition: 'opacity .2s linear',
-      })}
+      }}
     >
-      {children}
-    </div>
+      <div
+        css={mq({
+          alignItems: 'center',
+          display: 'flex',
+          height: '100%',
+          justifyContent: 'center',
+        })}
+      >
+        {children}
+      </div>
+    </BoundedBox>
   )
 }
 

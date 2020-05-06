@@ -102,6 +102,7 @@ export const WinnerFilters = ({
             defaultValue={initialYear}
             onChange={handleYearChange}
             ref={yearRef}
+            aria-label="Year"
             css={{ display: years.length > 1 ? 'auto' : 'none' }}
           >
             {years.map(y => (
@@ -115,6 +116,7 @@ export const WinnerFilters = ({
               defaultValue={firstPageId}
               value={firstPageId}
               onChange={handleCategoryChange}
+              aria-label="Category"
             >
               <option value="/">All categories</option>
               {firstPages.map(firstPage => (
@@ -127,6 +129,7 @@ export const WinnerFilters = ({
           <FormSearchInput
             value={query}
             onChange={onQueryChange}
+            aria-label="Search"
             css={mq({ gridColumn: ['1 / -1', 'auto'] })}
           />
         </div>

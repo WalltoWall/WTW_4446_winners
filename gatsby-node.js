@@ -28,7 +28,7 @@ const WINNERS_QUERY = `
         fields {
           url
           featured_image {
-            fluid(maxWidth: 500) {
+            fluid(maxWidth: 400) {
               aspectRatio
               base64
               sizes
@@ -53,7 +53,7 @@ const WINNERS_QUERY = `
             fields {
               url
               avatar {
-                fluid(maxWidth: 80) {
+                fluid(maxWidth: 40) {
                   aspectRatio
                   base64
                   sizes
