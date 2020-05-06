@@ -73,6 +73,7 @@ export const OrganizerMessagesSlice = ({
             display: 'grid',
             gridTemplateColumns: [null, 'repeat(2, 1fr)'],
             gap: linearScale('2rem', '5rem'),
+            alignItems: 'start',
           })}
         >
           {children}
