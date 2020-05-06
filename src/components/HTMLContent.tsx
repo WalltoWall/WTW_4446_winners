@@ -41,12 +41,34 @@ const components: React.ComponentProps<typeof HTMLRenderer>['components'] = {
   ),
   p: props => <View as="p" {...props} css={mq({ ...baseTextCss })} />,
   ul: props => (
-    <ul {...props} css={mq({ ...baseTextCss, listStyle: 'disc' })} />
+    <ul
+      {...props}
+      css={mq({
+        ...baseTextCss,
+        listStyle: 'disc',
+        paddingLeft: linearScale('1rem', '2rem'),
+      })}
+    />
   ),
   ol: props => (
-    <ol {...props} css={mq({ ...baseTextCss, listStyle: 'decimal' })} />
+    <ol
+      {...props}
+      css={mq({
+        ...baseTextCss,
+        listStyle: 'decimal',
+        paddingLeft: linearScale('1rem', '2rem'),
+      })}
+    />
   ),
-  li: props => <li {...props} css={mq({ ...baseTextCss, marginBottom: 0 })} />,
+  li: props => (
+    <li
+      {...props}
+      css={mq({
+        ...baseTextCss,
+        marginBottom: linearScale('0.125rem', '0.25rem'),
+      })}
+    />
+  ),
   // @ts-ignore
   a: ({ href, ...props }: { href: string }) => (
     <Anchor href={href} {...props} />

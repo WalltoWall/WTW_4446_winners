@@ -25,6 +25,7 @@ import { HeroSlice } from '../slices/HeroSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { MessageSlice } from '../slices/MessageSlice'
 import { VideoMessageSlice } from '../slices/VideoMessageSlice'
+import { OrganizerMessagesSlice } from '../slices/OrganizerMessagesSlice'
 
 export type IndexPageProps = LayoutProps & {
   data: IndexPageQuery
@@ -44,13 +45,36 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
       )}
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
-        imageFluid={data.homeHeroImage?.fields?.image?.fluid}
       />
 
-      <MessageSlice
-        textHTML={data.homeMessage?.data?.rich_text?.childMarkdownRemark?.html}
-        quotee={data.homeMessage?.data?.plain_text}
-      />
+      <OrganizerMessagesSlice
+        heading="A Message from Jen & Paul"
+        buttonHref="/from-jen-and-paul/"
+        buttonText="Read full letters here."
+      >
+        <OrganizerMessagesSlice.Message
+          name={data.organizer1Name?.data?.plain_text}
+          titleHTML={
+            data.organizer1Title?.data?.rich_text?.childMarkdownRemark?.html
+          }
+          textHTML={
+            data.organizer1LetterExcerpt?.data?.rich_text?.childMarkdownRemark
+              ?.html
+          }
+          imageFluid={data.organizer1Headshot?.fields?.image?.fluid}
+        />
+        <OrganizerMessagesSlice.Message
+          name={data.organizer2Name?.data?.plain_text}
+          titleHTML={
+            data.organizer2Title?.data?.rich_text?.childMarkdownRemark?.html
+          }
+          textHTML={
+            data.organizer2LetterExcerpt?.data?.rich_text?.childMarkdownRemark
+              ?.html
+          }
+          imageFluid={data.organizer2Headshot?.fields?.image?.fluid}
+        />
+      </OrganizerMessagesSlice>
 
       <BoundedBox
         maxWidth="Xlarge"
@@ -360,27 +384,86 @@ export const query = graphql`
         }
       }
     }
-    homeHeroImage: airtableImageField(
-      data: { uid: { eq: "Home Hero Image" } }
+
+    ###
+    # Organizer Messages
+    ###
+    organizer1LetterExcerpt: airtableTextField(
+      data: { uid: { eq: "Organizer 1 Letter Excerpt" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    organizer1Name: airtableTextField(
+      data: { uid: { eq: "Organizer 1 Name" } }
+    ) {
+      data {
+        plain_text
+      }
+    }
+    organizer1Title: airtableTextField(
+      data: { uid: { eq: "Organizer 1 Title" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    organizer1Headshot: airtableImageField(
+      data: { uid: { eq: "Organizer 1 Headshot" } }
     ) {
       fields {
         image {
-          fluid(maxWidth: 500) {
+          fluid(maxWidth: 100) {
             ...GatsbyImgixFluid
           }
         }
       }
     }
-
-    ###
-    # Home Message
-    ###
-    homeMessage: airtableTextField(data: { uid: { eq: "Home Message" } }) {
+    organizer2LetterExcerpt: airtableTextField(
+      data: { uid: { eq: "Organizer 2 Letter Excerpt" } }
+    ) {
       data {
-        plain_text
         rich_text {
           childMarkdownRemark {
             html
+          }
+        }
+      }
+    }
+    organizer2Name: airtableTextField(
+      data: { uid: { eq: "Organizer 2 Name" } }
+    ) {
+      data {
+        plain_text
+      }
+    }
+    organizer2Title: airtableTextField(
+      data: { uid: { eq: "Organizer 2 Title" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    organizer2Headshot: airtableImageField(
+      data: { uid: { eq: "Organizer 2 Headshot" } }
+    ) {
+      fields {
+        image {
+          fluid(maxWidth: 100) {
+            ...GatsbyImgixFluid
           }
         }
       }
