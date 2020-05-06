@@ -152,6 +152,8 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         textHTML={
           data.meetTheJudgesText?.data?.rich_text?.childMarkdownRemark?.html
         }
+        buttonHref="https://peleawards.com/#judges"
+        buttonText="Read their bios"
         videoUrl={data.meetTheJudgesVideoLink?.data?.href}
         videoThumbnailFluid={data.meetTheJudgesThumbnail?.fields?.image?.fluid}
         css={mq({
