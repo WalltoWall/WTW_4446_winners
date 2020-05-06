@@ -98,7 +98,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         buttonHref={data.aboutButtonHref?.data?.href}
         buttonText={data.aboutButtonText?.data?.plain_text}
         textHTML={data.aboutCtaText?.data?.rich_text?.childMarkdownRemark?.html}
-        isVisible={data.aboutCtaText?.data.visible}
+        isVisible={data.aboutCtaText?.data?.visible}
       />
     </Layout>
   )
