@@ -368,7 +368,6 @@ exports.createPages = async gatsbyContext => {
       collectionName: `collegeWinners/${years[0]}`,
       collectionRegex: new RegExp(`^collegeWinners/${years[0]}/`).toString(),
       year: years[0],
-      hideSpecialAwards: true,
       pathPrefix: 'college',
       type: 'College',
     },
