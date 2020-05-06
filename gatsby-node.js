@@ -85,6 +85,9 @@ const normalizeWinnerNode = node => ({
   award: node.data.award.toLowerCase(),
   year: node.data.year,
   nationalWinner: Boolean(node.data.national_winner),
+  nmgScholarshipWinner: (dlv(node, ['data', 'special_award']) || []).includes(
+    'NMG Scholarship',
+  ),
   year: node.data.year,
   category: dlv(node, ['data', 'category', 0, 'data']),
   imageFluid: dlv(node, ['fields', 'featured_image', 'fluid']),

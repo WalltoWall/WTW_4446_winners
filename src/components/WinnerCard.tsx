@@ -24,6 +24,7 @@ const imageVariants = {
 type WinnerCardImageLinkProps = {
   href: WinnerCardProps['href']
   isNationalWinner?: WinnerCardProps['isNationalWinner']
+  isNmgScholarshipWinner?: WinnerCardProps['isNmgScholarshipWinner']
   year?: number
   imageFluid?: WinnerCardProps['imageFluid']
   title?: WinnerCardProps['title']
@@ -38,6 +39,7 @@ export const WinnerCardImageLink = ({
   title,
   imageFluid,
   isNationalWinner,
+  isNmgScholarshipWinner,
   year,
   x,
   y,
@@ -78,6 +80,18 @@ export const WinnerCardImageLink = ({
             {year} National Winner
           </Ribbon>
         )}
+        {isNmgScholarshipWinner && (
+          <Ribbon
+            variant="teal"
+            css={mq({
+              position: 'absolute',
+              right: 0,
+              top: linearScale('1rem', '1.5rem'),
+            })}
+          >
+            NMG Scholarship Winner
+          </Ribbon>
+        )}
       </AspectRatio>
     </Link>
   )
@@ -87,6 +101,7 @@ export type WinnerCardProps = ViewProps & {
   href: string
   imageFluid?: FluidObject
   isNationalWinner?: boolean
+  isNmgScholarshipWinner?: boolean
   year?: number
   title?: string
   subtitle?: string
@@ -105,6 +120,7 @@ export const WinnerCard = ({
   imageFluid,
   agencies = [],
   isNationalWinner,
+  isNmgScholarshipWinner,
   year,
   videoUrl,
   ...props
@@ -122,6 +138,7 @@ export const WinnerCard = ({
           imageFluid={imageFluid}
           agencies={agencies}
           isNationalWinner={isNationalWinner}
+          isNmgScholarshipWinner={isNmgScholarshipWinner}
           year={year}
           videoUrl={videoUrl}
           {...props}
@@ -137,6 +154,7 @@ export const WinnerCard = ({
           imageFluid={imageFluid}
           agencies={agencies}
           isNationalWinner={isNationalWinner}
+          isNmgScholarshipWinner={isNmgScholarshipWinner}
           year={year}
           {...props}
         />

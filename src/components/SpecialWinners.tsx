@@ -44,6 +44,9 @@ export const SpecialWinners = ({
           award={overallWinner?.data?.award?.toLowerCase?.() as Award}
           imageFluid={overallWinner?.fields?.featured_image?.fluid}
           isNationalWinner={overallWinner?.data?.national_winner}
+          isNmgScholarshipWinner={overallWinner?.data?.special_award?.includes(
+            'NMG Scholarship',
+          )}
           videoUrl={overallWinner?.data?.special_award_video}
           agencies={
             overallWinner?.data?.agency?.map?.(agency => ({
@@ -73,6 +76,9 @@ export const SpecialWinners = ({
               award={winner?.data?.award?.toLowerCase?.() as Award}
               imageFluid={winner?.fields?.featured_image?.fluid}
               isNationalWinner={winner?.data?.national_winner}
+              isNmgScholarshipWinner={winner?.data?.special_award?.includes(
+                'NMG Scholarship',
+              )}
               videoUrl={winner?.data?.special_award_video}
               agencies={agencies}
             />

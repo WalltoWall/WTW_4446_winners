@@ -53,6 +53,7 @@ export const PaginatedWinners = ({
                 imageFluid={winner.imageFluid}
                 agencies={winner.agencies}
                 isNationalWinner={winner.nationalWinner}
+                isNmgScholarshipWinner={winner.nmgScholarshipWinner}
                 year={winner.year}
               />
             ))}
