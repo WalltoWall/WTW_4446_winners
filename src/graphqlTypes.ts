@@ -2196,8 +2196,8 @@ export type AirtableWinnerData = {
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
   national_winner?: Maybe<Scalars['Boolean']>;
-  video?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  video?: Maybe<Scalars['String']>;
   video_thumbnail?: Maybe<Array<Maybe<AirtableWinnerDataVideo_Thumbnail>>>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
   show_with?: Maybe<Array<Maybe<AirtableWinner>>>;
@@ -2235,8 +2235,8 @@ export type AirtableWinnerDataFilterInput = {
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
   national_winner?: Maybe<BooleanQueryOperatorInput>;
-  video?: Maybe<StringQueryOperatorInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  video?: Maybe<StringQueryOperatorInput>;
   video_thumbnail?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterListInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
   show_with?: Maybe<AirtableWinnerFilterListInput>;
@@ -2557,8 +2557,8 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
   DataNationalWinner = 'data___national_winner',
-  DataVideo = 'data___video',
   DataTags = 'data___tags',
+  DataVideo = 'data___video',
   DataVideoThumbnail = 'data___video_thumbnail',
   DataVideoThumbnailId = 'data___video_thumbnail___id',
   DataVideoThumbnailUrl = 'data___video_thumbnail___url',
@@ -2620,8 +2620,8 @@ export enum AirtableWinnerFieldsEnum {
   DataShowWithDataClient = 'data___show_with___data___client',
   DataShowWithDataCategory = 'data___show_with___data___category',
   DataShowWithDataNationalWinner = 'data___show_with___data___national_winner',
-  DataShowWithDataVideo = 'data___show_with___data___video',
   DataShowWithDataTags = 'data___show_with___data___tags',
+  DataShowWithDataVideo = 'data___show_with___data___video',
   DataShowWithDataVideoThumbnail = 'data___show_with___data___video_thumbnail',
   DataShowWithDataShowWith = 'data___show_with___data___show_with',
   DataShowWithDataSpecialAward = 'data___show_with___data___special_award',
@@ -2717,8 +2717,8 @@ export enum AirtableWinnerFieldsEnum {
   FieldsChildrenDataClient = 'fields___children___data___client',
   FieldsChildrenDataCategory = 'fields___children___data___category',
   FieldsChildrenDataNationalWinner = 'fields___children___data___national_winner',
-  FieldsChildrenDataVideo = 'fields___children___data___video',
   FieldsChildrenDataTags = 'fields___children___data___tags',
+  FieldsChildrenDataVideo = 'fields___children___data___video',
   FieldsChildrenDataVideoThumbnail = 'fields___children___data___video_thumbnail',
   FieldsChildrenDataShowWith = 'fields___children___data___show_with',
   FieldsChildrenDataSpecialAward = 'fields___children___data___special_award',
