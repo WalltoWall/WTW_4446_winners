@@ -59,6 +59,11 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         css={{ paddingBottom: 0 }}
         leftBoxChildren={
           <HTMLContent
+            css={{
+              maxWidth: '42ch',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
             html={
               data.aboutWhiteColoredBox?.data?.rich_text?.childMarkdownRemark
                 ?.html
@@ -98,7 +103,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         buttonHref={data.aboutButtonHref?.data?.href}
         buttonText={data.aboutButtonText?.data?.plain_text}
         textHTML={data.aboutCtaText?.data?.rich_text?.childMarkdownRemark?.html}
-        isVisible={data.aboutCtaText?.data.visible}
+        isVisible={data.aboutCtaText?.data?.visible}
       />
     </Layout>
   )
