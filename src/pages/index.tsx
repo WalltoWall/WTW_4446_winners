@@ -44,7 +44,6 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
       )}
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
-        imageFluid={data.homeHeroImage?.fields?.image?.fluid}
       />
 
       <MessageSlice
@@ -356,17 +355,6 @@ export const query = graphql`
         rich_text {
           childMarkdownRemark {
             html
-          }
-        }
-      }
-    }
-    homeHeroImage: airtableImageField(
-      data: { uid: { eq: "Home Hero Image" } }
-    ) {
-      fields {
-        image {
-          fluid(maxWidth: 500) {
-            ...GatsbyImgixFluid
           }
         }
       }
