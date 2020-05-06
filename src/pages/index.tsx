@@ -6,7 +6,7 @@ import { t, mq, linearScale } from '../theme'
 
 import { withLightbox } from '../components/Lightbox'
 // import { PersonCard } from '../components/PersonCard'
-// import { Heading } from '../components/Heading'
+import { Heading } from '../components/Heading'
 import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
