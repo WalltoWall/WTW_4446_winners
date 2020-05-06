@@ -53,7 +53,10 @@ export const WinnerCardBasic = ({
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: ['none', '1fr auto'],
-          padding: linearScale('1rem', '1.25rem', 'space'),
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
+          paddingLeft: linearScale('1rem', '1.25rem', 'space'),
+          paddingRight: linearScale('1rem', '1.25rem', 'space'),
           boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}

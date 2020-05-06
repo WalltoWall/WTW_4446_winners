@@ -2,26 +2,31 @@ import React from 'react'
 
 import { View, ViewProps } from '../components/View'
 import { BoundedBox } from '../components/BoundedBox'
-import { mq, t, linearScale } from '../theme'
+import { mq, t } from '../theme'
 
 const Box = ({ children, ...props }: { children: React.ReactNode }) => {
-  const p = linearScale('40px', '80px', 'space')
-
   return (
-    <View
+    <BoundedBox
       css={mq({
         display: 'flex',
         textAlign: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: p,
         minHeight: [null, null, '25rem', '32rem'],
       })}
+      innerProps={{
+        style: {
+          height: 'auto',
+          maxWidth: '42ch',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        },
+      }}
       {...props}
     >
       {children}
-    </View>
+    </BoundedBox>
   )
 }
 

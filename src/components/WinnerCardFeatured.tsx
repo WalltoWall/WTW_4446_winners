@@ -8,7 +8,7 @@ import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
-import { ReactComponent as AssetIconPlaySVG } from '../assets/icon-play.svg'
+import { PlayButton } from '../components/PlayButton'
 import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
 const variants = {
@@ -92,32 +92,18 @@ export const WinnerCardFeatured = ({
           },
         })}
       >
-        <div
+        <PlayButton
+          forwardedAs="div"
           className="play-button"
           css={mq({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            backgroundColor: t.c.Black,
             width: linearScale('2rem', '2.25rem', 'space'),
             height: linearScale('2rem', '2.25rem', 'space'),
-            backgroundColor: videoUrl ? t.colors.Gray10 : t.colors.Gray70,
-            borderRadius: '50%',
-            outline: 'none',
-            transition: 'background .2s ease',
-            color: t.colors.White,
             flexShrink: 0,
             marginRight: linearScale('10px', '10px', 'space'),
             marginLeft: '-.125rem',
           })}
-        >
-          <AssetIconPlaySVG
-            css={mq({
-              width: linearScale('.6rem', '.7rem', 'space'),
-              color: 'inherit',
-              transform: 'translateX(15%)',
-            })}
-          />
-        </div>
+        />
 
         {subtitle && (
           <div>
@@ -152,7 +138,10 @@ export const WinnerCardFeatured = ({
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
-          padding,
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
+          paddingLeft: padding,
+          paddingRight: padding,
           boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}
