@@ -9,6 +9,8 @@ import { BoundedBox } from '../components/BoundedBox'
 import { HTMLContent } from '../components/HTMLContent'
 import { ImageContainer } from '../components/ImageContainer'
 import { PlayButton } from '../components/PlayButton'
+import { Button } from '../components/Button'
+import { Link } from '../components/Link'
 
 const Box = ({ children, ...props }: { children: React.ReactNode }) => (
   <View
@@ -29,12 +31,16 @@ const Box = ({ children, ...props }: { children: React.ReactNode }) => (
 
 type VideoMessageSliceProps = ViewProps & {
   textHTML?: string
+  buttonHref?: string
+  buttonText?: string
   videoUrl?: string
   videoThumbnailFluid?: FluidObject
 }
 
 export const VideoMessageSlice = ({
   textHTML,
+  buttonHref,
+  buttonText,
   videoUrl: videoSrc,
   videoThumbnailFluid,
   ...props
@@ -60,25 +66,41 @@ export const VideoMessageSlice = ({
         })}
       >
         <Box css={{ background: t.colors.White }}>
-          <HTMLContent
-            html={textHTML}
-            componentOverrides={{
-              h1: Comp => props => (
-                <View
-                  as={Comp}
-                  {...props}
-                  css={mq({
-                    fontSize: t.f.xl,
-                    lineHeight: t.lh.Title,
-                    marginTop: linearScale('2.25rem', '3rem'),
-                    marginBottom: linearScale('1rem', '1.5rem'),
-                    color: t.c.Black,
-                    ...t.boxStyles.firstLastNoMargin,
-                  })}
-                />
-              ),
-            }}
-          />
+          <div
+            css={mq({
+              display: 'grid',
+              gap: linearScale('0.75rem', '1.5rem'),
+            })}
+          >
+            <HTMLContent
+              html={textHTML}
+              componentOverrides={{
+                h1: Comp => props => (
+                  <View
+                    as={Comp}
+                    {...props}
+                    css={mq({
+                      fontSize: t.f.xl,
+                      lineHeight: t.lh.Title,
+                      marginTop: linearScale('2.25rem', '3rem'),
+                      marginBottom: linearScale('1rem', '1.5rem'),
+                      color: t.c.Black,
+                      ...t.boxStyles.firstLastNoMargin,
+                    })}
+                  />
+                ),
+              }}
+            />
+            {buttonHref && (
+              <Button
+                forwardedAs={Link}
+                href={buttonHref}
+                css={{ justifySelf: 'center' }}
+              >
+                {buttonText}
+              </Button>
+            )}
+          </div>
         </Box>
         <Box
           css={{
