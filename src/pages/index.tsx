@@ -5,12 +5,12 @@ import { IndexPageQuery } from '../graphqlTypes'
 import { t, mq, linearScale } from '../theme'
 
 import { withLightbox } from '../components/Lightbox'
-import { PersonCard } from '../components/PersonCard'
-import { Heading } from '../components/Heading'
+// import { PersonCard } from '../components/PersonCard'
+// import { Heading } from '../components/Heading'
 import { Layout, LayoutProps } from '../components/Layout'
 import { BoundedBox } from '../components/BoundedBox'
 import { Anchor } from '../components/Anchor'
-import { CardList } from '../components/CardList'
+// import { CardList } from '../components/CardList'
 import { HTMLContent } from '../components/HTMLContent'
 import { View } from '../components/View'
 import { SpecialWinners } from '../components/SpecialWinners'
@@ -21,7 +21,7 @@ import { ReactComponent as AssetAAALogoSVG } from '../assets/aaa-logo.svg'
 
 import { HeroVideoSlice } from '../slices/HeroVideoSlice'
 import { HeroSlice } from '../slices/HeroSlice'
-import { CallToActionSlice } from '../slices/CallToActionSlice'
+// import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { MessageSlice } from '../slices/MessageSlice'
 import { VideoMessageSlice } from '../slices/VideoMessageSlice'
@@ -34,7 +34,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
   const bestOfWinners = data.bestOfWinners.nodes
   const overallJudgesWinner = data.overallJudgesWinner
   const judgesWinners = data.judgesWinners.nodes
-  const adPeople = data.adPeople.nodes
+  // const adPeople = data.adPeople.nodes
   const archives = data.archives.nodes
 
   return (
@@ -70,37 +70,6 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
             variant="featuredWide"
           />
         </div>
-      </BoundedBox>
-
-      <BoundedBox
-        maxWidth="Medium"
-        css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
-      >
-        {/* temporary message start */}
-        <div
-          css={mq({
-            display: 'grid',
-            gap: linearScale('0.625rem', '1.75rem', 'space'),
-          })}
-        >
-          <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-            <Anchor href="/ad-people/">People of the Year</Anchor>
-          </Heading>
-          <MessageSlice
-            textHTML={`
-              <p>
-                Due to the current world health situation, the Pele Awards
-                planning committee has made the decision to postpone the
-                selection of the 2020 AAF Person of the Year, Ad 2 Hawaii Young
-                Person of the Year, and Silver Medal Award winners until a later
-                time when we can select, honor and celebrate them together. More
-                details will be sent out about upcoming plans as they are made.
-                Until then, take care of yourselves and each other. 
-              </p>
-            `}
-          />
-        </div>
-        {/* temporary message end*/}
       </BoundedBox>
 
       {/* Disabled due to postponed ad people awards announcement */}
