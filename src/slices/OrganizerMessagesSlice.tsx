@@ -33,7 +33,7 @@ export const OrganizerMessagesSlice = ({
     <div
       css={mq({
         display: 'grid',
-        gap: linearScale('1.5rem', '5rem'),
+        gap: linearScale('2rem', '5rem'),
       })}
     >
       <div
@@ -72,7 +72,7 @@ export const OrganizerMessagesSlice = ({
           css={mq({
             display: 'grid',
             gridTemplateColumns: [null, 'repeat(2, 1fr)'],
-            gap: linearScale('1.5rem', '5rem'),
+            gap: linearScale('2rem', '5rem'),
           })}
         >
           {children}
@@ -106,8 +106,8 @@ OrganizerMessagesSlice.Message = ({
   >
     <ImageContainer
       css={mq({
-        width: linearScale('3rem', '6rem'),
-        height: linearScale('3rem', '6rem'),
+        width: linearScale('4rem', '6rem'),
+        height: linearScale('4rem', '6rem'),
         borderRadius: '50%',
         overflow: 'hidden',
         backgroundColor: t.c.White,
