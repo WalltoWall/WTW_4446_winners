@@ -33,3 +33,33 @@ select {
 button {
   cursor: pointer;
 }
+
+@font-face {
+  font-family: 'Work Sans';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/WorkSans-Regular.woff2');
+  src: url('/fonts/WorkSans-Regular.woff2') format('woff2'),
+    url('/fonts/WorkSans-Regular.woff') format('woff'),
+    url('/fonts/WorkSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/fonts/WorkSans-Medium.woff2');
+  src: url('/fonts/WorkSans-Medium.woff2') format('woff2'),
+    url('/fonts/WorkSans-Medium.woff') format('woff'),
+    url('/fonts/WorkSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  font-weight: 600;
+  font-style: normal;
+  src: url('/fonts/WorkSans-SemiBold.woff2');
+  src: url('/fonts/WorkSans-SemiBold.woff2') format('woff2'),
+    url('/fonts/WorkSans-SemiBold.woff') format('woff'),
+    url('/fonts/WorkSans-SemiBold.ttf') format('truetype');
+}
