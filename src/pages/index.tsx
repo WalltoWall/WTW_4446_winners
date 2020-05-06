@@ -24,6 +24,7 @@ import { HeroSlice } from '../slices/HeroSlice'
 import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
 import { MessageSlice } from '../slices/MessageSlice'
+import { VideoMessageSlice } from '../slices/VideoMessageSlice'
 
 export type IndexPageProps = LayoutProps & {
   data: IndexPageQuery
@@ -137,7 +138,31 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
 
       <BoundedBox
         maxWidth="Xlarge"
-        css={{ backgroundColor: t.c.Gray95, paddingBottom: 0 }}
+        css={mq({
+          backgroundColor: t.c.Gray95,
+          paddingBottom: linearScale('0.625rem', '1.75rem', 'space'),
+        })}
+      >
+        <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
+          <Anchor href="/winners/">Judge's Choice Awards</Anchor>
+        </Heading>
+      </BoundedBox>
+
+      <VideoMessageSlice
+        textHTML={
+          data.meetTheJudgesText?.data?.rich_text?.childMarkdownRemark?.html
+        }
+        videoUrl={data.meetTheJudgesVideoLink?.data?.href}
+        videoThumbnailFluid={data.meetTheJudgesThumbnail?.fields?.image?.fluid}
+        css={mq({
+          paddingTop: 0,
+          paddingBottom: linearScale('0.8125rem', '1.5rem'),
+        })}
+      />
+
+      <BoundedBox
+        maxWidth="Xlarge"
+        css={{ backgroundColor: t.c.Gray95, paddingTop: 0, paddingBottom: 0 }}
       >
         <div
           css={mq({
@@ -146,8 +171,6 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
           })}
         >
           <SpecialWinners
-            heading="Judge's Choice Awards"
-            headingHref="/winners/"
             columns={[1, 3]}
             variant="featured"
             overallWinner={overallJudgesWinner}
@@ -384,6 +407,39 @@ export const query = graphql`
         rich_text {
           childMarkdownRemark {
             html
+          }
+        }
+      }
+    }
+
+    ###
+    # Meet the Judges
+    ###
+    meetTheJudgesText: airtableTextField(
+      data: { uid: { eq: "Home Meet the Judges" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+    meetTheJudgesVideoLink: airtableLink(
+      data: { uid: { eq: "Home Meet the Judges Video" } }
+    ) {
+      data {
+        href
+      }
+    }
+    meetTheJudgesThumbnail: airtableImageField(
+      data: { uid: { eq: "Meet the Judges Thumbnail" } }
+    ) {
+      fields {
+        image {
+          fluid(maxWidth: 500) {
+            ...GatsbyImgixFluid
           }
         }
       }

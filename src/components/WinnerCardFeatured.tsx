@@ -9,6 +9,7 @@ import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
 import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
 import { ReactComponent as AssetIconPlaySVG } from '../assets/icon-play.svg'
+import { PlayButton } from '../components/PlayButton'
 import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
 const variants = {
@@ -90,32 +91,18 @@ export const WinnerCardFeatured = ({
           },
         })}
       >
-        <div
+        <PlayButton
+          forwardedAs="div"
           className="play-button"
           css={mq({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            backgroundColor: t.c.Black,
             width: linearScale('2rem', '2.25rem', 'space'),
             height: linearScale('2rem', '2.25rem', 'space'),
-            backgroundColor: videoUrl ? t.colors.Gray10 : t.colors.Gray70,
-            borderRadius: '50%',
-            outline: 'none',
-            transition: 'background .2s ease',
-            color: t.colors.White,
             flexShrink: 0,
             marginRight: linearScale('10px', '10px', 'space'),
             marginLeft: '-.125rem',
           })}
-        >
-          <AssetIconPlaySVG
-            css={mq({
-              width: linearScale('.6rem', '.7rem', 'space'),
-              color: 'inherit',
-              transform: 'translateX(15%)',
-            })}
-          />
-        </div>
+        />
 
         {subtitle && (
           <div>
