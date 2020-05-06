@@ -23,28 +23,28 @@ export const Hero = ({
     {...props}
     css={mq({
       display: 'grid',
-      gridTemplateColumns: [null, 'repeat(2, 1fr)'],
+      gridTemplateColumns: imageFluid ? [null, 'repeat(2, 1fr)'] : '1fr',
       backgroundColor: t.c.White,
       alignItems: 'center',
     })}
   >
-    <AspectRatio
-      x={8}
-      y={5}
-      css={{ backgroundColor: t.c.Black, height: '100%' }}
-    >
-      {imageFluid && (
+    {imageFluid && (
+      <AspectRatio
+        x={8}
+        y={5}
+        css={{ backgroundColor: t.c.Black, height: '100%' }}
+      >
         <GatsbyImage
           fluid={imageFluid}
           alt={imageAlt}
           style={{ height: '100%' }}
         />
-      )}
-    </AspectRatio>
+      </AspectRatio>
+    )}
     <BoundedBox css={{ textAlign: 'center' }}>
       <div
         css={{
-          maxWidth: '42ch',
+          maxWidth: imageFluid ? '42ch' : '70ch',
           marginLeft: 'auto',
           marginRight: 'auto',
           lineHeight: t.lh.Copy,
