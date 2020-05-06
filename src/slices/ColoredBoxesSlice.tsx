@@ -18,6 +18,9 @@ const Box = ({ children, ...props }: { children: React.ReactNode }) => {
       innerProps={{
         style: {
           height: 'auto',
+          maxWidth: '42ch',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         },
       }}
       {...props}
