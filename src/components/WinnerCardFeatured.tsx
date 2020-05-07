@@ -81,8 +81,8 @@ export const WinnerCardFeatured = ({
           borderColor: t.colors.Gray90,
           paddingLeft: padding,
           paddingRight: padding,
-          paddingTop: linearScale('.75rem', '.75rem', 'space'),
-          paddingBottom: linearScale('.75rem', '.75rem', 'space'),
+          paddingTop: linearScale('.75rem', '1rem', 'space'),
+          paddingBottom: linearScale('.75rem', '1rem', 'space'),
           cursor: videoUrl ? 'pointer' : 'not-allowed',
 
           '&:hover, &:focus': {
@@ -138,10 +138,7 @@ export const WinnerCardFeatured = ({
           flexGrow: '1',
           gap: linearScale('0.375rem', '0.5rem', 'space'),
           gridTemplateColumns: '1fr auto',
-          paddingTop: '1rem',
-          paddingBottom: '1rem',
-          paddingLeft: padding,
-          paddingRight: padding,
+          padding: padding,
           boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
           position: 'relative',
         })}
