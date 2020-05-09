@@ -59,6 +59,7 @@ const Overlay = ({ isVisible, children }: OverlayProps) => {
       maxWidth="Xlarge"
       css={{
         position: 'fixed',
+        maxWidth: '100vw',
         zIndex: t.zIndices.Lightbox,
         top: 0,
         bottom: 0,
