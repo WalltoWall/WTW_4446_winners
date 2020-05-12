@@ -329,18 +329,18 @@ exports.createPages = async gatsbyContext => {
       getNode,
     })
 
-    // createCollectionsAndPagesForWinners({
-    //   winners: highSchoolWinners,
-    //   name: 'highSchoolWinners',
-    //   pathPrefix: 'high-school',
-    //   type: 'High School',
-    //   year,
-    //   createNode,
-    //   createNodeId,
-    //   createContentDigest,
-    //   createPage,
-    //   getNode,
-    // })
+    createCollectionsAndPagesForWinners({
+      winners: highSchoolWinners,
+      name: 'highSchoolWinners',
+      pathPrefix: 'high-school',
+      type: 'High School',
+      year,
+      createNode,
+      createNodeId,
+      createContentDigest,
+      createPage,
+      getNode,
+    })
   }
 
   /**
@@ -373,21 +373,21 @@ exports.createPages = async gatsbyContext => {
     },
   })
 
-  // /**
-  //  * Create root high school winners.
-  //  */
-  // createPage({
-  //   path: '/high-school/',
-  //   component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
-  //   context: {
-  //     collectionName: `highSchoolWinners/${years[0]}`,
-  //     collectionRegex: new RegExp(`^highSchoolWinners/${years[0]}/`).toString(),
-  //     year: years[0],
-  //     hideSpecialAwards: true,
-  //     pathPrefix: 'high-school',
-  //     type: 'High School',
-  //   },
-  // })
+  /**
+   * Create root high school winners.
+   */
+  createPage({
+    path: '/high-school/',
+    component: path.resolve(__dirname, 'src/templates/allWinners.tsx'),
+    context: {
+      collectionName: `highSchoolWinners/${years[0]}`,
+      collectionRegex: new RegExp(`^highSchoolWinners/${years[0]}/`).toString(),
+      year: years[0],
+      hideSpecialAwards: true,
+      pathPrefix: 'high-school',
+      type: 'High School',
+    },
+  })
 
   /**
    * Create pages for each tag.
