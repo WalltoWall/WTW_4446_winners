@@ -26,7 +26,7 @@ const breadcrumbVariants = {
     href: '/college/',
     label: 'College Winners',
   },
-  highSchool: {
+  'high school': {
     href: '/high-school/',
     label: 'High School Winners',
   },

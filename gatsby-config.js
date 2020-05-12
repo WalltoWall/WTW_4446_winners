@@ -177,9 +177,7 @@ module.exports = {
         engine: 'lunr',
         query: `
           query {
-            allAirtableWinner(
-              filter: { data: { type: { in: ["Professional", "College"] } } }
-            ) {
+            allAirtableWinner {
               nodes {
                 recordId
                 fields {
