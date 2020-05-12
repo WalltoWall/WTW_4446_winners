@@ -129,69 +129,75 @@ export const WinnerCardFeatured = ({
       </button>
 
       <div
-        className="metadata"
-        css={mq({
-          backgroundColor: t.c.White,
-          display: 'grid',
-          width: '100%',
-          alignContent: ['center', 'stretch'],
-          flexGrow: '1',
-          gap: linearScale('0.375rem', '0.5rem', 'space'),
-          gridTemplateColumns: '1fr auto',
-          padding: padding,
-          boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
-          position: 'relative',
-        })}
+        css={{
+          display: 'flex',
+          flexGrow: 1,
+        }}
       >
         <div
+          className="metadata"
           css={mq({
+            backgroundColor: t.c.White,
             display: 'grid',
+            width: '100%',
+            alignContent: ['center', 'stretch'],
             gap: linearScale('0.375rem', '0.5rem', 'space'),
-            gridTemplateRows: ['auto', 'auto auto'],
-            alignItems: ['center', 'start'],
-            textAlign: 'inherit',
+            gridTemplateColumns: '1fr auto',
+            padding: padding,
+            boxShadow: ['none', '0 -1px 0 rgba(0, 0, 0, 0.05)'],
+            position: 'relative',
           })}
         >
-          {title && (
-            <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
-              <Anchor className="title-link" href={href}>
-                {title}
-              </Anchor>
-            </Heading>
-          )}
-          <ul
+          <div
             css={mq({
               display: 'grid',
-              gap: linearScale('0.25rem', '0.375rem', 'space'),
-              alignSelf: ['center', 'end'],
-              justifyItems: 'start',
-              justifySelf: 'start',
+              gap: linearScale('0.375rem', '0.5rem', 'space'),
+              gridTemplateRows: ['auto', 'auto auto'],
+              alignItems: ['center', 'start'],
+              textAlign: 'inherit',
             })}
           >
-            {agencies.map(agency => (
-              <li key={agency.name}>
-                <AgencyIdentifier
-                  variant="small"
-                  name={agency.name}
-                  href={agency.url}
-                  avatarFluid={agency.avatarFluid}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
+            {title && (
+              <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
+                <Anchor className="title-link" href={href}>
+                  {title}
+                </Anchor>
+              </Heading>
+            )}
+            <ul
+              css={mq({
+                display: 'grid',
+                gap: linearScale('0.25rem', '0.375rem', 'space'),
+                alignSelf: ['center', 'end'],
+                justifyItems: 'start',
+                justifySelf: 'start',
+              })}
+            >
+              {agencies.map(agency => (
+                <li key={agency.name}>
+                  <AgencyIdentifier
+                    variant="small"
+                    name={agency.name}
+                    href={agency.url}
+                    avatarFluid={agency.avatarFluid}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        {award && (
-          <AwardIcon
-            type={award}
-            css={mq({
-              width: ['0.8125rem', '1.25rem'],
-              gridRow: 'auto',
-              justifySelf: 'end',
-              alignSelf: 'end',
-            })}
-          />
-        )}
+          {award && (
+            <AwardIcon
+              type={award}
+              css={mq({
+                width: ['0.8125rem', '1.25rem'],
+                gridRow: 'auto',
+                justifySelf: 'end',
+                alignSelf: 'end',
+              })}
+            />
+          )}
+        </div>
       </div>
     </View>
   )
