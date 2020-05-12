@@ -2187,19 +2187,19 @@ export type AirtableWinnerData = {
   year?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  assignee?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['Date']>;
-  created_at?: Maybe<Scalars['Date']>;
   agency?: Maybe<Array<Maybe<AirtableAgency>>>;
-  images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
+  video?: Maybe<Scalars['String']>;
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  type?: Maybe<Scalars['String']>;
   national_winner?: Maybe<Scalars['Boolean']>;
-  video?: Maybe<Scalars['String']>;
   video_thumbnail?: Maybe<Array<Maybe<AirtableWinnerDataVideo_Thumbnail>>>;
+  assignee?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['Date']>;
+  created_at?: Maybe<Scalars['Date']>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
+  images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
   show_with?: Maybe<Array<Maybe<AirtableWinner>>>;
   special_award?: Maybe<Array<Maybe<Scalars['String']>>>;
   special_award_video?: Maybe<Scalars['String']>;
@@ -2226,19 +2226,19 @@ export type AirtableWinnerDataFilterInput = {
   year?: Maybe<StringQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
-  type?: Maybe<StringQueryOperatorInput>;
-  assignee?: Maybe<StringQueryOperatorInput>;
-  updated_at?: Maybe<DateQueryOperatorInput>;
-  created_at?: Maybe<DateQueryOperatorInput>;
   agency?: Maybe<AirtableAgencyFilterListInput>;
-  images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
+  video?: Maybe<StringQueryOperatorInput>;
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
   tags?: Maybe<StringQueryOperatorInput>;
+  type?: Maybe<StringQueryOperatorInput>;
   national_winner?: Maybe<BooleanQueryOperatorInput>;
-  video?: Maybe<StringQueryOperatorInput>;
   video_thumbnail?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterListInput>;
+  assignee?: Maybe<StringQueryOperatorInput>;
+  updated_at?: Maybe<DateQueryOperatorInput>;
+  created_at?: Maybe<DateQueryOperatorInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
+  images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
   show_with?: Maybe<AirtableWinnerFilterListInput>;
   special_award?: Maybe<StringQueryOperatorInput>;
   special_award_video?: Maybe<StringQueryOperatorInput>;
@@ -2493,10 +2493,6 @@ export enum AirtableWinnerFieldsEnum {
   DataYear = 'data___year',
   DataName = 'data___name',
   DataAward = 'data___award',
-  DataType = 'data___type',
-  DataAssignee = 'data___assignee',
-  DataUpdatedAt = 'data___updated_at',
-  DataCreatedAt = 'data___created_at',
   DataAgency = 'data___agency',
   DataAgencyId = 'data___agency___id',
   DataAgencyParentId = 'data___agency___parent___id',
@@ -2527,12 +2523,7 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
   DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
-  DataImages = 'data___images',
-  DataImagesId = 'data___images___id',
-  DataImagesUrl = 'data___images___url',
-  DataImagesFilename = 'data___images___filename',
-  DataImagesSize = 'data___images___size',
-  DataImagesType = 'data___images___type',
+  DataVideo = 'data___video',
   DataClient = 'data___client',
   DataCategory = 'data___category',
   DataCategoryId = 'data___category___id',
@@ -2557,14 +2548,17 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
   DataTags = 'data___tags',
+  DataType = 'data___type',
   DataNationalWinner = 'data___national_winner',
-  DataVideo = 'data___video',
   DataVideoThumbnail = 'data___video_thumbnail',
   DataVideoThumbnailId = 'data___video_thumbnail___id',
   DataVideoThumbnailUrl = 'data___video_thumbnail___url',
   DataVideoThumbnailFilename = 'data___video_thumbnail___filename',
   DataVideoThumbnailSize = 'data___video_thumbnail___size',
   DataVideoThumbnailType = 'data___video_thumbnail___type',
+  DataAssignee = 'data___assignee',
+  DataUpdatedAt = 'data___updated_at',
+  DataCreatedAt = 'data___created_at',
   DataCreditsId = 'data___credits___id',
   DataCreditsParentId = 'data___credits___parent___id',
   DataCreditsParentChildren = 'data___credits___parent___children',
@@ -2590,6 +2584,12 @@ export enum AirtableWinnerFieldsEnum {
   DataCreditsChildMarkdownRemarkTimeToRead = 'data___credits___childMarkdownRemark___timeToRead',
   DataCreditsChildMarkdownRemarkTableOfContents = 'data___credits___childMarkdownRemark___tableOfContents',
   DataCreditsChildMarkdownRemarkChildren = 'data___credits___childMarkdownRemark___children',
+  DataImages = 'data___images',
+  DataImagesId = 'data___images___id',
+  DataImagesUrl = 'data___images___url',
+  DataImagesFilename = 'data___images___filename',
+  DataImagesSize = 'data___images___size',
+  DataImagesType = 'data___images___type',
   DataShowWith = 'data___show_with',
   DataShowWithId = 'data___show_with___id',
   DataShowWithParentId = 'data___show_with___parent___id',
@@ -2611,18 +2611,18 @@ export enum AirtableWinnerFieldsEnum {
   DataShowWithDataYear = 'data___show_with___data___year',
   DataShowWithDataName = 'data___show_with___data___name',
   DataShowWithDataAward = 'data___show_with___data___award',
-  DataShowWithDataType = 'data___show_with___data___type',
-  DataShowWithDataAssignee = 'data___show_with___data___assignee',
-  DataShowWithDataUpdatedAt = 'data___show_with___data___updated_at',
-  DataShowWithDataCreatedAt = 'data___show_with___data___created_at',
   DataShowWithDataAgency = 'data___show_with___data___agency',
-  DataShowWithDataImages = 'data___show_with___data___images',
+  DataShowWithDataVideo = 'data___show_with___data___video',
   DataShowWithDataClient = 'data___show_with___data___client',
   DataShowWithDataCategory = 'data___show_with___data___category',
   DataShowWithDataTags = 'data___show_with___data___tags',
+  DataShowWithDataType = 'data___show_with___data___type',
   DataShowWithDataNationalWinner = 'data___show_with___data___national_winner',
-  DataShowWithDataVideo = 'data___show_with___data___video',
   DataShowWithDataVideoThumbnail = 'data___show_with___data___video_thumbnail',
+  DataShowWithDataAssignee = 'data___show_with___data___assignee',
+  DataShowWithDataUpdatedAt = 'data___show_with___data___updated_at',
+  DataShowWithDataCreatedAt = 'data___show_with___data___created_at',
+  DataShowWithDataImages = 'data___show_with___data___images',
   DataShowWithDataShowWith = 'data___show_with___data___show_with',
   DataShowWithDataSpecialAward = 'data___show_with___data___special_award',
   DataShowWithDataSpecialAwardVideo = 'data___show_with___data___special_award_video',
@@ -2708,18 +2708,18 @@ export enum AirtableWinnerFieldsEnum {
   FieldsChildrenDataYear = 'fields___children___data___year',
   FieldsChildrenDataName = 'fields___children___data___name',
   FieldsChildrenDataAward = 'fields___children___data___award',
-  FieldsChildrenDataType = 'fields___children___data___type',
-  FieldsChildrenDataAssignee = 'fields___children___data___assignee',
-  FieldsChildrenDataUpdatedAt = 'fields___children___data___updated_at',
-  FieldsChildrenDataCreatedAt = 'fields___children___data___created_at',
   FieldsChildrenDataAgency = 'fields___children___data___agency',
-  FieldsChildrenDataImages = 'fields___children___data___images',
+  FieldsChildrenDataVideo = 'fields___children___data___video',
   FieldsChildrenDataClient = 'fields___children___data___client',
   FieldsChildrenDataCategory = 'fields___children___data___category',
   FieldsChildrenDataTags = 'fields___children___data___tags',
+  FieldsChildrenDataType = 'fields___children___data___type',
   FieldsChildrenDataNationalWinner = 'fields___children___data___national_winner',
-  FieldsChildrenDataVideo = 'fields___children___data___video',
   FieldsChildrenDataVideoThumbnail = 'fields___children___data___video_thumbnail',
+  FieldsChildrenDataAssignee = 'fields___children___data___assignee',
+  FieldsChildrenDataUpdatedAt = 'fields___children___data___updated_at',
+  FieldsChildrenDataCreatedAt = 'fields___children___data___created_at',
+  FieldsChildrenDataImages = 'fields___children___data___images',
   FieldsChildrenDataShowWith = 'fields___children___data___show_with',
   FieldsChildrenDataSpecialAward = 'fields___children___data___special_award',
   FieldsChildrenDataSpecialAwardVideo = 'fields___children___data___special_award_video',
@@ -4739,10 +4739,10 @@ export type Query = {
   allPaginatedCollectionPage: PaginatedCollectionPageConnection;
   markdownRemark?: Maybe<MarkdownRemark>;
   allMarkdownRemark: MarkdownRemarkConnection;
-  airtableAdPerson?: Maybe<AirtableAdPerson>;
-  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableAgency?: Maybe<AirtableAgency>;
   allAirtableAgency: AirtableAgencyConnection;
+  airtableAdPerson?: Maybe<AirtableAdPerson>;
+  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableTextField?: Maybe<AirtableTextField>;
@@ -4982,27 +4982,6 @@ export type QueryAllMarkdownRemarkArgs = {
 };
 
 
-export type QueryAirtableAdPersonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableAdPersonDataFilterInput>;
-  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableAdPersonArgs = {
-  filter?: Maybe<AirtableAdPersonFilterInput>;
-  sort?: Maybe<AirtableAdPersonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAgencyArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -5019,6 +4998,27 @@ export type QueryAirtableAgencyArgs = {
 export type QueryAllAirtableAgencyArgs = {
   filter?: Maybe<AirtableAgencyFilterInput>;
   sort?: Maybe<AirtableAgencySortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableAdPersonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableAdPersonDataFilterInput>;
+  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableAdPersonArgs = {
+  filter?: Maybe<AirtableAdPersonFilterInput>;
+  sort?: Maybe<AirtableAdPersonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -5597,7 +5597,6 @@ export type SitePageContext = {
   nextRecordId?: Maybe<Scalars['String']>;
   firstPageId?: Maybe<Scalars['String']>;
   hideSpecialAwards?: Maybe<Scalars['Boolean']>;
-  paginatedCollectionName?: Maybe<Scalars['String']>;
 };
 
 export type SitePageContextFilterInput = {
@@ -5611,7 +5610,6 @@ export type SitePageContextFilterInput = {
   nextRecordId?: Maybe<StringQueryOperatorInput>;
   firstPageId?: Maybe<StringQueryOperatorInput>;
   hideSpecialAwards?: Maybe<BooleanQueryOperatorInput>;
-  paginatedCollectionName?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageEdge = {
@@ -5723,7 +5721,6 @@ export enum SitePageFieldsEnum {
   ContextNextRecordId = 'context___nextRecordId',
   ContextFirstPageId = 'context___firstPageId',
   ContextHideSpecialAwards = 'context___hideSpecialAwards',
-  ContextPaginatedCollectionName = 'context___paginatedCollectionName',
   PluginCreatorId = 'pluginCreator___id',
   PluginCreatorParentId = 'pluginCreator___parent___id',
   PluginCreatorParentParentId = 'pluginCreator___parent___parent___id',
@@ -6420,7 +6417,7 @@ export type AllWinnersTemplateQuery = { paginatedCollectionPage?: Maybe<(
   )>, allPaginatedCollectionPage: { nodes: Array<(
       Pick<PaginatedCollectionPage, 'id'>
       & { collection: Pick<PaginatedCollection, 'id' | 'name'> }
-    )> }, bestOfWinners: { nodes: Array<SpecialAwardWinnerFragment> }, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> } };
+    )> }, bestOfWinners: { nodes: Array<SpecialAwardWinnerFragment> }, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, heroVideoHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
 
 export type TagTemplateQueryVariables = {
   paginatedCollectionName: Scalars['String'];
