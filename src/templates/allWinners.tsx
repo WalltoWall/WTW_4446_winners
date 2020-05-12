@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet-async'
 
 import { getURLParam } from '../utils'
+import { useYears } from '../hooks/useYears'
 import { AllWinnersTemplateQuery } from '../graphqlTypes'
 
 import { Layout, LayoutProps } from '../components/Layout'
@@ -10,8 +11,9 @@ import { PaginatedSearchResults } from '../components/PaginatedSearchResults'
 import { WinnerFilters } from '../components/WinnerFilters'
 import { LoadMoreWinners } from '../components/LoadMoreWinners'
 import { SpecialWinners } from '../components/SpecialWinners'
-import { useYears } from '../hooks/useYears'
 import { withLightbox } from '../components/Lightbox'
+
+import { HeroVideoSlice } from '../slices/HeroVideoSlice'
 
 export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
@@ -46,6 +48,10 @@ export const AllWinnersTemplate = ({
       <Helmet>
         <title>{pageContext.year} Winners</title>
       </Helmet>
+
+      {pageContext.type === 'High School' && data.heroVideoHref?.data?.href && (
+        <HeroVideoSlice src={data.heroVideoHref?.data?.href} />
+      )}
 
       <WinnerFilters
         variant={pageContext.type}
@@ -153,6 +159,17 @@ export const query = graphql`
     ) {
       nodes {
         ...SpecialAwardWinner
+      }
+    }
+
+    ###
+    # Hero Video
+    ###
+    heroVideoHref: airtableLink(
+      data: { uid: { eq: "High School Hero Video" } }
+    ) {
+      data {
+        href
       }
     }
   }
