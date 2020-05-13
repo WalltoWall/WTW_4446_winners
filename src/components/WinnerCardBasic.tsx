@@ -6,7 +6,8 @@ import { Anchor } from './Anchor'
 import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
-import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
+import { WinnerCardProps } from './WinnerCard'
+import { WinnerCardImageLink } from './WinnerCardImageLink'
 
 type WinnerCardBasicProps = Omit<WinnerCardProps, 'variant' | 'videoUrl'>
 
@@ -41,20 +42,25 @@ export const WinnerCardBasic = ({
         isNationalWinner={isNationalWinner}
         isNmgScholarshipWinner={isNmgScholarshipWinner}
         year={year}
+        css={{
+          flexGrow: 1,
+        }}
       />
 
       <div
-        css={{
+        css={mq({
           display: 'flex',
           flexGrow: 1,
-        }}
+          flexDirection: 'column',
+          justifyContent: 'center',
+          width: ['50%', '100%'],
+        })}
       >
         <div
           className="metadata"
           css={mq({
             backgroundColor: t.c.White,
             display: 'grid',
-            width: ['50%', '100%'],
             alignContent: ['center', 'stretch'],
             gap: linearScale('0.375rem', '0.5rem', 'space'),
             gridTemplateColumns: ['none', '1fr auto'],

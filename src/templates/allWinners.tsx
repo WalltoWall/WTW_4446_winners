@@ -73,7 +73,13 @@ export const AllWinnersTemplate = ({
         />
       ) : (
         <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage}>
-          {isInitialPageSelected && (
+          {isInitialPageSelected && pageContext.type === 'High School' ? (
+            <SpecialWinners
+              columns={[1, 3]}
+              winners={[...bestOfWinners, ...judgesWinners]}
+              variant="featuredWide"
+            />
+          ) : (
             <>
               {bestOfWinners.length > 0 && (
                 <SpecialWinners
