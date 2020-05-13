@@ -21,9 +21,11 @@ export const seedToFlavor = (seed?: string) => {
   if (!seed) return DEFAULT_FLAVOR
 
   const flavorNames = Object.keys(flavors)
-  const charIndex = Math.max(Math.min(seed?.length ?? 0, 2) - 1, 0)
   const flavorName =
-    flavorNames[seed.charCodeAt(charIndex) % (flavorNames.length - 1)]
+    flavorNames[
+      ((seed?.charCodeAt?.(0) ?? 0) + (seed?.charCodeAt?.(1) ?? 0)) %
+        (flavorNames.length - 1)
+    ]
 
   return flavors[flavorName]
 }

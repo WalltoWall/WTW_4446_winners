@@ -151,7 +151,7 @@ export const query = graphql`
     judgesWinners: allAirtableWinner(
       filter: {
         data: {
-          special_award: { regex: "/^Judge's Award - /" }
+          special_award: { regex: "/^Judge's/" }
           type: { eq: $type }
           year: { eq: $year }
         }
