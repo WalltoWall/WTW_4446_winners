@@ -130,7 +130,6 @@ export const Header = (props: HeaderProps) => {
             >
               <NavItem href="/winners/">Winners</NavItem>
               <NavItem href="/ad-people/">Ad People</NavItem>
-              <NavItem href="/high-school/">High School</NavItem>
               <NavItem href="/college/">College</NavItem>
               <NavItem href="/about/">About</NavItem>
             </ul>
@@ -220,7 +219,6 @@ export const Header = (props: HeaderProps) => {
           >
             <NavItem href="/winners/">Winners</NavItem>
             <NavItem href="/ad-people/">Ad People</NavItem>
-            <NavItem href="/high-school/">High School</NavItem>
             <NavItem href="/college/">College</NavItem>
             <NavItem href="/about/">About</NavItem>
             {/* <NavItem href="/">How to enter</NavItem> */}
