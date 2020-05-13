@@ -7,7 +7,8 @@ import { Anchor } from './Anchor'
 import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
-import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
+import { WinnerCardProps } from './WinnerCard'
+import { WinnerCardImageLink } from './WinnerCardImageLink'
 import { PlayButton } from '../components/PlayButton'
 import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
@@ -71,6 +72,9 @@ export const WinnerCardFeatured = ({
         isNmgScholarshipWinner={isNmgScholarshipWinner}
         year={year}
         variant="wide"
+        css={{
+          flexGrow: 1,
+        }}
       />
       {videoUrl && (
         <button
@@ -133,7 +137,6 @@ export const WinnerCardFeatured = ({
       <div
         css={{
           display: 'flex',
-          flexGrow: 1,
         }}
       >
         <div
