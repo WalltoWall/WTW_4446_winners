@@ -105,7 +105,7 @@ export const WinnerInfo: React.FC<WinnerInfoProps> = ({
                 lineHeight: t.lh.Solid,
               }}
             >
-              {specialAward ?? awardText}
+              {specialAward?.[0] ?? awardText}
             </Heading>
           )}
         </div>
