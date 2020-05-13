@@ -34,7 +34,7 @@ export const HighSchoolPage = () => (
       <img
         src="https://images.prismic.io/peleawards/df36a555-9549-439c-982c-a41d66b390ee_comingsoon.png?auto=compress,format"
         css={mq({
-          width: '50%',
+          width: ['70%', '50%'],
           maxWidth: '30rem',
           position: 'absolute',
           top: '50%',
