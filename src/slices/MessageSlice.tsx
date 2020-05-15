@@ -35,10 +35,22 @@ export const MessageSlice = ({ textHTML, quotee }: MessageSliceProps) => {
                 })}
               />
             ),
+            a: Comp => props => (
+              <View
+                as={Comp}
+                {...props}
+                css={mq({
+                  textDecoration: 'underline',
+                  '&:hover, &:focus': {
+                    color: 'inherit',
+                  },
+                })}
+              />
+            ),
           }}
           css={{
             margin: '0 auto',
-            maxWidth: '70ch',
+            maxWidth: '75ch',
             textAlign: 'center',
           }}
         />

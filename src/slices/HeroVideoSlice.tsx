@@ -16,7 +16,7 @@ export type HeroVideoSliceProps = ViewProps & {
 }
 
 export const HeroVideoSlice = ({ src, ...props }: HeroVideoSliceProps) => {
-  const [elementId] = useState(() => `hero-video-${uniqueId()}`)
+  const { current: elementId } = useRef(`hero-video-${uniqueId()}`)
   const player = useRef<Player>()
 
   const [mute, setMute] = useState(true)
@@ -38,12 +38,16 @@ export const HeroVideoSlice = ({ src, ...props }: HeroVideoSliceProps) => {
   // }
 
   useEffect(() => {
-    if (!player.current) player.current = new Player(elementId)
-    player.current.setVolume(mute ? 0 : 1)
+    try {
+      if (!player.current) player.current = new Player(elementId)
+      player.current.setVolume(mute ? 0 : 1)
 
-    player.current.on('ended', function () {
-      setVideoEnded(true)
-    })
+      player.current.on('ended', function () {
+        setVideoEnded(true)
+      })
+    } catch (error) {
+      // Ignore
+    }
   }, [mute, elementId])
 
   return (

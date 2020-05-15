@@ -7,7 +7,8 @@ import { Anchor } from './Anchor'
 import { View } from './View'
 import { AwardIcon } from './AwardIcon'
 import { AgencyIdentifier } from './AgencyIdentifier'
-import { WinnerCardImageLink, WinnerCardProps } from './WinnerCard'
+import { WinnerCardProps } from './WinnerCard'
+import { WinnerCardImageLink } from './WinnerCardImageLink'
 import { PlayButton } from '../components/PlayButton'
 import { useLightbox, LIGHTBOX_TYPE } from './Lightbox'
 
@@ -71,67 +72,71 @@ export const WinnerCardFeatured = ({
         isNmgScholarshipWinner={isNmgScholarshipWinner}
         year={year}
         variant="wide"
+        css={{
+          flexGrow: 1,
+        }}
       />
-      <button
-        onClick={onClick}
-        css={mq({
-          display: 'flex',
-          alignItems: 'center',
-          borderBottom: '1px solid',
-          borderColor: t.colors.Gray90,
-          paddingLeft: padding,
-          paddingRight: padding,
-          paddingTop: linearScale('.75rem', '1rem', 'space'),
-          paddingBottom: linearScale('.75rem', '1rem', 'space'),
-          cursor: videoUrl ? 'pointer' : 'not-allowed',
-
-          '&:hover, &:focus': {
-            '.play-button': {
-              backgroundColor: videoUrl ? t.colors.Red40 : t.colors.Gray70,
-            },
-          },
-        })}
-      >
-        <PlayButton
-          forwardedAs="div"
-          className="play-button"
+      {videoUrl && (
+        <button
+          onClick={onClick}
           css={mq({
-            backgroundColor: t.c.Black,
-            width: linearScale('2rem', '2.25rem', 'space'),
-            height: linearScale('2rem', '2.25rem', 'space'),
-            flexShrink: 0,
-            marginRight: linearScale('10px', '10px', 'space'),
-            marginLeft: '-.125rem',
-          })}
-        />
+            display: 'flex',
+            alignItems: 'center',
+            borderBottom: '1px solid',
+            borderColor: t.colors.Gray90,
+            paddingLeft: padding,
+            paddingRight: padding,
+            paddingTop: linearScale('.75rem', '1rem', 'space'),
+            paddingBottom: linearScale('.75rem', '1rem', 'space'),
+            cursor: videoUrl ? 'pointer' : 'not-allowed',
 
-        {subtitle && (
-          <div>
-            <Subheading
-              forwardedAs="h4"
-              css={mq({
-                fontSize: t.fontSizeScales.b,
-                marginBottom: videoUrl && '.125rem',
-              })}
-            >
-              {subtitle}
-            </Subheading>
-            <p
-              css={mq({
-                color: t.colors.Gray50,
-                fontSize: t.fontSizeScales['b-'],
-              })}
-            >
-              {videoUrl ? 'Watch the presentation' : 'Video unavailable'}
-            </p>
-          </div>
-        )}
-      </button>
+            '&:hover, &:focus': {
+              '.play-button': {
+                backgroundColor: videoUrl ? t.colors.Red40 : t.colors.Gray70,
+              },
+            },
+          })}
+        >
+          <PlayButton
+            forwardedAs="div"
+            className="play-button"
+            css={mq({
+              backgroundColor: t.c.Black,
+              width: linearScale('2rem', '2.25rem', 'space'),
+              height: linearScale('2rem', '2.25rem', 'space'),
+              flexShrink: 0,
+              marginRight: linearScale('10px', '10px', 'space'),
+              marginLeft: '-.125rem',
+            })}
+          />
+
+          {subtitle && (
+            <div>
+              <Subheading
+                forwardedAs="h4"
+                css={mq({
+                  fontSize: t.fontSizeScales.b,
+                  marginBottom: videoUrl && '.125rem',
+                })}
+              >
+                {subtitle}
+              </Subheading>
+              <p
+                css={mq({
+                  color: t.colors.Gray50,
+                  fontSize: t.fontSizeScales['b-'],
+                })}
+              >
+                Watch the presentation
+              </p>
+            </div>
+          )}
+        </button>
+      )}
 
       <div
         css={{
           display: 'flex',
-          flexGrow: 1,
         }}
       >
         <div
@@ -157,6 +162,17 @@ export const WinnerCardFeatured = ({
               textAlign: 'inherit',
             })}
           >
+            {!videoUrl && subtitle && (
+              <Subheading
+                forwardedAs="h4"
+                css={mq({
+                  fontSize: t.fontSizeScales['m-'],
+                  marginBottom: videoUrl && '.125rem',
+                })}
+              >
+                {subtitle}
+              </Subheading>
+            )}
             {title && (
               <Heading forwardedAs="h3" css={mq({ fontSize: t.f.m })}>
                 <Anchor className="title-link" href={href}>

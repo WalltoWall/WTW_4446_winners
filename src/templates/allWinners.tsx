@@ -14,6 +14,7 @@ import { SpecialWinners } from '../components/SpecialWinners'
 import { withLightbox } from '../components/Lightbox'
 
 import { HeroVideoSlice } from '../slices/HeroVideoSlice'
+import { MessageSlice } from '../slices/MessageSlice'
 
 export type AllWinnersProps = LayoutProps & {
   data: AllWinnersTemplateQuery
@@ -49,9 +50,10 @@ export const AllWinnersTemplate = ({
         <title>{pageContext.year} Winners</title>
       </Helmet>
 
-      {pageContext.type === 'High School' && data.heroVideoHref?.data?.href && (
-        <HeroVideoSlice src={data.heroVideoHref?.data?.href} />
-      )}
+      {pageContext.type === 'High School' &&
+        data.highSchoolHeroVideo?.data?.href && (
+          <HeroVideoSlice src={data.highSchoolHeroVideo?.data?.href} />
+        )}
 
       <WinnerFilters
         variant={pageContext.type}
@@ -73,7 +75,21 @@ export const AllWinnersTemplate = ({
         />
       ) : (
         <LoadMoreWinners firstPageId={firstPageId} initialPage={initialPage}>
-          {isInitialPageSelected && (
+          {isInitialPageSelected && pageContext.type === 'High School' ? (
+            <>
+              <SpecialWinners
+                columns={[1, 3]}
+                winners={[...bestOfWinners, ...judgesWinners]}
+                variant="featuredWide"
+              />
+              <MessageSlice
+                textHTML={
+                  data.highSchoolIntro?.data?.rich_text?.childMarkdownRemark
+                    ?.html
+                }
+              />
+            </>
+          ) : (
             <>
               {bestOfWinners.length > 0 && (
                 <SpecialWinners
@@ -151,7 +167,7 @@ export const query = graphql`
     judgesWinners: allAirtableWinner(
       filter: {
         data: {
-          special_award: { regex: "/^Judge's Award - /" }
+          special_award: { regex: "/^Judge's/" }
           type: { eq: $type }
           year: { eq: $year }
         }
@@ -163,13 +179,28 @@ export const query = graphql`
     }
 
     ###
-    # Hero Video
+    # High School - Hero Video
     ###
-    heroVideoHref: airtableLink(
+    highSchoolHeroVideo: airtableLink(
       data: { uid: { eq: "High School Hero Video" } }
     ) {
       data {
         href
+      }
+    }
+
+    ###
+    # High School - Intro
+    ###
+    highSchoolIntro: airtableTextField(
+      data: { uid: { eq: "High School Page Intro" } }
+    ) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
       }
     }
   }
