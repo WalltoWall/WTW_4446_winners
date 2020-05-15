@@ -50,7 +50,7 @@ export const MessageSlice = ({ textHTML, quotee }: MessageSliceProps) => {
           }}
           css={{
             margin: '0 auto',
-            maxWidth: '70ch',
+            maxWidth: '75ch',
             textAlign: 'center',
           }}
         />
