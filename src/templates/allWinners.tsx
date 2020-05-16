@@ -52,7 +52,10 @@ export const AllWinnersTemplate = ({
 
       {pageContext.type === 'High School' &&
         data.highSchoolHeroVideo?.data?.href && (
-          <HeroVideoSlice src={data.highSchoolHeroVideo?.data?.href} />
+          <HeroVideoSlice
+            videoPlayerId="hero"
+            src={data.highSchoolHeroVideo?.data?.href}
+          />
         )}
 
       <WinnerFilters

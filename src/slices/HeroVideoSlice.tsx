@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import Player from '@vimeo/player'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import { convertVimeoLinkToIframeSrc, uniqueId } from '../utils'
+import { convertVimeoLinkToIframeSrc } from '../utils'
 
 import { t, mq, linearScale } from '../theme'
 import { View, ViewProps } from '../components/View'
@@ -13,10 +13,14 @@ import { ReactComponent as AssetIconReplaySVG } from '../assets/icon-replay-vide
 
 export type HeroVideoSliceProps = ViewProps & {
   src: string
+  videoPlayerId: string
 }
 
-export const HeroVideoSlice = ({ src, ...props }: HeroVideoSliceProps) => {
-  const { current: elementId } = useRef(`hero-video-${uniqueId()}`)
+export const HeroVideoSlice = ({
+  src,
+  videoPlayerId,
+  ...props
+}: HeroVideoSliceProps) => {
   const player = useRef<Player>()
 
   const [mute, setMute] = useState(true)
@@ -39,16 +43,17 @@ export const HeroVideoSlice = ({ src, ...props }: HeroVideoSliceProps) => {
 
   useEffect(() => {
     try {
-      if (!player.current) player.current = new Player(elementId)
+      if (!player.current) player.current = new Player(videoPlayerId)
       player.current.setVolume(mute ? 0 : 1)
 
       player.current.on('ended', function () {
         setVideoEnded(true)
       })
     } catch (error) {
+      console.error(error)
       // Ignore
     }
-  }, [mute, elementId])
+  }, [mute, videoPlayerId])
 
   return (
     <View
@@ -67,7 +72,7 @@ export const HeroVideoSlice = ({ src, ...props }: HeroVideoSliceProps) => {
         }}
       >
         <iframe
-          id={elementId}
+          id={videoPlayerId}
           src={
             convertVimeoLinkToIframeSrc(src) +
             '?autoplay=1&loop=0&autopause=0&muted=1&background=1'

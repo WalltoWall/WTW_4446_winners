@@ -198,6 +198,7 @@ module.exports = {
                   tags
                   special_award
                   type
+                  client
                   category {
                     data {
                       line_1
@@ -224,7 +225,7 @@ module.exports = {
             }
           }
         `,
-        index: ['name', 'tags', 'agencyName'],
+        index: ['name', 'tags', 'agencyName', 'client'],
         store: [
           'url',
           'name',
@@ -250,6 +251,7 @@ module.exports = {
               specialAward: dlv(node, ['data', 'special_award']),
               tags: (dlv(node, ['data', 'tags']) || []).join(' '),
               type: dlv(node, ['data', 'type']),
+              client: dlv(node, ['data', 'client']),
               categoryLine1: dlv(node, [
                 'data',
                 'category',

@@ -41,7 +41,10 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
   return (
     <Layout {...props}>
       {data.heroVideoHref?.data?.href && (
-        <HeroVideoSlice src={data.heroVideoHref?.data?.href} />
+        <HeroVideoSlice
+          videoPlayerId="hero"
+          src={data.heroVideoHref?.data?.href}
+        />
       )}
       <HeroSlice
         textHTML={data.homeHeroText?.data?.rich_text?.childMarkdownRemark?.html}
