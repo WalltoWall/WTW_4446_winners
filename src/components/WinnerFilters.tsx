@@ -14,7 +14,7 @@ import { BoundedBox } from '../components/BoundedBox'
 const variants = {
   Professional: {
     heading: 'Winners',
-    pathPrefix: 'winners/',
+    pathPrefix: 'winners',
   },
   College: {
     heading: 'College Winners',
