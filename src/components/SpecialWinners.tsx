@@ -55,6 +55,7 @@ export const SpecialWinners = ({
               avatarFluid: agency?.fields?.avatar?.fluid,
             })) as Agency[]
           }
+          year={Number.parseInt(overallWinner?.data?.year!)}
         />
       )}
 
@@ -81,6 +82,7 @@ export const SpecialWinners = ({
               )}
               videoUrl={winner?.data?.special_award_video}
               agencies={agencies}
+              year={Number.parseInt(winner?.data?.year!)}
             />
           )
         })}

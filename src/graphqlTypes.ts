@@ -3453,14 +3453,15 @@ export type ImgixImage = {
 
 
 export type ImgixImageUrlArgs = {
-  imgixParams?: Maybe<ImgixParamsInputType>;
+  imgixParams?: Maybe<ImgixUrlParamsInput>;
 };
 
 
 export type ImgixImageFixedArgs = {
   width?: Maybe<Scalars['Int']>;
   height?: Maybe<Scalars['Int']>;
-  imgixParams?: Maybe<ImgixParamsInputType>;
+  imgixParams?: Maybe<ImgixUrlParamsInput>;
+  placeholderImgixParams?: Maybe<ImgixUrlParamsInput>;
 };
 
 
@@ -3468,7 +3469,8 @@ export type ImgixImageFluidArgs = {
   maxWidth?: Maybe<Scalars['Int']>;
   maxHeight?: Maybe<Scalars['Int']>;
   srcSetBreakpoints?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  imgixParams?: Maybe<ImgixParamsInputType>;
+  imgixParams?: Maybe<ImgixUrlParamsInput>;
+  placeholderImgixParams?: Maybe<ImgixUrlParamsInput>;
 };
 
 export type ImgixImageFilterInput = {
@@ -3481,9 +3483,532 @@ export type ImgixImageFilterListInput = {
   elemMatch?: Maybe<ImgixImageFilterInput>;
 };
 
-export type ImgixParamsInputType = {
-  w?: Maybe<Scalars['Int']>;
+export type ImgixUrlParamsInput = {
+  /** Specifies an aspect ratio to maintain when resizing and cropping the image. */
+  ar?: Maybe<Scalars['String']>;
+  /** Applies automatic enhancements to images. [See docs](https://docs.imgix.com/apis/url/auto). */
+  auto?: Maybe<Scalars['String']>;
+  /**
+   * Colors the background of padded and partially-transparent images. Default:
+   * `fff`. [See docs](https://docs.imgix.com/apis/url/bg).
+   */
+  bg?: Maybe<Scalars['String']>;
+  /**
+   * Changes the blend alignment relative to the parent image. [See
+   * docs](https://docs.imgix.com/apis/url/blending/blend-align).
+   */
+  blendAlign?: Maybe<Scalars['String']>;
+  /** Alias for `blendAlign`. */
+  blendalign?: Maybe<Scalars['String']>;
+  /** Alias for `blendAlign`. */
+  ba?: Maybe<Scalars['String']>;
+  /** Changes the alpha of the blend image. Default: `100`. [See docs](https://docs.imgix.com/apis/url/blending/blend-alpha). */
+  blendAlpha?: Maybe<Scalars['Int']>;
+  /** Alias for `blendAlpha`. */
+  blendalpha?: Maybe<Scalars['Int']>;
+  /** Alias for `blendAlpha`. */
+  balph?: Maybe<Scalars['Int']>;
+  /** Specifies a color to use when applying the blend. [See docs](https://docs.imgix.com/apis/url/blending/blend-color). */
+  blendColor?: Maybe<Scalars['String']>;
+  /** Alias for `blendColor`. */
+  blendcolor?: Maybe<Scalars['String']>;
+  /** Alias for `blendColor`. */
+  blendClr?: Maybe<Scalars['String']>;
+  /** Alias for `blendColor`. */
+  blendclr?: Maybe<Scalars['String']>;
+  /** Specifies the type of crop for blend images. [See docs](https://docs.imgix.com/apis/url/blending/blend-crop). */
+  blendCrop?: Maybe<Scalars['String']>;
+  /** Alias for `blendCrop`. */
+  blendcrop?: Maybe<Scalars['String']>;
+  /** Alias for `blendCrop`. */
+  bc?: Maybe<Scalars['String']>;
+  /** Specifies the fit mode for blend images. Default: `clip`. [See docs](https://docs.imgix.com/apis/url/blending/blend-fit). */
+  blendFit?: Maybe<Scalars['String']>;
+  /** Alias for `blendFit`. */
+  blendfit?: Maybe<Scalars['String']>;
+  /** Alias for `blendFit`. */
+  bf?: Maybe<Scalars['String']>;
+  /** Adjusts the height of the blend image. [See docs](https://docs.imgix.com/apis/url/blending/blend-h). */
+  blendH?: Maybe<Scalars['Int']>;
+  /** Alias for `blendH`. */
+  blendh?: Maybe<Scalars['Int']>;
+  /** Alias for `blendH`. */
+  bh?: Maybe<Scalars['Int']>;
+  /**
+   * Sets the blend mode for a blend image. Default: `overlay`. [See
+   * docs](https://docs.imgix.com/apis/url/blending/blend-mode).
+   */
+  blendMode?: Maybe<Scalars['String']>;
+  /** Alias for `blendMode`. */
+  blendmode?: Maybe<Scalars['String']>;
+  /** Alias for `blendMode`. */
+  bm?: Maybe<Scalars['String']>;
+  /** Applies padding to the blend image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/blending/blend-pad). */
+  blendPad?: Maybe<Scalars['Int']>;
+  /** Alias for `blendPad`. */
+  blendpad?: Maybe<Scalars['Int']>;
+  /** Alias for `blendPad`. */
+  bp?: Maybe<Scalars['Int']>;
+  /** Adjusts the size of the blend image. [See docs](https://docs.imgix.com/apis/url/blending/blend-size). */
+  blendSize?: Maybe<Scalars['String']>;
+  /** Alias for `blendSize`. */
+  blendsize?: Maybe<Scalars['String']>;
+  /** Alias for `blendSize`. */
+  bs?: Maybe<Scalars['String']>;
+  /** Adjusts the width of the blend image. [See docs](https://docs.imgix.com/apis/url/blending/blend-w). */
+  blendW?: Maybe<Scalars['Int']>;
+  /** Alias for `blendW`. */
+  blendw?: Maybe<Scalars['Int']>;
+  /** Alias for `blendW`. */
+  bw?: Maybe<Scalars['Int']>;
+  /**
+   * Adjusts the x-offset of the blend image relative to its parent. Default: `0`.
+   * [See docs](https://docs.imgix.com/apis/url/blending/blend-x).
+   */
+  blendX?: Maybe<Scalars['Int']>;
+  /** Alias for `blendX`. */
+  blendx?: Maybe<Scalars['Int']>;
+  /** Alias for `blendX`. */
+  bx?: Maybe<Scalars['Int']>;
+  /**
+   * Adjusts the y-offset of the blend image relative to its parent. Default: `0`.
+   * [See docs](https://docs.imgix.com/apis/url/blending/blend-y).
+   */
+  blendY?: Maybe<Scalars['Int']>;
+  /** Alias for `blendY`. */
+  blendy?: Maybe<Scalars['Int']>;
+  /** Alias for `blendY`. */
+  by?: Maybe<Scalars['Int']>;
+  /** Specifies the location of the blend image. [See docs](https://docs.imgix.com/apis/url/blending/blend). */
+  blend?: Maybe<Scalars['String']>;
+  /** Alias for `blend`. */
+  b?: Maybe<Scalars['String']>;
+  /** Applies a gaussian blur to an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/stylize/blur). */
+  blur?: Maybe<Scalars['Int']>;
+  /**
+   * Sets the inner radius of the image's border in pixels. [See
+   * docs](https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner).
+   */
+  borderRadiusInner?: Maybe<Scalars['String']>;
+  /**
+   * Sets the outer radius of the image's border in pixels. [See
+   * docs](https://docs.imgix.com/apis/url/border-and-padding/border-radius).
+   */
+  borderRadius?: Maybe<Scalars['String']>;
+  /** Applies a border to an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/border). */
+  border?: Maybe<Scalars['String']>;
+  /** Adjusts the brightness of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/bri). */
+  bri?: Maybe<Scalars['Int']>;
+  /** Sets one or more Client-Hints headers. [See docs](https://docs.imgix.com/apis/url/format/ch). */
+  ch?: Maybe<Scalars['String']>;
+  /**
+   * Specifies the output chroma subsampling rate. Default: `420`. [See
+   * docs](https://docs.imgix.com/apis/url/format/chromasub).
+   */
+  chromasub?: Maybe<Scalars['Int']>;
+  /** Limits the number of unique colors in an image. [See docs](https://docs.imgix.com/apis/url/format/colorquant). */
+  colorquant?: Maybe<Scalars['Int']>;
+  /**
+   * Specifies how many colors to include in a palette-extraction response.
+   * Default: `6`. [See
+   * docs](https://docs.imgix.com/apis/url/color-palette/colors).
+   */
+  colors?: Maybe<Scalars['Int']>;
+  /** Adjusts the contrast of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/con). */
+  con?: Maybe<Scalars['Int']>;
+  /** Specifies the radius value for a rounded corner mask. [See docs](https://docs.imgix.com/apis/url/mask/corner-radius). */
+  cornerRadius?: Maybe<Scalars['String']>;
+  /** Specifies how to crop an image. [See docs](https://docs.imgix.com/apis/url/size/crop). */
+  crop?: Maybe<Scalars['String']>;
+  /** Specifies the color space of the output image. [See docs](https://docs.imgix.com/apis/url/format/cs). */
+  cs?: Maybe<Scalars['String']>;
+  /** Forces a URL to use send-file in its response. [See docs](https://docs.imgix.com/apis/url/format/dl). */
+  dl?: Maybe<Scalars['String']>;
+  /** Sets the DPI value in the EXIF header. [See docs](https://docs.imgix.com/apis/url/format/dpi). */
+  dpi?: Maybe<Scalars['Int']>;
+  /** Adjusts the device-pixel ratio of the output image. Default: `1`. [See docs](https://docs.imgix.com/apis/url/dpr). */
+  dpr?: Maybe<Scalars['Float']>;
+  /**
+   * Changes the alpha of the duotone effect atop the source image. Default: `100`.
+   * [See docs](https://docs.imgix.com/apis/url/stylize/duotone-alpha).
+   */
+  duotoneAlpha?: Maybe<Scalars['Int']>;
+  /** Applies a duotone effect to the source image. [See docs](https://docs.imgix.com/apis/url/stylize/duotone). */
+  duotone?: Maybe<Scalars['String']>;
+  /** Adjusts the exposure of the output image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/exp). */
+  exp?: Maybe<Scalars['Int']>;
+  /**
+   * A Unix timestamp specifying a UTC time. Requests made to this URL after that
+   * time will output a 404 status code. [See
+   * docs](https://docs.imgix.com/apis/url/expires).
+   */
+  expires?: Maybe<Scalars['String']>;
+  /** Selects a face to crop to. [See docs](https://docs.imgix.com/apis/url/face-detection/faceindex). */
+  faceindex?: Maybe<Scalars['Int']>;
+  /** Adjusts padding around a selected face. Default: `1`. [See docs](https://docs.imgix.com/apis/url/face-detection/facepad). */
+  facepad?: Maybe<Scalars['Float']>;
+  /**
+   * Specifies that face data should be included in output when combined with
+   * `fm=json`. [See docs](https://docs.imgix.com/apis/url/face-detection/faces).
+   */
+  faces?: Maybe<Scalars['Int']>;
+  /**
+   * Sets the fill color for images with additional space created by the fit
+   * setting. Default: `fff`. [See
+   * docs](https://docs.imgix.com/apis/url/fill/fill-color).
+   */
+  fillColor?: Maybe<Scalars['String']>;
+  /** Alias for `fillColor`. */
+  fillcolor?: Maybe<Scalars['String']>;
+  /**
+   * Determines how to fill in additional space created by the fit setting. [See
+   * docs](https://docs.imgix.com/apis/url/fill/fill).
+   */
+  fill?: Maybe<Scalars['String']>;
+  /**
+   * Specifies how to map the source image to the output image dimensions. Default:
+   * `clip`. [See docs](https://docs.imgix.com/apis/url/size/fit).
+   */
+  fit?: Maybe<Scalars['String']>;
+  /** Alias for `fit`. */
+  f?: Maybe<Scalars['String']>;
+  /** Flips an image on a specified axis. [See docs](https://docs.imgix.com/apis/url/rotation/flip). */
+  flip?: Maybe<Scalars['String']>;
+  /** Changes the format of the output image. [See docs](https://docs.imgix.com/apis/url/format/fm). */
+  fm?: Maybe<Scalars['String']>;
+  /**
+   * Displays crosshairs identifying the location of the set focal point. Default:
+   * `false`. [See docs](https://docs.imgix.com/apis/url/focalpoint-crop/fp-debug).
+   */
+  fpDebug?: Maybe<Scalars['Boolean']>;
+  /**
+   * Sets the relative horizontal value for the focal point of an image. [See
+   * docs](https://docs.imgix.com/apis/url/focalpoint-crop/fp-x).
+   */
+  fpX?: Maybe<Scalars['Int']>;
+  /**
+   * Sets the relative vertical value for the focal point of an image. [See
+   * docs](https://docs.imgix.com/apis/url/focalpoint-crop/fp-y).
+   */
+  fpY?: Maybe<Scalars['Int']>;
+  /**
+   * Sets the relative zoom value for the focal point of an image. [See
+   * docs](https://docs.imgix.com/apis/url/focalpoint-crop/fp-z).
+   */
+  fpZ?: Maybe<Scalars['Int']>;
+  /** Adjusts the gamma of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/gam). */
+  gam?: Maybe<Scalars['Int']>;
+  /** Adjusts the height of the output image. [See docs](https://docs.imgix.com/apis/url/size/h). */
   h?: Maybe<Scalars['Int']>;
+  /** Alias for `h`. */
+  height?: Maybe<Scalars['Int']>;
+  /** Adjusts the highlights of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/high). */
+  high?: Maybe<Scalars['Int']>;
+  /** Applies a half-tone effect to the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/stylize/htn). */
+  htn?: Maybe<Scalars['Int']>;
+  /** Adjusts the hue of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/hue). */
+  hue?: Maybe<Scalars['Int']>;
+  /** Inverts the colors on the source image. Default: `false`. [See docs](https://docs.imgix.com/apis/url/adjustment/invert). */
+  invert?: Maybe<Scalars['Boolean']>;
+  /** Alias for `invert`. */
+  inv?: Maybe<Scalars['Boolean']>;
+  /**
+   * Specifies that the output image should be a lossless variant. Default:
+   * `false`. [See docs](https://docs.imgix.com/apis/url/format/lossless).
+   */
+  lossless?: Maybe<Scalars['Boolean']>;
+  /**
+   * Changes the watermark alignment relative to the parent image. [See
+   * docs](https://docs.imgix.com/apis/url/watermark/mark-align).
+   */
+  markAlign?: Maybe<Scalars['String']>;
+  /** Alias for `markAlign`. */
+  ma?: Maybe<Scalars['String']>;
+  /** Alias for `markAlign`. */
+  markalign?: Maybe<Scalars['String']>;
+  /**
+   * Changes the alpha of the watermark image. Default: `100`. [See
+   * docs](https://docs.imgix.com/apis/url/watermark/mark-alpha).
+   */
+  markAlpha?: Maybe<Scalars['Int']>;
+  /** Alias for `markAlpha`. */
+  markalpha?: Maybe<Scalars['Int']>;
+  /** Alias for `markAlpha`. */
+  malph?: Maybe<Scalars['Int']>;
+  /** Changes base URL of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark-base). */
+  markBase?: Maybe<Scalars['String']>;
+  /** Alias for `markBase`. */
+  mb?: Maybe<Scalars['String']>;
+  /** Alias for `markBase`. */
+  markbase?: Maybe<Scalars['String']>;
+  /**
+   * Specifies the fit mode for watermark images. Default: `clip`. [See
+   * docs](https://docs.imgix.com/apis/url/watermark/mark-fit).
+   */
+  markFit?: Maybe<Scalars['String']>;
+  /** Alias for `markFit`. */
+  mf?: Maybe<Scalars['String']>;
+  /** Alias for `markFit`. */
+  markfit?: Maybe<Scalars['String']>;
+  /** Adjusts the height of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark-h). */
+  markH?: Maybe<Scalars['Int']>;
+  /** Alias for `markH`. */
+  mh?: Maybe<Scalars['Int']>;
+  /** Alias for `markH`. */
+  markh?: Maybe<Scalars['Int']>;
+  /** Applies padding to the watermark image. Default: `10`. [See docs](https://docs.imgix.com/apis/url/watermark/mark-pad). */
+  markPad?: Maybe<Scalars['Int']>;
+  /** Alias for `markPad`. */
+  mp?: Maybe<Scalars['Int']>;
+  /** Alias for `markPad`. */
+  markpad?: Maybe<Scalars['Int']>;
+  /** Adjusts the scale of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark-scale). */
+  markScale?: Maybe<Scalars['Int']>;
+  /** Alias for `markScale`. */
+  ms?: Maybe<Scalars['Int']>;
+  /** Alias for `markScale`. */
+  markscale?: Maybe<Scalars['Int']>;
+  /** Adjusts the width of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark-w). */
+  markW?: Maybe<Scalars['Int']>;
+  /** Alias for `markW`. */
+  mw?: Maybe<Scalars['Int']>;
+  /** Alias for `markW`. */
+  markw?: Maybe<Scalars['Int']>;
+  /**
+   * Adjusts the x-offset of the watermark image relative to its parent. [See
+   * docs](https://docs.imgix.com/apis/url/watermark/mark-x).
+   */
+  markX?: Maybe<Scalars['Int']>;
+  /** Alias for `markX`. */
+  mx?: Maybe<Scalars['Int']>;
+  /** Alias for `markX`. */
+  markx?: Maybe<Scalars['Int']>;
+  /**
+   * Adjusts the y-offset of the watermark image relative to its parent. [See
+   * docs](https://docs.imgix.com/apis/url/watermark/mark-y).
+   */
+  markY?: Maybe<Scalars['Int']>;
+  /** Alias for `markY`. */
+  my?: Maybe<Scalars['Int']>;
+  /** Alias for `markY`. */
+  marky?: Maybe<Scalars['Int']>;
+  /** Specifies the location of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark). */
+  mark?: Maybe<Scalars['String']>;
+  /** Alias for `mark`. */
+  m?: Maybe<Scalars['String']>;
+  /** Defines the type of mask and specifies the URL if that type is selected. [See docs](https://docs.imgix.com/apis/url/mask). */
+  mask?: Maybe<Scalars['String']>;
+  /**
+   * Colors the background of the transparent mask area of images. Default: `fff`.
+   * [See docs](https://docs.imgix.com/apis/url/mask/mask-bg).
+   */
+  maskbg?: Maybe<Scalars['String']>;
+  /** Specifies the maximum height of the output image in pixels. [See docs](https://docs.imgix.com/apis/url/size/max-height). */
+  maxH?: Maybe<Scalars['Int']>;
+  /** Alias for `maxH`. */
+  maxHeight?: Maybe<Scalars['Int']>;
+  /** Specifies the maximum width of the output image in pixels. [See docs](https://docs.imgix.com/apis/url/size/max-width). */
+  maxW?: Maybe<Scalars['Int']>;
+  /** Alias for `maxW`. */
+  maxWidth?: Maybe<Scalars['Int']>;
+  /** Specifies the minimum height of the output image in pixels. [See docs](https://docs.imgix.com/apis/url/size/min-height). */
+  minH?: Maybe<Scalars['Int']>;
+  /** Alias for `minH`. */
+  minHeight?: Maybe<Scalars['Int']>;
+  /** Specifies the minimum width of the output image in pixels. [See docs](https://docs.imgix.com/apis/url/size/min-width). */
+  minW?: Maybe<Scalars['Int']>;
+  /** Alias for `minW`. */
+  minWidth?: Maybe<Scalars['Int']>;
+  /** Applies a monochrome effect to the source image. [See docs](https://docs.imgix.com/apis/url/stylize/monochrome). */
+  monochrome?: Maybe<Scalars['String']>;
+  /** Alias for `monochrome`. */
+  mono?: Maybe<Scalars['String']>;
+  /** Reduces the noise in an image. Default: `20`. [See docs](https://docs.imgix.com/apis/url/noise-reduction/nr). */
+  nr?: Maybe<Scalars['Int']>;
+  /**
+   * Provides a threshold by which to sharpen an image. Default: `20`. [See
+   * docs](https://docs.imgix.com/apis/url/noise-reduction/nrs).
+   */
+  nrs?: Maybe<Scalars['Int']>;
+  /** Changes the image orientation. [See docs](https://docs.imgix.com/apis/url/rotation/orient). */
+  orient?: Maybe<Scalars['Int']>;
+  /** Alias for `orient`. */
+  or?: Maybe<Scalars['Int']>;
+  /** Pads an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/border-and-padding/pad). */
+  pad?: Maybe<Scalars['Int']>;
+  /** Selects a page from a PDF for display. Default: `1`. [See docs](https://docs.imgix.com/apis/url/pdf-page-number). */
+  page?: Maybe<Scalars['Int']>;
+  /** Specifies an output format for palette-extraction. [See docs](https://docs.imgix.com/apis/url/color-palette/palette). */
+  palette?: Maybe<Scalars['String']>;
+  /**
+   * Specifies a CSS prefix for all classes in palette-extraction. Default:
+   * `image`. [See docs](https://docs.imgix.com/apis/url/color-palette/prefix).
+   */
+  prefix?: Maybe<Scalars['String']>;
+  /** Applies a pixelation effect to an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/stylize/px). */
+  px?: Maybe<Scalars['Int']>;
+  /** Adjusts the quality of an output image. Default: `75`. [See docs](https://docs.imgix.com/apis/url/format/q). */
+  q?: Maybe<Scalars['Int']>;
+  /** Crops an image to a specified rectangle. [See docs](https://docs.imgix.com/apis/url/size/rect). */
+  rect?: Maybe<Scalars['String']>;
+  /** Rotates an image by a specified number of degrees. Default: `0`. [See docs](https://docs.imgix.com/apis/url/rotation/rot). */
+  rot?: Maybe<Scalars['Float']>;
+  /** Adjusts the saturation of an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/sat). */
+  sat?: Maybe<Scalars['Int']>;
+  /** Applies a sepia effect to an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/stylize/sepia). */
+  sepia?: Maybe<Scalars['Int']>;
+  /** Adjusts the highlights of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/shad). */
+  shad?: Maybe<Scalars['Float']>;
+  /** Adjusts the sharpness of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/sharp). */
+  sharp?: Maybe<Scalars['Float']>;
+  /** Specifies a trim color on a trim operation. [See docs](https://docs.imgix.com/apis/url/trim/trim-color). */
+  trimColor?: Maybe<Scalars['String']>;
+  /** Alias for `trimColor`. */
+  trimcolor?: Maybe<Scalars['String']>;
+  /**
+   * Specifies the mean difference on a trim operation. Default: `11`. [See
+   * docs](https://docs.imgix.com/apis/url/trim/trim-md).
+   */
+  trimMd?: Maybe<Scalars['Float']>;
+  /** Alias for `trimMd`. */
+  trimmd?: Maybe<Scalars['Float']>;
+  /**
+   * Pads the area of the source image before trimming. Default: `0`. [See
+   * docs](https://docs.imgix.com/apis/url/trim/trim-pad).
+   */
+  trimPad?: Maybe<Scalars['Int']>;
+  /** Alias for `trimPad`. */
+  trimpad?: Maybe<Scalars['Int']>;
+  /**
+   * Specifies the standard deviation on a trim operation. Default: `10`. [See
+   * docs](https://docs.imgix.com/apis/url/trim/trim-sd).
+   */
+  trimSd?: Maybe<Scalars['Float']>;
+  /** Alias for `trimSd`. */
+  trimsd?: Maybe<Scalars['Float']>;
+  /** Specifies the tolerance on a trim operation. Default: `0`. [See docs](https://docs.imgix.com/apis/url/trim/trim-tol). */
+  trimTol?: Maybe<Scalars['Float']>;
+  /** Alias for `trimTol`. */
+  trimtol?: Maybe<Scalars['Float']>;
+  /** Trims the source image. [See docs](https://docs.imgix.com/apis/url/trim/trim). */
+  trim?: Maybe<Scalars['String']>;
+  /**
+   * Sets the vertical and horizontal alignment of rendered text relative to the
+   * base image. [See docs](https://docs.imgix.com/apis/url/text/txt-align).
+   */
+  txtAlign?: Maybe<Scalars['String']>;
+  /** Alias for `txtAlign`. */
+  txtalign?: Maybe<Scalars['String']>;
+  /** Alias for `txtAlign`. */
+  ta?: Maybe<Scalars['String']>;
+  /** Sets the clipping properties of rendered text. Default: `end`. [See docs](https://docs.imgix.com/apis/url/text/txt-clip). */
+  txtClip?: Maybe<Scalars['String']>;
+  /** Alias for `txtClip`. */
+  txtclip?: Maybe<Scalars['String']>;
+  /** Alias for `txtClip`. */
+  tcl?: Maybe<Scalars['String']>;
+  /** Specifies the color of rendered text. [See docs](https://docs.imgix.com/apis/url/text/txt-color). */
+  txtColor?: Maybe<Scalars['String']>;
+  /** Alias for `txtColor`. */
+  txtcolor?: Maybe<Scalars['String']>;
+  /** Alias for `txtColor`. */
+  txtClr?: Maybe<Scalars['String']>;
+  /** Alias for `txtColor`. */
+  txtclr?: Maybe<Scalars['String']>;
+  /** Alias for `txtColor`. */
+  tc?: Maybe<Scalars['String']>;
+  /** Specifies the fit approach for rendered text. [See docs](https://docs.imgix.com/apis/url/text/txt-fit). */
+  txtFit?: Maybe<Scalars['String']>;
+  /** Alias for `txtFit`. */
+  txtfit?: Maybe<Scalars['String']>;
+  /** Selects a font for rendered text. [See docs](https://docs.imgix.com/apis/url/text/txt-font). */
+  txtFont?: Maybe<Scalars['String']>;
+  /** Alias for `txtFont`. */
+  tf?: Maybe<Scalars['String']>;
+  /** Alias for `txtFont`. */
+  txtfont?: Maybe<Scalars['String']>;
+  /**
+   * Sets the leading (line spacing) for rendered text. Only works on the
+   * multi-line text endpoint. Default: `0`. [See
+   * docs](https://docs.imgix.com/apis/url/typesetting/txt-lead).
+   */
+  txtLead?: Maybe<Scalars['Int']>;
+  /** Alias for `txtLead`. */
+  txtlead?: Maybe<Scalars['Int']>;
+  /** Controls the level of ligature substitution. [See docs](https://docs.imgix.com/apis/url/text/txt-lig). */
+  txtLig?: Maybe<Scalars['Int']>;
+  /** Alias for `txtLig`. */
+  txtlig?: Maybe<Scalars['Int']>;
+  /** Specifies a text outline color. Default: `fff`. [See docs](https://docs.imgix.com/apis/url/text/txt-line-color). */
+  txtLineColor?: Maybe<Scalars['String']>;
+  /** Alias for `txtLineColor`. */
+  txtlinecolor?: Maybe<Scalars['String']>;
+  /** Alias for `txtLineColor`. */
+  txtLineClr?: Maybe<Scalars['String']>;
+  /** Alias for `txtLineColor`. */
+  txtlineclr?: Maybe<Scalars['String']>;
+  /**
+   * Outlines the rendered text with a specified color. Default: `0`. [See
+   * docs](https://docs.imgix.com/apis/url/text/txt-line).
+   */
+  txtLine?: Maybe<Scalars['Int']>;
+  /** Alias for `txtLine`. */
+  txtline?: Maybe<Scalars['Int']>;
+  /** Alias for `txtLine`. */
+  tl?: Maybe<Scalars['Int']>;
+  /**
+   * Specifies the padding (in device-independent pixels) between a textbox and the
+   * edges of the base image. [See
+   * docs](https://docs.imgix.com/apis/url/text/txt-pad).
+   */
+  txtPad?: Maybe<Scalars['Int']>;
+  /** Alias for `txtPad`. */
+  txtpad?: Maybe<Scalars['Int']>;
+  /** Alias for `txtPad`. */
+  tp?: Maybe<Scalars['Int']>;
+  /** Applies a shadow to rendered text. Default: `0`. [See docs](https://docs.imgix.com/apis/url/text/txt-shad). */
+  txtShad?: Maybe<Scalars['Float']>;
+  /** Alias for `txtShad`. */
+  txtshad?: Maybe<Scalars['Float']>;
+  /** Alias for `txtShad`. */
+  tsh?: Maybe<Scalars['Float']>;
+  /** Sets the font size of rendered text. Default: `12`. [See docs](https://docs.imgix.com/apis/url/text/txt-size). */
+  txtSize?: Maybe<Scalars['Int']>;
+  /** Alias for `txtSize`. */
+  tsz?: Maybe<Scalars['Int']>;
+  /** Alias for `txtSize`. */
+  txtsize?: Maybe<Scalars['Int']>;
+  /**
+   * Sets the tracking (letter spacing) for rendered text. Only works on the
+   * multi-line text endpoint. Default: `0`. [See
+   * docs](https://docs.imgix.com/apis/url/typesetting/txt-track).
+   */
+  txtTrack?: Maybe<Scalars['Int']>;
+  /** Alias for `txtTrack`. */
+  txttrack?: Maybe<Scalars['Int']>;
+  /** Alias for `txtTrack`. */
+  tt?: Maybe<Scalars['Int']>;
+  /** Sets the width of rendered text. [See docs](https://docs.imgix.com/apis/url/text/txt-width). */
+  txtWidth?: Maybe<Scalars['Int']>;
+  /** Alias for `txtWidth`. */
+  txtwidth?: Maybe<Scalars['Int']>;
+  /** Sets the text string to render. [See docs](https://docs.imgix.com/apis/url/text/txt). */
+  txt?: Maybe<Scalars['String']>;
+  /** Alias for `txt`. */
+  t?: Maybe<Scalars['String']>;
+  /** Sharpens the source image using an unsharp mask. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/usm). */
+  usm?: Maybe<Scalars['Int']>;
+  /**
+   * Specifies the radius for an unsharp mask operation. Default: `2.5`. [See
+   * docs](https://docs.imgix.com/apis/url/adjustment/usmrad).
+   */
+  usmrad?: Maybe<Scalars['Float']>;
+  /** Adjusts the vibrance of an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/vib). */
+  vib?: Maybe<Scalars['Int']>;
+  /** Adjusts the width of the output image. [See docs](https://docs.imgix.com/apis/url/size/w). */
+  w?: Maybe<Scalars['Int']>;
+  /** Alias for `w`. */
+  width?: Maybe<Scalars['Int']>;
 };
 
 export type Internal = {
@@ -3815,6 +4340,7 @@ export type PageInfo = {
   itemCount: Scalars['Int'];
   pageCount: Scalars['Int'];
   perPage?: Maybe<Scalars['Int']>;
+  totalCount: Scalars['Int'];
 };
 
 /** A paginated collection of nodes. */
@@ -3861,10 +4387,8 @@ export type PaginatedCollectionConnectionGroupArgs = {
 };
 
 export type PaginatedCollectionEdge = {
-  /** A paginated collection of nodes. */
   next?: Maybe<PaginatedCollection>;
   node: PaginatedCollection;
-  /** A paginated collection of nodes. */
   previous?: Maybe<PaginatedCollection>;
 };
 
@@ -4188,10 +4712,8 @@ export type PaginatedCollectionPageConnectionGroupArgs = {
 };
 
 export type PaginatedCollectionPageEdge = {
-  /** A page in a paginated collection. */
   next?: Maybe<PaginatedCollectionPage>;
   node: PaginatedCollectionPage;
-  /** A page in a paginated collection. */
   previous?: Maybe<PaginatedCollectionPage>;
 };
 
@@ -4890,7 +5412,7 @@ export type QueryAllSitePageArgs = {
 export type QuerySiteArgs = {
   buildTime?: Maybe<DateQueryOperatorInput>;
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
-  port?: Maybe<IntQueryOperatorInput>;
+  port?: Maybe<DateQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
   polyfill?: Maybe<BooleanQueryOperatorInput>;
   pathPrefix?: Maybe<StringQueryOperatorInput>;
@@ -5229,7 +5751,7 @@ export type QueryAllSitePluginArgs = {
 export type Site = Node & {
   buildTime?: Maybe<Scalars['Date']>;
   siteMetadata?: Maybe<SiteSiteMetadata>;
-  port?: Maybe<Scalars['Int']>;
+  port?: Maybe<Scalars['Date']>;
   host?: Maybe<Scalars['String']>;
   polyfill?: Maybe<Scalars['Boolean']>;
   pathPrefix?: Maybe<Scalars['String']>;
@@ -5241,6 +5763,14 @@ export type Site = Node & {
 
 
 export type SiteBuildTimeArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+
+export type SitePortArgs = {
   formatString?: Maybe<Scalars['String']>;
   fromNow?: Maybe<Scalars['Boolean']>;
   difference?: Maybe<Scalars['String']>;
@@ -5529,7 +6059,7 @@ export enum SiteFieldsEnum {
 export type SiteFilterInput = {
   buildTime?: Maybe<DateQueryOperatorInput>;
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
-  port?: Maybe<IntQueryOperatorInput>;
+  port?: Maybe<DateQueryOperatorInput>;
   host?: Maybe<StringQueryOperatorInput>;
   polyfill?: Maybe<BooleanQueryOperatorInput>;
   pathPrefix?: Maybe<StringQueryOperatorInput>;
@@ -6348,7 +6878,7 @@ export type SpecialAwardWinnerFragment = { fields?: Maybe<(
     Pick<AirtableWinnerFields, 'url'>
     & { featured_image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }
   )>, data?: Maybe<(
-    Pick<AirtableWinnerData, 'name' | 'award' | 'national_winner' | 'special_award' | 'special_award_video'>
+    Pick<AirtableWinnerData, 'name' | 'award' | 'national_winner' | 'special_award' | 'special_award_video' | 'year'>
     & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<(
         Pick<AirtableAgencyFields, 'url'>
         & { avatar?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }

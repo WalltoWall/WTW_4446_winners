@@ -29,6 +29,7 @@ export const fragments = graphql`
           name
         }
       }
+      year
     }
   }
 `

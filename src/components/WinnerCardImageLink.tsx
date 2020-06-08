@@ -1,6 +1,7 @@
 import React from 'react'
 import VisuallyHidden from '@reach/visually-hidden'
 import GatsbyImage from 'gatsby-image'
+import { negateScale } from 'styled-system-scale'
 
 import { AspectRatio } from './AspectRatio'
 import { t, mq, linearScale } from '../theme'
@@ -68,29 +69,36 @@ export const WinnerCardImageLink = ({
         {imageFluid && (
           <GatsbyImage fluid={imageFluid} css={{ height: '100%' }} />
         )}
-        {isNationalWinner && (
-          <Ribbon
-            css={mq({
-              position: 'absolute',
-              right: 0,
-              top: linearScale('1rem', '1.5rem'),
-            })}
-          >
-            {year} National Winner
-          </Ribbon>
-        )}
-        {isNmgScholarshipWinner && (
-          <Ribbon
-            variant="teal"
-            css={mq({
-              position: 'absolute',
-              right: 0,
-              top: linearScale('1rem', '1.5rem'),
-            })}
-          >
-            NMG Scholarship Winner
-          </Ribbon>
-        )}
+        <ul
+          css={mq({
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            position: 'absolute',
+            right: 0,
+            top: linearScale('1rem', '1.5rem'),
+            marginBottom: negateScale(linearScale('0.5rem', '1rem', 'space')),
+          })}
+        >
+          {isNationalWinner && (
+            <li
+              css={mq({
+                marginBottom: linearScale('0.5rem', '0.75rem', 'space'),
+              })}
+            >
+              <Ribbon>{year} National Winner</Ribbon>
+            </li>
+          )}
+          {isNmgScholarshipWinner && (
+            <li
+              css={mq({
+                marginBottom: linearScale('0.5rem', '0.75rem', 'space'),
+              })}
+            >
+              <Ribbon variant="teal">NMG Scholarship Winner</Ribbon>
+            </li>
+          )}
+        </ul>
       </AspectRatio>
     </Link>
   )
