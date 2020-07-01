@@ -21,8 +21,9 @@ type AboutPageProps = LayoutProps & {
 }
 
 export const AboutPage = ({ data }: AboutPageProps) => {
-  let highSchoolSponsors: Sponsor[] = []
-  let professionalSponsors: Sponsor[] = []
+  const highSchoolSponsors: Sponsor[] = []
+  const professionalSponsors: Sponsor[] = []
+  const virtualSponsors: Sponsor[] = []
 
   data.aboutSponsors.nodes.forEach(node => {
     const sponsor: Sponsor = {
@@ -37,6 +38,8 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         return highSchoolSponsors.push(sponsor)
       case 'professional':
         return professionalSponsors.push(sponsor)
+      case 'virtual':
+        return virtualSponsors.push(sponsor)
       default:
         return
     }
@@ -92,6 +95,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
       <SponsorsSlice
         highSchool={highSchoolSponsors}
         professional={professionalSponsors}
+        virtual={virtualSponsors}
       />
 
       <CallToActionSlice

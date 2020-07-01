@@ -1,5 +1,6 @@
 import React from 'react'
 import { negateScale } from 'styled-system-scale'
+import { undefIfEmpty } from '@walltowall/helpers'
 
 import { mq, t, linearScale } from '../theme'
 
@@ -7,21 +8,6 @@ import { BoundedBox } from '../components/BoundedBox'
 import { Heading } from '../components/Heading'
 import { View, ViewProps } from '../components/View'
 import { Link } from '../components/Link'
-
-export type Sponsor = {
-  url?: string
-  type?: 'high school' | 'professional'
-  name?: string
-  src?: string
-}
-type SponsorsSliceProps = {
-  highSchool: Sponsor[]
-  professional: Sponsor[]
-}
-
-type SponsorsProps = ViewProps & {
-  sponsors: Sponsor[]
-}
 
 // TODO: Extract to component.
 const GAP = t.spaceScales.l
@@ -31,7 +17,18 @@ const ITEM_WIDTHS = Array.from({
   length: Math.max(GAP.length, WIDTHS.length),
 }).map((_, i) => `calc(${WIDTHS[i]} - ${GAP[i]})`)
 
-const Sponsors = ({ sponsors, ...props }: SponsorsProps) => {
+export type Sponsor = {
+  url?: string
+  type?: 'high school' | 'professional'
+  name?: string
+  src?: string
+}
+
+type SponsorsProps = ViewProps & {
+  sponsors?: Sponsor[]
+}
+
+const Sponsors = ({ sponsors = [], ...props }: SponsorsProps) => {
   return (
     <View
       {...props}
@@ -67,9 +64,16 @@ const Sponsors = ({ sponsors, ...props }: SponsorsProps) => {
   )
 }
 
+type SponsorsSliceProps = {
+  highSchool?: Sponsor[]
+  professional?: Sponsor[]
+  virtual?: Sponsor[]
+}
+
 export const SponsorsSlice = ({
   highSchool,
   professional,
+  virtual,
 }: SponsorsSliceProps) => {
   return (
     <BoundedBox
@@ -77,31 +81,50 @@ export const SponsorsSlice = ({
       maxWidth="Large"
       css={{ background: t.colors.Gray95 }}
     >
-      <Heading
-        css={mq({
-          fontSize: t.fontSizeScales.xl,
-          textAlign: 'center',
-          marginBottom: t.spaceScales.l,
-        })}
-      >
-        Mahalo to Our Sponsors
-      </Heading>
+      <div css={mq({ display: 'grid', gap: t.spaceScales.xl })}>
+        <div>
+          <Heading
+            css={mq({
+              fontSize: t.fontSizeScales.xl,
+              textAlign: 'center',
+              marginBottom: t.spaceScales.l,
+            })}
+          >
+            Mahalo to Our Sponsors
+          </Heading>
+          {undefIfEmpty(professional) && <Sponsors sponsors={professional} />}
+        </div>
 
-      <Sponsors
-        sponsors={professional}
-        css={mq({ marginBottom: t.spaceScales.l })}
-      />
+        {undefIfEmpty(highSchool) && (
+          <div>
+            <Heading
+              css={mq({
+                fontSize: t.fontSizeScales.l,
+                textAlign: 'center',
+                marginBottom: t.spaceScales.m,
+              })}
+            >
+              High School Sponsor
+            </Heading>
+            <Sponsors sponsors={highSchool} />
+          </div>
+        )}
 
-      <Heading
-        css={mq({
-          fontSize: t.fontSizeScales.l,
-          textAlign: 'center',
-          marginBottom: t.spaceScales.m,
-        })}
-      >
-        High School Sponsors
-      </Heading>
-      <Sponsors sponsors={highSchool} />
+        {undefIfEmpty(virtual) && (
+          <div>
+            <Heading
+              css={mq({
+                fontSize: t.fontSizeScales.l,
+                textAlign: 'center',
+                marginBottom: t.spaceScales.m,
+              })}
+            >
+              Virtual Pele Show Sponsor
+            </Heading>
+            <Sponsors sponsors={virtual} />
+          </div>
+        )}
+      </div>
     </BoundedBox>
   )
 }
