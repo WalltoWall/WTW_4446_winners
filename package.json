@@ -25,7 +25,7 @@
     "gatsby-image": "^2.3.4",
     "gatsby-paginated-collection-json-files": "^0.2.0-next.2",
     "gatsby-plugin-google-tagmanager": "^2.3.0",
-    "gatsby-plugin-imgix": "^0.8.1",
+    "gatsby-plugin-imgix": "^0.9.0",
     "gatsby-plugin-local-search": "^1.1.1",
     "gatsby-plugin-manifest": "^2.4.1",
     "gatsby-plugin-netlify": "^2.3.0",
