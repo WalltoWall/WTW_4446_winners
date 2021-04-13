@@ -14,6 +14,7 @@ const SocialIconAnchor = ({ href, platform }: SocialIconProps) => (
     <Icon
       name={platform}
       css={mq({
+        display: 'block',
         width: linearScale('0.75rem', '1.125rem'),
         height: linearScale('0.75rem', '1.125rem'),
       })}
