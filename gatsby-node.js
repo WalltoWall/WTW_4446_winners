@@ -463,6 +463,27 @@ exports.createPages = async gatsbyContext => {
   }
 
   /**
+   * Write pages for each year's Ad People winners.
+   */
+
+  for (const year of years) {
+    createPage({
+      path: `/ad-people/${year}/`,
+      component: path.resolve(__dirname, 'src/templates/adPeople.tsx'),
+      context: { year },
+    })
+  }
+
+  /**
+   * Create root Ad Peoples page.
+   */
+  createPage({
+    path: `/ad-people/`,
+    component: path.resolve(__dirname, 'src/templates/adPeople.tsx'),
+    context: { year: years[0] },
+  })
+
+  /**
    * Write search indexes.
    */
 

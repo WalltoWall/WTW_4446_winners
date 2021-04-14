@@ -56,7 +56,6 @@ export const LargePersonCard = ({
         y={[4, 7]}
         css={mq({
           backgroundColor: t.c.Black,
-          height: '100%',
           width: '100%',
         })}
       >
@@ -68,7 +67,7 @@ export const LargePersonCard = ({
     <BoundedBox css={{ textAlign: 'center' }}>
       <div
         css={mq({
-          maxWidth: '42ch',
+          maxWidth: '70ch',
           marginLeft: 'auto',
           marginRight: 'auto',
           lineHeight: t.lh.Copy,
@@ -92,7 +91,9 @@ export const LargePersonCard = ({
             )}
           </p>
         </div>
-        {descriptionHTML && <HTMLContent html={descriptionHTML} />}
+        {descriptionHTML && (
+          <HTMLContent html={descriptionHTML} css={{ textAlign: 'left' }} />
+        )}
       </div>
     </BoundedBox>
   </View>
