@@ -23,7 +23,6 @@ import { HeroVideoSlice } from '../slices/HeroVideoSlice'
 import { HeroSlice } from '../slices/HeroSlice'
 // import { CallToActionSlice } from '../slices/CallToActionSlice'
 import { ColoredBoxesSlice } from '../slices/ColoredBoxesSlice'
-import { MessageSlice } from '../slices/MessageSlice'
 import { VideoMessageSlice } from '../slices/VideoMessageSlice'
 import { OrganizerMessagesSlice } from '../slices/OrganizerMessagesSlice'
 
@@ -51,9 +50,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
       />
 
       <OrganizerMessagesSlice
-        heading="A Message from Jen & Paul"
-        buttonHref="/from-jen-and-paul/"
-        buttonText="Read full letters here."
+        textHTML={data.homeMessage?.data?.rich_text?.childMarkdownRemark?.html}
       >
         <OrganizerMessagesSlice.Message
           name={data.organizer1Name?.data?.plain_text}
@@ -301,6 +298,7 @@ export const query = graphql`
       filter: {
         data: {
           special_award: { regex: "/^Best of Show - /" }
+          year: { eq: "2021" }
           type: { eq: "Professional" }
         }
       }
@@ -334,7 +332,7 @@ export const query = graphql`
     overallJudgesWinner: airtableWinner(
       data: {
         special_award: { eq: "Judge's Award - Overall" }
-        year: { eq: "2020" }
+        year: { eq: "2021" }
         type: { eq: "Professional" }
       }
     ) {
@@ -344,7 +342,7 @@ export const query = graphql`
       filter: {
         data: {
           special_award: { regex: "/^Judge's Award - (?!Overall)/" }
-          year: { eq: "2020" }
+          year: { eq: "2021" }
           type: { eq: "Professional" }
         }
       }
@@ -379,6 +377,19 @@ export const query = graphql`
     # Home Hero
     ###
     homeHeroText: airtableTextField(data: { uid: { eq: "Home Hero Text" } }) {
+      data {
+        rich_text {
+          childMarkdownRemark {
+            html
+          }
+        }
+      }
+    }
+
+    ###
+    # Home Message
+    ###
+    homeMessage: airtableTextField(data: { uid: { eq: "Home Message" } }) {
       data {
         rich_text {
           childMarkdownRemark {

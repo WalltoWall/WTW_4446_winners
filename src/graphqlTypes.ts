@@ -273,13 +273,13 @@ export enum AirtableAdPersonFieldsEnum {
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
+  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataAvatar = 'data___agency___data___avatar',
   DataAgencyDataWebsite = 'data___agency___data___website',
   DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
-  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
   DataPhoto = 'data___photo',
   DataPhotoId = 'data___photo___id',
@@ -400,13 +400,13 @@ export type AirtableAgencyData = {
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
+  Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
   avatar?: Maybe<Array<Maybe<AirtableAgencyDataAvatar>>>;
   website?: Maybe<Scalars['String']>;
   facebook_handle?: Maybe<Scalars['String']>;
   linkedin_handle?: Maybe<Scalars['String']>;
   twitter_handle?: Maybe<Scalars['String']>;
   instagram_handle?: Maybe<Scalars['String']>;
-  Ad_People?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
@@ -500,13 +500,13 @@ export type AirtableAgencyDataFilterInput = {
   Entries?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
+  Ad_People?: Maybe<StringQueryOperatorInput>;
   avatar?: Maybe<AirtableAgencyDataAvatarFilterListInput>;
   website?: Maybe<StringQueryOperatorInput>;
   facebook_handle?: Maybe<StringQueryOperatorInput>;
   linkedin_handle?: Maybe<StringQueryOperatorInput>;
   twitter_handle?: Maybe<StringQueryOperatorInput>;
   instagram_handle?: Maybe<StringQueryOperatorInput>;
-  Ad_People?: Maybe<StringQueryOperatorInput>;
 };
 
 export type AirtableAgencyEdge = {
@@ -614,6 +614,7 @@ export enum AirtableAgencyFieldsEnum {
   DataEntries = 'data___Entries',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
+  DataAdPeople = 'data___Ad_People',
   DataAvatar = 'data___avatar',
   DataAvatarId = 'data___avatar___id',
   DataAvatarUrl = 'data___avatar___url',
@@ -625,7 +626,6 @@ export enum AirtableAgencyFieldsEnum {
   DataLinkedinHandle = 'data___linkedin_handle',
   DataTwitterHandle = 'data___twitter_handle',
   DataInstagramHandle = 'data___instagram_handle',
-  DataAdPeople = 'data___Ad_People',
   FieldsAvatarUrl = 'fields___avatar___url',
   FieldsAvatarFixedBase64 = 'fields___avatar___fixed___base64',
   FieldsAvatarFixedSrc = 'fields___avatar___fixed___src',
@@ -892,6 +892,15 @@ export type AirtableCategoryData = {
   Entries?: Maybe<Array<Maybe<Scalars['String']>>>;
   line_1?: Maybe<Scalars['String']>;
   code?: Maybe<Scalars['String']>;
+  Year?: Maybe<Scalars['Date']>;
+};
+
+
+export type AirtableCategoryDataYearArgs = {
+  formatString?: Maybe<Scalars['String']>;
+  fromNow?: Maybe<Scalars['Boolean']>;
+  difference?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
 };
 
 export type AirtableCategoryDataFilterInput = {
@@ -899,6 +908,7 @@ export type AirtableCategoryDataFilterInput = {
   Entries?: Maybe<StringQueryOperatorInput>;
   line_1?: Maybe<StringQueryOperatorInput>;
   code?: Maybe<StringQueryOperatorInput>;
+  Year?: Maybe<DateQueryOperatorInput>;
 };
 
 export type AirtableCategoryEdge = {
@@ -1000,7 +1010,8 @@ export enum AirtableCategoryFieldsEnum {
   DataLine_2 = 'data___line_2',
   DataEntries = 'data___Entries',
   DataLine_1 = 'data___line_1',
-  DataCode = 'data___code'
+  DataCode = 'data___code',
+  DataYear = 'data___Year'
 }
 
 export type AirtableCategoryFilterInput = {
@@ -2188,22 +2199,22 @@ export type AirtableWinnerData = {
   name?: Maybe<Scalars['String']>;
   award?: Maybe<Scalars['String']>;
   agency?: Maybe<Array<Maybe<AirtableAgency>>>;
-  video?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
   client?: Maybe<Scalars['String']>;
   category?: Maybe<Array<Maybe<AirtableCategory>>>;
   tags?: Maybe<Array<Maybe<Scalars['String']>>>;
   type?: Maybe<Scalars['String']>;
-  national_winner?: Maybe<Scalars['Boolean']>;
-  video_thumbnail?: Maybe<Array<Maybe<AirtableWinnerDataVideo_Thumbnail>>>;
   assignee?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['Date']>;
   created_at?: Maybe<Scalars['Date']>;
-  images?: Maybe<Array<Maybe<AirtableWinnerDataImages>>>;
   credits?: Maybe<AirtableFieldtextmarkdown>;
-  show_with?: Maybe<Array<Maybe<AirtableWinner>>>;
+  video?: Maybe<Scalars['String']>;
+  video_thumbnail?: Maybe<Array<Maybe<AirtableWinnerDataVideo_Thumbnail>>>;
+  national_winner?: Maybe<Scalars['Boolean']>;
   special_award?: Maybe<Array<Maybe<Scalars['String']>>>;
-  special_award_video?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  show_with?: Maybe<Array<Maybe<AirtableWinner>>>;
+  special_award_video?: Maybe<Scalars['String']>;
 };
 
 
@@ -2227,22 +2238,22 @@ export type AirtableWinnerDataFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
   award?: Maybe<StringQueryOperatorInput>;
   agency?: Maybe<AirtableAgencyFilterListInput>;
-  video?: Maybe<StringQueryOperatorInput>;
+  images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
   client?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<AirtableCategoryFilterListInput>;
   tags?: Maybe<StringQueryOperatorInput>;
   type?: Maybe<StringQueryOperatorInput>;
-  national_winner?: Maybe<BooleanQueryOperatorInput>;
-  video_thumbnail?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterListInput>;
   assignee?: Maybe<StringQueryOperatorInput>;
   updated_at?: Maybe<DateQueryOperatorInput>;
   created_at?: Maybe<DateQueryOperatorInput>;
-  images?: Maybe<AirtableWinnerDataImagesFilterListInput>;
   credits?: Maybe<AirtableFieldtextmarkdownFilterInput>;
-  show_with?: Maybe<AirtableWinnerFilterListInput>;
+  video?: Maybe<StringQueryOperatorInput>;
+  video_thumbnail?: Maybe<AirtableWinnerDataVideo_ThumbnailFilterListInput>;
+  national_winner?: Maybe<BooleanQueryOperatorInput>;
   special_award?: Maybe<StringQueryOperatorInput>;
-  special_award_video?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
+  show_with?: Maybe<AirtableWinnerFilterListInput>;
+  special_award_video?: Maybe<StringQueryOperatorInput>;
 };
 
 export type AirtableWinnerDataImages = {
@@ -2515,15 +2526,20 @@ export enum AirtableWinnerFieldsEnum {
   DataAgencyDataEntries = 'data___agency___data___Entries',
   DataAgencyDataUpdatedAt = 'data___agency___data___updated_at',
   DataAgencyDataCreatedAt = 'data___agency___data___created_at',
+  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyDataAvatar = 'data___agency___data___avatar',
   DataAgencyDataWebsite = 'data___agency___data___website',
   DataAgencyDataFacebookHandle = 'data___agency___data___facebook_handle',
   DataAgencyDataLinkedinHandle = 'data___agency___data___linkedin_handle',
   DataAgencyDataTwitterHandle = 'data___agency___data___twitter_handle',
   DataAgencyDataInstagramHandle = 'data___agency___data___instagram_handle',
-  DataAgencyDataAdPeople = 'data___agency___data___Ad_People',
   DataAgencyFieldsUrl = 'data___agency___fields___url',
-  DataVideo = 'data___video',
+  DataImages = 'data___images',
+  DataImagesId = 'data___images___id',
+  DataImagesUrl = 'data___images___url',
+  DataImagesFilename = 'data___images___filename',
+  DataImagesSize = 'data___images___size',
+  DataImagesType = 'data___images___type',
   DataClient = 'data___client',
   DataCategory = 'data___category',
   DataCategoryId = 'data___category___id',
@@ -2547,24 +2563,12 @@ export enum AirtableWinnerFieldsEnum {
   DataCategoryDataEntries = 'data___category___data___Entries',
   DataCategoryDataLine_1 = 'data___category___data___line_1',
   DataCategoryDataCode = 'data___category___data___code',
+  DataCategoryDataYear = 'data___category___data___Year',
   DataTags = 'data___tags',
   DataType = 'data___type',
-  DataNationalWinner = 'data___national_winner',
-  DataVideoThumbnail = 'data___video_thumbnail',
-  DataVideoThumbnailId = 'data___video_thumbnail___id',
-  DataVideoThumbnailUrl = 'data___video_thumbnail___url',
-  DataVideoThumbnailFilename = 'data___video_thumbnail___filename',
-  DataVideoThumbnailSize = 'data___video_thumbnail___size',
-  DataVideoThumbnailType = 'data___video_thumbnail___type',
   DataAssignee = 'data___assignee',
   DataUpdatedAt = 'data___updated_at',
   DataCreatedAt = 'data___created_at',
-  DataImages = 'data___images',
-  DataImagesId = 'data___images___id',
-  DataImagesUrl = 'data___images___url',
-  DataImagesFilename = 'data___images___filename',
-  DataImagesSize = 'data___images___size',
-  DataImagesType = 'data___images___type',
   DataCreditsId = 'data___credits___id',
   DataCreditsParentId = 'data___credits___parent___id',
   DataCreditsParentChildren = 'data___credits___parent___children',
@@ -2590,6 +2594,16 @@ export enum AirtableWinnerFieldsEnum {
   DataCreditsChildMarkdownRemarkTimeToRead = 'data___credits___childMarkdownRemark___timeToRead',
   DataCreditsChildMarkdownRemarkTableOfContents = 'data___credits___childMarkdownRemark___tableOfContents',
   DataCreditsChildMarkdownRemarkChildren = 'data___credits___childMarkdownRemark___children',
+  DataVideo = 'data___video',
+  DataVideoThumbnail = 'data___video_thumbnail',
+  DataVideoThumbnailId = 'data___video_thumbnail___id',
+  DataVideoThumbnailUrl = 'data___video_thumbnail___url',
+  DataVideoThumbnailFilename = 'data___video_thumbnail___filename',
+  DataVideoThumbnailSize = 'data___video_thumbnail___size',
+  DataVideoThumbnailType = 'data___video_thumbnail___type',
+  DataNationalWinner = 'data___national_winner',
+  DataSpecialAward = 'data___special_award',
+  DataDescription = 'data___description',
   DataShowWith = 'data___show_with',
   DataShowWithId = 'data___show_with___id',
   DataShowWithParentId = 'data___show_with___parent___id',
@@ -2612,28 +2626,26 @@ export enum AirtableWinnerFieldsEnum {
   DataShowWithDataName = 'data___show_with___data___name',
   DataShowWithDataAward = 'data___show_with___data___award',
   DataShowWithDataAgency = 'data___show_with___data___agency',
-  DataShowWithDataVideo = 'data___show_with___data___video',
+  DataShowWithDataImages = 'data___show_with___data___images',
   DataShowWithDataClient = 'data___show_with___data___client',
   DataShowWithDataCategory = 'data___show_with___data___category',
   DataShowWithDataTags = 'data___show_with___data___tags',
   DataShowWithDataType = 'data___show_with___data___type',
-  DataShowWithDataNationalWinner = 'data___show_with___data___national_winner',
-  DataShowWithDataVideoThumbnail = 'data___show_with___data___video_thumbnail',
   DataShowWithDataAssignee = 'data___show_with___data___assignee',
   DataShowWithDataUpdatedAt = 'data___show_with___data___updated_at',
   DataShowWithDataCreatedAt = 'data___show_with___data___created_at',
-  DataShowWithDataImages = 'data___show_with___data___images',
-  DataShowWithDataShowWith = 'data___show_with___data___show_with',
+  DataShowWithDataVideo = 'data___show_with___data___video',
+  DataShowWithDataVideoThumbnail = 'data___show_with___data___video_thumbnail',
+  DataShowWithDataNationalWinner = 'data___show_with___data___national_winner',
   DataShowWithDataSpecialAward = 'data___show_with___data___special_award',
-  DataShowWithDataSpecialAwardVideo = 'data___show_with___data___special_award_video',
   DataShowWithDataDescription = 'data___show_with___data___description',
+  DataShowWithDataShowWith = 'data___show_with___data___show_with',
+  DataShowWithDataSpecialAwardVideo = 'data___show_with___data___special_award_video',
   DataShowWithFieldsImages = 'data___show_with___fields___images',
   DataShowWithFieldsUrl = 'data___show_with___fields___url',
   DataShowWithFieldsTags = 'data___show_with___fields___tags',
   DataShowWithFieldsChildren = 'data___show_with___fields___children',
-  DataSpecialAward = 'data___special_award',
   DataSpecialAwardVideo = 'data___special_award_video',
-  DataDescription = 'data___description',
   FieldsImages = 'fields___images',
   FieldsImagesUrl = 'fields___images___url',
   FieldsImagesFixedBase64 = 'fields___images___fixed___base64',
@@ -2709,21 +2721,21 @@ export enum AirtableWinnerFieldsEnum {
   FieldsChildrenDataName = 'fields___children___data___name',
   FieldsChildrenDataAward = 'fields___children___data___award',
   FieldsChildrenDataAgency = 'fields___children___data___agency',
-  FieldsChildrenDataVideo = 'fields___children___data___video',
+  FieldsChildrenDataImages = 'fields___children___data___images',
   FieldsChildrenDataClient = 'fields___children___data___client',
   FieldsChildrenDataCategory = 'fields___children___data___category',
   FieldsChildrenDataTags = 'fields___children___data___tags',
   FieldsChildrenDataType = 'fields___children___data___type',
-  FieldsChildrenDataNationalWinner = 'fields___children___data___national_winner',
-  FieldsChildrenDataVideoThumbnail = 'fields___children___data___video_thumbnail',
   FieldsChildrenDataAssignee = 'fields___children___data___assignee',
   FieldsChildrenDataUpdatedAt = 'fields___children___data___updated_at',
   FieldsChildrenDataCreatedAt = 'fields___children___data___created_at',
-  FieldsChildrenDataImages = 'fields___children___data___images',
-  FieldsChildrenDataShowWith = 'fields___children___data___show_with',
+  FieldsChildrenDataVideo = 'fields___children___data___video',
+  FieldsChildrenDataVideoThumbnail = 'fields___children___data___video_thumbnail',
+  FieldsChildrenDataNationalWinner = 'fields___children___data___national_winner',
   FieldsChildrenDataSpecialAward = 'fields___children___data___special_award',
-  FieldsChildrenDataSpecialAwardVideo = 'fields___children___data___special_award_video',
   FieldsChildrenDataDescription = 'fields___children___data___description',
+  FieldsChildrenDataShowWith = 'fields___children___data___show_with',
+  FieldsChildrenDataSpecialAwardVideo = 'fields___children___data___special_award_video',
   FieldsChildrenFieldsImages = 'fields___children___fields___images',
   FieldsChildrenFieldsUrl = 'fields___children___fields___url',
   FieldsChildrenFieldsTags = 'fields___children___fields___tags',
@@ -3403,7 +3415,7 @@ export type FloatQueryOperatorInput = {
   nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
 };
 
-export type ImgixFixed = {
+export type ImgixFixed = ImgixFixedImage & {
   base64: Scalars['String'];
   src: Scalars['String'];
   srcSet: Scalars['String'];
@@ -3425,7 +3437,18 @@ export type ImgixFixedFilterInput = {
   height?: Maybe<IntQueryOperatorInput>;
 };
 
-export type ImgixFluid = {
+export type ImgixFixedImage = {
+  base64: Scalars['String'];
+  src: Scalars['String'];
+  srcSet: Scalars['String'];
+  srcWebp: Scalars['String'];
+  srcSetWebp: Scalars['String'];
+  sizes: Scalars['String'];
+  width: Scalars['Int'];
+  height: Scalars['Int'];
+};
+
+export type ImgixFluid = ImgixFluidImage & {
   base64: Scalars['String'];
   src: Scalars['String'];
   srcSet: Scalars['String'];
@@ -3443,6 +3466,16 @@ export type ImgixFluidFilterInput = {
   srcSetWebp?: Maybe<StringQueryOperatorInput>;
   sizes?: Maybe<StringQueryOperatorInput>;
   aspectRatio?: Maybe<FloatQueryOperatorInput>;
+};
+
+export type ImgixFluidImage = {
+  base64: Scalars['String'];
+  src: Scalars['String'];
+  srcSet: Scalars['String'];
+  srcWebp: Scalars['String'];
+  srcSetWebp: Scalars['String'];
+  sizes: Scalars['String'];
+  aspectRatio: Scalars['Float'];
 };
 
 export type ImgixImage = {
@@ -3484,7 +3517,10 @@ export type ImgixImageFilterListInput = {
 };
 
 export type ImgixUrlParamsInput = {
-  /** Specifies an aspect ratio to maintain when resizing and cropping the image. */
+  /**
+   * Specifies an aspect ratio to maintain when resizing and cropping the image.
+   * [See docs](https://docs.imgix.com/apis/url/size/ar).
+   */
   ar?: Maybe<Scalars['String']>;
   /** Applies automatic enhancements to images. [See docs](https://docs.imgix.com/apis/url/auto). */
   auto?: Maybe<Scalars['String']>;
@@ -3585,6 +3621,10 @@ export type ImgixUrlParamsInput = {
   b?: Maybe<Scalars['String']>;
   /** Applies a gaussian blur to an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/stylize/blur). */
   blur?: Maybe<Scalars['Int']>;
+  /** Sets bottom border of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/border-bottom). */
+  borderBottom?: Maybe<Scalars['Int']>;
+  /** Sets left border of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/border-left). */
+  borderLeft?: Maybe<Scalars['Int']>;
   /**
    * Sets the inner radius of the image's border in pixels. [See
    * docs](https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner).
@@ -3595,6 +3635,10 @@ export type ImgixUrlParamsInput = {
    * docs](https://docs.imgix.com/apis/url/border-and-padding/border-radius).
    */
   borderRadius?: Maybe<Scalars['String']>;
+  /** Sets right border of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/border-right). */
+  borderRight?: Maybe<Scalars['Int']>;
+  /** Sets top border of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/border-top). */
+  borderTop?: Maybe<Scalars['Int']>;
   /** Applies a border to an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/border). */
   border?: Maybe<Scalars['String']>;
   /** Adjusts the brightness of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/bri). */
@@ -3695,9 +3739,13 @@ export type ImgixUrlParamsInput = {
    * Sets the relative zoom value for the focal point of an image. [See
    * docs](https://docs.imgix.com/apis/url/focalpoint-crop/fp-z).
    */
-  fpZ?: Maybe<Scalars['Int']>;
+  fpZ?: Maybe<Scalars['Float']>;
   /** Adjusts the gamma of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/gam). */
   gam?: Maybe<Scalars['Int']>;
+  /** Sets grid colors for the transparency checkerboard grid. */
+  gridColors?: Maybe<Scalars['String']>;
+  /** Sets grid size for the transparency checkerboard grid. */
+  gridSize?: Maybe<Scalars['Int']>;
   /** Adjusts the height of the output image. [See docs](https://docs.imgix.com/apis/url/size/h). */
   h?: Maybe<Scalars['Int']>;
   /** Alias for `h`. */
@@ -3756,18 +3804,29 @@ export type ImgixUrlParamsInput = {
   mh?: Maybe<Scalars['Int']>;
   /** Alias for `markH`. */
   markh?: Maybe<Scalars['Int']>;
-  /** Applies padding to the watermark image. Default: `10`. [See docs](https://docs.imgix.com/apis/url/watermark/mark-pad). */
+  /** Applies padding to the watermark image. Default: `5`. [See docs](https://docs.imgix.com/apis/url/watermark/mark-pad). */
   markPad?: Maybe<Scalars['Int']>;
   /** Alias for `markPad`. */
   mp?: Maybe<Scalars['Int']>;
   /** Alias for `markPad`. */
   markpad?: Maybe<Scalars['Int']>;
+  /**
+   * Rotates a watermark or tiled watermarks by a specified number of degrees.
+   * Default: `0`. [See docs](https://docs.imgix.com/apis/url/watermark/mark-rot).
+   */
+  markRot?: Maybe<Scalars['Float']>;
   /** Adjusts the scale of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark-scale). */
   markScale?: Maybe<Scalars['Int']>;
   /** Alias for `markScale`. */
   ms?: Maybe<Scalars['Int']>;
   /** Alias for `markScale`. */
   markscale?: Maybe<Scalars['Int']>;
+  /** Adds tiled watermark. [See docs](https://docs.imgix.com/apis/url/watermark/mark-tile). */
+  markTile?: Maybe<Scalars['String']>;
+  /** Alias for `markTile`. */
+  mtile?: Maybe<Scalars['String']>;
+  /** Alias for `markTile`. */
+  marktile?: Maybe<Scalars['String']>;
   /** Adjusts the width of the watermark image. [See docs](https://docs.imgix.com/apis/url/watermark/mark-w). */
   markW?: Maybe<Scalars['Int']>;
   /** Alias for `markW`. */
@@ -3796,13 +3855,15 @@ export type ImgixUrlParamsInput = {
   mark?: Maybe<Scalars['String']>;
   /** Alias for `mark`. */
   m?: Maybe<Scalars['String']>;
-  /** Defines the type of mask and specifies the URL if that type is selected. [See docs](https://docs.imgix.com/apis/url/mask). */
-  mask?: Maybe<Scalars['String']>;
   /**
    * Colors the background of the transparent mask area of images. Default: `fff`.
    * [See docs](https://docs.imgix.com/apis/url/mask/mask-bg).
    */
+  maskBg?: Maybe<Scalars['String']>;
+  /** Alias for `maskBg`. */
   maskbg?: Maybe<Scalars['String']>;
+  /** Defines the type of mask and specifies the URL if that type is selected. [See docs](https://docs.imgix.com/apis/url/mask). */
+  mask?: Maybe<Scalars['String']>;
   /** Specifies the maximum height of the output image in pixels. [See docs](https://docs.imgix.com/apis/url/size/max-height). */
   maxH?: Maybe<Scalars['Int']>;
   /** Alias for `maxH`. */
@@ -3834,12 +3895,24 @@ export type ImgixUrlParamsInput = {
   orient?: Maybe<Scalars['Int']>;
   /** Alias for `orient`. */
   or?: Maybe<Scalars['Int']>;
+  /** Sets bottom padding of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/pad-bottom). */
+  padBottom?: Maybe<Scalars['Int']>;
+  /** Sets left padding of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/pad-left). */
+  padLeft?: Maybe<Scalars['Int']>;
+  /** Sets right padding of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/pad-right). */
+  padRight?: Maybe<Scalars['Int']>;
+  /** Sets top padding of an image. [See docs](https://docs.imgix.com/apis/url/border-and-padding/pad-top). */
+  padTop?: Maybe<Scalars['Int']>;
   /** Pads an image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/border-and-padding/pad). */
   pad?: Maybe<Scalars['Int']>;
-  /** Selects a page from a PDF for display. Default: `1`. [See docs](https://docs.imgix.com/apis/url/pdf-page-number). */
+  /** Selects a page from a PDF for display. Default: `1`. [See docs](https://docs.imgix.com/apis/url/pdf/page). */
   page?: Maybe<Scalars['Int']>;
   /** Specifies an output format for palette-extraction. [See docs](https://docs.imgix.com/apis/url/color-palette/palette). */
   palette?: Maybe<Scalars['String']>;
+  /** Enables or disables PDF annotation. Default: `true`. [See docs](https://docs.imgix.com/apis/url/pdf/pdf-annotation). */
+  pdfAnnotation?: Maybe<Scalars['Boolean']>;
+  /** Alias for `pdfAnnotation`. */
+  annotation?: Maybe<Scalars['Boolean']>;
   /**
    * Specifies a CSS prefix for all classes in palette-extraction. Default:
    * `image`. [See docs](https://docs.imgix.com/apis/url/color-palette/prefix).
@@ -3861,6 +3934,8 @@ export type ImgixUrlParamsInput = {
   shad?: Maybe<Scalars['Float']>;
   /** Adjusts the sharpness of the source image. Default: `0`. [See docs](https://docs.imgix.com/apis/url/adjustment/sharp). */
   sharp?: Maybe<Scalars['Float']>;
+  /** Adds checkerboard behind images which support transparency. [See docs](https://docs.imgix.com/apis/url/fill/transparency). */
+  transparency?: Maybe<Scalars['String']>;
   /** Specifies a trim color on a trim operation. [See docs](https://docs.imgix.com/apis/url/trim/trim-color). */
   trimColor?: Maybe<Scalars['String']>;
   /** Alias for `trimColor`. */
@@ -5261,10 +5336,10 @@ export type Query = {
   allPaginatedCollectionPage: PaginatedCollectionPageConnection;
   markdownRemark?: Maybe<MarkdownRemark>;
   allMarkdownRemark: MarkdownRemarkConnection;
-  airtableAdPerson?: Maybe<AirtableAdPerson>;
-  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableAgency?: Maybe<AirtableAgency>;
   allAirtableAgency: AirtableAgencyConnection;
+  airtableAdPerson?: Maybe<AirtableAdPerson>;
+  allAirtableAdPerson: AirtableAdPersonConnection;
   airtableCategory?: Maybe<AirtableCategory>;
   allAirtableCategory: AirtableCategoryConnection;
   airtableTextField?: Maybe<AirtableTextField>;
@@ -5504,27 +5579,6 @@ export type QueryAllMarkdownRemarkArgs = {
 };
 
 
-export type QueryAirtableAdPersonArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  table?: Maybe<StringQueryOperatorInput>;
-  recordId?: Maybe<StringQueryOperatorInput>;
-  queryName?: Maybe<StringQueryOperatorInput>;
-  data?: Maybe<AirtableAdPersonDataFilterInput>;
-  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
-};
-
-
-export type QueryAllAirtableAdPersonArgs = {
-  filter?: Maybe<AirtableAdPersonFilterInput>;
-  sort?: Maybe<AirtableAdPersonSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QueryAirtableAgencyArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -5541,6 +5595,27 @@ export type QueryAirtableAgencyArgs = {
 export type QueryAllAirtableAgencyArgs = {
   filter?: Maybe<AirtableAgencyFilterInput>;
   sort?: Maybe<AirtableAgencySortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryAirtableAdPersonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  table?: Maybe<StringQueryOperatorInput>;
+  recordId?: Maybe<StringQueryOperatorInput>;
+  queryName?: Maybe<StringQueryOperatorInput>;
+  data?: Maybe<AirtableAdPersonDataFilterInput>;
+  fields?: Maybe<AirtableAdPersonFieldsFilterInput>;
+};
+
+
+export type QueryAllAirtableAdPersonArgs = {
+  filter?: Maybe<AirtableAdPersonFilterInput>;
+  sort?: Maybe<AirtableAdPersonSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -6901,14 +6976,6 @@ export type AboutPageQuery = { aboutHeroText?: Maybe<{ data?: Maybe<{ rich_text?
         & { logo?: Maybe<Array<Maybe<Pick<AirtableSponsorsDataLogo, 'url'>>>> }
       )> }> } };
 
-export type AdPeoplePageQueryVariables = {};
-
-
-export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ fields?: Maybe<{ photo?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }>, data?: Maybe<(
-        Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
-        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
-      )> }> } };
-
 export type OrganizerMessagesPageQueryVariables = {};
 
 
@@ -6923,7 +6990,17 @@ export type IndexPageQuery = { bestOfWinners: { nodes: Array<SpecialAwardWinnerF
       )>, data?: Maybe<(
         Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
         & { agency?: Maybe<Array<Maybe<{ data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>> }
-      )> }> }, overallJudgesWinner?: Maybe<SpecialAwardWinnerFragment>, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> }, heroVideoHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1LetterExcerpt?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer1Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, organizer2LetterExcerpt?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer2Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, meetTheJudgesText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, meetTheJudgesVideoLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, meetTheJudgesThumbnail?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, homeNationalWinnersLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeNationalWinnersText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeNationalWinnersButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
+      )> }> }, overallJudgesWinner?: Maybe<SpecialAwardWinnerFragment>, judgesWinners: { nodes: Array<SpecialAwardWinnerFragment> }, archives: { nodes: Array<{ data?: Maybe<Pick<AirtableArchiveData, 'link' | 'year'>> }> }, heroVideoHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeHeroText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeMessage?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1LetterExcerpt?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer1Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer1Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, organizer2LetterExcerpt?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Name?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, organizer2Title?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, organizer2Headshot?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, meetTheJudgesText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, meetTheJudgesVideoLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, meetTheJudgesThumbnail?: Maybe<{ fields?: Maybe<{ image?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }> }>, homeNationalWinnersLink?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }>, homeNationalWinnersText?: Maybe<{ data?: Maybe<{ rich_text?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }> }>, homeNationalWinnersButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonText?: Maybe<{ data?: Maybe<Pick<AirtableTextFieldData, 'plain_text'>> }>, homeButtonHref?: Maybe<{ data?: Maybe<Pick<AirtableLinkData, 'href'>> }> };
+
+export type AdPeoplePageQueryVariables = {
+  year: Scalars['Date'];
+};
+
+
+export type AdPeoplePageQuery = { allAirtableAdPerson: { nodes: Array<{ fields?: Maybe<{ photo?: Maybe<{ fluid?: Maybe<GatsbyImgixFluidFragment> }> }>, data?: Maybe<(
+        Pick<AirtableAdPersonData, 'name' | 'title' | 'award'>
+        & { agency?: Maybe<Array<Maybe<{ fields?: Maybe<Pick<AirtableAgencyFields, 'url'>>, data?: Maybe<Pick<AirtableAgencyData, 'name'>> }>>>, description?: Maybe<{ childMarkdownRemark?: Maybe<Pick<MarkdownRemark, 'html'>> }> }
+      )> }> } };
 
 export type AgencyTemplateQueryVariables = {
   recordId: Scalars['String'];

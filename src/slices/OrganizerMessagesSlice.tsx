@@ -14,6 +14,7 @@ export type OrganizerMessagesSliceProps = {
   heading?: string
   buttonHref?: string
   buttonText?: string
+  textHTML?: string
 }
 
 export const OrganizerMessagesSlice = ({
@@ -21,67 +22,93 @@ export const OrganizerMessagesSlice = ({
   heading,
   buttonHref,
   buttonText,
-}: OrganizerMessagesSliceProps) => (
-  <BoundedBox
-    forwardedAs="section"
-    maxWidth="Large"
-    css={{
-      backgroundColor: t.c.Red40,
-      color: t.c.White,
-    }}
-  >
-    <div
-      css={mq({
-        display: 'grid',
-        gap: linearScale('2rem', '5rem'),
-      })}
+  textHTML,
+}: OrganizerMessagesSliceProps) => {
+  return (
+    <BoundedBox
+      forwardedAs="section"
+      maxWidth="Large"
+      css={{
+        backgroundColor: t.c.Red40,
+        color: t.c.White,
+      }}
     >
       <div
         css={mq({
           display: 'grid',
-          gap: linearScale('0.5rem', '0.75rem'),
-          textAlign: 'center',
-          justifyItems: 'center',
+          gap: linearScale('2rem', '5rem'),
         })}
       >
-        {heading && (
-          <Heading
-            css={mq({
-              fontSize: t.f.xl,
-            })}
-          >
-            {heading}
-          </Heading>
-        )}
-        {buttonHref && (
-          <Anchor
-            href={buttonHref}
-            css={{
-              '&:hover, &:focus': {
-                color: 'inherit',
-                textDecoration: 'underline',
-              },
-            }}
-          >
-            {buttonText}
-          </Anchor>
-        )}
-      </div>
-      {children && (
         <div
           css={mq({
             display: 'grid',
-            gridTemplateColumns: [null, 'repeat(2, 1fr)'],
-            gap: linearScale('2rem', '5rem'),
-            alignItems: 'start',
+            gap: linearScale('0.5rem', '0.75rem'),
+            textAlign: 'center',
+            justifyItems: 'center',
           })}
         >
-          {children}
+          {textHTML && (
+            <HTMLContent
+              html={textHTML}
+              componentOverrides={{
+                h1: Comp => props => (
+                  <View
+                    as={Comp}
+                    {...props}
+                    css={mq({
+                      color: t.c.White,
+                      fontSize: t.f.xl,
+                    })}
+                  />
+                ),
+              }}
+            />
+          )}
+
+          {!textHTML && (
+            <>
+              {heading && (
+                <Heading
+                  css={mq({
+                    fontSize: t.f.xl,
+                  })}
+                >
+                  {heading}
+                </Heading>
+              )}
+            </>
+          )}
+
+          {buttonHref && (
+            <Anchor
+              href={buttonHref}
+              css={{
+                '&:hover, &:focus': {
+                  color: 'inherit',
+                  textDecoration: 'underline',
+                },
+              }}
+            >
+              {buttonText}
+            </Anchor>
+          )}
         </div>
-      )}
-    </div>
-  </BoundedBox>
-)
+        {children && (
+          <div
+            css={mq({
+              display: 'grid',
+              gridTemplateColumns: [null, 'repeat(2, 1fr)'],
+              gap: linearScale('2rem', '5rem'),
+              alignItems: 'start',
+            })}
+          >
+            {children}
+          </div>
+        )}
+      </div>
+    </BoundedBox>
+  )
+}
 
 export type OrganizerMessagesSliceMessageProps = {
   textHTML?: string
