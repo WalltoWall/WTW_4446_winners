@@ -61,6 +61,19 @@ export const OrganizerMessagesSlice = ({
                     })}
                   />
                 ),
+                a: Comp => props => (
+                  <View
+                    as={Comp}
+                    {...props}
+                    css={mq({
+                      color: t.c.White,
+                      textDecoration: 'underline',
+                      '&:hover, &:focus': {
+                        color: t.c.White,
+                      },
+                    })}
+                  />
+                ),
               }}
             />
           )}
