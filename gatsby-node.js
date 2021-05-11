@@ -82,19 +82,18 @@ const WINNERS_QUERY = `
 const normalizeWinnerNode = node => ({
   url: node.fields.url,
   name: node.data.name,
-  award: node.data.award.toLowerCase(),
+  award: node?.data?.award?.toLowerCase() ?? '',
   year: node.data.year,
   nationalWinner: Boolean(node.data.national_winner),
-  nmgScholarshipWinner: (dlv(node, ['data', 'special_award']) || []).includes(
-    'NMG Scholarship',
-  ),
+  nmgScholarshipWinner:
+    node?.data?.special_award?.includes('NMG Scholarship') ?? false,
   year: node.data.year,
-  category: dlv(node, ['data', 'category', 0, 'data']),
-  imageFluid: dlv(node, ['fields', 'featured_image', 'fluid']),
-  agencies: dlv(node, ['data', 'agency'], []).map(agency => ({
-    name: dlv(agency, ['data', 'name']),
-    url: dlv(agency, ['fields', 'url']),
-    avatarFluid: dlv(agency, ['fields', 'avatar', 'fluid']),
+  category: node?.data?.category?.[0]?.data,
+  imageFluid: node?.fields?.featured_image?.fluid,
+  agencies: node?.data?.agency?.map(agency => ({
+    name: agency?.data?.name,
+    url: agency?.fields?.url,
+    avatarFluid: agency?.fields?.avatar?.fluid,
   })),
 })
 

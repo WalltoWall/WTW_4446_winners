@@ -68,12 +68,14 @@ type SponsorsSliceProps = {
   highSchool?: Sponsor[]
   professional?: Sponsor[]
   virtual?: Sponsor[]
+  creativeTeam?: Sponsor[]
 }
 
 export const SponsorsSlice = ({
   highSchool,
   professional,
   virtual,
+  creativeTeam,
 }: SponsorsSliceProps) => {
   return (
     <BoundedBox
@@ -104,7 +106,7 @@ export const SponsorsSlice = ({
                 marginBottom: t.spaceScales.m,
               })}
             >
-              High School Sponsor
+              High School &amp; College Sponsors
             </Heading>
             <Sponsors sponsors={highSchool} />
           </div>
@@ -122,6 +124,21 @@ export const SponsorsSlice = ({
               Virtual Pele Show Sponsor
             </Heading>
             <Sponsors sponsors={virtual} />
+          </div>
+        )}
+
+        {undefIfEmpty(creativeTeam) && (
+          <div>
+            <Heading
+              css={mq({
+                fontSize: t.fontSizeScales.l,
+                textAlign: 'center',
+                marginBottom: t.spaceScales.m,
+              })}
+            >
+              Creative Team
+            </Heading>
+            <Sponsors sponsors={creativeTeam} />
           </div>
         )}
       </div>

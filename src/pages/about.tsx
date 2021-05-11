@@ -24,6 +24,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
   const highSchoolSponsors: Sponsor[] = []
   const professionalSponsors: Sponsor[] = []
   const virtualSponsors: Sponsor[] = []
+  const creativeTeamSponsors: Sponsor[] = []
 
   data.aboutSponsors.nodes.forEach(node => {
     const sponsor: Sponsor = {
@@ -40,6 +41,8 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         return professionalSponsors.push(sponsor)
       case 'virtual':
         return virtualSponsors.push(sponsor)
+      case 'creative team':
+        return creativeTeamSponsors.push(sponsor)
       default:
         return
     }
@@ -96,6 +99,7 @@ export const AboutPage = ({ data }: AboutPageProps) => {
         highSchool={highSchoolSponsors}
         professional={professionalSponsors}
         virtual={virtualSponsors}
+        creativeTeam={creativeTeamSponsors}
       />
 
       <CallToActionSlice
