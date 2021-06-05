@@ -87,7 +87,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
           })}
         >
           <SpecialWinners
-            heading="Best of Show Winners"
+            heading="2021 Best of Show Winners"
             headingHref="/winners/"
             columns={[1, 2]}
             winners={bestOfWinners}
@@ -137,7 +137,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         })}
       >
         <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-          <Anchor href="/winners/">Judge's Choice Awards</Anchor>
+          <Anchor href="/winners/">2021 Judge's Choice Awards</Anchor>
         </Heading>
       </BoundedBox>
 
