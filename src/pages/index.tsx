@@ -87,7 +87,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
           })}
         >
           <SpecialWinners
-            heading="2021 Best of Show Winners"
+            heading="2022 Best of Show Winners"
             headingHref="/winners/"
             columns={[1, 2]}
             winners={bestOfWinners}
@@ -137,7 +137,7 @@ export const IndexPage = ({ data, ...props }: IndexPageProps) => {
         })}
       >
         <Heading css={mq({ textAlign: 'center', fontSize: t.f.xl })}>
-          <Anchor href="/winners/">2021 Judge's Choice Awards</Anchor>
+          <Anchor href="/winners/">2022 Judge's Choice Awards</Anchor>
         </Heading>
       </BoundedBox>
 
@@ -298,7 +298,7 @@ export const query = graphql`
       filter: {
         data: {
           special_award: { regex: "/^Best of Show - /" }
-          year: { eq: "2021" }
+          year: { eq: "2022" }
           type: { eq: "Professional" }
         }
       }
@@ -332,7 +332,7 @@ export const query = graphql`
     overallJudgesWinner: airtableWinner(
       data: {
         special_award: { eq: "Judge's Award - Overall" }
-        year: { eq: "2021" }
+        year: { eq: "2022" }
         type: { eq: "Professional" }
       }
     ) {
@@ -342,7 +342,7 @@ export const query = graphql`
       filter: {
         data: {
           special_award: { regex: "/^Judge's Award - (?!Overall)/" }
-          year: { eq: "2021" }
+          year: { eq: "2022" }
           type: { eq: "Professional" }
         }
       }

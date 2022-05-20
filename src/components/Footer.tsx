@@ -96,7 +96,7 @@ export const Footer = (props: FooterProps) => (
           gridRow: [null, 2],
         })}
       >
-        &copy; 2021 Pele Awards. All rights reserved.
+        &copy; {new Date(Date.now()).getFullYear()} Pele Awards. All rights reserved.
       </View>
     </View>
   </BoundedBox>

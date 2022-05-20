@@ -168,7 +168,7 @@ export const query = graphql`
       }
     }
     aboutSponsors: allAirtableSponsors(
-      filter: { data: { year: { eq: "2021" } } }
+      filter: { data: { year: { eq: "2022" } } }
       sort: { fields: data___type }
     ) {
       nodes {
