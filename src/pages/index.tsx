@@ -355,7 +355,7 @@ export const query = graphql`
     ###
     # Archives
     ###
-    archives: allAirtableArchive {
+    archives: allAirtableArchive(sort: { fields: data___year, order: DESC }) {
       nodes {
         data {
           link

@@ -222,6 +222,8 @@ const createCollectionsAndPagesForWinners = ({
     if (!category) return acc
 
     const line1 = category.data.line_1
+    if (!line1) return acc
+
     acc[line1] = [...(acc[line1] || []), curr]
 
     return acc
