@@ -202,7 +202,6 @@ export const query = graphql`
         rich_text {
           childMarkdownRemark {
             html
-            id
           }
         }
       }
