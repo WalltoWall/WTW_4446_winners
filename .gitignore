@@ -12,3 +12,5 @@ jsconfig.json
 jsconfig.json
 .vscode
 shell.nix
+
+.env
